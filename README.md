@@ -53,36 +53,6 @@ Skill({ command: "superpowers:brainstorming" })
 }
 // → Enables structured reasoning for complex problem-solving
 ```
-
----
-
-## Table of Contents
-
-- [Prerequisites](#prerequisites)
-- [Marketplaces](#marketplaces)
-
-1. [Vibe Coding](#1-vibe-coding)
-2. [Dev](#2-dev)
-3. [Content & Marketing](#3-content--marketing)
-4. [Tools & Utilities](#4-tools--utilities)
-
----
-
-# Prerequisites
-
-Before installing any tools, verify you have the required dependencies:
-
-```bash
-# Verify Node.js (18+)
-node --version
-
-# Verify Git
-git --version
-
-# Optional: GitHub CLI for PR workflows
-gh --version
-```
-
 ---
 
 # Marketplaces
@@ -112,6 +82,32 @@ Official Anthropic workflows for language-specific development (JavaScript/TypeS
 Core utilities and integrations for Git operations, commit workflows, and version control helpers.
 
 **GitHub:** https://github.com/anthropics/claude-code-plugins
+
+---
+
+# Prerequisites
+
+Before installing any tools, verify you have the required dependencies:
+
+```bash
+# Verify Node.js (18+)
+node --version
+
+# Verify Git
+git --version
+
+# Optional: GitHub CLI for PR workflows
+gh --version
+```
+
+---
+
+# Table of Contents
+
+##1. [Vibe Coding](#1-vibe-coding)
+##2. [Dev](#2-dev)
+##3. [Content & Marketing](#3-content--marketing)
+##4. [Tools & Utilities](#4-tools--utilities)
 
 ---
 
