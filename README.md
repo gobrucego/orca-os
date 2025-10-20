@@ -164,7 +164,6 @@ works-with: all agents
 use-when: Running complex multi-agent workflows
 kit: wshobson
 ---
-```
 
 Key Capabilities:
 - Acts as your AI project manager
@@ -187,7 +186,6 @@ description: Your friendly coding mentor with personality
 works-with: all development agents
 kit: wshobson
 ---
-```
 
 Key Capabilities:
 - Provides guidance while you code
@@ -210,7 +208,6 @@ description: Optimizes how context is used across conversations
 use-when: Working on large codebases or long sessions
 kit: wshobson
 ---
-```
 
 Key Capabilities:
 - Maximizes available context windows
@@ -233,7 +230,6 @@ description: Expert prompt architect using Opus model for maximum reasoning
 use-when: Building AI features or optimizing prompts
 kit: claude-code-sub-agents
 ---
-```
 
 Key Capabilities:
 - Specializes in Chain-of-Thought and Tree-of-Thoughts techniques
@@ -257,7 +253,6 @@ requires: magic MCP, context7 MCP
 works-with: frontend-developer, ux-designer
 kit: claude-code-sub-agents
 ---
-```
 
 Key Capabilities:
 - Color palettes, typography, spacing systems
@@ -281,7 +276,6 @@ requires: context7 MCP, sequential-thinking MCP, playwright MCP
 works-with: ui-designer, frontend-developer
 kit: claude-code-sub-agents
 ---
-```
 
 Key Capabilities:
 - User flows, pain points, and interaction patterns
@@ -305,7 +299,6 @@ requires: magic MCP, context7 MCP, playwright MCP
 works-with: ui-designer, code-reviewer, nextjs-pro
 kit: claude-code-sub-agents
 ---
-```
 
 Key Capabilities:
 - State management, hooks, responsive design
@@ -328,7 +321,6 @@ description: Native iOS development using Swift, SwiftUI, and UIKit
 works-with: ui-designer
 kit: claude-code-sub-agents
 ---
-```
 
 Key Capabilities:
 - iOS-specific patterns and navigation
@@ -352,7 +344,6 @@ requires: context7 MCP, sequential-thinking MCP
 works-with: all development agents
 kit: claude-code-sub-agents
 ---
-```
 
 Key Capabilities:
 - Actionable feedback with line-by-line suggestions
@@ -375,7 +366,6 @@ description: Next.js specialist covering SSR, SSG, routing, and Next.js patterns
 works-with: frontend-developer
 kit: wshobson
 ---
-```
 
 Key Capabilities:
 - App Router, Server Components
@@ -385,7 +375,6 @@ Key Capabilities:
 ```bash
 # Included in wshobson kit
 ~/leamas/leamas agent@wshobson
-```
 
 ---
 
@@ -398,7 +387,6 @@ description: Handles data analysis, statistical modeling, SQL queries, BigQuery 
 works-with: python-pro, database-optimizer
 kit: wshobson
 ---
-```
 
 Key Capabilities:
 - Machine learning implementations
@@ -420,7 +408,6 @@ name: quant-analyst
 description: Quantitative analysis and financial modeling
 kit: wshobson
 ---
-```
 
 Key Capabilities:
 - Statistical analysis
@@ -443,7 +430,6 @@ description: Python development specialist
 works-with: data-scientist
 kit: wshobson
 ---
-```
 
 Key Capabilities:
 - Data analysis, scripting, automation
@@ -466,7 +452,6 @@ description: Database setup, configuration, and ongoing management
 works-with: database-optimizer
 kit: wshobson
 ---
-```
 
 Key Capabilities:
 - Schema design, migrations, backups
@@ -488,7 +473,6 @@ description: Optimizes database queries and overall database performance
 works-with: database-admin, data-scientist
 kit: wshobson
 ---
-```
 
 Key Capabilities:
 - Analyzes slow queries
@@ -510,7 +494,6 @@ name: payment-integration
 description: Integrating payment systems like Stripe and PayPal
 kit: wshobson
 ---
-```
 
 Key Capabilities:
 - Payment workflows, webhooks
@@ -533,7 +516,6 @@ description: Writes E-E-A-T optimized articles with proper keyword density
 model: Sonnet (high-quality long-form content)
 plugin: seo-content-creation@claude-code-workflows
 ---
-```
 
 Key Capabilities:
 - 0.5-1.5% keyword density
@@ -555,7 +537,6 @@ description: Creates content calendars, topic clusters, and search intent mappin
 model: Haiku (fast planning)
 plugin: seo-content-creation@claude-code-workflows
 ---
-```
 
 Key Capabilities:
 - Plans content strategy
@@ -577,7 +558,6 @@ description: Scores content quality 1-10 and provides improvement recommendation
 model: Sonnet (thorough analysis)
 plugin: seo-content-creation@claude-code-workflows
 ---
-```
 
 Key Capabilities:
 - Actionable improvement recommendations
@@ -590,10 +570,26 @@ Key Capabilities:
 
 ---
 
-# Plugins
+# Plugins: Marketplaces for Skills
 
-How to Enable Plugins:
+To find plugins and their associated skills, type /plugins into Claude Code
 
+```
+/plugins
+ # 1. Command Recognition — Claude Code detects the /plugins slash command
+ # 2. Marketplace Loading — The system reads ~/.claude/settings.json to see which plugins are enabled
+ # 3. Plugin Discovery — Scans ~/.claude/plugins/marketplaces/ directories for installed plugin definitions
+ # 4. Activation — Each enabled plugin's manifest is loaded, which contains:
+    - Skills (workflow instructions)
+    - Agents (specialized AI definitions)
+    - Slash commands (custom commands)
+    - MCP integrations (if any)
+ # 5. Context Injection — Skills become available for auto-triggering or manual invocation
+ # 6. Agent Registration — Agents become available via Task({ subagent_type: "agent-name" })
+ # 7. Command Registration — Slash commands become available in the command palette
+```
+
+# How to Enable Plugins:
 Edit `~/.claude/settings.json` and add plugins to `enabledPlugins`:
 
 ```json
@@ -614,7 +610,6 @@ Plugin Locations:
 
 ---
 
-## 🔧 Core Development Workflows
 
 ### Superpowers
 
@@ -624,7 +619,6 @@ Plugin Locations:
     "superpowers@superpowers-marketplace": true
   }
 }
-```
 
 Foundation of vibe coding with 10 systematic development skills
 
@@ -642,6 +636,7 @@ Skills:
 Repository: https://github.com/Ejb503/multiverse-of-multiagents
 
 ---
+```
 
 ### Claude Mem
 
@@ -651,7 +646,6 @@ Repository: https://github.com/Ejb503/multiverse-of-multiagents
     "claude-mem@thedotmack": true
   }
 }
-```
 
 Persistent memory system using SQLite with full-text search
 
@@ -663,8 +657,7 @@ Key Capabilities:
 Repository: https://github.com/thedotmack/claude-mem
 
 ---
-
-## 💻 JavaScript / TypeScript / Frontend
+```
 
 ### JavaScript TypeScript
 
@@ -674,7 +667,6 @@ Repository: https://github.com/thedotmack/claude-mem
     "javascript-typescript@claude-code-workflows": true
   }
 }
-```
 
 4 skills covering modern JS patterns and TypeScript
 
@@ -685,6 +677,7 @@ Skills:
 - typescript-advanced-types
 
 ---
+```
 
 ### Frontend Mobile Development
 
@@ -694,7 +687,6 @@ Skills:
     "frontend-mobile-development@claude-code-workflows": true
   }
 }
-```
 
 2 skills for building React and mobile apps
 
@@ -703,6 +695,7 @@ Skills:
 - mobile-developer
 
 ---
+```
 
 ### Code Documentation
 
@@ -712,7 +705,6 @@ Skills:
     "code-documentation@claude-code-workflows": true
   }
 }
-```
 
 3 skills covering code review and documentation
 
@@ -722,8 +714,7 @@ Skills:
 - tutorial-engineer
 
 ---
-
-## 📝 SEO & Content Creation
+```
 
 ### SEO Content Creation
 
@@ -733,7 +724,6 @@ Skills:
     "seo-content-creation@claude-code-workflows": true
   }
 }
-```
 
 Content writing optimized for search engines with E-E-A-T signals
 
@@ -743,6 +733,7 @@ Agents:
 - seo-content-auditor
 
 ---
+```
 
 ### SEO Technical Optimization
 
@@ -752,7 +743,7 @@ Agents:
     "seo-technical-optimization@claude-code-workflows": true
   }
 }
-```
+
 
 Technical SEO optimization covering keywords, meta tags, snippets
 
@@ -763,6 +754,7 @@ Agents:
 - seo-structure-architect
 
 ---
+```
 
 ### SEO Analysis Monitoring
 
@@ -772,7 +764,7 @@ Agents:
     "seo-analysis-monitoring@claude-code-workflows": true
   }
 }
-```
+
 
 SEO analysis and monitoring for authority building
 
@@ -782,6 +774,7 @@ Agents:
 - seo-cannibalization-detector
 
 ---
+```
 
 ### Elements of Style
 
@@ -791,7 +784,6 @@ Agents:
     "elements-of-style@superpowers-marketplace": true
   }
 }
-```
 
 Applies Strunk & White's timeless writing principles
 
@@ -801,8 +793,7 @@ Skills:
 Works on: documentation, commit messages, error messages
 
 ---
-
-## 🔧 Git & Version Control
+```
 
 ### Git
 
@@ -812,7 +803,6 @@ Works on: documentation, commit messages, error messages
     "git@claude-code-plugins": true
   }
 }
-```
 
 4 slash commands for Git operations
 
@@ -823,6 +813,7 @@ Commands:
 - /git:rebase-pr
 
 ---
+```
 
 ### Commit Commands
 
@@ -832,7 +823,6 @@ Commands:
     "commit-commands@claude-code-plugins": true
   }
 }
-```
 
 Enhanced Git commit workflows with automated conventions
 
@@ -841,6 +831,7 @@ Key Capabilities:
 - Conventional commit support
 
 ---
+```
 
 # MCPs
 
@@ -853,7 +844,6 @@ description: Step-by-step reasoning for complex problems
 used-by: All agents and workflows
 documentation: https://github.com/modelcontextprotocol/servers/tree/main/src/sequential-thinking
 ---
-```
 
 Key Capabilities:
 - Claude invokes this when thinking through multi-step solutions
@@ -874,21 +864,6 @@ Key Capabilities:
 
 ---
 
-## User-Created Skills
-
-Custom skills you can add to `~/.claude/skills/` for specialized workflows:
-
-**📰 article-extractor** — Extracts clean article content from URLs
-**🚀 ship-learn-next** — Transforms learning content into actionable implementation plans
-**🧵 tapestry** — Unified workflow for any learning material (auto-detects YouTube, articles, PDFs)
-**🎥 youtube-transcript** — Downloads transcripts and captions from YouTube videos
-
-```bash
-# Add to ~/.claude/skills/
-# Manual installation from user repository
-```
-
----
 
 ## Configuration
 
