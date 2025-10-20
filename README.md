@@ -19,7 +19,9 @@
 [![Skills](https://img.shields.io/badge/skills-21-orange)](#plugins)
 [![MCPs](https://img.shields.io/badge/MCPs-1-purple)](#mcps)
 
-# 🎛️ Vibe Coding Claude Code Setup: Focused on orchestration, UI/UX design, content development, prototyping, and efficient workflows for **vibe coding**.
+
+# Vibe Coding Claude Code Setup: 
+Focused on orchestration, UI/UX design, content development, prototyping, and efficient workflows for **vibe coding**.
 
 ---
 
