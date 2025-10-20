@@ -459,8 +459,7 @@ kit: wshobson
 ---
 
 
-'''
-
+```
 ########  ##       ##     ##  ######   #### ##    ##  ######  
 ##     ## ##       ##     ## ##    ##   ##  ###   ## ##    ## 
 ##     ## ##       ##     ## ##         ##  ####  ## ##       
@@ -468,8 +467,8 @@ kit: wshobson
 ##        ##       ##     ## ##    ##   ##  ##  ####       ## 
 ##        ##       ##     ## ##    ##   ##  ##   ### ##    ## 
 ##        ########  #######   ######   #### ##    ##  ######      
+```
 
-'''
 
 ###Marketplaces for Skills, Agents, and MCPs
 To find plugins and their associated skills, type /plugins into Claude Code
