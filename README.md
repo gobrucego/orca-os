@@ -148,10 +148,9 @@ cat ~/Library/Application\ Support/Claude/claude_desktop_config.json
 
 ---
 
-## 🎨 Vibe Coding
-# 1.Agents
+# Agents
 
-## 🧠 Agent Organizer ★★
+### 🧠 Agent Organizer ★★
 
 ```yaml
 ---
@@ -174,7 +173,7 @@ use-when: Running complex multi-agent workflows
 
 ---
 
-## 🎯 Vibe Coding Coach ★★★
+### 🎯 Vibe Coding Coach ★★★
 
 ```yaml
 ---
@@ -196,7 +195,7 @@ works-with: all development agents
 
 ---
 
-## 📦 Context Manager ★★
+### 📦 Context Manager ★★
 
 ```yaml
 ---
@@ -218,7 +217,7 @@ use-when: Working on large codebases or long sessions
 
 ---
 
-## 🎨 Prompt Engineer ★★
+### 🎨 Prompt Engineer ★★
 
 ```yaml
 ---
@@ -240,9 +239,9 @@ use-when: Building AI features or optimizing prompts
 
 ---
 
-### Plugins
+# Plugins
 
-## 🔧 Superpowers ★★★
+### 🔧 Superpowers ★★★
 
 ```yaml
 ---
@@ -265,7 +264,7 @@ repository: https://github.com/Ejb503/multiverse-of-multiagents
 
 ---
 
-## 🧠 Claude Mem ★★★
+### 🧠 Claude Mem ★★★
 
 ```yaml
 ---
@@ -289,9 +288,9 @@ repository: https://github.com/thedotmack/claude-mem
 
 ---
 
-### Skills (from superpowers plugin)
+# Skills
 
-## ⚡ Using Superpowers ★★★
+### ⚡ Using Superpowers ★★★
 
 ```yaml
 ---
@@ -313,7 +312,7 @@ auto-triggers: Start of every conversation
 
 ---
 
-## 💭 Brainstorming ★★★
+### 💭 Brainstorming ★★★
 
 ```yaml
 ---
@@ -336,7 +335,7 @@ manual-invoke: /superpowers:brainstorm
 
 ---
 
-## 📋 Writing Plans ★★★
+### 📋 Writing Plans ★★★
 
 ```yaml
 ---
@@ -359,7 +358,7 @@ works-with: executing-plans, subagent-driven-development
 
 ---
 
-## ▶️ Executing Plans ★★★
+### ▶️ Executing Plans ★★★
 
 ```yaml
 ---
@@ -382,7 +381,7 @@ works-with: writing-plans
 
 ---
 
-## 🤖 Subagent Driven Development ★★★
+### 🤖 Subagent Driven Development ★★★
 
 ```yaml
 ---
@@ -405,7 +404,7 @@ works-with: writing-plans, requesting-code-review
 
 ---
 
-## ⚡ Dispatching Parallel Agents ★★
+### ⚡ Dispatching Parallel Agents ★★
 
 ```yaml
 ---
@@ -427,53 +426,10 @@ auto-triggers: When facing 3+ independent failures
 
 ---
 
-## 👀 Requesting Code Review ★★★
-
-```yaml
----
-name: requesting-code-review
-description: Dispatches code-reviewer subagent to review implementation
-auto-triggers: When completing tasks
-works-with: code-reviewer agent
----
-```
-
-**Key Capabilities:**
-- Reviews implementation against plan or requirements
-- Catches issues before merging
-- Provides actionable feedback
-
-```bash
-# Included in superpowers plugin
-"superpowers@superpowers-marketplace": true
-```
 
 ---
 
-## ✅ Verification Before Completion ★★★
-
-```yaml
----
-name: verification-before-completion
-description: Runs verification commands and confirms output before claiming success
-auto-triggers: Before claiming completion
-use-when: About to commit or create PRs
----
-```
-
-**Key Capabilities:**
-- Evidence before assertions always
-- Prevents claiming work is done without proof
-- Runs tests and confirms passing
-
-```bash
-# Included in superpowers plugin
-"superpowers@superpowers-marketplace": true
-```
-
----
-
-## 📝 Writing Skills ★
+### 📝 Writing Skills ★
 
 ```yaml
 ---
@@ -495,7 +451,7 @@ use-when: Creating new skills
 
 ---
 
-## 🧪 Testing Skills with Subagents ★
+### 🧪 Testing Skills with Subagents ★
 
 ```yaml
 ---
@@ -517,7 +473,7 @@ use-when: Verifying skills work before deployment
 
 ---
 
-## 🤝 Sharing Skills ★
+### 🤝 Sharing Skills ★
 
 ```yaml
 ---
@@ -539,9 +495,9 @@ use-when: Contributing skills to community
 
 ---
 
-### MCPs
+# MCPs
 
-## 🔌 Sequential Thinking ★★★
+### 🔌 Sequential Thinking ★★★
 
 ```yaml
 ---
@@ -571,7 +527,7 @@ documentation: https://github.com/modelcontextprotocol/servers/tree/main/src/seq
 
 ---
 
-## ⚙️ Development
+### ⚙️ Development
 
 Design, frontend, Next.js, code review
 
@@ -600,7 +556,7 @@ works-with: frontend-developer, ux-designer
 
 ---
 
-## 👤 UX Designer ★★★
+### 👤 UX Designer ★★★
 
 ```yaml
 ---
