@@ -201,7 +201,13 @@ Plugins come from **marketplaces** — collections of related plugins:
 
 ---
 
-# Agents
+  ```  _                    _       
+    / \   __ _  ___ _ __ | |_ ___ 
+   / _ \ / _` |/ _ \ '_ \| __/ __|
+  / ___ \ (_| |  __/ | | | |_\__ \
+ /_/   \_\__, |\___|_| |_|\__|___/
+         |___/                    
+ ```        
 
 Agents are installed to: `~/.claude/agents/leamas/{kit-name}/`
 
@@ -451,119 +457,17 @@ kit: wshobson
 
 ---
 
-### 📊 Data Scientist
 
-```yaml
----
-name: data-scientist
-description: Handles data analysis, statistical modeling, SQL queries, BigQuery operations
-works-with: python-pro, database-optimizer
-kit: wshobson
----
-# Key Capabilities:
-# - Machine learning implementations
-# - Data transformation or analysis
-# - Statistical analysis
-```
+'''
+  ____  _             _           
+ |  _ \| |_   _  __ _(_)_ __  ___ 
+ | |_) | | | | |/ _` | | '_ \/ __|
+ |  __/| | |_| | (_| | | | | \__ \
+ |_|   |_|\__,_|\__, |_|_| |_|___/
+                |___/             
+'''
 
-```bash
-# Included in wshobson kit
-~/leamas/leamas agent@wshobson
-```
-
-
----
-
-### 📈 Quant Analyst
-
-```yaml
----
-name: quant-analyst
-description: Quantitative analysis and financial modeling
-kit: wshobson
----
-# Key Capabilities:
-# - Statistical analysis
-# - Risk modeling
-# - Financial calculations
-```
-
-```bash
-# Included in wshobson kit
-~/leamas/leamas agent@wshobson
-```
-
-
----
-
-### 🐍 Python Pro
-
-```yaml
----
-name: python-pro
-description: Python development specialist
-works-with: data-scientist
-kit: wshobson
----
-# Key Capabilities:
-# - Data analysis, scripting, automation
-# - Python-specific best practices
-# - Knows pandas, numpy, requests
-```
-
-```bash
-# Included in wshobson kit
-~/leamas/leamas agent@wshobson
-```
-
----
-
-### 🗄️ Database Admin
-
-```yaml
----
-name: database-admin
-description: Database setup, configuration, and ongoing management
-works-with: database-optimizer
-kit: wshobson
----
-# Key Capabilities:
-# - Schema design, migrations, backups
-# - Database administration tasks
-```
-
-```bash
-# Included in wshobson kit
-~/leamas/leamas agent@wshobson
-```
-
-
----
-
-### ⚡ Database Optimizer
-
-```yaml
----
-name: database-optimizer
-description: Optimizes database queries and overall database performance
-works-with: database-admin, data-scientist
-kit: wshobson
----
-# Key Capabilities:
-# - Analyzes slow queries
-# - Suggests indexes
-# - Improves database efficiency
-```
-
-```bash
-# Included in wshobson kit
-~/leamas/leamas agent@wshobson
-```
-
----
-
-# Plugins: Marketplaces for Skills
-
+###Marketplaces for Skills, Agents, and MCPs
 To find plugins and their associated skills, type /plugins into Claude Code
 
 ```yaml
@@ -613,18 +517,19 @@ Plugin Locations:
     "superpowers@superpowers-marketplace": true
   }
 }
-// Foundation of vibe coding with 10 systematic development skills
-// Skills:
-// - using-superpowers
-// - brainstorming
-// - writing-plans
-// - executing-plans
-// - subagent-driven-development
-// - dispatching-parallel-agents
-// - writing-skills
-// - testing-skills-with-subagents
-// - sharing-skills
-// Repository: https://github.com/Ejb503/multiverse-of-multiagents
+"Description": "Foundation of vibe coding with 10 systematic development skills",
+"Skills": [
+  "using-superpowers",
+  "brainstorming",
+  "writing-plans",
+  "executing-plans",
+  "subagent-driven-development",
+  "dispatching-parallel-agents",
+  "writing-skills",
+  "testing-skills-with-subagents",
+  "sharing-skills"
+],
+"Repository": "https://github.com/Ejb503/multiverse-of-multiagents"
 ```
 
 ---
@@ -637,12 +542,13 @@ Plugin Locations:
     "claude-mem@thedotmack": true
   }
 }
-// Persistent memory system using SQLite with full-text search
-// Key Capabilities:
-// - Provides 6 MCP search tools for querying stored knowledge
-// - Automatically captures work, processes into summaries
-// - Injects relevant context in future sessions
-// Repository: https://github.com/thedotmack/claude-mem
+"Description": "Persistent memory system using SQLite with full-text search",
+"Key Capabilities": [
+  "Provides 6 MCP search tools for querying stored knowledge",
+  "Automatically captures work, processes into summaries",
+  "Injects relevant context in future sessions"
+],
+"Repository": "https://github.com/thedotmack/claude-mem"
 ```
 
 ---
@@ -655,12 +561,13 @@ Plugin Locations:
     "javascript-typescript@claude-code-workflows": true
   }
 }
-// 4 skills covering modern JS patterns and TypeScript
-// Skills:
-// - modern-javascript-patterns
-// - javascript-testing-patterns
-// - nodejs-backend-patterns
-// - typescript-advanced-types
+"Description": "4 skills covering modern JS patterns and TypeScript",
+"Skills": [
+  "modern-javascript-patterns",
+  "javascript-testing-patterns",
+  "nodejs-backend-patterns",
+  "typescript-advanced-types"
+]
 ```
 
 ---
@@ -673,10 +580,11 @@ Plugin Locations:
     "frontend-mobile-development@claude-code-workflows": true
   }
 }
-// 2 skills for building React and mobile apps
-// Skills:
-// - frontend-developer
-// - mobile-developer
+"Description": "2 skills for building React and mobile apps",
+"Skills": [
+  "frontend-developer",
+  "mobile-developer"
+]
 ```
 
 ---
@@ -689,11 +597,12 @@ Plugin Locations:
     "code-documentation@claude-code-workflows": true
   }
 }
-// 3 skills covering code review and documentation
-// Skills:
-// - code-reviewer
-// - docs-architect
-// - tutorial-engineer
+"Description": "3 skills covering code review and documentation",
+"Skills": [
+  "code-reviewer",
+  "docs-architect",
+  "tutorial-engineer"
+]
 ```
 
 ---
@@ -706,11 +615,12 @@ Plugin Locations:
     "seo-content-creation@claude-code-workflows": true
   }
 }
-// Content writing optimized for search engines with E-E-A-T signals
-// Agents:
-// - seo-content-writer
-// - seo-content-planner
-// - seo-content-auditor
+"Description": "Content writing optimized for search engines with E-E-A-T signals",
+"Agents": [
+  "seo-content-writer",
+  "seo-content-planner",
+  "seo-content-auditor"
+]
 ```
 
 ---
@@ -723,12 +633,13 @@ Plugin Locations:
     "seo-technical-optimization@claude-code-workflows": true
   }
 }
-// Technical SEO optimization covering keywords, meta tags, snippets
-// Agents:
-// - seo-keyword-strategist
-// - seo-meta-optimizer
-// - seo-snippet-hunter
-// - seo-structure-architect
+"Description": "Technical SEO optimization covering keywords, meta tags, snippets",
+"Agents": [
+  "seo-keyword-strategist",
+  "seo-meta-optimizer",
+  "seo-snippet-hunter",
+  "seo-structure-architect"
+]
 ```
 
 ---
@@ -741,11 +652,12 @@ Plugin Locations:
     "seo-analysis-monitoring@claude-code-workflows": true
   }
 }
-// SEO analysis and monitoring for authority building
-// Agents:
-// - seo-authority-builder
-// - seo-content-refresher
-// - seo-cannibalization-detector
+"Description": "SEO analysis and monitoring for authority building",
+"Agents": [
+  "seo-authority-builder",
+  "seo-content-refresher",
+  "seo-cannibalization-detector"
+]
 ```
 
 ---
@@ -758,10 +670,15 @@ Plugin Locations:
     "elements-of-style@superpowers-marketplace": true
   }
 }
-// Applies Strunk & White's timeless writing principles
-// Skills:
-// - writing-clearly-and-concisely
-// Works on: documentation, commit messages, error messages
+"Description": "Applies Strunk & White's timeless writing principles",
+"Skills": [
+  "writing-clearly-and-concisely"
+],
+"Works on": [
+  "documentation",
+  "commit messages",
+  "error messages"
+]
 ```
 
 ---
@@ -774,12 +691,13 @@ Plugin Locations:
     "git@claude-code-plugins": true
   }
 }
-// 4 slash commands for Git operations
-// Commands:
-// - /git:commit-push
-// - /git:compact-commits
-// - /git:create-worktree
-// - /git:rebase-pr
+"Description": "4 slash commands for Git operations",
+"Commands": [
+  "/git:commit-push",
+  "/git:compact-commits",
+  "/git:create-worktree",
+  "/git:rebase-pr"
+]
 ```
 
 ---
@@ -792,13 +710,21 @@ Plugin Locations:
     "commit-commands@claude-code-plugins": true
   }
 }
-// Enhanced Git commit workflows with automated conventions
-// Key Capabilities:
-// - Improves commit message formatting
-// - Conventional commit support
+"Description": "Enhanced Git commit workflows with automated conventions",
+"Key Capabilities": [
+  "Improves commit message formatting",
+  "Conventional commit support"
+]
 ```
 
-# MCPs
+'''
+  __  __  ____ ____      
+ |  \/  |/ ___|  _ \ ___ 
+ | |\/| | |   | |_) / __|
+ | |  | | |___|  __/\__ \
+ |_|  |_|\____|_|   |___/
+                        
+'''
 
 ### 🔌 Sequential Thinking
 
