@@ -3,9 +3,10 @@
 [![Skills](https://img.shields.io/badge/skills-21-orange)](#plugins)
 [![MCPs](https://img.shields.io/badge/MCPs-1-purple)](#mcps)
 
-# Claude Code Setup
+# Vibe Coding Claude Code Setup
 
-**Optimized for vibe coding** — Describe what you want, AI handles implementation. Uses 62 specialized tools (agents, skills, plugins, MCPs) organized by what you're building, not where they came from.
+**Optimized for vibe coding**
+Focused on orchestration, UI/UX design, content development, prototyping, and effiienct workflows for vibe coding.
 
 ---
 
@@ -86,7 +87,7 @@ USER: "Add authentication to my app"
   │  └─ Write failing tests: login✗ logout✗ OAuth✗
   │
   ├─ Parallel execution ───────────────────────────────────────────────────────┐
-  │  🤖 frontend-developer       🤖 database-admin          🔌 context7        │
+  │  🤖 frontend-developer       🤖 database-admin          📦 context7        │
   │     Build login UI              Create users table         Lookup Auth0/   │
   │     (React + TypeScript)        (oauth, sessions)          Supabase docs   │
   │
@@ -175,7 +176,7 @@ Key Capabilities:
 ~/leamas/leamas agent@wshobson
 ```
 
----
+
 
 ### 🎯 Vibe Coding Coach
 
@@ -197,7 +198,7 @@ Key Capabilities:
 ~/leamas/leamas agent@wshobson
 ```
 
----
+
 
 ### 📦 Context Manager
 
@@ -219,12 +220,12 @@ Key Capabilities:
 ~/leamas/leamas agent@wshobson
 ```
 
----
+
 
 ### 🎨 Prompt Engineer
 
 ```yaml
----
+
 name: prompt-engineer
 description: Expert prompt architect using Opus model for maximum reasoning
 use-when: Building AI features or optimizing prompts
@@ -241,7 +242,7 @@ Key Capabilities:
 ~/leamas/leamas agent@claude-code-sub-agents
 ```
 
----
+
 
 ### 🎨 UI Designer
 
@@ -252,7 +253,7 @@ description: Creates design systems and visual interfaces with WCAG accessibilit
 requires: magic MCP, context7 MCP
 works-with: frontend-developer, ux-designer
 kit: claude-code-sub-agents
----
+
 
 Key Capabilities:
 - Color palettes, typography, spacing systems
@@ -264,7 +265,7 @@ Key Capabilities:
 ~/leamas/leamas agent@claude-code-sub-agents
 ```
 
----
+
 
 ### 👤 UX Designer
 
@@ -275,7 +276,7 @@ description: Conducts user research, creates journey maps, and designs usability
 requires: context7 MCP, sequential-thinking MCP, playwright MCP
 works-with: ui-designer, frontend-developer
 kit: claude-code-sub-agents
----
+
 
 Key Capabilities:
 - User flows, pain points, and interaction patterns
@@ -287,7 +288,7 @@ Key Capabilities:
 ~/leamas/leamas agent@claude-code-sub-agents
 ```
 
----
+
 
 ### ⚛️ Frontend Developer
 
@@ -298,7 +299,7 @@ description: Builds production-ready React components with TypeScript and Tailwi
 requires: magic MCP, context7 MCP, playwright MCP
 works-with: ui-designer, code-reviewer, nextjs-pro
 kit: claude-code-sub-agents
----
+
 
 Key Capabilities:
 - State management, hooks, responsive design
@@ -310,7 +311,7 @@ Key Capabilities:
 ~/leamas/leamas agent@claude-code-sub-agents
 ```
 
----
+
 
 ### 📱 iOS Developer
 
@@ -320,7 +321,7 @@ name: ios-developer
 description: Native iOS development using Swift, SwiftUI, and UIKit
 works-with: ui-designer
 kit: claude-code-sub-agents
----
+
 
 Key Capabilities:
 - iOS-specific patterns and navigation
@@ -332,7 +333,7 @@ Key Capabilities:
 ~/leamas/leamas agent@claude-code-sub-agents
 ```
 
----
+
 
 ### 👁️ Code Reviewer
 
@@ -355,7 +356,7 @@ Key Capabilities:
 ~/leamas/leamas agent@claude-code-sub-agents
 ```
 
----
+
 
 ### ⚡ Next.js Pro
 
@@ -376,7 +377,7 @@ Key Capabilities:
 # Included in wshobson kit
 ~/leamas/leamas agent@wshobson
 
----
+```
 
 ### 📊 Data Scientist
 
@@ -398,7 +399,6 @@ Key Capabilities:
 ~/leamas/leamas agent@wshobson
 ```
 
----
 
 ### 📈 Quant Analyst
 
@@ -419,7 +419,6 @@ Key Capabilities:
 ~/leamas/leamas agent@wshobson
 ```
 
----
 
 ### 🐍 Python Pro
 
@@ -441,8 +440,6 @@ Key Capabilities:
 ~/leamas/leamas agent@wshobson
 ```
 
----
-
 ### 🗄️ Database Admin
 
 ```yaml
@@ -462,7 +459,6 @@ Key Capabilities:
 ~/leamas/leamas agent@wshobson
 ```
 
----
 
 ### ⚡ Database Optimizer
 
@@ -486,110 +482,26 @@ Key Capabilities:
 
 ---
 
-### 💳 Payment Integration
-
-```yaml
----
-name: payment-integration
-description: Integrating payment systems like Stripe and PayPal
-kit: wshobson
----
-
-Key Capabilities:
-- Payment workflows, webhooks
-- Security considerations
-- Checkout flows
-
-```bash
-# Included in wshobson kit
-~/leamas/leamas agent@wshobson
-```
-
----
-
-### 📰 SEO Content Writer
-
-```yaml
----
-name: seo-content-writer
-description: Writes E-E-A-T optimized articles with proper keyword density
-model: Sonnet (high-quality long-form content)
-plugin: seo-content-creation@claude-code-workflows
----
-
-Key Capabilities:
-- 0.5-1.5% keyword density
-- Structures content for readability and ranking
-
-```bash
-# Enable plugin in ~/.claude/settings.json:
-"seo-content-creation@claude-code-workflows": true
-```
-
----
-
-### 📅 SEO Content Planner
-
-```yaml
----
-name: seo-content-planner
-description: Creates content calendars, topic clusters, and search intent mappings
-model: Haiku (fast planning)
-plugin: seo-content-creation@claude-code-workflows
----
-
-Key Capabilities:
-- Plans content strategy
-- Topic clustering and search intent mapping
-
-```bash
-# Enable plugin in ~/.claude/settings.json:
-"seo-content-creation@claude-code-workflows": true
-```
-
----
-
-### 📊 SEO Content Auditor
-
-```yaml
----
-name: seo-content-auditor
-description: Scores content quality 1-10 and provides improvement recommendations
-model: Sonnet (thorough analysis)
-plugin: seo-content-creation@claude-code-workflows
----
-
-Key Capabilities:
-- Actionable improvement recommendations
-- Quality scoring system
-
-```bash
-# Enable plugin in ~/.claude/settings.json:
-"seo-content-creation@claude-code-workflows": true
-```
-
----
-
 # Plugins: Marketplaces for Skills
 
 To find plugins and their associated skills, type /plugins into Claude Code
 
-```
+```yaml
 /plugins
- # 1. Command Recognition — Claude Code detects the /plugins slash command
- # 2. Marketplace Loading — The system reads ~/.claude/settings.json to see which plugins are enabled
- # 3. Plugin Discovery — Scans ~/.claude/plugins/marketplaces/ directories for installed plugin definitions
- # 4. Activation — Each enabled plugin's manifest is loaded, which contains:
+ 1. Command Recognition:  Claude Code detects the /plugins slash command
+ 2. Marketplace Loading:  The system reads ~/.claude/settings.json to see which plugins are enabled
+ 3. Plugin Discovery: Scans ~/.claude/plugins/marketplaces/ directories for installed plugin definitions
+ 4. Activation — Each enabled plugin's manifest is loaded, which contains:
     - Skills (workflow instructions)
     - Agents (specialized AI definitions)
     - Slash commands (custom commands)
     - MCP integrations (if any)
- # 5. Context Injection — Skills become available for auto-triggering or manual invocation
- # 6. Agent Registration — Agents become available via Task({ subagent_type: "agent-name" })
- # 7. Command Registration — Slash commands become available in the command palette
+  5. Context Injection: Skills become available for auto-triggering or manual invocation
+  6. Agent Registration: Agents become available via Task({ subagent_type: "agent-name" })
+  7. Command Registration: Slash commands become available in the command palette
 ```
 
-# How to Enable Plugins:
+## How to Enable Plugins:
 Edit `~/.claude/settings.json` and add plugins to `enabledPlugins`:
 
 ```json
@@ -613,7 +525,7 @@ Plugin Locations:
 
 ### Superpowers
 
-```json
+```jsonc
 {
   "enabledPlugins": {
     "superpowers@superpowers-marketplace": true
@@ -640,7 +552,7 @@ Repository: https://github.com/Ejb503/multiverse-of-multiagents
 
 ### Claude Mem
 
-```json
+```jsonc
 {
   "enabledPlugins": {
     "claude-mem@thedotmack": true
@@ -656,12 +568,12 @@ Key Capabilities:
 
 Repository: https://github.com/thedotmack/claude-mem
 
----
+
 ```
 
 ### JavaScript TypeScript
 
-```json
+```jsonc
 {
   "enabledPlugins": {
     "javascript-typescript@claude-code-workflows": true
@@ -676,12 +588,12 @@ Skills:
 - nodejs-backend-patterns
 - typescript-advanced-types
 
----
+
 ```
 
 ### Frontend Mobile Development
 
-```json
+```jsonc
 {
   "enabledPlugins": {
     "frontend-mobile-development@claude-code-workflows": true
@@ -694,12 +606,12 @@ Skills:
 - frontend-developer
 - mobile-developer
 
----
+
 ```
 
 ### Code Documentation
 
-```json
+```jsonc
 {
   "enabledPlugins": {
     "code-documentation@claude-code-workflows": true
@@ -713,12 +625,12 @@ Skills:
 - docs-architect
 - tutorial-engineer
 
----
+
 ```
 
 ### SEO Content Creation
 
-```json
+```jsonc
 {
   "enabledPlugins": {
     "seo-content-creation@claude-code-workflows": true
@@ -732,12 +644,12 @@ Agents:
 - seo-content-planner
 - seo-content-auditor
 
----
+
 ```
 
 ### SEO Technical Optimization
 
-```json
+```jsonc
 {
   "enabledPlugins": {
     "seo-technical-optimization@claude-code-workflows": true
@@ -753,12 +665,12 @@ Agents:
 - seo-snippet-hunter
 - seo-structure-architect
 
----
+
 ```
 
 ### SEO Analysis Monitoring
 
-```json
+```jsonc
 {
   "enabledPlugins": {
     "seo-analysis-monitoring@claude-code-workflows": true
@@ -773,12 +685,12 @@ Agents:
 - seo-content-refresher
 - seo-cannibalization-detector
 
----
+
 ```
 
 ### Elements of Style
 
-```json
+```jsonc
 {
   "enabledPlugins": {
     "elements-of-style@superpowers-marketplace": true
@@ -792,12 +704,12 @@ Skills:
 
 Works on: documentation, commit messages, error messages
 
----
+
 ```
 
 ### Git
 
-```json
+```jsonc
 {
   "enabledPlugins": {
     "git@claude-code-plugins": true
@@ -812,12 +724,12 @@ Commands:
 - /git:create-worktree
 - /git:rebase-pr
 
----
+
 ```
 
 ### Commit Commands
 
-```json
+```jsonc
 {
   "enabledPlugins": {
     "commit-commands@claude-code-plugins": true
@@ -830,7 +742,7 @@ Key Capabilities:
 - Improves commit message formatting
 - Conventional commit support
 
----
+
 ```
 
 # MCPs
