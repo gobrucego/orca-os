@@ -3,10 +3,9 @@
 [![Skills](https://img.shields.io/badge/skills-21-orange)](#plugins)
 [![MCPs](https://img.shields.io/badge/MCPs-1-purple)](#mcps)
 
-# Vibe Coding Claude Code Setup
+# Claude Code Setup
 
-**Optimized for vibe coding**
-Focused on orchestration, UI/UX design, content development, prototyping, and effiienct workflows for vibe coding.
+**Optimized for vibe coding** — Describe what you want, AI handles implementation. Uses 62 specialized tools (agents, skills, plugins, MCPs) organized by what you're building, not where they came from.
 
 ---
 
@@ -87,7 +86,7 @@ USER: "Add authentication to my app"
   │  └─ Write failing tests: login✗ logout✗ OAuth✗
   │
   ├─ Parallel execution ───────────────────────────────────────────────────────┐
-  │  🤖 frontend-developer       🤖 database-admin          📦 context7        │
+  │  🤖 frontend-developer       🤖 database-admin          🔌 context7        │
   │     Build login UI              Create users table         Lookup Auth0/   │
   │     (React + TypeScript)        (oauth, sessions)          Supabase docs   │
   │
@@ -927,4 +926,3 @@ cat ~/Library/Application\ Support/Claude/claude_desktop_config.json
 ```
 
 ---
-
