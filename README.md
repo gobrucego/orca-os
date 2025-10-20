@@ -122,7 +122,7 @@ I use **Leamas** to install agent kits. Each kit bundles multiple related agents
 - `claude-code-sub-agents` — 6 agents (ui-designer, ux-designer, frontend-developer, ios-developer, code-reviewer, prompt-engineer)
 - `wshobson` — 10 agents (agent-organizer, vibe-coding-coach, context-manager, nextjs-pro, data-scientist, quant-analyst, python-pro, database-admin, database-optimizer, payment-integration)
 
-Agents are installed to: `~/.claude/agents/leamas/{kit-name}/`
+
 
   
 ### How to Get Plugin Marketplaces
@@ -153,9 +153,7 @@ Plugins come from **marketplaces** — collections of related plugins.
 
 # Agents
 
-**Agent Kits:**
-- `claude-code-sub-agents` — 6 agents (prompt engineer, designers, frontend, iOS, code reviewer)
-- `wshobson` — 10 agents (vibe coding, data, utilities, Next.js)
+Agents are installed to: `~/.claude/agents/leamas/{kit-name}/`
 
 
 ### 🧠 Agent Organizer
