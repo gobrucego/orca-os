@@ -101,52 +101,7 @@ USER: "Add authentication to my app"
 
 ---
 
-## Quick Start (15 Minutes)
 
-```bash
-# ============================================================================
-# QUICK START (15 Minutes)
-# ============================================================================
-
-# Step 1: Prerequisites (2 min)
-# Verify you have the basics
-node --version  # Need 18+
-git --version
-
-# Step 2: Install Essentials (8 min)
-
-# 2a. superpowers - Core workflow skills (TDD, code review, planning)
-# 2b. claude-mem - Persistent memory across sessions
-# Add to ~/.claude/settings.json:
-{
-  "enabledPlugins": {
-    "superpowers@superpowers-marketplace": true,
-    "claude-mem@thedotmack": true
-  }
-}
-
-# 2c. sequential-thinking - Structured reasoning for complex problems
-# Add to ~/Library/Application Support/Claude/claude_desktop_config.json:
-{
-  "mcpServers": {
-    "sequential-thinking": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
-    }
-  }
-}
-
-# Step 3: Verify (2 min)
-# Restart Claude Desktop, then verify:
-cat ~/.claude/settings.json | grep enabledPlugins
-cat ~/Library/Application\ Support/Claude/claude_desktop_config.json
-
-# Step 4: Try It (3 min)
-# Ask Claude: "Use brainstorming to help me design a navbar component"
-# ✅ Expected: Claude invokes brainstorming skill and asks Socratic questions
-```
-
----
 
 ## Installation
 
@@ -169,6 +124,7 @@ I use **Leamas** to install agent kits. Each kit bundles multiple related agents
 
 Agents are installed to: `~/.claude/agents/leamas/{kit-name}/`
 
+  
 ### How to Get Plugin Marketplaces
 
 Plugins come from **marketplaces** — collections of related plugins.
@@ -191,29 +147,16 @@ Plugins come from **marketplaces** — collections of related plugins.
    - Persistent memory system using SQLite
    - Standalone plugin with MCP integration
 
-**How to Enable Plugins:**
 
-Edit `~/.claude/settings.json` and add plugins to `enabledPlugins`:
-
-```json
-{
-  "enabledPlugins": {
-    "superpowers@superpowers-marketplace": true,
-    "claude-mem@thedotmack": true,
-    "javascript-typescript@claude-code-workflows": true,
-    "seo-content-creation@claude-code-workflows": true,
-    "git@claude-code-plugins": true
-  }
-}
-```
-
-**Plugin Locations:**
-- Installed to: `~/.claude/plugins/marketplaces/{marketplace-name}/{plugin-name}/`
-- Settings: `~/.claude/settings.json`
 
 ---
 
 # Agents
+
+**Agent Kits:**
+- `claude-code-sub-agents` — 6 agents (prompt engineer, designers, frontend, iOS, code reviewer)
+- `wshobson` — 10 agents (vibe coding, data, utilities, Next.js)
+
 
 ### 🧠 Agent Organizer
 
@@ -652,6 +595,27 @@ plugin: seo-content-creation@claude-code-workflows
 ---
 
 # Plugins
+**How to Enable Plugins:**
+
+Edit `~/.claude/settings.json` and add plugins to `enabledPlugins`:
+
+```json
+{
+  "enabledPlugins": {
+    "superpowers@superpowers-marketplace": true,
+    "claude-mem@thedotmack": true,
+    "javascript-typescript@claude-code-workflows": true,
+    "seo-content-creation@claude-code-workflows": true,
+    "git@claude-code-plugins": true
+  }
+}
+```
+
+**Plugin Locations:**
+- Installed to: `~/.claude/plugins/marketplaces/{marketplace-name}/{plugin-name}/`
+- Settings: `~/.claude/settings.json`
+
+
 
 ```json
 {
@@ -838,19 +802,50 @@ Claude-Mem   ${CLAUDE_PLUGIN_ROOT}/data/
 
 ---
 
-## Summary
+## Quick Start (15 Minutes)
 
-**62 total tools:** 19 agents • 11 plugins • 21 skills • 1 MCP
+```bash
+# ============================================================================
+# QUICK START (15 Minutes)
+# ============================================================================
 
-**Agent Kits:**
-- `claude-code-sub-agents` — 6 agents (prompt engineer, designers, frontend, iOS, code reviewer)
-- `wshobson` — 10 agents (vibe coding, data, utilities, Next.js)
+# Step 1: Prerequisites (2 min)
+# Verify you have the basics
+node --version  # Need 18+
+git --version
 
-**Skills Breakdown:**
-- 10 from Superpowers (core workflows)
-- 9 from development plugins (JavaScript, frontend, docs)
-- 1 from Elements of Style (writing)
-- 4 user-created utilities
+# Step 2: Install Essentials (8 min)
 
-**Recently Streamlined:**
-Removed 18 redundant tools to focus on core functionality: react-pro, mobile-developer, javascript-pro, debugger, security-auditor, 4 business agents, 4 duplicate data agents, content-writer
+# 2a. superpowers - Core workflow skills (TDD, code review, planning)
+# 2b. claude-mem - Persistent memory across sessions
+# Add to ~/.claude/settings.json:
+{
+  "enabledPlugins": {
+    "superpowers@superpowers-marketplace": true,
+    "claude-mem@thedotmack": true
+  }
+}
+
+# 2c. sequential-thinking - Structured reasoning for complex problems
+# Add to ~/Library/Application Support/Claude/claude_desktop_config.json:
+{
+  "mcpServers": {
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+    }
+  }
+}
+
+# Step 3: Verify (2 min)
+# Restart Claude Desktop, then verify:
+cat ~/.claude/settings.json | grep enabledPlugins
+cat ~/Library/Application\ Support/Claude/claude_desktop_config.json
+
+# Step 4: Try It (3 min)
+# Ask Claude: "Use brainstorming to help me design a navbar component"
+# ✅ Expected: Claude invokes brainstorming skill and asks Socratic questions
+```
+
+---
+
