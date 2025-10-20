@@ -149,7 +149,7 @@ cat ~/Library/Application\ Support/Claude/claude_desktop_config.json
 ---
 
 ## 🎨 Vibe Coding
-#1.Agents
+# 1.Agents
 
 ## 🧠 Agent Organizer ★★
 
