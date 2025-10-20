@@ -58,17 +58,20 @@ These tools are **not mutually exclusive** — an agent can use multiple skills 
 Specialized AI instances with domain expertise. Each agent spawns a fresh Claude conversation with a custom prompt focused on a specific task.
 
 
-#### 1. What they are
+
+### 1. What they are
 
 Dedicated AI instances with specialized knowledge in specific domains (frontend development, SEO writing, database optimization, financial analysis). When invoked, Claude Code spawns a parallel conversation with the agent's custom instructions.
 
 
-#### 2. How to explore
+
+### 2. How to explore
 
 Browse agent collections at [Leamas marketplace](https://leamas.sh/)
 
 
-#### 3. How to install
+
+### 3. How to install
 
 1. Download Leamas binary from [leamas.sh](https://leamas.sh/)
 2. Place binary in `~/leamas/` directory
@@ -76,14 +79,16 @@ Browse agent collections at [Leamas marketplace](https://leamas.sh/)
 4. Agents install to `~/.claude/agents/leamas/collection-name/`
 
 
-#### 4. How to invoke
+
+### 4. How to invoke
 
 **Automatic:** Claude Code detects context and routes to appropriate agent
 
 **Manual:** `Task({ subagent_type: "agent-name" })`
 
 
-#### 5. What they do
+
+### 5. What they do
 
 Spawn parallel Claude instance with specialized knowledge. Can access MCPs and use skills. Returns results to main conversation when complete.
 
@@ -188,33 +193,38 @@ These agents are bundled in SEO plugins. Enable plugins in settings.json (see [P
 Process frameworks that modify Claude's behavior. Skills provide step-by-step workflows, checklists, and mandatory procedures.
 
 
-#### 1. What they are
+
+### 1. What they are
 
 Behavioral modifications that guide Claude's execution. Skills add structured processes (test-driven development, systematic debugging, code review protocols) to ensure consistent quality and methodology.
 
 
-#### 2. How to explore
+
+### 2. How to explore
 
 - Browse plugin marketplaces for bundled skills
 - Check `~/.claude/skills/` for user-created skills
 - Review plugin documentation for included skills
 
 
-#### 3. How to install
+
+### 3. How to install
 
 **Plugin-bundled skills:** Enable plugin in `~/.claude/settings.json`
 
 **Standalone skills:** Create `.md` file in `~/.claude/skills/`
 
 
-#### 4. How to invoke
+
+### 4. How to invoke
 
 **Automatic:** Skills with triggers auto-activate on matching conditions
 
 **Manual:** `Skill({ command: "skill-name" })`
 
 
-#### 5. What they do
+
+### 5. What they do
 
 Load additional instructions into current Claude context. Transform behavior without spawning new instance. Can be used by agents or main Claude instance.
 
@@ -283,19 +293,22 @@ Load additional instructions into current Claude context. Transform behavior wit
 Containers that bundle related skills. Enabling one plugin makes multiple skills available simultaneously.
 
 
-#### 1. What they are
+
+### 1. What they are
 
 Package management for skills. Instead of enabling 20 individual skills, you enable one plugin and get all related skills at once.
 
 
-#### 2. How to explore
+
+### 2. How to explore
 
 - [Plugin Marketplace](https://claudecodeplugins.io/)
 - [Plugin Toolkits](https://claudemarketplaces.com/)
 - [Superpowers Repository](https://github.com/Ejb503/multiverse-of-multiagents)
 
 
-#### 3. How to install
+
+### 3. How to install
 
 Add to `~/.claude/settings.json`:
 
@@ -308,12 +321,14 @@ Add to `~/.claude/settings.json`:
 ```
 
 
-#### 4. How to invoke
+
+### 4. How to invoke
 
 Automatic — all skills inside become available once enabled
 
 
-#### 5. What they do
+
+### 5. What they do
 
 Enable bundled skills. No manual invocation needed. Skills within activate based on their individual triggers.
 
@@ -365,18 +380,21 @@ Enable bundled skills. No manual invocation needed. Skills within activate based
 Background services providing tools and data sources. MCPs run continuously as separate processes, exposing capabilities to Claude Code.
 
 
-#### 1. What they are
+
+### 1. What they are
 
 External services that provide additional capabilities beyond Claude's built-in tools. Examples: memory systems, documentation lookup, browser automation, sequential reasoning.
 
 
-#### 2. How to explore
+
+### 2. How to explore
 
 - [MCP Servers Repository](https://github.com/modelcontextprotocol/servers)
 - [NPM package search](https://www.npmjs.com/search?q=mcp%20server)
 
 
-#### 3. How to install
+
+### 3. How to install
 
 Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
@@ -392,12 +410,14 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 ```
 
 
-#### 4. How to invoke
+
+### 4. How to invoke
 
 Always running — tools appear automatically in Claude Code and agents. No manual invocation needed.
 
 
-#### 5. What they do
+
+### 5. What they do
 
 Provide external capabilities:
 
