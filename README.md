@@ -149,10 +149,7 @@ cat ~/Library/Application\ Support/Claude/claude_desktop_config.json
 ---
 
 ## 🎨 Vibe Coding
-
-Agents, skills, and tools for AI-assisted development workflows
-
-### Agents
+#1.Agents
 
 ## 🧠 Agent Organizer ★★
 
