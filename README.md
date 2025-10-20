@@ -169,20 +169,32 @@ Specialized Claude instances with domain expertise. Each spawns a fresh conversa
 Coordinate complex workflows and translate vision into implementation.
 
 
-| Agent | Model | What It Does | Install |
-|-------|-------|--------------|---------|
-| **[agent-organizer](https://github.com/wshobson/claude-agents)** | Sonnet | Analyzes project requirements, defines specialized agent teams, manages collaborative workflows | wshobson |
-| **[vibe-coding-coach](https://github.com/wshobson/claude-agents)** | Sonnet | Friendly mentor that translates ideas and visual references into working applications through conversation | wshobson |
-| **[prompt-engineer](https://github.com/anthropics/claude-code-workflows)** | Opus | Crafts optimized prompts using Chain-of-Thought, Tree-of-Thought, and few-shot patterns | claude-code-sub-agents |
-| **[context-manager](https://github.com/wshobson/claude-agents)** | Sonnet | Manages context across multiple agents and long-running tasks (required for 10k+ token projects) | wshobson |
+**From [wshobson](https://github.com/wshobson/claude-agents) collection:**
 
-
+| AGENT | MODEL | WHAT IT DOES |
+|-------|-------|--------------|
+| **agent-organizer** | Sonnet | Analyzes project requirements, defines specialized agent teams, manages collaborative workflows |
+| **vibe-coding-coach** | Sonnet | Friendly mentor that translates ideas and visual references into working applications through conversation |
+| **context-manager** | Sonnet | Manages context across multiple agents and long-running tasks (required for 10k+ token projects) |
 
 ```bash
-# Install orchestration agents
-~/leamas/leamas agent@wshobson                    # agent-organizer, vibe-coding-coach, context-manager
-~/leamas/leamas agent@claude-code-sub-agents      # prompt-engineer
+~/leamas/leamas agent@wshobson
 ```
+
+<br>
+
+**From [claude-code-sub-agents](https://github.com/anthropics/claude-code-workflows) collection:**
+
+| AGENT | MODEL | WHAT IT DOES |
+|-------|-------|--------------|
+| **prompt-engineer** | Opus | Crafts optimized prompts using Chain-of-Thought, Tree-of-Thought, and few-shot patterns |
+
+```bash
+~/leamas/leamas agent@claude-code-sub-agents
+```
+
+<br>
+<br>
 
 
 
@@ -193,22 +205,34 @@ Coordinate complex workflows and translate vision into implementation.
 Build interfaces, review code, and implement features with modern frameworks.
 
 
-| Agent | Model | What It Does | MCPs Used | Install |
-|-------|-------|--------------|-----------|---------|
-| **[ui-designer](https://github.com/anthropics/claude-code-workflows)** | Sonnet | Create design systems, ensure WCAG compliance, build prototypes | magic, context7 | claude-code-sub-agents |
-| **[ux-designer](https://github.com/anthropics/claude-code-workflows)** | Sonnet | User research, journey mapping, usability testing | context7, sequential-thinking, playwright | claude-code-sub-agents |
-| **[frontend-developer](https://github.com/anthropics/claude-code-workflows)** | Sonnet | React + TypeScript + Tailwind implementation with best practices | magic, context7, playwright | claude-code-sub-agents |
-| **[nextjs-pro](https://github.com/wshobson/claude-agents)** | Sonnet | Next.js architecture (SSR/SSG/App Router), performance optimization | — | wshobson |
-| **[ios-developer](https://github.com/anthropics/claude-code-workflows)** | Sonnet | Swift, SwiftUI, UIKit native iOS development | — | claude-code-sub-agents |
-| **[code-reviewer](https://github.com/anthropics/claude-code-workflows)** | Sonnet | Quality assurance, security analysis, performance review | context7, sequential-thinking | claude-code-sub-agents |
+**From [claude-code-sub-agents](https://github.com/anthropics/claude-code-workflows) collection:**
 
-
+| AGENT | MODEL | WHAT IT DOES | MCPS USED |
+|-------|-------|--------------|-----------|
+| **ui-designer** | Sonnet | Create design systems, ensure WCAG compliance, build prototypes | magic, context7 |
+| **ux-designer** | Sonnet | User research, journey mapping, usability testing | context7, sequential-thinking, playwright |
+| **frontend-developer** | Sonnet | React + TypeScript + Tailwind implementation with best practices | magic, context7, playwright |
+| **ios-developer** | Sonnet | Swift, SwiftUI, UIKit native iOS development | — |
+| **code-reviewer** | Sonnet | Quality assurance, security analysis, performance review | context7, sequential-thinking |
 
 ```bash
-# Install development agents
-~/leamas/leamas agent@claude-code-sub-agents      # ui-designer, ux-designer, frontend-developer, ios-developer, code-reviewer
-~/leamas/leamas agent@wshobson                    # nextjs-pro
+~/leamas/leamas agent@claude-code-sub-agents
 ```
+
+<br>
+
+**From [wshobson](https://github.com/wshobson/claude-agents) collection:**
+
+| AGENT | MODEL | WHAT IT DOES |
+|-------|-------|--------------|
+| **nextjs-pro** | Sonnet | Next.js architecture (SSR/SSG/App Router), performance optimization |
+
+```bash
+~/leamas/leamas agent@wshobson
+```
+
+<br>
+<br>
 
 
 
@@ -219,22 +243,36 @@ Build interfaces, review code, and implement features with modern frameworks.
 Create content that ranks on Google with E-E-A-T optimization and technical SEO.
 
 
-| Agent | Model | What It Does | Install |
-|-------|-------|--------------|---------|
-| **[seo-content-writer](https://github.com/anthropics/claude-code-workflows)** | Sonnet | Write E-E-A-T optimized articles with 0.5-1.5% keyword density | Plugin |
-| **[seo-content-planner](https://github.com/anthropics/claude-code-workflows)** | Haiku | Create content calendars, topic clusters, search intent analysis | Plugin |
-| **[seo-content-auditor](https://github.com/anthropics/claude-code-workflows)** | Sonnet | Score content 1-10, provide actionable quality improvements | Plugin |
-| **[seo-keyword-strategist](https://github.com/anthropics/claude-code-workflows)** | Haiku | Analyze keyword density, suggest 20-30 LSI variations | Plugin |
-| **[seo-meta-optimizer](https://github.com/anthropics/claude-code-workflows)** | Haiku | Generate meta titles, descriptions with 3-5 A/B test variations | Plugin |
-| **[seo-snippet-hunter](https://github.com/anthropics/claude-code-workflows)** | Haiku | Format content for featured snippets and SERP features | Plugin |
-| **[seo-structure-architect](https://github.com/anthropics/claude-code-workflows)** | Haiku | Optimize header hierarchy, plan schema markup, suggest internal linking | Plugin |
-| **[seo-authority-builder](https://github.com/anthropics/claude-code-workflows)** | Sonnet | Analyze E-E-A-T signals, enhance credibility for YMYL topics | Plugin |
-| **[seo-content-refresher](https://github.com/anthropics/claude-code-workflows)** | Haiku | Detect outdated elements (statistics, dates, examples), suggest updates | Plugin |
-| **[seo-cannibalization-detector](https://github.com/anthropics/claude-code-workflows)** | Haiku | Find keyword overlap between pages, recommend differentiation strategies | Plugin |
+**From [seo-content-creation](https://github.com/anthropics/claude-code-workflows) plugin:**
 
+| AGENT | MODEL | WHAT IT DOES |
+|-------|-------|--------------|
+| **seo-content-writer** | Sonnet | Write E-E-A-T optimized articles with 0.5-1.5% keyword density |
+| **seo-content-planner** | Haiku | Create content calendars, topic clusters, search intent analysis |
+| **seo-content-auditor** | Sonnet | Score content 1-10, provide actionable quality improvements |
 
+<br>
 
-These agents are bundled in SEO plugins. Enable in `~/.claude/settings.json`:
+**From [seo-technical-optimization](https://github.com/anthropics/claude-code-workflows) plugin:**
+
+| AGENT | MODEL | WHAT IT DOES |
+|-------|-------|--------------|
+| **seo-keyword-strategist** | Haiku | Analyze keyword density, suggest 20-30 LSI variations |
+| **seo-meta-optimizer** | Haiku | Generate meta titles, descriptions with 3-5 A/B test variations |
+| **seo-snippet-hunter** | Haiku | Format content for featured snippets and SERP features |
+| **seo-structure-architect** | Haiku | Optimize header hierarchy, plan schema markup, suggest internal linking |
+
+<br>
+
+**From [seo-analysis-monitoring](https://github.com/anthropics/claude-code-workflows) plugin:**
+
+| AGENT | MODEL | WHAT IT DOES |
+|-------|-------|--------------|
+| **seo-authority-builder** | Sonnet | Analyze E-E-A-T signals, enhance credibility for YMYL topics |
+| **seo-content-refresher** | Haiku | Detect outdated elements (statistics, dates, examples), suggest updates |
+| **seo-cannibalization-detector** | Haiku | Find keyword overlap between pages, recommend differentiation strategies |
+
+Enable in `~/.claude/settings.json`:
 
 ```json
 {
@@ -246,6 +284,9 @@ These agents are bundled in SEO plugins. Enable in `~/.claude/settings.json`:
 }
 ```
 
+<br>
+<br>
+
 
 
 
@@ -255,21 +296,23 @@ These agents are bundled in SEO plugins. Enable in `~/.claude/settings.json`:
 Query databases, backtest strategies, analyze quantitative models.
 
 
-| Agent | Model | What It Does | Install |
-|-------|-------|--------------|---------|
-| **[data-scientist](https://github.com/wshobson/claude-agents)** | Sonnet | Data analysis, SQL queries, BigQuery operations, ML workflows | wshobson |
-| **[quant-analyst](https://github.com/wshobson/claude-agents)** | Sonnet | Quantitative finance, backtesting, portfolio optimization, risk metrics | wshobson |
-| **[python-pro](https://github.com/wshobson/claude-agents)** | Sonnet | Python development with async patterns, decorators, design patterns | wshobson |
-| **[database-admin](https://github.com/wshobson/claude-agents)** | Sonnet | Database setup, backups, replication, monitoring, user permissions | wshobson |
-| **[database-optimizer](https://github.com/wshobson/claude-agents)** | Sonnet | Query optimization, index design, solve N+1 problems, implement caching | wshobson |
-| **[payment-integration](https://github.com/wshobson/claude-agents)** | Sonnet | Stripe, PayPal integration, webhooks, subscriptions, PCI compliance | wshobson |
+**From [wshobson](https://github.com/wshobson/claude-agents) collection:**
 
-
+| AGENT | MODEL | WHAT IT DOES |
+|-------|-------|--------------|
+| **data-scientist** | Sonnet | Data analysis, SQL queries, BigQuery operations, ML workflows |
+| **quant-analyst** | Sonnet | Quantitative finance, backtesting, portfolio optimization, risk metrics |
+| **python-pro** | Sonnet | Python development with async patterns, decorators, design patterns |
+| **database-admin** | Sonnet | Database setup, backups, replication, monitoring, user permissions |
+| **database-optimizer** | Sonnet | Query optimization, index design, solve N+1 problems, implement caching |
+| **payment-integration** | Sonnet | Stripe, PayPal integration, webhooks, subscriptions, PCI compliance |
 
 ```bash
-# Install data/financial agents
-~/leamas/leamas agent@wshobson                    # All data and tools agents
+~/leamas/leamas agent@wshobson
 ```
+
+<br>
+<br>
 
 
 
@@ -299,7 +342,7 @@ Process frameworks that modify my behavior. Skills provide step-by-step workflow
 Test-driven development, systematic debugging, planning, code review.
 
 
-| Skill | What It Does | Trigger |
+| SKILL | WHAT IT DOES | TRIGGER |
 |-------|--------------|---------|
 | **using-superpowers** | Mandatory starting point - establishes workflows for finding and using skills | Session start (automatic) |
 | **brainstorming** | Interactive design refinement using Socratic method before implementation | Manual: `/superpowers:brainstorm` |
@@ -312,9 +355,10 @@ Test-driven development, systematic debugging, planning, code review.
 | **writing-skills** | TDD for process documentation - test skills with subagents before deployment | Creating/editing skills (automatic) |
 | **testing-skills-with-subagents** | Validate skills resist rationalization under pressure using RED-GREEN-REFACTOR | Before skill deployment (manual) |
 
+Install via [superpowers](https://github.com/Ejb503/multiverse-of-multiagents) plugin.
 
-
-Install via superpowers plugin (see [Plugins](#plugins) section).
+<br>
+<br>
 
 
 
@@ -325,7 +369,7 @@ Install via superpowers plugin (see [Plugins](#plugins) section).
 Code review protocols, verification requirements, anti-patterns to avoid.
 
 
-| Skill | What It Does | Trigger |
+| SKILL | WHAT IT DOES | TRIGGER |
 |-------|--------------|---------|
 | **requesting-code-review** | Dispatch code-reviewer subagent to verify work meets requirements before merging | Task completion (automatic) |
 | **receiving-code-review** | Require technical rigor and verification when receiving feedback, not performative agreement | Receiving review feedback (automatic) |
@@ -333,9 +377,10 @@ Code review protocols, verification requirements, anti-patterns to avoid.
 | **testing-anti-patterns** | Prevent testing mock behavior, production pollution with test-only methods, blind mocking | Writing/changing tests (automatic) |
 | **condition-based-waiting** | Replace arbitrary timeouts with condition polling to wait for actual state changes | Fixing flaky tests (manual) |
 
+Install via [superpowers](https://github.com/Ejb503/multiverse-of-multiagents) plugin.
 
-
-Install via superpowers plugin (see [Plugins](#plugins) section).
+<br>
+<br>
 
 
 
@@ -346,17 +391,18 @@ Install via superpowers plugin (see [Plugins](#plugins) section).
 Worktrees, branch finishing, root cause tracing, multi-layer validation.
 
 
-| Skill | What It Does | Source |
-|-------|--------------|--------|
-| **using-git-worktrees** | Create isolated git worktrees with smart directory selection and safety verification | superpowers plugin |
-| **finishing-a-development-branch** | Present structured options for merge, PR, or cleanup when implementation is complete | superpowers plugin |
-| **sharing-skills** | Guide PR contribution workflow to contribute skills back to upstream repository | superpowers plugin |
-| **root-cause-tracing** | Trace bugs backward through call stack, add instrumentation to find invalid data source | superpowers plugin |
-| **defense-in-depth** | Validate data at every layer it passes through to make bugs structurally impossible | superpowers plugin |
+| SKILL | WHAT IT DOES |
+|-------|--------------|
+| **using-git-worktrees** | Create isolated git worktrees with smart directory selection and safety verification |
+| **finishing-a-development-branch** | Present structured options for merge, PR, or cleanup when implementation is complete |
+| **sharing-skills** | Guide PR contribution workflow to contribute skills back to upstream repository |
+| **root-cause-tracing** | Trace bugs backward through call stack, add instrumentation to find invalid data source |
+| **defense-in-depth** | Validate data at every layer it passes through to make bugs structurally impossible |
 
+Install via [superpowers](https://github.com/Ejb503/multiverse-of-multiagents) plugin.
 
-
-Install via superpowers plugin (see [Plugins](#plugins) section).
+<br>
+<br>
 
 
 
@@ -367,13 +413,14 @@ Install via superpowers plugin (see [Plugins](#plugins) section).
 Apply Strunk & White principles to documentation, commit messages, error messages, UI text.
 
 
-| Skill | What It Does | Source |
-|-------|--------------|--------|
-| **writing-clearly-and-concisely** | Make writing clearer, stronger, more professional for any prose humans will read | elements-of-style plugin |
+| SKILL | WHAT IT DOES |
+|-------|--------------|
+| **writing-clearly-and-concisely** | Make writing clearer, stronger, more professional for any prose humans will read |
 
+Install via [elements-of-style](https://github.com/Ejb503/multiverse-of-multiagents) plugin.
 
-
-Install via elements-of-style plugin (see [Plugins](#plugins) section).
+<br>
+<br>
 
 
 
@@ -384,16 +431,42 @@ Install via elements-of-style plugin (see [Plugins](#plugins) section).
 Extract content from URLs, YouTube videos, PDFs and transform into actionable plans.
 
 
-| Skill | What It Does | Location |
-|-------|--------------|----------|
-| **tapestry** | Auto-detect content type (YouTube, article, PDF), extract clean content, create action plan | `~/.claude/skills/tapestry/` |
-| **youtube-transcript** | Download YouTube video transcripts from URLs | `~/.claude/skills/youtube-transcript/` |
-| **article-extractor** | Extract clean article content from URLs without ads, navigation, clutter | `~/.claude/skills/article-extractor/` |
-| **ship-learn-next** | Transform learning content into actionable implementation plans using Ship-Learn-Next framework | `~/.claude/skills/ship-learn-next/` |
+| SKILL | WHAT IT DOES |
+|-------|--------------|
+| **tapestry** | Auto-detect content type (YouTube, article, PDF), extract clean content, create action plan |
 
+```
+~/.claude/skills/tapestry/
+```
 
+| SKILL | WHAT IT DOES |
+|-------|--------------|
+| **youtube-transcript** | Download YouTube video transcripts from URLs |
 
-User skills are stored in project directory (`~/.claude/skills/` in this repository).
+```
+~/.claude/skills/youtube-transcript/
+```
+
+| SKILL | WHAT IT DOES |
+|-------|--------------|
+| **article-extractor** | Extract clean article content from URLs without ads, navigation, clutter |
+
+```
+~/.claude/skills/article-extractor/
+```
+
+| SKILL | WHAT IT DOES |
+|-------|--------------|
+| **ship-learn-next** | Transform learning content into actionable implementation plans using Ship-Learn-Next framework |
+
+```
+~/.claude/skills/ship-learn-next/
+```
+
+User skills are stored in `~/.claude/skills/` directory.
+
+<br>
+<br>
 
 
 
@@ -418,21 +491,44 @@ User skills are stored in project directory (`~/.claude/skills/` in this reposit
 Containers that bundle related skills. Enable one plugin to make multiple skills available simultaneously.
 
 
-| Plugin | Skills Included | Repository |
-|--------|-----------------|------------|
-| **[superpowers](https://github.com/Ejb503/multiverse-of-multiagents)** | 20 core development skills (TDD, debugging, planning, code review, git workflows) | superpowers-marketplace |
-| **[elements-of-style](https://github.com/Ejb503/multiverse-of-multiagents)** | 1 writing skill (clear writing for docs, commits, UI text) | superpowers-marketplace |
-| **[javascript-typescript](https://github.com/anthropics/claude-code-workflows)** | 4 skills (modern JS patterns, testing, Node.js backend, TypeScript types) | claude-code-workflows |
-| **[frontend-mobile-development](https://github.com/anthropics/claude-code-workflows)** | 2 skills (React components, mobile apps with React Native/Flutter) | claude-code-workflows |
-| **[code-documentation](https://github.com/anthropics/claude-code-workflows)** | 3 skills (code review, architecture documentation, step-by-step tutorials) | claude-code-workflows |
-| **[seo-content-creation](https://github.com/anthropics/claude-code-workflows)** | 3 SEO agents (writer, planner, auditor) | claude-code-workflows |
-| **[seo-technical-optimization](https://github.com/anthropics/claude-code-workflows)** | 4 SEO agents (keywords, meta tags, featured snippets, structure planning) | claude-code-workflows |
-| **[seo-analysis-monitoring](https://github.com/anthropics/claude-code-workflows)** | 3 SEO agents (authority building, content refreshing, cannibalization detection) | claude-code-workflows |
-| **[claude-mem](https://github.com/thedotmack/claude-mem)** | Memory system with 6 MCP search tools for persistent knowledge across sessions | thedotmack |
-| **[git](https://github.com/anthropics/claude-code-plugins)** | 4 slash commands (commit-push, compact-commits, create-worktree, rebase-pr) | claude-code-plugins |
-| **[commit-commands](https://github.com/anthropics/claude-code-plugins)** | Enhanced git commit workflows with automated conventions | claude-code-plugins |
+**From [superpowers-marketplace](https://github.com/Ejb503/multiverse-of-multiagents):**
 
+| PLUGIN | WHAT IT INCLUDES |
+|--------|------------------|
+| **superpowers** | 20 core development skills (TDD, debugging, planning, code review, git workflows) |
+| **elements-of-style** | 1 writing skill (clear writing for docs, commits, UI text) |
 
+<br>
+
+**From [claude-code-workflows](https://github.com/anthropics/claude-code-workflows):**
+
+| PLUGIN | WHAT IT INCLUDES |
+|--------|------------------|
+| **javascript-typescript** | 4 skills (modern JS patterns, testing, Node.js backend, TypeScript types) |
+| **frontend-mobile-development** | 2 skills (React components, mobile apps with React Native/Flutter) |
+| **code-documentation** | 3 skills (code review, architecture documentation, step-by-step tutorials) |
+| **seo-content-creation** | 3 SEO agents (writer, planner, auditor) |
+| **seo-technical-optimization** | 4 SEO agents (keywords, meta tags, featured snippets, structure planning) |
+| **seo-analysis-monitoring** | 3 SEO agents (authority building, content refreshing, cannibalization detection) |
+
+<br>
+
+**From [thedotmack](https://github.com/thedotmack/claude-mem):**
+
+| PLUGIN | WHAT IT INCLUDES |
+|--------|------------------|
+| **claude-mem** | Memory system with 6 MCP search tools for persistent knowledge across sessions |
+
+<br>
+
+**From [claude-code-plugins](https://github.com/anthropics/claude-code-plugins):**
+
+| PLUGIN | WHAT IT INCLUDES |
+|--------|------------------|
+| **git** | 4 slash commands (commit-push, compact-commits, create-worktree, rebase-pr) |
+| **commit-commands** | Enhanced git commit workflows with automated conventions |
+
+<br>
 
 Enable plugins in `~/.claude/settings.json`:
 
@@ -477,13 +573,15 @@ Enable plugins in `~/.claude/settings.json`:
 Background services that provide external capabilities. MCPs run continuously, exposing tools to Claude Code and all agents.
 
 
-| MCP | What It Provides | Repository |
-|-----|------------------|------------|
-| **[sequential-thinking](https://github.com/modelcontextprotocol/servers/tree/main/src/sequential-thinking)** | `sequentialthinking` tool for structured step-by-step reasoning | modelcontextprotocol |
+**From [modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers):**
 
+| MCP | WHAT IT PROVIDES |
+|-----|------------------|
+| **sequential-thinking** | `sequentialthinking` tool for structured step-by-step reasoning |
 
-**Note:** Additional MCPs are available through plugins. The `magic` MCP (component builder), `context7` MCP (documentation lookup), and `playwright` MCP (browser automation) are included when certain agents are installed.
+**Note:** Additional MCPs (`magic`, `context7`, `playwright`) are included when certain agents are installed.
 
+<br>
 
 Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
