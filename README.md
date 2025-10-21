@@ -71,10 +71,10 @@ When you ask Claude to build something complex, it typically works alone:
 Same request, orchestrated across specialized agents:
 
 ```
-         ┌─────────────────────────────────────────────────────────┐
-         │ USER REQUEST                                            │
-         │ "Build an iOS app with login, home screen, and settings"│
-         └─────────────────────────────────────────────────────────┘
+         ┌──────────────────────────────────────────────────────────┐
+         │ USER REQUEST                                             │
+         │ "Build an iOS app with login, home screen, and settings" │
+         └──────────────────────────────────────────────────────────┘
                                     │
                                     ▼
                   ┌──────────────────────────────────┐
@@ -142,10 +142,10 @@ Claude Code provides 4 layers that enable orchestration:
     │  Proven patterns for complex tasks                                │
     │                                                                   │
     │  📋 ios-development.yml     →  Architecture → TDD → Review        │
-    │  🎨 ui-ux-design.yml        →  Concept → Design → Visual QA      │
-    │  🐛 debugging.yml           →  Investigate → Fix → Verify        │
+    │  🎨 ui-ux-design.yml        →  Concept → Design → Visual QA       │
+    │  🐛 debugging.yml           →  Investigate → Fix → Verify         │
     │                                                                   │
-    │  "This is the RECIPE: these agents, in this order, these steps"  │
+    │  "This is the RECIPE: these agents, in this order, these steps"   │
     └───────────────────────────────────────────────────────────────────┘
                                        │
                                        │ orchestrates
@@ -155,7 +155,7 @@ Claude Code provides 4 layers that enable orchestration:
     │  ═══════════════════                                              │
     │  Automation triggers for workflows                                │
     │                                                                   │
-    │  /agentfeedback  →  Parse feedback, assign agents, execute waves │
+    │  /agentfeedback  →  Parse feedback, assign agents, execute waves  │
     │  /concept        →  Creative exploration BEFORE building          │
     │  /enhance        →  Detect task, launch appropriate workflow      │
     │  /visual-review  →  QA design before shipping                     │
@@ -273,9 +273,9 @@ Claude: "I'll fix those for you"
          │  🛡️  PHASE 5: QUALITY GATE                                 │
          ├────────────────────────────────────────────────────────────┤
          │  code-reviewer-pro:                                        │
-         │    ✓ Code review passed                                   │
-         │    ✓ Build verified                                       │
-         │    ✓ No regressions                                       │
+         │    ✓ Code review passed                                    │
+         │    ✓ Build verified                                        │
+         │    ✓ No regressions                                        │
          │                                                            │
          │  → APPROVED ✅                                             │
          └────────────────────────────────────────────────────────────┘
@@ -284,10 +284,10 @@ Claude: "I'll fix those for you"
                   ┌──────────────────────────────────┐
                   │  📈 RESULT                       │
                   ├──────────────────────────────────┤
-                  │  ⏱️  45 minutes                   │
-                  │  ✅ 7/7 items fixed               │
-                  │  🧪 Tested & reviewed             │
-                  │  🚀 Production-ready              │
+                  │  ⏱️  45 minutes                  │
+                  │  ✅ 7/7 items fixed              │
+                  │  🧪 Tested & reviewed            │
+                  │  🚀 Production-ready             │
                   └──────────────────────────────────┘
 ```
 
