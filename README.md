@@ -1,4 +1,4 @@
-# Claude Code: Orchestration Guide
+# Claude Code: Orchestration
 
 ```
 ══════════════════════════════════════════════
@@ -12,7 +12,7 @@
     `"bmmd"' .JMML. .JMM. `"bmmmd'.AMA.   .AMMA.
   ═════════════════════════════════════════════                                                                                           
                                                                                                    
-  Multi-Agent Coordination Done Right              
+   Multi-Agent Coordination: A Vibe Code Guide              
                                                             
 
 ```
