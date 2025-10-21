@@ -759,6 +759,48 @@ If MCP servers aren't loading in Claude Desktop:
    ~/Library/Logs/Claude/mcp*.log
    ```
 
+#### chrome-devtools MCP Screenshot Too Large
+
+**Symptom:**
+```
+API Error: 400 {"type":"error","error":{"type":"invalid_request_error",
+"message":"messages.21.content.2.image.source.base64.data: At least one of
+the image dimensions exceed max allowed size: 8000 pixels"}}
+```
+
+**Cause:**
+Using `fullPage: true` on long pages (> 8000px height).
+
+**Fix:**
+Use viewport screenshots instead:
+
+```javascript
+// ❌ WRONG: fullPage on long pages
+mcp__chrome-devtools__take_screenshot({
+  fullPage: true  // Fails on pages > 8000px
+})
+
+// ✅ CORRECT: viewport only
+mcp__chrome-devtools__take_screenshot({
+  fullPage: false  // Always works, captures above-the-fold
+})
+```
+
+**Why viewport is sufficient:**
+- Design QA focuses on visible viewport (1440x900)
+- Typography, spacing, hierarchy visible in first 900px
+- Long scrolling content doesn't affect aesthetic evaluation
+
+**Alternative:**
+Use Chrome headless with viewport size:
+```bash
+CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+"$CHROME" --headless --screenshot=output.png \
+  --window-size=1440,900 \
+  --hide-scrollbars \
+  "http://localhost:8080/your-page"
+```
+
 ---
 
 ## Contributing

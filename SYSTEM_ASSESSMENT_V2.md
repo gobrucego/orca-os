@@ -478,6 +478,36 @@ xcodebuild -version  # Test
 - Simulator CLI: ❌ Broken
 - iOS agent automation: ❌ Fails
 
+---
+
+#### chrome-devtools MCP Screenshot Exceeds 8000px
+
+**Symptom:**
+```
+API Error: 400 At least one of the image dimensions exceed max allowed size: 8000 pixels
+```
+
+**Cause:**
+Using `fullPage: true` on long pages (injury protocol page is > 8000px tall)
+
+**Fix:**
+```javascript
+// Use viewport screenshots only
+mcp__chrome-devtools__take_screenshot({
+  fullPage: false  // ← Set to false
+})
+```
+
+**Impact:**
+- `/visual-review` fails on long pages
+- Design QA workflow blocked
+- Cannot analyze full-page implementations
+
+**Why viewport is sufficient:**
+- Design standards apply to visible viewport (1440x900)
+- Typography, spacing, color visible above-the-fold
+- Aesthetic evaluation doesn't require full page scroll
+
 #### Setup Verification
 
 Run the verification script:
