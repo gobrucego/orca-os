@@ -442,59 +442,6 @@ brainstorming:
 
 ---
 
-## Design Inspiration & Visual QA System
-
-A complete system for building design taste and ensuring visual quality:
-
-```
-┌────────────────────────────────────────────────────────────┐
-│  🎨 DESIGN INSPIRATION SYSTEM                              │
-│  Global Library: ~/.claude/design-inspiration/             │
-└────────────────────────────────────────────────────────────┘
-                           │
-        ┌──────────────────┼──────────────────┐
-        │                  │                  │
-        ▼                  ▼                  ▼
-┌──────────────┐  ┌──────────────┐  ┌──────────────┐
-│  /discover   │  │   /inspire   │  │ /visual-     │
-│              │  │              │  │  review      │
-├──────────────┤  ├──────────────┤  ├──────────────┤
-│ Find NEW     │  │ Analyze      │  │ QA before    │
-│ examples     │  │ EXISTING     │  │ shipping     │
-│              │  │ screenshots  │  │              │
-│ • Browse web │  │              │  │ • Screenshot │
-│ • Screenshot │  │ • Vision     │  │ • Vision     │
-│ • Save to    │  │   analysis   │  │   analysis   │
-│   gallery    │  │ • Extract    │  │ • Standards  │
-│ • Extract    │  │   patterns   │  │   check      │
-│   principles │  │ • Build      │  │ • Compare to │
-│              │  │   taste      │  │   gallery    │
-└──────────────┘  └──────────────┘  └──────────────┘
-```
-
-**Gallery Contents:**
-- **22 curated screenshots** across 4 categories
-- **Landing pages (10):** Vaayu, MOHEIM, DeepJudge, Linear, Notion, etc.
-- **Elegant information design (6):** Pudding, Distill, Nicky Case, Bartosz Ciechanowski
-- **Components (4):** Figma, Chakra UI, Airtable, Intercom
-- **Typography (2):** Fontshare, Google Fonts
-
-**Key Features:**
-- ✅ Vision analysis of aesthetic sophistication
-- ✅ Extract universal design principles
-- ✅ Compare implementations to inspiration
-- ✅ Mandatory visual QA before shipping
-- ✅ Global accessibility across all sessions
-
-**Integration with Workflows:**
-- `/concept` → Studies references before designing
-- `/agentfeedback` → Visual review after design fixes
-- All UI work → Validated against standards
-
-**[See design inspiration docs →](https://github.com/yourusername/claude-vibe-code/.claude/design-inspiration/)**
-
----
-
 ## Optimization: 40% Token Savings, 50% Cost Reduction
 
 Recent enhancements make orchestration more efficient:
