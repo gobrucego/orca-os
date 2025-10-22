@@ -309,7 +309,7 @@ const workflow = workflows.find(w =>
 
 **Problem identified in logs:**
 ```
-Wave 1: Fix calculator (45 minutes)
+Wave 1: Fix dashboard (45 minutes)
 Wave 2: Fix tab structure (30 minutes)
 
 These are INDEPENDENT - could run in parallel!
@@ -322,13 +322,13 @@ These are INDEPENDENT - could run in parallel!
 ## Phase 4: Agent Assignment & Parallelization
 
 Analyze dependencies:
-- Calculator fix: No dependencies
+- Dashboard fix: No dependencies
 - Tab structure: No dependencies
 - Typography: Depends on design-master decisions
 
 Execution plan:
 Wave 1 (PARALLEL):
-  → ios-dev (calculator)
+  → ios-dev (dashboard)
   → ios-dev (tab structure)
 
 Wave 2 (after design decisions):
@@ -367,8 +367,8 @@ templates:
 # Usage in /agentfeedback:
 validation: !template ios_library_population
   expected_count: 28
-  pattern: "Peptide("
-  target_file: "PeptideDatabase.swift"
+  pattern: "Task("
+  target_file: "TaskDatabase.swift"
 ```
 
 **Impact:** Faster validation setup, consistent patterns.

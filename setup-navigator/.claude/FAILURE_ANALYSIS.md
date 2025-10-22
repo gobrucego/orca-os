@@ -39,11 +39,11 @@
 
 **Wave 2 - Implementation (Parallel):**
 - swift-architect → All Swift 6.0 data models
-- ios-dev (calculator) → CalculatorEngine.swift + tests
+- ios-dev (dashboard) → DashboardEngine.swift + tests
 - ios-dev (validation) → ValidationEngine.swift + tests
 
 **Wave 3 - Data & UI (Parallel):**
-- ios-dev (database) → PeptideDatabase.swift
+- ios-dev (database) → TaskDatabase.swift
 - swiftui-specialist → 17 production SwiftUI files
 - ios-dev (finalization) → App Store assets + docs
 

@@ -1,0 +1,17 @@
+{
+  "name": "quantitative-trading",
+  "version": "1.0.0",
+  "description": "Quantitative trading and financial modeling agents for algorithmic trading, risk analysis, and portfolio optimization",
+  "author": {
+    "name": "kivilaid",
+    "email": "ando@kivilaid.ee"
+  },
+  "homepage": "https://github.com/kivilaid/plugin-marketplace",
+  "repository": "https://github.com/kivilaid/plugin-marketplace",
+  "license": "MIT",
+  "keywords": ["trading", "finance", "quantitative", "risk-management", "portfolio", "backtesting"],
+  "agents": [
+    "./agents/quant-analyst.md",
+    "./agents/risk-manager.md"
+  ]
+}

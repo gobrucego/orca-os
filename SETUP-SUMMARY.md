@@ -2,7 +2,7 @@
 
 **Date:** October 20, 2025
 **Machine:** M4 Max, 48GB RAM
-**Project:** iOS Calculator + Protocol Tracking Apps
+**Project:** iOS Dashboard + Protocol Tracking Apps
 
 ---
 
@@ -292,7 +292,7 @@ Use when project exceeds 10k tokens:
 ### **Level 3: Full Production Workflow**
 When building complete production apps:
 ```bash
-/agent-workflow "iOS calculator with basic arithmetic, percentage, and clear functions"
+/agent-workflow "iOS dashboard with basic arithmetic, percentage, and clear functions"
   ↓
 spec-analyst → Requirements & user stories
   ↓
@@ -314,7 +314,7 @@ spec-tester → Comprehensive test suite
 
 ### **Phase 1: Sketch with Fluxwing**
 ```bash
-"Create a calculator screen with number pad and display"
+"Create a dashboard screen with number pad and display"
 ```
 **Output:** ASCII mockup with interactive states
 
@@ -330,7 +330,7 @@ spec-tester → Comprehensive test suite
 
 ### **Phase 3: Architect with swift-architect (Opus)**
 ```bash
-"Use swift-architect to design the calculator architecture"
+"Use swift-architect to design the dashboard architecture"
 ```
 **Output:**
 - MVVM vs Clean Architecture decision
@@ -469,14 +469,14 @@ spec-tester → Comprehensive test suite
 
 ## 🎯 NEXT STEPS
 
-### For Calculator App:
+### For Dashboard App:
 ```bash
 # Option 1: Vibe coding (quick)
-"Create a calculator screen with number pad and display"
+"Create a dashboard screen with number pad and display"
 → Fluxwing → design-master → ios-dev
 
 # Option 2: Full production
-/agent-workflow "iOS calculator with basic arithmetic, percentage, and clear functions"
+/agent-workflow "iOS dashboard with basic arithmetic, percentage, and clear functions"
 → Complete specs → architecture → implementation → tests
 ```
 
@@ -524,5 +524,5 @@ spec-tester → Comprehensive test suite
 ---
 
 **Setup completed:** October 20, 2025
-**Ready for:** iOS Calculator + Protocol Tracking Apps
+**Ready for:** iOS Dashboard + Protocol Tracking Apps
 **Stack:** Vibe Coding → Fluxwing → design-master → swift-architect (Opus) → ios-dev (Sonnet) → swiftui-specialist (Sonnet)

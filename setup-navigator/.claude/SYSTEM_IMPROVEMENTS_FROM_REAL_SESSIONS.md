@@ -43,7 +43,7 @@
 
 ### 2. Quality Gates Prevent Failures
 **Evidence:**
-- **iOS:** code-reviewer-pro caught 2 critical issues (peptide count 8→28, legacy components)
+- **iOS:** code-reviewer-pro caught 2 critical issues (task count 8→28, legacy components)
 - **Injury:** code-reviewer-pro caught typo + hardcoded colors
 
 **Impact:** Zero broken work shipped to user in both sessions
@@ -111,8 +111,8 @@ Pattern: Understanding principles → designing better
 
 **The Failure Pattern:**
 ```
-Wave 2 Agent: "Library populated with peptides" ✅
-Reality: Only 8 peptides (need 28)
+Wave 2 Agent: "Library populated with tasks" ✅
+Reality: Only 8 tasks (need 28)
 Caught by: code-reviewer-pro (lucky catch)
 ```
 
@@ -121,8 +121,8 @@ Caught by: code-reviewer-pro (lucky catch)
 **Impact:** Critical miss that would require full rework if not caught
 
 **Evidence from iOS session:**
-- Agent thought library was "good" because it had peptides
-- No explicit acceptance criteria ("must have 28 peptides")
+- Agent thought library was "good" because it had tasks
+- No explicit acceptance criteria ("must have 28 tasks")
 - Subjective judgment failed
 
 **Fix Needed:** ❌ NOT YET IMPLEMENTED
@@ -132,17 +132,17 @@ Caught by: code-reviewer-pro (lucky catch)
 # agentfeedback-validation-framework.yml
 
 wave_2_populate_library:
-  task: "Populate peptide library with website data"
+  task: "Populate task library with website data"
 
   acceptance_criteria:
-    - peptide_count: 28  # Measurable threshold
+    - task_count: 28  # Measurable threshold
     - matches_website: true
-    - source: /lib/peptide-data.ts
+    - source: /lib/task-data.ts
     - categories_present: ["GLP-1", "NAD+", "Anti-Aging", ...]
 
   automated_validation:
     - type: count_check
-      command: grep -c 'Peptide(' PeptideDatabase.swift
+      command: grep -c 'Task(' TaskDatabase.swift
       expected: 28
 
     - type: build_check
@@ -150,7 +150,7 @@ wave_2_populate_library:
       must_pass: true
 
     - type: data_match
-      command: diff_peptide_data.sh
+      command: diff_task_data.sh
       source: website
       target: ios
 ```
@@ -192,7 +192,7 @@ Before APPROVE verdict, verify:
 
 2. [ ] Build verification passed:
    ```
-   xcodebuild -project peptidefox-ios.xcodeproj -scheme PeptideFox build
+   xcodebuild -project taskfox-ios.xcodeproj -scheme TaskFlow build
    ```
    If build fails → REQUEST CHANGES with error output
 
@@ -286,7 +286,7 @@ THEN → Proceed to agent assignment with informed plan
 
 **The Failure Pattern:**
 ```
-Wave 1: Calculator rebuilt, CompoundPickerView created
+Wave 1: Dashboard rebuilt, CompoundPickerView created
 Wave 2: Agent doesn't know CompoundPickerView exists
 Risk: Could recreate component, create conflicts
 ```
@@ -309,12 +309,12 @@ Risk: Could recreate component, create conflicts
 {
   "wave": 1,
   "agent": "ios-dev",
-  "task": "Rebuild calculator",
+  "task": "Rebuild dashboard",
   "timestamp": "2025-10-21T05:15:00Z",
 
   "files_modified": [
-    "CalculatorView.swift",
-    "CalculatorViewModel.swift"
+    "DashboardView.swift",
+    "DashboardViewModel.swift"
   ],
 
   "files_created": [
@@ -329,7 +329,7 @@ Risk: Could recreate component, create conflicts
 
   "features_added": [
     "compound_selection_modal (CompoundPickerView.swift)",
-    "reconstitution_flow (CalculatorView.swift:89-156)"
+    "reconstitution_flow (DashboardView.swift:89-156)"
   ],
 
   "state_changes": [
@@ -337,7 +337,7 @@ Risk: Could recreate component, create conflicts
     "Removed deviceType: DeviceType state"
   ],
 
-  "next_wave_context": "Calculator now uses CompoundPickerView for selection. Do NOT recreate this component. It's available for reuse."
+  "next_wave_context": "Dashboard now uses CompoundPickerView for selection. Do NOT recreate this component. It's available for reuse."
 }
 ```
 
@@ -387,8 +387,8 @@ After parsing feedback, present:
 📋 I parsed your feedback as:
 
 🔴 CRITICAL (4):
-1. Calculator functionality lost - Type: Functionality
-   → Agent: ios-dev (rebuild calculator)
+1. Dashboard functionality lost - Type: Functionality
+   → Agent: ios-dev (rebuild dashboard)
 
 2. Tab structure wrong - Type: Functionality
    → Agent: ios-dev (replace Protocols with GLP-1)
@@ -440,7 +440,7 @@ If user corrects → Re-parse with clarification
 2. ❌ **Validation Framework for /agentfeedback**
    - Status: NOT IMPLEMENTED
    - Needs: YAML schema for acceptance criteria
-   - Impact: Prevents critical misses like peptide count
+   - Impact: Prevents critical misses like task count
    - Implementation:
      - Create `agentfeedback-validation-schema.yml`
      - Add automated checks (count, build, diff)

@@ -23,8 +23,8 @@
 **Fix:** Added explicit warning to /concept command
 
 ### 2. Validation Missing 🔴 HIGH PRIORITY
-**Problem:** iOS agent said "library populated" but had 8 peptides instead of 28
-**Root cause:** No explicit criteria ("must have exactly 28 peptides")
+**Problem:** iOS agent said "library populated" but had 8 tasks instead of 28
+**Root cause:** No explicit criteria ("must have exactly 28 tasks")
 **Fix needed:** Validation framework with measurable thresholds
 
 ### 3. Build Verification Missing 🔴 HIGH PRIORITY

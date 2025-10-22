@@ -484,9 +484,16 @@
   ],
   "commands": [
     {
-      "name": "agent-workflow",
-      "file": "/Users/adilkalam/.claude/commands/agent-workflow.md",
-      "description": "Automated multi-agent development workflow with quality gates from idea to production code",
+      "name": "nav",
+      "file": "/Users/adilkalam/.claude/commands/nav.md",
+      "description": "View your complete Claude Code setup (agents, skills, MCPs) in a navigable format",
+      "allowedTools": [],
+      "category": "general"
+    },
+    {
+      "name": "orca",
+      "file": "/Users/adilkalam/.claude/commands/orca.md",
+      "description": "Smart multi-agent orchestration with tech stack detection and team confirmation",
       "allowedTools": [
         "Task",
         "Read",
@@ -495,15 +502,10 @@
         "MultiEdit",
         "Grep",
         "Glob",
+        "Bash",
+        "AskUserQuestion",
         "TodoWrite"
       ],
-      "category": "workflow"
-    },
-    {
-      "name": "nav",
-      "file": "/Users/adilkalam/.claude/commands/nav.md",
-      "description": "View your complete Claude Code setup (agents, skills, MCPs) in a navigable format",
-      "allowedTools": [],
       "category": "general"
     }
   ],
@@ -551,6 +553,6 @@
     "totalSkills": 13,
     "totalCommands": 2,
     "enabledPlugins": 10,
-    "scannedAt": "2025-10-21T03:33:27.695Z"
+    "scannedAt": "2025-10-21T19:17:28.078Z"
   }
 }

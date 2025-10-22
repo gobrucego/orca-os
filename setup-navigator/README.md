@@ -830,8 +830,8 @@ Time: 90 minutes
 
 **Real failure from iOS session:**
 ```
-Agent: "Library populated with peptides" ✅
-Reality: Only 8 peptides (needed 28)
+Agent: "Library populated with tasks" ✅
+Reality: Only 8 tasks (needed 28)
 Caught by: code-reviewer-pro (lucky catch)
 ```
 
@@ -845,20 +845,20 @@ Caught by: code-reviewer-pro (lucky catch)
 
 ```yaml
 wave_example_populate_library:
-  task: "Populate peptide library with data from website"
+  task: "Populate task library with data from website"
 
   acceptance_criteria:
-    - peptide_count: 28              # ✅ Measurable
-    - source_match: /lib/peptide-data.ts
+    - task_count: 28              # ✅ Measurable
+    - source_match: /lib/task-data.ts
     - categories_minimum: 9
     # NOT: "library should be good"  # ❌ Subjective
 
   automated_validation:
     # Count check
     - type: count
-      command: "grep -c 'Peptide(' PeptideDatabase.swift"
+      command: "grep -c 'Task(' TaskDatabase.swift"
       expected: 28
-      failure_message: "Only {actual} peptides found, need 28"
+      failure_message: "Only {actual} tasks found, need 28"
 
     # Build verification (mandatory)
     - type: build
@@ -870,9 +870,9 @@ wave_example_populate_library:
     action: REQUEST_REWORK
     agent: ios-dev
     prompt: |
-      Validation failed: Only {actual} peptides, need 28.
+      Validation failed: Only {actual} tasks, need 28.
       Requirements:
-      - Must have exactly 28 peptides
+      - Must have exactly 28 tasks
       - Must match website data structure
       - Build must pass
 
@@ -883,7 +883,7 @@ wave_example_populate_library:
 
 | **Type** | **Purpose** | **Example** |
 |----------|-------------|-------------|
-| `count` | Count occurrences, compare to expected | Peptide count, component count |
+| `count` | Count occurrences, compare to expected | Task count, component count |
 | `grep` | Search for pattern, verify matches | Check for unauthorized code |
 | `file_exists` | Verify file was created | New component files |
 | `file_not_exists` | Verify file was deleted | Legacy components removed |
@@ -899,7 +899,7 @@ wave_example_populate_library:
 
 ```bash
 # iOS example
-xcodebuild -project peptidefox-ios.xcodeproj -scheme PeptideFox build
+xcodebuild -project taskfox-ios.xcodeproj -scheme TaskFlow build
 
 # Web example
 npm run build
@@ -962,12 +962,12 @@ Time saved: ~2 hours
 {
   "wave": 1,
   "agent": "ios-dev",
-  "task": "Rebuild calculator",
+  "task": "Rebuild dashboard",
   "timestamp": "2025-10-21T05:15:00Z",
 
   "files_modified": [
-    "CalculatorView.swift",
-    "CalculatorViewModel.swift"
+    "DashboardView.swift",
+    "DashboardViewModel.swift"
   ],
 
   "files_created": [
@@ -986,14 +986,14 @@ Time saved: ~2 hours
 
   "features_added": [
     "compound_selection_modal (CompoundPickerView.swift)",
-    "reconstitution_flow (CalculatorView.swift:89-156)"
+    "reconstitution_flow (DashboardView.swift:89-156)"
   ],
 
   "components_available_for_reuse": [
     "CompoundPickerView - DO NOT recreate this component"
   ],
 
-  "next_wave_context": "Calculator now uses CompoundPickerView for selection. Reuse this component."
+  "next_wave_context": "Dashboard now uses CompoundPickerView for selection. Reuse this component."
 }
 ```
 
@@ -1020,8 +1020,8 @@ I won't recreate it - I'll use the existing component.
 📋 I parsed your feedback as:
 
 🔴 CRITICAL (4):
-1. Calculator functionality lost - Type: Functionality
-   → Agent: ios-dev (rebuild calculator)
+1. Dashboard functionality lost - Type: Functionality
+   → Agent: ios-dev (rebuild dashboard)
 
 2. Tab structure wrong - Type: Functionality
    → Agent: ios-dev (replace Protocols with GLP-1)
@@ -1124,7 +1124,7 @@ IF ANY FAIL → REQUEST CHANGES (do not approve)
 **Without validation framework:**
 ```
 Wave 2 Agent: "Library populated" ✅
-Reality: Only 8 peptides (need 28)
+Reality: Only 8 tasks (need 28)
 Detection: code-reviewer-pro (manual catch)
 Risk: Could have been missed
 ```
@@ -1134,8 +1134,8 @@ Risk: Could have been missed
 Wave 2 Agent: "Library populated" ✅
 
 Automated Validation:
-  CHECK 1: Peptide count
-    Command: grep -c 'Peptide(' PeptideDatabase.swift
+  CHECK 1: Task count
+    Command: grep -c 'Task(' TaskDatabase.swift
     Expected: 28
     Actual: 8
     Status: ❌ FAILED
@@ -1146,12 +1146,12 @@ Automated Validation:
 VALIDATION FAILED
 
 Action: REQUEST_REWORK from ios-dev
-Prompt: "Only 8 peptides found, need 28. Please add remaining 20."
+Prompt: "Only 8 tasks found, need 28. Please add remaining 20."
 
 Agent re-executes with explicit requirement.
 
 Re-validation:
-  CHECK 1: Peptide count → ✅ PASSED (28 found)
+  CHECK 1: Task count → ✅ PASSED (28 found)
   CHECK 2: Build → ✅ PASSED
 
 VALIDATION PASSED → Proceed to quality gate

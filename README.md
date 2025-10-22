@@ -1,834 +1,260 @@
-# Claude Code: Orchestration
+# Claude Code Orchestration
+
+**Multi-agent coordination for systematic, high-quality development**
 
 ```
-══════════════════════════════════════════════════
-  --------   -----------  ------------    ------    
- **********  ***********  ************   ********   
-----    ---- ----    ---  ---           ----------  
-***      *** *********    ***          ****    **** 
----      --- ---------    ---          ------------ 
-****    **** ****  ****   ***          ************ 
- ----------  ----   ----  ------------ ----    ---- 
-  ********   ****    **** ************ ****    **** 
-═══════════════════════════════════════════════════
-
-   Multi-Agent Coordination: A Vibe Code Guide
-
+═══════════════════════════════════════════════
+   SOLO → SYSTEMATIC → ORCHESTRATED
+═══════════════════════════════════════════════
 ```
 
-<div align="left">
-
-**From solo execution to systematic coordination**
-
-[![Agents](https://img.shields.io/badge/agents-19-blue)](#the-ecosystem-explained)
-[![Skills](https://img.shields.io/badge/skills-40+-orange)](#the-ecosystem-explained)
-[![Workflows](https://img.shields.io/badge/workflows-proven-green)](./setup-navigator)
-
-[Why Orchestration](#why-orchestration-matters) • [The Ecosystem](#the-ecosystem-explained) • [Quick Start](#quick-start) • [Deep Dive](./setup-navigator)
-
-</div>
+[![Agents](https://img.shields.io/badge/agents-19-blue)](#what-is-orchestration)
+[![Skills](https://img.shields.io/badge/skills-40+-orange)](#what-is-orchestration)
+[![Workflows](https://img.shields.io/badge/workflows-proven-green)](#what-is-orchestration)
 
 ---
 
-## Why Orchestration Matters
+## 📚 NAVIGATION
 
-### The Problem: Solo Execution
+**New to orchestration?**
+- **[Setup Guide](docs/SETUP.md)** - Complete installation with examples and explanations
 
-When you ask Claude to build something complex, it typically works alone:
+**Ready to use it?**
+- **[Quick Start](docs/QUICKSTART.md)** - Commands, examples, and basic workflows
+- **[Workflows Guide](docs/WORKFLOWS.md)** - Detailed scenario walkthroughs
 
-```
-         ┌─────────────────────────────────────────────────────────┐
-         │ USER REQUEST                                            │
-         │ "Build an iOS app with login, home screen, and settings"│
-         └─────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-                  ┌──────────────────────────────────┐
-                  │     CLAUDE (SOLO EXECUTION)      │
-                  ├──────────────────────────────────┤
-                  │  ▸ Writes Swift code             │
-                  │  ▸ Creates some views            │
-                  │  ▸ Ships it immediately          │
-                  └──────────────────────────────────┘
-                                    │
-                                    ▼
-                  ┌──────────────────────────────────┐
-                  │  ⚠️  RESULT                      │
-                  ├──────────────────────────────────┤
-                  │  ✗ No systematic testing         │
-                  │  ✗ No code review                │
-                  │  ✗ Mediocre architecture         │
-                  │  ✗ 6 hours of work               │
-                  └──────────────────────────────────┘
-```
+**Want to optimize?**
+- **[Optimization Guide](docs/OPTIMIZATION.md)** - 40% token savings, 50% cost reduction
+- **[Reference](docs/REFERENCE.md)** - CLI commands and API documentation
 
-**It works, but it's not professional quality.**
+**Having issues?**
+- **[Troubleshooting](docs/TROUBLESHOOTING.md)** - Common problems and solutions
 
 ---
 
-### The Solution: Orchestration
+## What Is Orchestration?
 
-Same request, orchestrated across specialized agents:
-
-```
-         ┌──────────────────────────────────────────────────────────┐
-         │ USER REQUEST                                             │
-         │ "Build an iOS app with login, home screen, and settings" │
-         └──────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-                  ┌──────────────────────────────────┐
-                  │     ORCHESTRATOR DETECTS         │
-                  │   iOS work → ios-development     │
-                  └──────────────────────────────────┘
-                                    │
-            ┌───────────────────────┼───────────────────────┐
-            │                       │                       │
-            ▼                       ▼                       ▼
-    ┌───────────────┐       ┌───────────────┐       ┌───────────────┐
-    │   PHASE 1     │       │   PHASE 2     │       │   PHASE 3     │
-    │  Architecture │       │Implementation │       │   Quality     │
-    ├───────────────┤       ├───────────────┤       ├───────────────┤
-    │  ios-dev      │       │  ios-dev      │       │code-reviewer  │
-    │               │       │               │       │    -pro       │
-    │ • Plan arch   │   →   │ • Build/TDD   │   →   │               │
-    │ • Setup tests │       │ • Components  │       │ • Review all  │
-    └───────────────┘       └───────────────┘       │ • Verify      │
-            ↓                       ↓               └───────────────┘
-    swift-architect         swiftui-specialist              ↓
-      (reviews)              (assists UI)            ┌───────────────┐
-                                                     │  ✓ APPROVED   │
-                                                     └───────────────┘
-                                    │
-                                    ▼
-                  ┌──────────────────────────────────┐
-                  │  ✅ RESULT                       │
-                  ├──────────────────────────────────┤
-                  │  ✓ Production-ready              │
-                  │  ✓ Tested & reviewed             │
-                  │  ✓ Professional architecture     │
-                  │  ✓ 90 minutes                    │
-                  └──────────────────────────────────┘
-```
-
-**Time:** 90 minutes (vs 6 hours) = **75% faster**
-**Quality:** Professional architecture + tests + review
-**Systematic:** Proven workflow, not ad-hoc
-
----
-
-## The Real Difference
-
-| **Solo Execution** | **Orchestrated** |
-|--------------------|------------------|
-| One agent does everything | Specialized agents for each domain |
-| No systematic process | Proven workflows enforced |
-| No quality gates | code-reviewer-pro validates everything |
-| 6 hours, mediocre quality | 90 minutes, production-ready |
-
-**Orchestration isn't about "using multiple agents."**
-**It's about systematic coordination with quality gates.**
-
----
-
-## The Ecosystem Explained
-
-Claude Code provides 4 layers that enable orchestration:
-
-```
-    ┌───────────────────────────────────────────────────────────────────┐
-    │  ⚙️  LAYER 1: WORKFLOWS                                           │
-    │  ══════════════════════                                           │
-    │  Proven patterns for complex tasks                                │
-    │                                                                   │
-    │  📋 ios-development.yml     →  Architecture → TDD → Review        │
-    │  🎨 ui-ux-design.yml        →  Concept → Design → Visual QA       │
-    │  🐛 debugging.yml           →  Investigate → Fix → Verify         │
-    │                                                                   │
-    │  "This is the RECIPE: these agents, in this order, these steps"   │
-    └───────────────────────────────────────────────────────────────────┘
-                                       │
-                                       │ orchestrates
-                                       ▼
-    ┌───────────────────────────────────────────────────────────────────┐
-    │  🚀 LAYER 2: COMMANDS                                             │
-    │  ═══════════════════                                              │
-    │  Automation triggers for workflows                                │
-    │                                                                   │
-    │  /agentfeedback  →  Parse feedback, assign agents, execute waves  │
-    │  /concept        →  Creative exploration BEFORE building          │
-    │  /enhance        →  Detect task, launch appropriate workflow      │
-    │  /visual-review  →  QA design before shipping                     │
-    └───────────────────────────────────────────────────────────────────┘
-                                       │
-                                       │ launches
-                                       ▼
-    ┌───────────────────────────────────────────────────────────────────┐
-    │  🤖 LAYER 3: AGENTS                                               │
-    │  ═════════════════                                                │
-    │  Specialized Claude instances with domain expertise               │
-    │                                                                   │
-    │  design-master     →  UI/UX design, spacing, typography           │
-    │  ios-dev           →  Swift, SwiftUI, iOS patterns                │
-    │  code-reviewer-pro →  Quality gates, security, best practices     │
-    │  frontend-dev      →  React, Next.js, component architecture      │
-    └───────────────────────────────────────────────────────────────────┘
-                                       │
-                                       │ follow
-                                       ▼
-    ┌───────────────────────────────────────────────────────────────────┐
-    │  📚 LAYER 4: SKILLS                                               │
-    │  ═════════════════                                                │
-    │  Proven processes that agents execute                             │
-    │                                                                   │
-    │  test-driven-development  →  RED → GREEN → REFACTOR cycle         │
-    │  systematic-debugging     →  Investigate → Root cause → Fix       │
-    │  brainstorming            →  Socratic questioning before coding   │
-    │  design-with-precision    →  Pixel-perfect spacing/typography     │
-    └───────────────────────────────────────────────────────────────────┘
-```
-
-**How they work together:**
-
-1. **You trigger a workflow** (via /agentfeedback, /concept, or /enhance)
-2. **Workflow launches agents** in phases (architecture → implementation → review)
-3. **Each agent uses skills** (TDD, debugging, brainstorming)
-4. **Quality gates between phases** prevent bad work from proceeding
-
----
-
-## Real Example: iOS App Feedback
-
-**Scenario:** You have 7 pieces of feedback after testing your iOS app.
+Instead of Claude working alone on complex tasks, orchestration coordinates **specialized agents** through **proven workflows** with **quality gates**.
 
 ### Without Orchestration
 
 ```
-You: "Here are 7 things to fix: [list]"
+You: "Build a user dashboard with charts"
 
-Claude: "I'll fix those for you"
-  ├─ Works on them one by one
-  ├─ Might miss some
-  ├─ No systematic approach
-  ├─ Ships untested fixes
-  │
-  └─ Result: 3 hours, some bugs remain, no review
+Claude (solo):
+  → Writes code
+  → Ships immediately
+
+Result: 6 hours, mediocre quality, no tests
 ```
 
 ### With Orchestration
 
 ```
-         ┌────────────────────────────────────────────────────────────┐
-         │  YOU: /agentfeedback [your 7 items]                        │
-         └────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-         ┌────────────────────────────────────────────────────────────┐
-         │  📊 PHASE 1: PARSE & CATEGORIZE                            │
-         ├────────────────────────────────────────────────────────────┤
-         │  🔴 CRITICAL (4 items)                                     │
-         │     • Calculator broken                                    │
-         │     • Tab structure wrong                                  │
-         │                                                            │
-         │  🟡 IMPORTANT (3 items)                                    │
-         │     • Typography messy                                     │
-         │     • Legacy components remain                             │
-         └────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-         ┌────────────────────────────────────────────────────────────┐
-         │  🎯 PHASE 2: ASSIGN AGENTS                                 │
-         ├────────────────────────────────────────────────────────────┤
-         │  Critical fixes    →  ios-dev (parallel execution)         │
-         │  Design issues     →  design-master                        │
-         │  Cleanup           →  ios-dev                              │
-         └────────────────────────────────────────────────────────────┘
-                                    │
-                 ┌──────────────────┼──────────────────┐
-                 │                  │                  │
-                 ▼                  ▼                  ▼
-         ┌────────────────┐ ┌────────────────┐ ┌────────────────┐
-         │  // WAVE 1     │ │  // WAVE 2     │ │  // WAVE 3     │
-         │  Critical Bugs │ │  Design        │ │  Cleanup       │
-         ├────────────────┤ ├────────────────┤ ├────────────────┤
-         │  ios-dev × 2   │ │  design-master │ │  ios-dev       │
-         │                │ │                │ │                │
-         │  • Calculator  │ │  • Typography  │ │  • Remove      │
-         │  • Tab struct  │ │  • Spacing     │ │    legacy      │
-         └────────────────┘ └────────────────┘ └────────────────┘
-                 │                  │                  │
-                 └──────────────────┼──────────────────┘
-                                    │
-                                    ▼
-         ┌────────────────────────────────────────────────────────────┐
-         │  ✅ PHASE 4: VALIDATION                                    │
-         ├────────────────────────────────────────────────────────────┤
-         │  ✓ Build passes                                            │
-         │  ✓ All 28 peptides loaded (not 8)                          │
-         │  ✓ No orphaned imports                                     │
-         └────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-         ┌────────────────────────────────────────────────────────────┐
-         │  🛡️  PHASE 5: QUALITY GATE                                 │
-         ├────────────────────────────────────────────────────────────┤
-         │  code-reviewer-pro:                                        │
-         │    ✓ Code review passed                                    │
-         │    ✓ Build verified                                        │
-         │    ✓ No regressions                                        │
-         │                                                            │
-         │  → APPROVED ✅                                             │
-         └────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-                  ┌──────────────────────────────────┐
-                  │  📈 RESULT                       │
-                  ├──────────────────────────────────┤
-                  │  ⏱️  45 minutes                  │
-                  │  ✅ 7/7 items fixed              │
-                  │  🧪 Tested & reviewed            │
-                  │  🚀 Production-ready             │
-                  └──────────────────────────────────┘
+You: /enhance "Build a user dashboard with charts"
+
+System:
+  Phase 1: Concept exploration
+    → design-master explores approaches
+
+  Phase 2: Implementation (parallel)
+    → frontend-developer builds components
+    → Uses test-driven-development skill
+
+  Quality Gate:
+    → code-reviewer-pro validates
+
+Result: 90 minutes, production-ready, tested
 ```
 
-**Impact:**
-- Time: 45 min (vs 3 hours)
-- Quality: 100% (0 items missed, 0 regressions)
-- Systematic: Proven process, not ad-hoc
+**Impact:** 75% faster, professional quality, systematic process
 
 ---
 
-## Key Concepts
+## How It Works
 
-### 1. Workflows = Proven Recipes
+**4 Layers:**
 
-A workflow is like a recipe that says:
-- Which agents to use
-- In what order
-- What skills they should follow
-- Where quality gates go
+1. **Commands** - `/enhance`, `/concept`, `/agentfeedback`
+   - Entry points that trigger workflows
 
-**Example: `ios-development.yml`**
-```yaml
-phases:
-  setup:
-    agent: ios-dev
-    skill: using-git-worktrees  # Isolated workspace
+2. **Workflows** - Proven recipes for complex tasks
+   - iOS development, UI/UX design, debugging, etc.
 
-  implementation:
-    agent: ios-dev
-    skill: test-driven-development  # RED-GREEN-REFACTOR
+3. **Agents** - Specialized Claude instances
+   - design-master, ios-dev, code-reviewer-pro, etc.
 
-  review:
-    agent: code-reviewer-pro
-    mandatory: true  # Quality gate
-```
+4. **Skills** - Proven processes agents follow
+   - test-driven-development, systematic-debugging, brainstorming
 
-### 2. Quality Gates = Prevention
-
-Every workflow has mandatory checkpoints:
+**Example Flow:**
 
 ```
-                  ┌──────────────────┐
-                  │  Implementation  │
-                  │                  │
-                  │  Agent builds    │
-                  │  the feature     │
-                  └──────────────────┘
-                           │
-                           ▼
-         ┌──────────────────────────────────────────┐
-         │  🛡️  QUALITY GATE                        │
-         │  (code-reviewer-pro)                     │
-         ├──────────────────────────────────────────┤
-         │  Mandatory Checks:                       │
-         │  ✓ Code review passed                    │
-         │  ✓ Build passes                          │
-         │  ✓ Tests pass                            │
-         │  ✓ No regressions                        │
-         │  ✓ Security verified                     │
-         └──────────────────────────────────────────┘
-                           │
-                           │
-            ┌──────────────┴──────────────┐
-            │                             │
-            │                             │
-     ✅ APPROVED                  ❌ REQUEST_CHANGES
-            │                             │
-            ▼                             ▼
-  ┌──────────────────┐          ┌──────────────────┐
-  │  Merge/Ship      │          │  Return to       │
-  │                  │          │  Implementation  │
-  │  Production-     │          │                  │
-  │  ready code      │          │  Agent fixes     │
-  └──────────────────┘          │  issues          │
-                                └──────────────────┘
-                                         │
-                                         │
-                        ┌────────────────┘
-                        │
-                        ▼
-                (Loop until approved)
+/concept "redesign login page"
+   ↓
+concept workflow
+   ↓
+design-master agent
+   ↓
+brainstorming skill
+   ↓
+Quality gate (visual-review)
+   ↓
+Production-ready design
 ```
-
-**If quality gate fails:** Agent must fix before proceeding.
-
-**Impact:** 0 bugs shipped in production sessions analyzed.
-
-### 3. Agents = Specialists
-
-Each agent has deep expertise in one domain:
-
-```
-design-master
-  ├─ Knows: Spacing systems, typography, visual hierarchy
-  ├─ Skills: design-with-precision (pixel-perfect enforcement)
-  └─ Use for: UI/UX work, design system compliance
-
-ios-dev
-  ├─ Knows: Swift, SwiftUI, iOS patterns, App Store rules
-  ├─ Skills: test-driven-development, systematic debugging
-  └─ Use for: iOS app development
-
-code-reviewer-pro
-  ├─ Knows: Security, performance, best practices
-  ├─ Skills: verification-before-completion
-  └─ Use for: Quality gates (mandatory before shipping)
-```
-
-**Why this matters:** Specialists deliver higher quality than generalists.
-
-### 4. Skills = Proven Processes
-
-Skills are workflows that agents execute:
-
-```
-test-driven-development:
-  1. Write test (RED)
-  2. Watch it fail
-  3. Write minimal code (GREEN)
-  4. Refactor
-  5. Repeat
-
-systematic-debugging:
-  1. Investigation phase
-  2. Root cause identification
-  3. Hypothesis testing
-  4. Implementation
-  5. Verification
-
-brainstorming:
-  1. Socratic questioning
-  2. Alternative exploration
-  3. Incremental validation
-  4. Creative direction
-```
-
-**Why this matters:** Prevents agents from inventing ad-hoc approaches.
-
----
-
-## Optimization: 40% Token Savings, 50% Cost Reduction
-
-Recent enhancements make orchestration more efficient:
-
-### Before Optimization
-- Complex session: 75,000 tokens (hitting limits)
-- Cost: $1.13 per session (all Opus)
-- Maintenance: Commands duplicated across files
-
-### After Optimization
-- Same session: 45,000 tokens (60% reduction)
-- Cost: $0.59 per session (48% reduction via model tiering)
-- Maintenance: DRY central configs
-
-**How:**
-1. **Context caching** - Don't re-read same files (save 15K tokens)
-2. **Agent compression** - Reference-style prompts (save 20K tokens)
-3. **Model tiering** - Sonnet for deterministic, Opus for creative (50% cost ↓)
-4. **Command consolidation** - Central configs, no duplication (easier maintenance)
-5. **Analytics** - Track performance, identify inefficiencies
-
-**[See full optimization guide](./setup-navigator/docs/OPTIMIZATION_GUIDE.md)**
-
----
-
-## Quick Start
-
-### Install Core Tools
-
-**1. Install agent kits** (specialized Claude instances):
-```bash
-# Install Leamas (agent installer)
-# Visit: https://leamas.sh/
-
-# Core agent kits
-~/leamas/leamas agent@claude-code-sub-agents  # 6 agents
-~/leamas/leamas agent@wshobson               # 10 agents
-```
-
-**2. Enable essential plugins** (skills + workflows):
-
-Edit `~/.claude/settings.json`:
-```json
-{
-  "enabledPlugins": {
-    "superpowers@superpowers-marketplace": true,
-    "claude-mem@thedotmack": true
-  }
-}
-```
-
-**3. Add MCP for structured reasoning:**
-
-Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
-```json
-{
-  "mcpServers": {
-    "sequential-thinking": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
-    }
-  }
-}
-```
-
-**4. Restart Claude Desktop**
-
-### Try It
-
-**Example 1: Design work**
-```
-You: "/concept - redesign the login page"
-
-Claude:
-  ├─ Reads DESIGN_PATTERNS.md (reference examples)
-  ├─ Uses brainstorming skill (Socratic questions)
-  ├─ Presents concept brief
-  └─ Gets your approval before building
-```
-
-**Example 2: Process feedback**
-```
-You: "/agentfeedback
-1. Calculator is broken
-2. Typography is messy
-3. Need to add dark mode"
-
-Claude:
-  ├─ Parses: Critical (1), Important (2,3)
-  ├─ Assigns: ios-dev for 1, design-master for 2,3
-  ├─ Executes in parallel waves
-  ├─ Validates: build passes, no regressions
-  └─ Quality gate: code-reviewer-pro approves
-```
-
-**Example 3: Build from scratch**
-```
-You: "/enhance - build React dashboard with charts"
-
-Claude:
-  ├─ Detects: Frontend work
-  ├─ Launches: frontend-developer agent
-  ├─ Uses: test-driven-development skill
-  ├─ Quality gate: code-reviewer-pro
-  └─ Ships: Tested, reviewed, production-ready
-```
-
----
-
-## Deep Dive: Setup Navigator
-
-For complete orchestration system including:
-- 8 proven workflows (iOS, UI/UX, debugging, etc.)
-- Failure prevention (SESSION_START.md prevents context loss)
-- Validation framework (measurable acceptance criteria)
-- Analytics (track token usage, agent performance)
-- Model tiering (optimize costs)
-
-**[See full system →](./setup-navigator)**
-
----
-
-## The Mental Model
-
-Think of orchestration like a professional kitchen:
-
-| **Kitchen** | **Claude Code** | **Why It Matters** |
-|-------------|-----------------|-------------------|
-| **Recipe** | Workflow | Proven steps, not improvisation |
-| **Head Chef** | Orchestrator | Coordinates specialists |
-| **Pastry Chef** | design-master | Specialist in one domain |
-| **Sous Chef** | ios-dev | Systematic execution |
-| **Food Inspector** | code-reviewer-pro | Quality gate before serving |
-| **Techniques** | Skills | Proven processes (TDD, debugging) |
-
-**Solo execution = one person cooks everything**
-**Orchestration = specialized team with proven recipes**
-
----
-
-## Key Resources
-
-**System Documentation:**
-- [Setup Navigator](./setup-navigator) - Complete orchestration system
-- [Optimization Guide](./setup-navigator/docs/OPTIMIZATION_GUIDE.md) - Token & cost savings
-- [Quick Reference](./setup-navigator/docs/QUICK_REFERENCE.md) - CLI commands
-- [System Audit](./setup-navigator/.claude/COMPREHENSIVE_SYSTEM_AUDIT.md) - Full analysis
-
-**Workflows:**
-- [iOS Development](./setup-navigator/workflows/ios-development.yml)
-- [UI/UX Design](./setup-navigator/workflows/ui-ux-design.yml)
-- [Debugging](./setup-navigator/workflows/debugging.yml)
-- [Code Review](./setup-navigator/workflows/code-review.yml)
-
-**Validation:**
-- [Validation Schema](./setup-navigator/.claude/agentfeedback-validation-schema.yml) - Measurable criteria
-- [Quality Gate Checklist](./setup-navigator/.claude/config/quality-gate-checklist.md)
-
-**Analytics:**
-- Session tracking - `analytics-viewer dashboard`
-- Agent performance - `analytics-viewer agents`
-- Token efficiency - `analytics-viewer tokens`
 
 ---
 
 ## Proven Results
 
-### Real Sessions Analyzed
-
-**iOS App (7 feedback items):**
-- Without orchestration: 3 hours, some bugs remain
-- With orchestration: 45 minutes, 100% complete, 0 regressions
-- **Improvement:** 62% faster, perfect quality
+**iOS App Development (7 bug fixes):**
+- Solo: 3 hours, some bugs remain
+- Orchestrated: 45 min, 100% complete, 0 regressions
+- **75% faster, perfect quality**
 
 **UI Redesign (5 critical issues):**
-- Without orchestration: Complete failure (generic design)
-- With orchestration: 20 minutes, "miles better" quality
-- **Improvement:** Actually works vs complete failure
+- Solo: Complete failure (generic design)
+- Orchestrated: 20 minutes, "miles better" quality
+- **Works vs doesn't work**
 
 **Cost Optimization:**
-- Before: 75K tokens per session, $1.13, hitting limits
-- After: 45K tokens, $0.59, well below limits
-- **Savings:** 40% tokens, 48% cost
+- Before: 75K tokens/session, $1.13
+- After: 45K tokens, $0.59
+- **40% token savings, 48% cost savings**
 
 ---
 
-## Why This Works
+## Quick Example
 
-**1. Systematic > Ad-hoc**
-- Proven workflows beat improvisation
-- Quality gates prevent shipping mistakes
-- 100% of feedback addressed in analyzed sessions
+### Command: `/enhance`
 
-**2. Specialists > Generalists**
-- design-master delivers pixel-perfect UI
-- code-reviewer-pro catches security issues
-- ios-dev follows iOS best practices
+Detects your task and launches the right workflow.
 
-**3. Process > Heroics**
-- test-driven-development ensures quality
-- systematic-debugging finds root causes
-- brainstorming prevents generic designs
+**Input:**
+```bash
+/enhance "Build React dashboard with charts and user table"
+```
 
-**4. Validation > Assumptions**
-- Measurable acceptance criteria (not "looks good")
-- Automated checks (build, tests, count)
-- 0 bugs shipped in production sessions
+**What Happens:**
+```
+🔍 Analyzing task...
+   → Detected: Frontend development
+   → Workflow: ui-ux-design
+   → Agents: frontend-developer, design-master
+
+📋 WAVE 1 - Architecture
+   → frontend-developer: Component structure
+   → Duration: 8 minutes
+
+🎨 WAVE 2 - Implementation (parallel)
+   → frontend-developer: Build components with TDD
+   → design-master: Spacing, typography, layout
+   → Duration: 25 minutes
+
+🛡️ QUALITY GATE
+   → code-reviewer-pro: Review code
+   → Checks: Build passes, tests pass, best practices
+   → Result: ✅ APPROVED
+
+✅ COMPLETE
+   Time: 45 minutes
+   Quality: Production-ready
+   Tests: Passing
+```
+
+**Output:**
+- Tested React components
+- Pixel-perfect design
+- Code-reviewed
+- Production-ready
+
+---
+
+## Available Commands
+
+| Command | Purpose | Example |
+|---------|---------|---------|
+| `/enhance` | Auto-detect task, run workflow | `/enhance "build login page"` |
+| `/concept` | Explore approaches before coding | `/concept "redesign nav"` |
+| `/agentfeedback` | Process multiple feedback items | `/agentfeedback [7 bugs]` |
+| `/nav` | View your setup | `/nav` |
+| `/visual-review` | QA design work | `/visual-review` |
+
+**[See all commands with examples →](docs/QUICKSTART.md)**
 
 ---
 
 ## Get Started
 
-1. **Install tools** (agents, plugins, MCPs) - [Quick Start](#quick-start)
-2. **Try a workflow** - `/agentfeedback` or `/concept`
-3. **Read deep dive** - [Setup Navigator](./setup-navigator)
-4. **Optimize** - [Optimization Guide](./setup-navigator/docs/OPTIMIZATION_GUIDE.md)
-
-**Questions?** Open an issue or explore the [setup navigator](./setup-navigator).
-
----
-
-## Troubleshooting
-
-### Common Issues
-
-#### xcodebuild Not Working (macOS/iOS Development)
-
-**Symptom:**
+**1. Install**
 ```bash
-xcode-select: error: tool 'xcodebuild' requires Xcode, but active developer directory '/Library/Developer/CommandLineTools' is a command line tools instance
+# Follow complete setup guide
+→ docs/SETUP.md
 ```
 
-**Cause:**
-Your `xcode-select` path is pointing to Command Line Tools instead of full Xcode.app. This can happen after:
-- macOS system updates
-- Installing Command Line Tools separately
-- Xcode reinstallation
-
-**Fix:**
+**2. Try a command**
 ```bash
-# Switch to full Xcode
-sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
-
-# Verify the fix
-xcode-select -p
-# Should show: /Applications/Xcode.app/Contents/Developer
-
-xcodebuild -version
-# Should show Xcode version without errors
+# See quick start examples
+→ docs/QUICKSTART.md
 ```
 
-**Impact:**
-- ✅ Xcode GUI works (it finds its own tools)
-- ❌ Terminal `xcodebuild` commands fail
-- ❌ iOS Simulator access from CLI broken
-- ❌ Agent automation for iOS builds fails
-
-#### Setup Verification Script
-
-Run this to check your system configuration:
-
+**3. Learn workflows**
 ```bash
-# Create verification script
-cat > verify-setup.sh << 'EOF'
-#!/bin/bash
-echo "🔍 VERIFYING CLAUDE CODE SETUP"
-echo ""
-
-# Check Xcode path
-echo "📱 iOS Development:"
-XCODE_PATH=$(xcode-select -p 2>/dev/null)
-if [[ "$XCODE_PATH" == "/Applications/Xcode.app/Contents/Developer" ]]; then
-    echo "✅ Xcode path: $XCODE_PATH"
-    xcodebuild -version 2>/dev/null | head -1
-else
-    echo "❌ Xcode path incorrect: $XCODE_PATH"
-    echo "   Run: sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer"
-fi
-echo ""
-
-# Check agents
-echo "🤖 Agents:"
-AGENT_COUNT=$(find ~/.claude/agents -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
-echo "   Found: $AGENT_COUNT agent(s)"
-echo ""
-
-# Check commands
-echo "📝 Commands:"
-CMD_COUNT=$(find ~/.claude/commands -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
-echo "   Found: $CMD_COUNT command(s)"
-echo ""
-
-# Check design inspiration
-echo "🎨 Design Inspiration:"
-if [ -d ~/.claude/design-inspiration ]; then
-    SCREENSHOT_COUNT=$(find ~/.claude/design-inspiration -name "*.png" 2>/dev/null | wc -l | tr -d ' ')
-    echo "✅ Gallery exists: $SCREENSHOT_COUNT screenshots"
-else
-    echo "⚠️  Gallery not found: ~/.claude/design-inspiration"
-fi
-echo ""
-
-echo "✅ VERIFICATION COMPLETE"
-EOF
-
-chmod +x verify-setup.sh
-./verify-setup.sh
+# See detailed walkthroughs
+→ docs/WORKFLOWS.md
 ```
 
-#### MCP Server Issues
-
-If MCP servers aren't loading in Claude Desktop:
-
-1. **Check config location:**
-   ```bash
-   cat ~/Library/Application\ Support/Claude/claude_desktop_config.json
-   ```
-
-2. **Verify JSON syntax:**
-   - Use [JSONLint](https://jsonlint.com/) to validate
-   - Check for missing commas, brackets
-
-3. **Restart Claude Desktop:**
-   - Quit completely (Cmd+Q)
-   - Relaunch from Applications
-
-4. **Check MCP server logs:**
-   ```bash
-   ~/Library/Logs/Claude/mcp*.log
-   ```
-
-#### chrome-devtools MCP Screenshot Too Large
-
-**Symptom:**
-```
-API Error: 400 {"type":"error","error":{"type":"invalid_request_error",
-"message":"messages.21.content.2.image.source.base64.data: At least one of
-the image dimensions exceed max allowed size: 8000 pixels"}}
-```
-
-**Cause:**
-Using `fullPage: true` on long pages (> 8000px height).
-
-**Fix:**
-Use viewport screenshots instead:
-
-```javascript
-// ❌ WRONG: fullPage on long pages
-mcp__chrome-devtools__take_screenshot({
-  fullPage: true  // Fails on pages > 8000px
-})
-
-// ✅ CORRECT: viewport only
-mcp__chrome-devtools__take_screenshot({
-  fullPage: false  // Always works, captures above-the-fold
-})
-```
-
-**Why viewport is sufficient:**
-- Design QA focuses on visible viewport (1440x900)
-- Typography, spacing, hierarchy visible in first 900px
-- Long scrolling content doesn't affect aesthetic evaluation
-
-**Alternative:**
-Use Chrome headless with viewport size:
+**4. Optimize**
 ```bash
-CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-"$CHROME" --headless --screenshot=output.png \
-  --window-size=1440,900 \
-  --hide-scrollbars \
-  "http://localhost:8080/your-page"
+# Reduce costs, improve speed
+→ docs/OPTIMIZATION.md
 ```
 
 ---
 
-## Contributing
+## Why This Works
 
-This system evolved from real failures and successes:
-- 1 catastrophic UI failure (0 agents, generic output)
-- 1 successful iOS app (9 agents, 90 minutes, production-ready)
-- Countless orchestration experiments
+**Systematic > Ad-hoc**
+- Proven workflows beat improvisation
+- Quality gates prevent mistakes
+- 100% completion rate in analyzed sessions
 
-**To contribute:**
-- Document failure modes in [FAILURE_ANALYSIS](./setup-navigator/.claude/FAILURE_ANALYSIS.md)
-- Create proven workflows in [workflows/](./setup-navigator/workflows/)
-- Share before/after examples
+**Specialists > Generalists**
+- design-master: Pixel-perfect UI
+- ios-dev: iOS best practices
+- code-reviewer-pro: Security, performance
 
-**The goal:** Make orchestration systematic, not heroic.
+**Process > Heroics**
+- test-driven-development ensures quality
+- systematic-debugging finds root causes
+- brainstorming prevents generic work
+
+**Validation > Assumptions**
+- Measurable criteria (not "looks good")
+- Automated checks (build, tests, metrics)
+- 0 bugs shipped in production
+
+---
+
+## Navigation Summary
+
+| I Want To... | Go Here |
+|--------------|---------|
+| **Install the system** | [SETUP.md](docs/SETUP.md) |
+| **Learn commands quickly** | [QUICKSTART.md](docs/QUICKSTART.md) |
+| **See detailed examples** | [WORKFLOWS.md](docs/WORKFLOWS.md) |
+| **Reduce costs** | [OPTIMIZATION.md](docs/OPTIMIZATION.md) |
+| **Fix issues** | [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) |
+| **API reference** | [REFERENCE.md](docs/REFERENCE.md) |
 
 ---
 
 ## License
 
-MIT License - See [LICENSE](LICENSE) for details
+MIT License - See [LICENSE](LICENSE)
 
 ---
 
-<div align="center">
+**Orchestration: Systematic coordination for complex work**
 
-**Orchestration: Because complex work deserves systematic coordination.**
-
-[Get Started](#quick-start) • [Deep Dive](./setup-navigator) • [Optimize](./setup-navigator/docs/OPTIMIZATION_GUIDE.md)
-
-</div>
+[Setup →](docs/SETUP.md) • [Quick Start →](docs/QUICKSTART.md) • [Workflows →](docs/WORKFLOWS.md)

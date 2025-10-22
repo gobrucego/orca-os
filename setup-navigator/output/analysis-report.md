@@ -1,8 +1,8 @@
 # Setup Analysis Report
 
-**Generated:** 10/20/2025
-**Total Agents:** 29
-**Total Skills:** 12
+**Generated:** 10/21/2025
+**Total Agents:** 28
+**Total Skills:** 13
 
 ---
 
@@ -10,19 +10,19 @@
 
 
 ### OPUS
-- **Count:** 4 agents (13.8%)
+- **Count:** 4 agents (14.3%)
 - **Cost:** $15/$75 per million tokens
 - **Agents:** context-manager, prompt-engineer, quant-analyst, swift-architect
 
 
 ### SONNET
-- **Count:** 22 agents (75.9%)
+- **Count:** 21 agents (75.0%)
 - **Cost:** $3/$15 per million tokens
-- **Agents:** agent-organizer, design-master, dx-optimizer, ios-dev, content-writer, security-auditor, vibe-coding-coach, agent-organizer, code-reviewer-pro, frontend-developer, nextjs-pro, react-pro, ui-designer, ux-designer, debugger, ios-developer, javascript-pro, mobile-developer, payment-integration, python-pro, seo-specialist, swiftui-specialist
+- **Agents:** agent-organizer, design-master, dx-optimizer, ios-dev, content-writer, security-auditor, agent-organizer, code-reviewer-pro, frontend-developer, nextjs-pro, react-pro, ui-designer, ux-designer, debugger, ios-developer, javascript-pro, mobile-developer, payment-integration, python-pro, seo-specialist, swiftui-specialist
 
 
 ### HAIKU
-- **Count:** 3 agents (10.3%)
+- **Count:** 3 agents (10.7%)
 - **Cost:** $1/$5 per million tokens
 - **Agents:** business-analyst, data-scientist, legal-advisor
 
@@ -35,7 +35,7 @@
 - **Optimization Status:** ✅ OPTIMAL
 
 
-Your model distribution is cost-optimized with 13.8% Opus and 75.9% Sonnet.
+Your model distribution is cost-optimized with 14.3% Opus and 75.0% Sonnet.
 
 
 ---
@@ -43,11 +43,10 @@ Your model distribution is cost-optimized with 13.8% Opus and 75.9% Sonnet.
 ## 📂 CATEGORY BREAKDOWN
 
 
-### LEAMAS (22 agents)
+### LEAMAS (21 agents)
 
 - **content-writer** (sonnet, 4.0 KB)
 - **security-auditor** (sonnet, 7.9 KB)
-- **vibe-coding-coach** (sonnet, 4.9 KB)
 - **agent-organizer** (sonnet, 43.2 KB)
 - **code-reviewer-pro** (sonnet, 9.6 KB)
 - **frontend-developer** (sonnet, 4.5 KB)
@@ -119,7 +118,7 @@ Found 1 potential redundancy group(s):
 
 ### 1. Consolidate Leamas Agents (MEDIUM PRIORITY)
 
-You have 22 agents in the 'leamas' category. Consider consolidating similar ones.
+You have 21 agents in the 'leamas' category. Consider consolidating similar ones.
 
 **Impact:** Easier navigation and faster agent selection
 
