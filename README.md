@@ -1,125 +1,362 @@
-# Claude Code Orchestration System
+```
+╔═══════════════════════════════════════════════════════════════╗
+║                                                               ║
+║   ██████╗██╗      █████╗ ██╗   ██╗██████╗ ███████╗          ║
+║  ██╔════╝██║     ██╔══██╗██║   ██║██╔══██╗██╔════╝          ║
+║  ██║     ██║     ███████║██║   ██║██║  ██║█████╗            ║
+║  ██║     ██║     ██╔══██║██║   ██║██║  ██║██╔══╝            ║
+║  ╚██████╗███████╗██║  ██║╚██████╔╝██████╔╝███████╗          ║
+║   ╚═════╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝          ║
+║                                                               ║
+║        ██╗   ██╗██╗██████╗ ███████╗                          ║
+║        ██║   ██║██║██╔══██╗██╔════╝                          ║
+║        ██║   ██║██║██████╔╝█████╗                            ║
+║        ╚██╗ ██╔╝██║██╔══██╗██╔══╝                            ║
+║         ╚████╔╝ ██║██████╔╝███████╗                          ║
+║          ╚═══╝  ╚═╝╚═════╝ ╚══════╝                          ║
+║                                                               ║
+║        Native Agent Orchestration with Evidence              ║
+║                                                               ║
+╚═══════════════════════════════════════════════════════════════╝
+```
 
-**Native Claude Code agents with evidence-based verification**
+**Professional multi-agent orchestration for iOS development**
 
-## Quick Start
+---
+
+## ⚡ Quick Start
 
 ```bash
-# Main command for any coding task
+# Main command - orchestrates everything
 /enhance "Add a dark mode toggle to settings"
 
-# Deep analysis without implementation
+# Deep analysis - no code changes
 /ultra-think "Why is the app slow?"
 ```
 
-The system automatically:
-- ✅ Orchestrates specialized agents
-- ✅ Requires evidence for all work
-- ✅ Verifies 100% completion
-- ✅ Never shows broken work
+**What happens automatically:**
+- ✅ Orchestrates specialized agents (iOS, SwiftUI, QA)
+- ✅ Requires evidence for all work (screenshots, tests)
+- ✅ Verifies 100% completion before presenting
+- ✅ Never shows broken or incomplete work
 
-## How It Works
+---
+
+## 🏗️ System Architecture
 
 ```
-Your Request → Orchestrator → Agents → Evidence → Verification → Results
+┌─────────────────────────────────────────────────────────────────┐
+│                        YOUR REQUEST                             │
+│                     "Add dark mode toggle"                      │
+└─────────────────┬───────────────────────────────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                   WORKFLOW ORCHESTRATOR                         │
+│  • Saves your exact words to .orchestration/user-request.md    │
+│  • Creates work plan in manageable pieces                      │
+│  • Dispatches specialized agents                               │
+│  • Maintains your perspective throughout                       │
+└─────────────────┬───────────────────────────────────────────────┘
+                  │
+        ┌─────────┴─────────┬─────────────┐
+        ▼                   ▼             ▼
+  ┌───────────┐       ┌───────────┐  ┌───────────┐
+  │ ios-expert│       │  swiftui  │  │  quality  │
+  │           │       │  -expert  │  │   -gate   │
+  │ • Swift   │       │ • Layouts │  │ • Verifies│
+  │ • Async   │       │ • Anims   │  │ • Evidence│
+  │ • Testing │       │ • A11y    │  │ • Blocks  │
+  └─────┬─────┘       └─────┬─────┘  └─────┬─────┘
+        │                   │              │
+        └─────────┬─────────┴──────────────┘
+                  ▼
+    ┌──────────────────────────────────────────┐
+    │          EVIDENCE COLLECTION             │
+    │  📸 Screenshots of UI changes            │
+    │  ✅ Test output and build logs           │
+    │  📊 Performance measurements             │
+    └──────────────┬───────────────────────────┘
+                   ▼
+    ┌──────────────────────────────────────────┐
+    │         QUALITY GATE (100%)              │
+    │  ✓ All requirements verified             │
+    │  ✓ Evidence for every claim              │
+    │  ✓ No failures, no partial work          │
+    └──────────────┬───────────────────────────┘
+                   ▼
+    ┌──────────────────────────────────────────┐
+    │           RESULTS TO YOU                 │
+    │  Complete, tested, proven solution       │
+    └──────────────────────────────────────────┘
 ```
 
-1. **workflow-orchestrator** coordinates everything
-2. Specialized agents do the work (iOS, design, etc.)
-3. Evidence collected (screenshots, tests)
-4. Quality gate verifies 100% complete
-5. Only then presented to you
+---
 
-## Key Features
+## 🎯 Key Features
 
-### 🎯 Maintains Your Perspective
-- Your exact words saved in `.orchestration/user-request.md`
-- Orchestrator re-reads your request multiple times
-- Verifies your actual problem is solved
+### Maintains Your Perspective
+```
+┌──────────────────────────────────────────────────────┐
+│ .orchestration/user-request.md                       │
+│ ──────────────────────────────────────────────────── │
+│ "The text is too small - I can't read it"           │
+│                                                      │
+│ ✓ Saved verbatim                                    │
+│ ✓ Re-read by orchestrator before each decision      │
+│ ✓ Agents reference YOUR words, not interpretations  │
+└──────────────────────────────────────────────────────┘
+```
 
-### 📸 Evidence-Based
-- Screenshots for UI changes
-- Test output for functionality
-- No claims without proof
+### Evidence-Based Verification
+```
+┌─────────────────────────────────────────────────────┐
+│ .orchestration/evidence/                            │
+│ ─────────────────────────────────────────────────── │
+│ before.png  ────►  Font size: 12pt (unreadable)    │
+│ after.png   ────►  Font size: 18pt (readable)      │
+│ test.log    ────►  ✓ All tests passing             │
+│                                                     │
+│ No evidence = Not done                             │
+└─────────────────────────────────────────────────────┘
+```
 
-### ✅ Quality Gate
-- 100% verification required
-- Blocks incomplete work
-- You never see failures
+### Quality Gate (100% Required)
+```
+┌──────────────────────────────────────────────┐
+│ Verification Table                           │
+│ ──────────────────────────────────────────── │
+│ ✅ Font increased to 18pt                    │
+│ ✅ Screenshot shows readable text            │
+│ ✅ Accessibility tested                      │
+│ ✅ Dark mode works                           │
+│ ✅ Tests passing                             │
+│                                              │
+│ Status: 100% Complete → Present to user     │
+└──────────────────────────────────────────────┘
+```
 
-## Documentation
+---
 
-- [Quick Start Guide](docs/QUICKSTART.md) - Examples and usage
-- [Architecture](docs/ARCHITECTURE.md) - How the system works
-- [Setup](docs/SETUP.md) - Installation and configuration
-- [Workflows](docs/WORKFLOWS.md) - Common patterns
-- [Troubleshooting](docs/TROUBLESHOOTING.md) - Debugging help
-- [Design Guidelines](docs/DESIGN-GUIDELINES.md) - Universal design patterns
-- [SwiftUI Design System](docs/SWIFTUI-DESIGN-SYSTEM.md) - iOS-specific patterns
+## 📁 Agent Structure
 
-## What's New
+```
+.claude/agents/
+│
+├── workflow-orchestrator.md  (61 lines)
+│   ├─ Coordinates all work
+│   ├─ Never implements anything
+│   ├─ Maintains user perspective
+│   └─ Dispatches specialized agents
+│
+├── ios-expert.md  (370 lines)
+│   ├─ Swift 5.9+ async/await
+│   ├─ Networking & Core Data
+│   ├─ Testing & App Store
+│   └─ Performance optimization
+│
+├── swiftui-expert.md  (337 lines)
+│   ├─ Advanced animations
+│   ├─ Custom layouts & grids
+│   ├─ Accessibility excellence
+│   └─ Platform adaptive design
+│
+└── quality-gate.md  (66 lines)
+    ├─ 100% verification required
+    ├─ Evidence validation
+    ├─ Blocks incomplete work
+    └─ Final approval gate
+```
 
-This system replaces the previous complex orchestration with a simpler, more reliable approach:
+---
 
-| Before | After |
-|--------|-------|
-| 1,284 line agents | <200 lines |
+## 📊 What's New
+
+Rebuilt from the ground up to solve orchestration failures:
+
+| **Before** | **After** |
+|------------|-----------|
+| 1,284 line agents | <400 lines |
 | Guidelines buried | Critical rules first |
 | ~40% completion | 100% required |
 | No verification | Evidence mandatory |
+| Frame switching | User perspective locked |
 | Complex coordination | Simple file-based |
 
-## Project Structure
+**Key Improvements:**
+- Agent prompts streamlined (1,284 → <400 lines)
+- Context usage optimized (20K → <5K tokens)
+- Completion rate enforced (40% → 100%)
+- Frame maintenance automated (re-read user request)
+- Evidence collection required for all claims
+
+---
+
+## 💼 File-Based Coordination
 
 ```
-.claude/
-  agents/               # Specialized agents
-  commands/            # /enhance, /ultra-think
-
 .orchestration/
-  user-request.md      # Your exact words
-  work-plan.md        # How work is broken down
-  agent-log.md        # What each agent did
-  evidence/           # Proof of completion
-
-docs/
-  QUICKSTART.md       # Examples and usage
-  ARCHITECTURE.md     # System design
+├── user-request.md      ← Your exact words (never interpreted)
+├── work-plan.md         ← Broken into 2-hour pieces
+├── agent-log.md         ← What each agent did + evidence
+└── evidence/
+    ├── before.png       ← Screenshot before changes
+    ├── after.png        ← Screenshot after changes
+    └── tests.log        ← Proof functionality works
 ```
 
-## Examples
+**Why file-based?**
+- ✓ Simple coordination without message passing
+- ✓ Clear handoffs between agents
+- ✓ Persistent context across sessions
+- ✓ Easy to debug (just read the files)
+- ✓ Evidence naturally organized
+
+---
+
+## 🚀 Examples
 
 ### Add a Feature
-```
+```bash
 /enhance "Add a logout button to the profile"
 ```
-Result: Button added, screenshot provided, functionality tested
+**Result:**
+- Button added with proper styling
+- Screenshot showing button in context
+- Tap handler tested and verified
+- Accessibility labels added
+- Evidence: `profile-logout.png`, `tests.log`
 
 ### Fix a Problem
-```
+```bash
 /enhance "The text is too small to read"
 ```
-Result: Font size increased, before/after comparison, measurements provided
+**Result:**
+- Font size increased from 12pt → 18pt
+- Before/after screenshots provided
+- Measurements documented
+- Dark mode verified
+- Evidence: `before.png`, `after.png`, `measurements.txt`
 
-### Analyze an Issue
-```
+### Analyze Without Changing
+```bash
 /ultra-think "Why does the calculator feel confusing?"
 ```
-Result: Multi-dimensional analysis with solution options
+**Result:**
+- Multi-dimensional analysis
+- UX principles evaluated
+- Design patterns examined
+- Concrete recommendations
+- No code changes made
 
-## Contributing
+---
 
-The system is designed to be extended:
-1. Agents are simple markdown files in `.claude/agents/`
-2. Commands are markdown in `.claude/commands/`
-3. Keep agents under 200 lines
-4. Critical rules in first 30 lines
-5. Always require evidence
+## 📚 Documentation
 
-## License
+| Document | Purpose |
+|----------|---------|
+| [Quick Start](docs/QUICKSTART.md) | Examples and usage patterns |
+| [Architecture](docs/ARCHITECTURE.md) | How the system works internally |
+| [Setup](docs/SETUP.md) | Installation and configuration |
+| [Workflows](docs/WORKFLOWS.md) | Common development patterns |
+| [Troubleshooting](docs/TROUBLESHOOTING.md) | Debug help and FAQ |
+| [Design Guidelines](docs/DESIGN-GUIDELINES.md) | Universal design patterns |
+| [SwiftUI Design System](docs/SWIFTUI-DESIGN-SYSTEM.md) | iOS-specific patterns |
+
+---
+
+## 🛠️ Extending the System
+
+The orchestration system is designed to be extended:
+
+1. **Add new agents**: Create markdown files in `.claude/agents/`
+2. **Add commands**: Create markdown in `.claude/commands/`
+3. **Keep agents focused**: Under 400 lines, single responsibility
+4. **Critical rules first**: Most important info in first 30 lines
+5. **Always require evidence**: Screenshots, tests, measurements
+
+**Agent Template:**
+```markdown
+---
+name: my-expert
+description: What this agent does (use PROACTIVELY for X)
+tools: Read, Edit, Bash, Grep
+---
+
+# My Expert
+
+## CRITICAL RULES (READ FIRST)
+
+1. Read .orchestration/user-request.md BEFORE starting
+2. Evidence required for all work
+3. No claims without proof
+
+## [Rest of agent definition]
+```
+
+---
+
+## 📈 Performance Metrics
+
+**Context Efficiency:**
+- Agent prompts: 1,284 → 370 lines (71% reduction)
+- Context per iteration: 20K → <5K tokens (75% reduction)
+- Agent invocations: Multiple → Single dispatch
+
+**Quality Improvements:**
+- Completion rate: ~40% → 100% enforced
+- Frame maintenance: Manual → Automated
+- Evidence collection: Optional → Mandatory
+- Verification: ~40% → 100% required
+
+---
+
+## 🎨 Design Philosophy
+
+```
+┌──────────────────────────────────────────────────────┐
+│  "Built to solve actual problems,                   │
+│   not just complete tasks."                         │
+│                                                      │
+│  • User perspective maintained throughout           │
+│  • Evidence required for all claims                 │
+│  • 100% verification before presenting              │
+│  • No broken work ever shown                        │
+└──────────────────────────────────────────────────────┘
+```
+
+**Core Values:**
+1. **User truth**: Your exact words are the specification
+2. **Evidence-based**: No claims without proof
+3. **Quality gate**: 100% complete or block
+4. **Transparency**: All work logged and visible
+
+---
+
+## 📄 License
 
 MIT
 
 ---
 
-Built to solve the actual problems, not just complete tasks.
+## 🤝 Contributing
+
+Contributions welcome! The system is intentionally simple:
+- Agents are markdown files with clear structure
+- Coordination is file-based (no complex protocols)
+- Evidence is required for all changes
+- Quality gates enforce completion
+
+See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for guidelines.
+
+---
+
+<div align="center">
+
+**Claude Vibe Code**
+
+*Native agent orchestration • Evidence-based • 100% verification*
+
+Built with [Claude Code](https://claude.com/claude-code)
+
+</div>
