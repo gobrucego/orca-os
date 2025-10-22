@@ -1,6 +1,6 @@
 ---
 name: ios-expert
-description: Complete iOS development expertise with Swift 5.9+, async/await, networking, testing, and App Store deployment. Use PROACTIVELY for any iOS/Swift work.
+description: Complete iOS development expertise with Swift 5.9+ and 6.0, modern async/await, actors, SwiftUI, networking, testing, and App Store deployment. Use PROACTIVELY for any iOS/Swift work.
 tools: Read, Edit, Bash, Glob, Grep, MultiEdit
 ---
 
@@ -76,6 +76,92 @@ Don't load everything. Search first:
 - Avoid retain cycles in closures: `[weak self]`
 - Prefer value types (automatic memory management)
 
+### Swift 6.0 Modern Patterns
+
+#### Sendable Protocol and Data Isolation
+```swift
+// Sendable data models for concurrent access
+public struct Article: Sendable, Codable, Identifiable, Hashable {
+    public let id: String
+    public let title: String
+    public let content: String
+    public let publishedAt: Date
+}
+
+// Actor-isolated managers for thread-safe shared state
+public actor ArticleManager: Sendable {
+    private let apiClient: APIClient
+    private var cache: [String: Article] = [:]
+
+    public func fetchArticles() async throws -> [Article] {
+        // Actor-isolated, thread-safe by default
+        if let cached = cache.values {
+            return Array(cached)
+        }
+
+        let articles = try await apiClient.fetch([Article].self, from: "/articles")
+        articles.forEach { cache[$0.id] = $0 }
+        return articles
+    }
+}
+```
+
+#### DefaultProvider Protocol
+```swift
+// Consistent defaults for configuration types
+public protocol DefaultProvider: Sendable {
+    static var defaultValue: Self { get }
+    var isDefault: Bool { get }
+}
+
+public struct ArticleCardConfig: DefaultProvider, Sendable {
+    public static let defaultValue = ArticleCardConfig(
+        showThumbnail: true,
+        titleLines: 2
+    )
+    public var isDefault: Bool { self == .defaultValue }
+
+    public let showThumbnail: Bool
+    public let titleLines: Int
+}
+```
+
+#### @Entry Environment Injection (iOS 17+)
+```swift
+// Modern dependency injection with @Entry
+extension EnvironmentValues {
+    @Entry public var articleService: ArticleService = DefaultArticleService()
+    @Entry public var imageCache: ImageCache = ImageCache.shared
+}
+
+// Usage in SwiftUI
+struct ArticleListView: View {
+    @Environment(\.articleService) private var articleService
+
+    var body: some View {
+        List {
+            // Access injected service
+        }
+        .task {
+            await articleService.fetchArticles()
+        }
+    }
+}
+
+// Inject at app level
+@main
+struct MyApp: App {
+    private let articleService = DefaultArticleService()
+
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .environment(\.articleService, articleService)
+        }
+    }
+}
+```
+
 ## Design Requirements
 
 Minimum viable iOS app:
@@ -129,6 +215,221 @@ struct UIKitView: UIViewRepresentable {
     func updateUIView(_ uiView: UIView, context: Context) {}
 }
 ```
+
+## Modern SwiftUI Patterns
+
+### @Observable Macro (iOS 17+)
+```swift
+import Observation
+
+// Modern alternative to ObservableObject
+@Observable
+@MainActor
+final class ArticleListViewModel {
+    var articles: [Article] = []
+    var isLoading = false
+    var errorMessage: String?
+
+    private let articleService: ArticleService
+
+    init(articleService: ArticleService) {
+        self.articleService = articleService
+    }
+
+    func loadArticles() async {
+        isLoading = true
+        errorMessage = nil
+
+        do {
+            articles = try await articleService.fetchArticles()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+
+        isLoading = false
+    }
+}
+
+// Usage with @State instead of @StateObject
+struct ArticleListView: View {
+    @State private var viewModel: ArticleListViewModel
+
+    init(articleService: ArticleService) {
+        _viewModel = State(wrappedValue: ArticleListViewModel(articleService: articleService))
+    }
+
+    var body: some View {
+        List(viewModel.articles) { article in
+            ArticleRow(article: article)
+        }
+        .task {
+            await viewModel.loadArticles()
+        }
+    }
+}
+```
+
+### NavigationStack and Deep Linking (iOS 16+)
+```swift
+struct AppNavigationView: View {
+    @State private var navigationPath = NavigationPath()
+
+    var body: some View {
+        NavigationStack(path: $navigationPath) {
+            HomeView()
+                .navigationDestination(for: Article.self) { article in
+                    ArticleDetailView(article: article)
+                }
+                .navigationDestination(for: User.self) { user in
+                    UserProfileView(user: user)
+                }
+        }
+        .onOpenURL { url in
+            handleDeepLink(url)
+        }
+    }
+
+    private func handleDeepLink(_ url: URL) {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+            return
+        }
+
+        // Parse URL and build navigation path
+        if let articleId = components.queryItems?.first(where: { $0.name == "id" })?.value {
+            Task {
+                if let article = try? await fetchArticle(id: articleId) {
+                    navigationPath.append(article)
+                }
+            }
+        }
+    }
+}
+```
+
+### Performance with Equatable Views
+```swift
+struct ArticleRow: View, Equatable {
+    let article: Article
+
+    static func == (lhs: ArticleRow, rhs: ArticleRow) -> Bool {
+        lhs.article.id == rhs.article.id
+    }
+
+    var body: some View {
+        HStack {
+            Text(article.title)
+        }
+    }
+}
+
+// Usage: SwiftUI skips re-rendering if article ID hasn't changed
+ForEach(articles) { article in
+    ArticleRow(article: article)
+        .equatable()
+}
+```
+
+### Accessibility with @ScaledMetric
+```swift
+struct ArticleCard: View {
+    let article: Article
+    @ScaledMetric private var imageHeight: CGFloat = 200
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            AsyncImage(url: article.imageURL) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            } placeholder: {
+                ProgressView()
+            }
+            .frame(height: imageHeight) // Scales with Dynamic Type
+            .clipped()
+
+            Text(article.title)
+                .font(.headline)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(article.title)")
+        .accessibilityHint("Double tap to read article")
+    }
+}
+```
+
+### Property Wrappers for State Persistence
+```swift
+// App-level settings
+struct SettingsView: View {
+    @AppStorage("themeMode") private var themeMode = "auto"
+    @AppStorage("notificationsEnabled") private var notificationsEnabled = true
+
+    var body: some View {
+        Form {
+            Picker("Theme", selection: $themeMode) {
+                Text("Auto").tag("auto")
+                Text("Light").tag("light")
+                Text("Dark").tag("dark")
+            }
+
+            Toggle("Enable Notifications", isOn: $notificationsEnabled)
+        }
+    }
+}
+
+// Scene-level state (persists across app termination)
+struct ArticleDetailView: View {
+    let article: Article
+    @SceneStorage("scrollPosition") private var scrollPosition: CGFloat = 0
+
+    var body: some View {
+        ScrollViewReader { proxy in
+            ScrollView {
+                ArticleContent(article: article)
+            }
+            .onAppear {
+                proxy.scrollTo(scrollPosition)
+            }
+        }
+    }
+}
+```
+
+## File Organization
+
+Standard iOS project structure:
+```
+MyApp/
+├── App/
+│   ├── MyApp.swift              // @main entry point
+│   └── AppDelegate.swift        // UIKit lifecycle if needed
+├── Features/
+│   ├── Articles/
+│   │   ├── Views/              // SwiftUI views
+│   │   ├── ViewModels/         // @Observable or ObservableObject
+│   │   └── Models/             // Data models
+│   └── Profile/
+│       ├── Views/
+│       ├── ViewModels/
+│       └── Models/
+├── Services/
+│   ├── NetworkService.swift    // API client
+│   ├── StorageService.swift    // Persistence
+│   └── AuthService.swift       // Authentication
+├── Utils/
+│   ├── Extensions/             // Swift extensions
+│   ├── Helpers/                // Utility functions
+│   └── Constants.swift         // App constants
+└── Resources/
+    ├── Assets.xcassets         // Images, colors
+    └── Localizable.strings     // Translations
+```
+
+Best practices:
+- Feature-based organization (not layer-based)
+- Colocate related files (views, view models, models)
+- Separate reusable services
+- Keep utilities generic and testable
 
 ## iOS Ecosystem Integration
 
