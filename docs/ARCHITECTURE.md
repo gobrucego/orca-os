@@ -19,8 +19,8 @@ User Request
 workflow-orchestrator (conductor)
     ↓
 Dispatches specialized agents:
-- ios-implementation (iOS/SwiftUI work)
-- design-verification (visual checking)
+- ios-expert (Complete iOS development)
+- swiftui-expert (SwiftUI UI/design)
 - quality-gate (final verification)
     ↓
 Evidence collection
@@ -36,8 +36,8 @@ Present to user
 .claude/
   agents/
     workflow-orchestrator.md    # Coordinates all work
-    ios-implementation.md       # iOS development
-    design-verification.md      # Design requirements
+    ios-expert.md              # Complete iOS development
+    swiftui-expert.md          # SwiftUI UI/design
     quality-gate.md            # Final verification
   commands/
     enhance.md                 # Entry point
@@ -97,17 +97,17 @@ No complex shared state or message passing.
 - **Doesn't**: Implement anything
 - **Key feature**: Maintains user frame throughout
 
-### ios-implementation
-- **Role**: iOS developer
-- **Does**: SwiftUI implementation, testing
+### ios-expert
+- **Role**: Complete iOS developer
+- **Does**: Swift 5.9+, networking, testing, App Store
 - **Doesn't**: Design decisions without user input
 - **Key feature**: Evidence for every change
 
-### design-verification
-- **Role**: Design checker
-- **Does**: Verify visual requirements met
-- **Doesn't**: Make changes (only verify)
-- **Key feature**: Blocks if requirements violated
+### swiftui-expert
+- **Role**: SwiftUI UI/design expert
+- **Does**: Advanced animations, layouts, accessibility
+- **Doesn't**: Skip evidence requirements
+- **Key feature**: Beautiful UI with proof
 
 ### quality-gate
 - **Role**: Final guardian
@@ -183,7 +183,7 @@ Only when:
 The orchestrator will:
 1. Write request to file
 2. Create work plan
-3. Dispatch ios-implementation
+3. Dispatch ios-expert
 4. Collect evidence
 5. Run quality gate
 6. Present only if 100% complete

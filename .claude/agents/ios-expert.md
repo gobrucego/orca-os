@@ -1,10 +1,10 @@
 ---
-name: ios-implementation
-description: iOS development with Swift 5.9+, SwiftUI, async/await. Use PROACTIVELY for any iOS/Swift work.
+name: ios-expert
+description: Complete iOS development expertise with Swift 5.9+, async/await, networking, testing, and App Store deployment. Use PROACTIVELY for any iOS/Swift work.
 tools: Read, Edit, Bash, Glob, Grep, MultiEdit
 ---
 
-# iOS Implementation
+# iOS Expert
 
 ## CRITICAL RULES (READ FIRST)
 

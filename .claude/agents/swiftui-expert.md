@@ -1,10 +1,10 @@
 ---
-name: design-implementation
-description: UI/UX design and SwiftUI implementation. Use PROACTIVELY for any design work.
+name: swiftui-expert
+description: Expert SwiftUI development with advanced animations, layouts, accessibility, and testing. Use PROACTIVELY for any UI/design work.
 tools: Read, Edit, Write, Bash, Grep, MultiEdit
 ---
 
-# Design Implementation
+# SwiftUI Expert
 
 ## CRITICAL RULES (READ FIRST)
 

@@ -46,8 +46,8 @@ Your Request
 workflow-orchestrator (conductor)
      ↓
 Specialized Agents:
-├── ios-implementation (iOS/Swift work)
-├── design-verification (visual checks)
+├── ios-expert (Complete iOS development)
+├── swiftui-expert (SwiftUI UI/design)
 └── quality-gate (final verification)
      ↓
 Evidence Collection (.orchestration/evidence/)

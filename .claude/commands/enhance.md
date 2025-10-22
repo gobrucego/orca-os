@@ -47,8 +47,8 @@ Only present when you can confidently say the user's actual problem is solved.
 ## Available Agents
 
 The orchestrator can dispatch:
-- **ios-implementation**: iOS/SwiftUI development
-- **design-verification**: Visual design checking
+- **ios-expert**: Complete iOS development expertise
+- **swiftui-expert**: Expert SwiftUI UI/design development
 - **quality-gate**: Final verification before presenting
 
 ## Evidence Requirements
