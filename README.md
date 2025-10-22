@@ -58,25 +58,25 @@
 └─────────────────┬───────────────────────────────────────────────┘
                   │
                   ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                   WORKFLOW ORCHESTRATOR                         │
+┌────────────────────────────────────────────────────────────────┐
+│                   WORKFLOW ORCHESTRATOR                        │
 │  • Saves your exact words to .orchestration/user-request.md    │
 │  • Creates work plan in manageable pieces                      │
 │  • Dispatches specialized agents                               │
 │  • Maintains your perspective throughout                       │
-└─────────────────┬───────────────────────────────────────────────┘
+└─────────────────┬──────────────────────────────────────────────┘
                   │
         ┌─────────┴─────────┬─────────────┐
         ▼                   ▼             ▼
-  ┌───────────┐       ┌───────────┐  ┌───────────┐
-  │ ios-expert│       │  swiftui  │  │  quality  │
-  │           │       │  -expert  │  │   -gate   │
-  │ • Swift   │       │ • Layouts │  │ • Verifies│
-  │ • Async   │       │ • Anims   │  │ • Evidence│
-  │ • Testing │       │ • A11y    │  │ • Blocks  │
-  └─────┬─────┘       └─────┬─────┘  └─────┬─────┘
-        │                   │              │
-        └─────────┬─────────┴──────────────┘
+  ┌───────────┐       ┌───────────┐    ┌───────────┐
+  │ ios-expert│       │  swiftui  │    │  quality  │
+  │           │       │  -expert  │    │   -gate   │
+  │ • Swift   │       │ • Layouts │    │ • Verifies│
+  │ • Async   │       │ • Anims   │    │ • Evidence│
+  │ • Testing │       │ • A11y    │    │ • Blocks  │
+  └─────┬─────┘       └─────┬─────┘    └─────┬─────┘
+        │                   │                │
+        └─────────┬─────────┴────────────────┘
                   ▼
     ┌──────────────────────────────────────────┐
     │          EVIDENCE COLLECTION             │
@@ -107,11 +107,11 @@
 ┌──────────────────────────────────────────────────────┐
 │ .orchestration/user-request.md                       │
 │ ──────────────────────────────────────────────────── │
-│ "The text is too small - I can't read it"           │
+│ "The text is too small - I can't read it"            │
 │                                                      │
-│ ✓ Saved verbatim                                    │
-│ ✓ Re-read by orchestrator before each decision      │
-│ ✓ Agents reference YOUR words, not interpretations  │
+│ ✓ Saved verbatim                                     │
+│ ✓ Re-read by orchestrator before each decision       │
+│ ✓ Agents reference YOUR words, not interpretations   │
 └──────────────────────────────────────────────────────┘
 ```
 
@@ -120,11 +120,11 @@
 ┌─────────────────────────────────────────────────────┐
 │ .orchestration/evidence/                            │
 │ ─────────────────────────────────────────────────── │
-│ before.png  ────►  Font size: 12pt (unreadable)    │
-│ after.png   ────►  Font size: 18pt (readable)      │
-│ test.log    ────►  ✓ All tests passing             │
+│ before.png  ────►  Font size: 12pt (unreadable)     │
+│ after.png   ────►  Font size: 18pt (readable)       │
+│ test.log    ────►  ✓ All tests passing              │
 │                                                     │
-│ No evidence = Not done                             │
+│ No evidence = Not done                              │
 └─────────────────────────────────────────────────────┘
 ```
 
@@ -139,7 +139,7 @@
 │ ✅ Dark mode works                           │
 │ ✅ Tests passing                             │
 │                                              │
-│ Status: 100% Complete → Present to user     │
+│ Status: 100% Complete → Present to user      │
 └──────────────────────────────────────────────┘
 ```
 
@@ -322,13 +322,13 @@ tools: Read, Edit, Bash, Grep
 
 ```
 ┌──────────────────────────────────────────────────────┐
-│  "Built to solve actual problems,                   │
-│   not just complete tasks."                         │
+│  "Built to solve actual problems,                    │
+│   not just complete tasks."                          │
 │                                                      │
-│  • User perspective maintained throughout           │
-│  • Evidence required for all claims                 │
-│  • 100% verification before presenting              │
-│  • No broken work ever shown                        │
+│  • User perspective maintained throughout            │
+│  • Evidence required for all claims                  │
+│  • 100% verification before presenting               │
+│  • No broken work ever shown                         │
 └──────────────────────────────────────────────────────┘
 ```
 
