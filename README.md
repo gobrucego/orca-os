@@ -363,7 +363,7 @@ See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for guidelines.
 
 **Vibe with Orca**
 
-*Native agent orchestration • Evidence-based • 100% verification*
+*Native agent orchestration
 
 Built with [Claude Code](https://claude.com/claude-code)
 
