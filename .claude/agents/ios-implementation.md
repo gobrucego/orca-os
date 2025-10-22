@@ -85,65 +85,85 @@ Minimum viable iOS app:
 - **Colors:** System colors preferred for dark mode support
 - **Accessibility:** VoiceOver labels required
 
-## Common Patterns
+## Architecture Patterns
 
-### SwiftUI View with Proper Structure
+### MVVM with Combine
 ```swift
-struct ContentView: View {
-    @State private var text = ""
-    @StateObject private var viewModel = ContentViewModel()
-
-    var body: some View {
-        NavigationStack {
-            VStack(spacing: 16) {
-                // Content here
-            }
-            .padding()
-            .navigationTitle("Title")
-            .task {
-                await viewModel.loadData()
-            }
-        }
-    }
-}
-
-// Separate view model
-@MainActor
-final class ContentViewModel: ObservableObject {
+class ViewModel: ObservableObject {
     @Published var items: [Item] = []
+    private var cancellables = Set<AnyCancellable>()
 
     func loadData() async {
-        // Async work here
+        await NetworkService.shared.fetch()
+            .receive(on: DispatchQueue.main)
+            .sink { items in self.items = items }
+            .store(in: &cancellables)
     }
 }
 ```
 
-### Testing Pattern
+### Networking with URLSession
 ```swift
-import XCTest
-@testable import YourApp
-
-final class FeatureTests: XCTestCase {
-    func testAsyncFunction() async throws {
-        // Given
-        let sut = ViewModel()
-
-        // When
-        await sut.loadData()
-
-        // Then
-        XCTAssertFalse(sut.items.isEmpty)
+func fetch<T: Decodable>(_ type: T.Type, from url: URL) async throws -> T {
+    let (data, response) = try await URLSession.shared.data(from: url)
+    guard let httpResponse = response as? HTTPURLResponse,
+          (200...299).contains(httpResponse.statusCode) else {
+        throw NetworkError.invalidResponse
     }
+    return try JSONDecoder().decode(T.self, from: data)
 }
 ```
+
+### Core Data Setup
+```swift
+@StateObject private var dataController = DataController()
+.environment(\.managedObjectContext, dataController.container.viewContext)
+```
+
+### UIKit Integration
+```swift
+struct UIKitView: UIViewRepresentable {
+    func makeUIView(context: Context) -> UIView {
+        // Complex UIKit component
+    }
+    func updateUIView(_ uiView: UIView, context: Context) {}
+}
+```
+
+## iOS Ecosystem Integration
+
+### CloudKit Sync
+```swift
+CKContainer.default().privateCloudDatabase.save(record) { _, error in }
+```
+
+### Keychain Security
+```swift
+KeychainItem.save(password, service: "app", account: user)
+```
+
+### Apple Pay
+```swift
+PKPaymentAuthorizationViewController(paymentRequest: request)
+```
+
+## App Store Checklist
+- [ ] App icon in all required sizes (1024x1024 for store)
+- [ ] Screenshots for all device sizes
+- [ ] Privacy policy URL
+- [ ] App uses HTTPS for all connections
+- [ ] Export compliance (encryption)
+- [ ] Tested on real devices
+- [ ] No private APIs used
 
 ## Quality Checklist
 - [ ] Builds without warnings
 - [ ] No force unwrapping (!) unless absolutely necessary
 - [ ] Memory leaks checked with Instruments
-- [ ] Accessibility labels added
-- [ ] Dark mode tested
-- [ ] Different screen sizes tested
-- [ ] Tests written for business logic
+- [ ] Accessibility: VoiceOver, Dynamic Type tested
+- [ ] Localization for target markets
+- [ ] Performance: <1s launch, 60fps scrolling
+- [ ] CI/CD pipeline configured
+- [ ] Tests: Unit + UI coverage >80%
 
 Always prioritize user experience, follow Apple HIG, and provide evidence for all work.
