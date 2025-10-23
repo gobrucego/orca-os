@@ -45,7 +45,7 @@
 
 ---
 
-## ⚡ Commands (15 Total)
+## ⚡ Commands (13 Total)
 
 ### Core Orchestration
 
@@ -62,7 +62,6 @@
 | **/concept** | Before building UI/UX | Creative exploration - study references, extract patterns, get approval BEFORE building |
 | **/design** | Design brainstorming | Conversational design with project-specific references, establishes design system baseline |
 | **/inspire** | Need design inspiration | Analyze beautiful design examples to develop aesthetic taste |
-| **/discover** | Finding design references | Browse design collections when you DON'T have specific references |
 | **/save-inspiration** | Found good design example | Save to personal gallery with tags and vision analysis |
 | **/visual-review** | After implementing UI | Visual QA review using chrome-devtools to screenshot and analyze |
 
@@ -72,7 +71,6 @@
 |---------|-------------|--------------|
 | **/agentfeedback** | Providing feedback on completed work | Parses feedback and orchestrates agents to address all points systematically |
 | **/clarify** | Quick mid-workflow question | Focused clarification without full orchestration |
-| **/nav** | Want to see what's available | View complete Claude Code setup (agents, skills, MCPs) in navigable format |
 | **/session-save** | End of session | Save current session context for automatic resumption |
 | **/session-resume** | Start of session | Manually reload session context (normally auto-loads) |
 
@@ -340,7 +338,7 @@ Got a task?
 │
 └─ Is it design-related?
    ├─ Exploration: /concept
-   ├─ Inspiration: /inspire or /discover
+   ├─ Inspiration: /inspire or /save-inspiration
    ├─ Brainstorming: /design
    └─ Verification: /visual-review
 ```

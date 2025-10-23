@@ -236,7 +236,7 @@ All agents live in `agents/` and are organized by function:
 |-------|-----------|------|
 | **workflow-orchestrator** | Pure orchestration coordinator, multi-phase workflows, quality gates | `workflow-orchestrator.md` |
 
-### ⚡ Commands (15 Total)
+### ⚡ Commands (13 Total)
 
 All commands live in `commands/` and extend Claude Code workflows:
 
@@ -255,7 +255,6 @@ All commands live in `commands/` and extend Claude Code workflows:
 | **/concept** | Creative exploration phase - study references, extract patterns, get approval BEFORE building | `concept.md` |
 | **/design** | Conversational design brainstorming with user-provided project-specific references | `design.md` |
 | **/inspire** | Analyze beautiful design examples to develop aesthetic taste before creating | `inspire.md` |
-| **/discover** | Browse design collections when you DON'T have specific refs | `discover.md` |
 | **/save-inspiration** | Save design examples to your personal gallery with tags and vision analysis | `save-inspiration.md` |
 | **/visual-review** | Visual QA review of implemented UI using chrome-devtools to screenshot and analyze | `visual-review.md` |
 
@@ -265,7 +264,6 @@ All commands live in `commands/` and extend Claude Code workflows:
 |---------|-------------|------|
 | **/agentfeedback** | Parse user feedback and orchestrate agents to address all points systematically | `agentfeedback.md` |
 | **/clarify** | Quick focused clarification for mid-workflow questions | `clarify.md` |
-| **/nav** | View your complete Claude Code setup (agents, skills, MCPs) in navigable format | `nav.md` |
 | **/session-save** | Save current session context for automatic resumption | `session-save.md` |
 | **/session-resume** | Manually reload session context (normally auto-loads) | `session-resume.md` |
 | **/all-tools** | (Utility command) | `all-tools.md` |
@@ -468,7 +466,7 @@ cp -r skills/* ~/.claude/skills/
 
 **What you get:**
 - **12 specialized agents** for implementation, planning, quality, and orchestration
-- **15 slash commands** for enhanced workflows
+- **13 slash commands** for enhanced workflows
 - **Project-specific skills** from the superpowers plugin
 
 ### 5. Verify installation
@@ -735,19 +733,17 @@ claude-vibe-code/
 │   └── orchestration/                 # 1 orchestrator
 │       └── workflow-orchestrator.md
 │
-├── commands/                          # All slash commands (15 total)
+├── commands/                          # All slash commands (13 total)
 │   ├── orca.md                       # Multi-agent orchestration
 │   ├── enhance.md                    # Smart task execution
 │   ├── ultra-think.md                # Deep analysis
 │   ├── concept.md                    # Design exploration
 │   ├── design.md                     # Design brainstorming
 │   ├── inspire.md                    # Design inspiration
-│   ├── discover.md                   # Design discovery
 │   ├── save-inspiration.md           # Save design examples
 │   ├── visual-review.md              # Visual QA
 │   ├── agentfeedback.md              # Feedback processing
 │   ├── clarify.md                    # Quick questions
-│   ├── nav.md                        # Setup navigation
 │   ├── session-save.md               # Save session
 │   ├── session-resume.md             # Resume session
 │   └── all-tools.md                  # Utility
