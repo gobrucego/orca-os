@@ -113,6 +113,271 @@ const DataContext = createContext();
 // #PATH_DECISION: Used context when prop drilling > 2 levels
 ```
 
+---
+
+## ⚠️ MANDATORY: Meta-Cognitive Tag Usage for Verification
+
+**CRITICAL:** You MUST mark all assumptions with explicit tags. The verification-agent will check ALL your claims.
+
+See full documentation: `docs/METACOGNITIVE_TAGS.md`
+
+### Why This Matters
+
+**The Problem:** You operate in "generation mode" where you cannot stop to verify assumptions mid-response.
+- You might claim "I created DarkModeToggle.tsx" without checking if file actually exists
+- You might assume "ThemeContext exists" without verifying
+- This causes false completion claims → user frustration → system failure
+
+**The Solution:** Tag assumptions during generation, separate verification-agent verifies after
+
+### Required Tags
+
+#### #COMPLETION_DRIVE - File/Component Assumptions
+
+**Use when:** Assuming a file, component, or module exists
+
+```typescript
+// #COMPLETION_DRIVE: Assuming ThemeContext exists at src/context/ThemeContext.tsx
+import { useTheme } from '@/context/ThemeContext'
+
+// #COMPLETION_DRIVE: Assuming Button component uses height: 44px per design system
+<Button className="h-[44px]">Submit</Button>
+
+// #COMPLETION_DRIVE: Assuming API returns {token: string, user: User}
+const { token, user } = await response.json()
+```
+
+#### #FILE_CREATED - Document in .orchestration/implementation-log.md
+
+**Use when:** You create a NEW file
+
+```markdown
+#FILE_CREATED: src/components/DarkModeToggle.tsx (247 lines)
+  Description: React component with theme context integration
+  Dependencies: ThemeContext, lucide-react icons
+  Purpose: Allow users to toggle between light and dark mode
+```
+
+#### #FILE_MODIFIED - Document in .orchestration/implementation-log.md
+
+**Use when:** You modify an EXISTING file
+
+```markdown
+#FILE_MODIFIED: src/App.tsx
+  Lines affected: 8, 102-115
+  Changes:
+    - Line 8: Added import for DarkModeToggle
+    - Lines 102-115: Added <DarkModeToggle /> to header
+```
+
+#### #SCREENSHOT_CLAIMED - Document in .orchestration/implementation-log.md
+
+**Use when:** Making UI changes (before/after screenshots)
+
+```markdown
+#SCREENSHOT_CLAIMED: .orchestration/evidence/task-123/before-dark-mode.png
+  Description: Application header before dark mode toggle
+  Timestamp: 2025-10-23T14:20:00
+
+#SCREENSHOT_CLAIMED: .orchestration/evidence/task-123/after-dark-mode.png
+  Description: Application header with dark mode toggle in top-right
+  Timestamp: 2025-10-23T14:25:00
+```
+
+#### #COMPLETION_DRIVE_INTEGRATION - API/Service Assumptions
+
+**Use when:** Assuming API behavior or external service integration
+
+```typescript
+// #COMPLETION_DRIVE_INTEGRATION: Assuming /api/login returns {token: string, user: User}
+const response = await fetch('/api/login', {
+  method: 'POST',
+  body: JSON.stringify({ email, password })
+})
+const { token, user } = await response.json()
+```
+
+### Implementation Log Structure
+
+**MANDATORY:** Create `.orchestration/implementation-log.md` for EVERY task
+
+```markdown
+# Implementation Log - Task [ID]: [Title]
+
+## Assumptions Made
+
+#COMPLETION_DRIVE: Assuming ThemeContext exists at src/context/ThemeContext.tsx
+  Context: Saw ThemeContext usage in other components
+  Files affected: src/components/DarkModeToggle.tsx
+
+#COMPLETION_DRIVE: Assuming design system uses 44px button height
+  Context: Following existing Button component pattern
+
+## Files Created
+
+#FILE_CREATED: src/components/DarkModeToggle.tsx (247 lines)
+  Description: Theme toggle button component
+  Dependencies: ThemeContext, lucide-react
+  Purpose: User-facing dark mode toggle
+
+## Files Modified
+
+#FILE_MODIFIED: src/App.tsx
+  Lines affected: 8, 102-115
+  Changes: Added DarkModeToggle import and component to header
+
+#FILE_MODIFIED: src/styles/globals.css
+  Lines affected: 1-20
+  Changes: Added CSS variables for dark mode theme
+
+## Evidence Captured
+
+#SCREENSHOT_CLAIMED: .orchestration/evidence/task-123/before.png
+#SCREENSHOT_CLAIMED: .orchestration/evidence/task-123/after-light.png
+#SCREENSHOT_CLAIMED: .orchestration/evidence/task-123/after-dark.png
+
+## Integration Points
+
+#COMPLETION_DRIVE_INTEGRATION: ThemeContext.toggle() updates theme state
+  Expected behavior: Toggles between 'light' and 'dark'
+  Verification: Runtime test required
+```
+
+### What Happens Next
+
+1. **After you complete implementation:** verification-agent runs
+2. **verification-agent searches for tags:** Uses `grep` to find all your tags
+3. **verification-agent verifies each tag:**
+   - Runs `ls` to check files exist
+   - Runs `grep` to check code exists
+   - Runs `file` to verify screenshots captured
+4. **If verification fails:** Workflow BLOCKS, you must fix issues
+5. **If verification passes:** Workflow continues to quality-validator
+
+### Critical Rules
+
+**DO NOT:**
+❌ Skip tags "to save time" (verification will fail)
+❌ Claim files created without creating them
+❌ Claim screenshots without capturing them
+❌ Verify your own assumptions (that's verification-agent's job)
+❌ Mark work complete without tagging
+
+**DO:**
+✅ Tag EVERY assumption about file existence
+✅ Tag EVERY file you create or modify
+✅ Tag EVERY screenshot claim
+✅ Tag EVERY API/service integration assumption
+✅ Create implementation log for every task
+
+### Example: Adding Dark Mode Feature
+
+**In src/components/DarkModeToggle.tsx:**
+```typescript
+// #COMPLETION_DRIVE: Assuming ThemeContext at src/context/ThemeContext.tsx
+import { useTheme } from '@/context/ThemeContext'
+// #COMPLETION_DRIVE: Assuming lucide-react provides Moon and Sun icons
+import { Moon, Sun } from 'lucide-react'
+
+export function DarkModeToggle() {
+  // #COMPLETION_DRIVE_INTEGRATION: Assuming useTheme() returns {theme, toggle}
+  const { theme, toggle } = useTheme()
+
+  return (
+    <button
+      onClick={toggle}
+      className="btn btn-ghost btn-circle"
+      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+    >
+      {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+    </button>
+  )
+}
+```
+
+**In .orchestration/implementation-log.md:**
+```markdown
+# Implementation Log - Task 123: Add Dark Mode Toggle
+
+## Assumptions Made
+
+#COMPLETION_DRIVE: Assuming ThemeContext exists at src/context/ThemeContext.tsx
+  Context: Found existing theme context in codebase
+  Verification: ls src/context/ThemeContext.tsx
+
+#COMPLETION_DRIVE: Assuming lucide-react is installed
+  Context: Saw lucide-react imports in other components
+  Verification: grep "lucide-react" package.json
+
+## Files Created
+
+#FILE_CREATED: src/components/DarkModeToggle.tsx (32 lines)
+  Description: Theme toggle button with icon switching
+  Dependencies: ThemeContext, lucide-react
+  Purpose: User-facing control for theme switching
+
+## Files Modified
+
+#FILE_MODIFIED: src/App.tsx
+  Lines affected: 8, 45
+  Changes:
+    - Line 8: Added import { DarkModeToggle } from '@/components/DarkModeToggle'
+    - Line 45: Added <DarkModeToggle /> to header navigation
+
+## Evidence Captured
+
+#SCREENSHOT_CLAIMED: .orchestration/evidence/task-123/before-header.png
+  Description: Header without dark mode toggle
+  Timestamp: 2025-10-23T14:20:00
+
+#SCREENSHOT_CLAIMED: .orchestration/evidence/task-123/after-header-light.png
+  Description: Header with dark mode toggle (light mode, moon icon visible)
+  Timestamp: 2025-10-23T14:22:00
+
+#SCREENSHOT_CLAIMED: .orchestration/evidence/task-123/after-header-dark.png
+  Description: Header with dark mode toggle (dark mode active, sun icon visible)
+  Timestamp: 2025-10-23T14:23:00
+```
+
+**Verification Process:**
+1. verification-agent runs `grep "#COMPLETION_DRIVE" .orchestration/implementation-log.md`
+2. verification-agent runs `ls src/context/ThemeContext.tsx` → ✅ exists
+3. verification-agent runs `grep "lucide-react" package.json` → ✅ found
+4. verification-agent runs `ls src/components/DarkModeToggle.tsx` → ✅ exists
+5. verification-agent runs `ls .orchestration/evidence/task-123/*.png` → ✅ all 3 screenshots exist
+6. verification-agent creates verification report: ALL VERIFIED ✅
+7. Quality gate PASSES, work confirmed complete
+
+**Without tags:** You claim "I built it" → verification-agent finds no tags → BLOCKS → "No verifiable claims found"
+
+**With wrong tags:** You claim files created but they don't exist → verification-agent checks → FAILED_VERIFICATION → BLOCKS → "File X claimed but missing"
+
+**With correct tags:** You claim + files exist → verification-agent confirms → VERIFIED → PASSES → User gets working feature
+
+### This Prevents False Completions
+
+**Before (without tags):**
+```
+❌ Agent claims: "I created DarkModeToggle.tsx with theme integration"
+❌ quality-validator: "Looks good based on plan"
+❌ User runs app: File doesn't exist, import fails, app crashes
+❌ Trust destroyed
+```
+
+**After (with tags + verification):**
+```
+✅ Agent claims: #FILE_CREATED: src/components/DarkModeToggle.tsx
+✅ verification-agent: ls src/components/DarkModeToggle.tsx → File exists ✓
+✅ verification-agent: VERIFIED ✓
+✅ quality-validator: Reviews verification report ✓
+✅ User runs app: Works as expected ✓
+✅ Trust maintained
+```
+
+**The tags make quality gates actually work.**
+
+---
+
 ## Core Development Patterns
 
 ### Component Architecture (React + TypeScript)

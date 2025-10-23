@@ -219,7 +219,90 @@ Before ANY agent dispatch:
    TodoWrite: Mark task as completed ONLY after evidence verified
    ```
 
-3. **Quality Gate 2: Development Quality**
+3. **⚠️ CRITICAL: Meta-Cognitive Verification Phase (NEW - MANDATORY)**
+   ```markdown
+   After ALL implementation tasks complete, BEFORE quality-validator:
+
+   Step 1: Check for Implementation Log
+   Read .orchestration/implementation-log.md
+
+   If file missing:
+     #FAILED_VERIFICATION: Implementation agents did not create tag log
+     BLOCK: Cannot proceed without verifiable claims
+     Redispatch implementation agent to create implementation log with tags
+     STOP HERE
+
+   Step 2: Deploy verification-agent
+   Dispatch verification-agent with:
+     Task: "Search for all meta-cognitive tags in .orchestration/implementation-log.md and codebase.
+            For EACH tag found:
+            - Run actual verification commands (ls, grep, Read, file)
+            - Show command outputs in verification report
+            - Mark tags as #VERIFIED or #FAILED_VERIFICATION
+            Create .orchestration/verification-report.md with findings."
+
+     Agent: verification-agent
+     Input: .orchestration/implementation-log.md, entire codebase
+     Output: .orchestration/verification-report.md
+
+   #CRITICAL: verification-agent must run ACTUAL commands, not generate validation
+
+   Step 3: Read Verification Report
+   Read .orchestration/verification-report.md
+
+   Step 4: Check Verification Status
+   If report contains "FAILED VERIFICATIONS":
+     Count failed verifications
+     Read specific failures from report
+
+     BLOCK WORKFLOW:
+     - Do NOT proceed to quality-validator
+     - Do NOT mark tasks complete
+     - Report failures to user with details
+
+     Report to user:
+     "❌ Verification Failed - Quality Gate BLOCKED
+
+     {N} assumptions were incorrect:
+
+     {List each failed verification from report with:
+       - What was claimed
+       - What was actually found
+       - Which file/line
+       - What needs to be fixed
+     }
+
+     Required actions:
+     {List fixes needed}
+
+     Workflow cannot proceed until all verifications pass.
+
+     Details: .orchestration/verification-report.md"
+
+     STOP HERE - Wait for user to fix or approve redispatch
+
+   If report shows "ALL VERIFIED":
+     TodoWrite: Add "Verification phase complete - all assumptions verified"
+     Proceed to Quality Gate 2 (quality-validator)
+     Include verification report as evidence
+
+   If report shows "CONDITIONAL" (runtime tests needed):
+     Report to user:
+     "⏳ Verification Conditional - Manual Testing Required
+
+     All static verifications passed ✓
+
+     {N} items need runtime testing:
+     {List each from report}
+
+     Please test these items before production deployment.
+
+     Proceeding to quality validation with conditional approval."
+
+     Proceed to Quality Gate 2 with note about manual tests needed
+   ```
+
+4. **Quality Gate 2: Development Quality**
    ```markdown
    Dispatch test-engineer with:
    - Input: All implemented code

@@ -149,6 +149,177 @@ const postLoader = new DataLoader(async (userIds) => {
 // #PATTERN_MOMENTUM: Always check query count in logs
 ```
 
+---
+
+## ⚠️ MANDATORY: Meta-Cognitive Tag Usage for Verification
+
+**CRITICAL:** You MUST mark all assumptions with explicit tags. The verification-agent will check ALL your claims.
+
+See full documentation: `docs/METACOGNITIVE_TAGS.md`
+
+### Required Tags for Backend Development
+
+#### #COMPLETION_DRIVE - File/Module/API Assumptions
+
+```typescript
+// #COMPLETION_DRIVE: Assuming UserService exists at src/services/user.service.ts
+import { UserService } from '@/services/user.service'
+
+// #COMPLETION_DRIVE: Assuming database.users table has email column
+const user = await db.users.findOne({ where: { email } })
+
+// #COMPLETION_DRIVE: Assuming JWT_SECRET in environment variables
+const token = jwt.sign(payload, process.env.JWT_SECRET)
+```
+
+#### #COMPLETION_DRIVE_INTEGRATION - External Service Assumptions
+
+```typescript
+// #COMPLETION_DRIVE_INTEGRATION: Assuming Stripe API key is configured
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+
+// #COMPLETION_DRIVE_INTEGRATION: Assuming Redis connection at localhost:6379
+const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379')
+
+// #COMPLETION_DRIVE_INTEGRATION: Assuming external API returns {data, status}
+const response = await axios.get(apiUrl)
+const { data, status } = response
+```
+
+#### #FILE_CREATED / #FILE_MODIFIED - In .orchestration/implementation-log.md
+
+```markdown
+#FILE_CREATED: src/api/routes/auth.ts (156 lines)
+  Description: Authentication endpoints (login, register, refresh)
+  Dependencies: bcrypt, jsonwebtoken, Prisma
+  Purpose: User authentication flow
+
+#FILE_MODIFIED: src/server.ts
+  Lines affected: 12-14, 34
+  Changes: Added auth routes import and middleware registration
+```
+
+#### #SCREENSHOT_CLAIMED - API Testing Evidence
+
+```markdown
+#SCREENSHOT_CLAIMED: .orchestration/evidence/task-234/postman-login-success.png
+  Description: POST /api/login returns 200 with {token, user}
+  Timestamp: 2025-10-23T15:10:00
+
+#SCREENSHOT_CLAIMED: .orchestration/evidence/task-234/postman-protected-route.png
+  Description: GET /api/profile with valid token returns user data
+  Timestamp: 2025-10-23T15:12:00
+```
+
+### Implementation Log Example (Backend)
+
+```markdown
+# Implementation Log - Task 234: Add User Authentication
+
+## Assumptions Made
+
+#COMPLETION_DRIVE: Assuming Prisma schema has User model with email/password fields
+  Context: Read schema.prisma, saw User model
+  Verification: grep "model User" prisma/schema.prisma
+
+#COMPLETION_DRIVE: Assuming bcrypt is installed
+  Context: Saw bcrypt usage in other services
+  Verification: grep "bcrypt" package.json
+
+#COMPLETION_DRIVE_INTEGRATION: Assuming JWT_SECRET in .env file
+  Context: Following existing environment variable pattern
+  Verification: grep "JWT_SECRET" .env.example
+
+## Files Created
+
+#FILE_CREATED: src/api/routes/auth.ts (156 lines)
+  Description: Authentication endpoints
+  Routes: POST /login, POST /register, POST /refresh
+  Dependencies: bcrypt, jsonwebtoken, UserService
+
+#FILE_CREATED: src/services/auth.service.ts (89 lines)
+  Description: Authentication business logic
+  Methods: login(), register(), verifyToken(), refreshToken()
+
+#FILE_CREATED: src/middleware/auth.middleware.ts (45 lines)
+  Description: JWT verification middleware
+  Purpose: Protect routes requiring authentication
+
+## Files Modified
+
+#FILE_MODIFIED: src/server.ts
+  Lines affected: 12, 34-36
+  Changes:
+    - Line 12: Added import for auth routes
+    - Lines 34-36: Registered auth routes at /api/auth
+
+#FILE_MODIFIED: prisma/schema.prisma
+  Lines affected: 45-52
+  Changes: Added passwordHash field to User model (if not exists)
+
+## Evidence Captured
+
+#SCREENSHOT_CLAIMED: .orchestration/evidence/task-234/api-test-login.png
+  Description: Postman test showing POST /api/login success response
+  Shows: {token: "...", user: {...}}
+
+#SCREENSHOT_CLAIMED: .orchestration/evidence/task-234/api-test-protected.png
+  Description: Protected route access with valid JWT token
+  Shows: Successfully authenticated request
+
+## Integration Points
+
+#COMPLETION_DRIVE_INTEGRATION: Database connection available via Prisma client
+  Expected behavior: await prisma.user.findUnique() works
+  Verification: Runtime test required
+
+#COMPLETION_DRIVE_INTEGRATION: JWT tokens expire after 1 hour
+  Expected behavior: Access token expiry = 1h, refresh token = 7d
+  Verification: Check token payload after generation
+```
+
+### Critical Rules for Backend
+
+**DO NOT:**
+❌ Claim API endpoints work without testing them
+❌ Assume database migrations ran successfully without checking
+❌ Skip tagging service/module assumptions
+❌ Claim integration works without evidence (Postman screenshots, curl outputs)
+
+**DO:**
+✅ Tag EVERY assumption about database schema
+✅ Tag EVERY assumption about environment variables
+✅ Tag EVERY external service integration (Redis, S3, Stripe, etc.)
+✅ Provide API test evidence (Postman screenshots or curl outputs)
+✅ Document which routes/endpoints were created/modified
+
+### What verification-agent Checks for Backend
+
+```bash
+# File existence
+ls src/api/routes/auth.ts
+ls src/services/auth.service.ts
+
+# Database schema assumptions
+grep "model User" prisma/schema.prisma
+grep "passwordHash" prisma/schema.prisma
+
+# Dependencies
+grep "bcrypt" package.json
+grep "jsonwebtoken" package.json
+
+# Environment variables (in .env.example)
+grep "JWT_SECRET" .env.example
+
+# API test evidence
+ls .orchestration/evidence/task-234/api-test-*.png
+file .orchestration/evidence/task-234/api-test-login.png
+```
+
+**If ANY check fails → BLOCKED → Must fix before proceeding**
+
+---
+
 ## Core Development Patterns
 
 ### RESTful API Implementation (Node.js + TypeScript)
