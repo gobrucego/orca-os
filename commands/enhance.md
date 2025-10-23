@@ -1,192 +1,392 @@
 ---
-description: Transform vague requests into well-structured implementations with Response Awareness
-allowed-tools: ["Task", "TodoWrite", "Read", "Write", "Edit", "Grep", "Glob"]
+description: Transform vague requests into well-structured prompts using intelligent step selection and Claude 4 best practices
+allowed-tools: [exit_plan_mode, Read, Glob, Task]
+argument-hint: [--debug] <request to enhance>
 ---
 
-# Enhance - Intelligent Request Enhancement with Response Awareness
+# STOP! This is the /enhance command - Enhancement Only!
 
-Transform vague or incomplete requests into well-structured, implementable specifications using Response Awareness patterns.
+**YOUR SOLE PURPOSE**: Transform the user's request into an enhanced prompt, then seek approval.
 
-## Response Awareness Integration
+**YOU MUST**:
+1. Follow the enhancement process below
+2. Present the enhanced prompt clearly
+3. Ask for user approval before any execution
 
-Before enhancing any request, check for these patterns:
+**YOU MUST NOT**:
+1. Start executing immediately
+2. Create implementation todos before approval
+3. Jump to fixing/implementing without permission
 
-**Metacognitive Checks:**
-- `#ASSUMPTION_BLINDNESS` - What assumptions am I making about this request?
-- `#CARGO_CULT` - Am I applying patterns just because they're common?
-- `#PREMATURE_OPTIMIZATION` - Am I adding unnecessary complexity?
-- `#TOOL_OBSESSION` - Am I suggesting complex tools when simple ones suffice?
+**Original Request to Enhance**: $ARGUMENTS
 
-## Enhancement Process
+## Check for Debug Mode
 
-### Step 1: Analyze Request (with #ASSUMPTION_BLINDNESS check)
+If $ARGUMENTS starts with "--debug", enable verbose mode:
+- Remove "--debug" from $ARGUMENTS before processing
+- Set DEBUG_MODE = true
+- Show all analysis steps and reasoning
+Otherwise:
+- Set DEBUG_MODE = false  
+- Provide compact, focused output
+
+## Phase 1: Context Analysis & Intelligence Gathering
+
+If DEBUG_MODE, tell the user: "🔍 Debug mode enabled. Showing detailed analysis..."
+Otherwise, tell the user: "✨ Enhancing your request..."
+
+### Handle Empty Arguments
+If $ARGUMENTS is empty or just whitespace:
+- Ask the user to provide a request with examples
+- DO NOT guess from conversation history
+- Show examples: `/enhance fix bug`, `/enhance implement feature X`
+
+### Analyze Request Context
+Understand the request by identifying:
+- **What's being changed**: Code, configuration, documentation, infrastructure
+- **Risk level**: Production impact, data handling, security implications
+- **Scope**: Single line fix vs architectural change
+- **Technology context**: Language, framework, available tools
+- **Project size**: Consider actual codebase size and complexity for realistic goals
+
+### CRITICAL: Design/UX Work Detection
+
+**Check if this is design/UX work:**
+- Page redesign, layout changes, visual design
+- New UI features, information architecture
+- "Make it elegant", "improve UX", "redesign"
+- Requests about how something should "feel" or "look"
+
+**If YES → STOP and redirect to /concept:**
+
 ```
-Before assuming what the user wants:
-1. Identify explicit requirements
-2. List implicit assumptions
-3. Note ambiguities that need clarification
-4. Check for missing context
-```
+⚠️ DESIGN/UX WORK DETECTED
 
-### Step 2: Clarify Intent (with #COMPLETION_DRIVE resistance)
-```
-Don't rush to implement. First ensure understanding:
-1. What problem is being solved?
-2. Who are the users?
-3. What are the success criteria?
-4. What are the constraints?
-```
+This request requires creative conceptualization before planning.
 
-### Step 3: Structure Enhancement
+You MUST run /concept first to:
+1. Study reference patterns in codebase
+2. Extract what makes them elegant
+3. Brainstorm creative approach
+4. Get concept approval
 
-**Transform vague request into:**
+Then return here with /enhance using the approved concept.
 
-```markdown
-## Enhanced Specification
-
-### Original Request
-[User's original request verbatim]
-
-### Clarified Intent
-#ASSUMPTION_BLINDNESS check - These assumptions need verification:
-- [List all assumptions being made]
-- [Identify what needs user confirmation]
-
-### Requirements Breakdown
-#CARGO_CULT check - Using patterns because they fit, not because they're trendy:
-
-#### Functional Requirements
-1. [Specific, measurable requirement]
-2. [Include acceptance criteria]
-3. [Define edge cases]
-
-#### Non-Functional Requirements
-1. Performance targets
-2. Security requirements
-3. Accessibility standards
-
-### Technical Approach
-#PREMATURE_OPTIMIZATION check - Starting simple:
-1. MVP first approach
-2. Iterative enhancement
-3. Avoid over-engineering
-
-### Implementation Plan
-#TOOL_OBSESSION check - Using appropriate tools:
-- Simple solutions where possible
-- Complex tools only when necessary
-- Clear justification for each choice
-
-### Quality Criteria
-#FALSE_COMPLETION prevention - Evidence required:
-- Specific test cases
-- Measurable outcomes
-- Verification methods
-
-### Risk Assessment
-#IMPLEMENTATION_SKEW prevention:
-- Potential drift points
-- Mitigation strategies
-- Checkpoints for alignment
+Please run: /concept [your request]
 ```
 
-## Enhancement Patterns
+**DO NOT proceed with /enhance for design work without /concept first.**
 
-### For Feature Requests
+**Exception:** If user explicitly says "I already have a concept" or provides detailed creative direction, proceed but note it in the enhanced prompt.
+
+### Read Project Rules
+Check for and read CLAUDE.md files:
+- Use Read or Glob to find CLAUDE.md in current and parent directories
+- Extract rules relevant to the detected context
+- Store for inclusion in enhancement
+
+## Phase 2: Intelligent Step Selection
+
+Based on your analysis, dynamically select relevant steps from the dictionary below.
+No rigid rules - use Claude's reasoning to pick what adds value.
+
+### Selection Guidelines
+
+**Baseline (all requests):**
+- Steps 1-2 (Claude 4 fundamentals: clarity and context)
+- Step 7 (load project rules)
+- Step 8 (parse requirements)
+
+**Risk-Based Additions:**
+- **Low risk** (typo, docs): Baseline only
+- **Medium risk** (features): Add steps 3, 5, 9, 11
+- **High risk** (auth, payments): Add steps 10, 12, 13, 16
+- **Critical** (production): All relevant steps
+
+**Examples:**
+- "Fix typo in README" → [1, 2, 7, 8]
+- "Add login feature" → [1, 2, 3, 5, 6, 7, 8, 9, 11, 16, 18]
+- "Database migration" → [1, 2, 7, 8, 9, 13, 17, 20]
+- "Production deploy" → [1, 2, 5, 7, 8, 9, 13, 14, 23, 24]
+
+Mark operations that can run in parallel with 🔄
+
+## Phase 3: Step Dictionary
+
+### Claude 4 Foundation Steps (1-6)
+1. **BE_CLEAR_EXPLICIT**: Write precise, unambiguous requirements with specific expectations
+2. **PROVIDE_CONTEXT**: Explain why this matters and motivation behind the task
+3. **USE_EXAMPLES**: Include relevant examples that match desired behavior and output
+4. **FORMAT_MATCHING**: Match prompt style to desired output style (e.g., avoid markdown if not wanted)
+5. **PARALLEL_TOOLS**: Identify operations that can run simultaneously for efficiency 🔄
+6. **ROLE_PROMPTING**: Define specific expert role (e.g., "Act as a senior security engineer")
+
+### Core Enhancement Steps (7-10)
+7. **CONTEXT_LOAD**: Read CLAUDE.md and incorporate project-specific rules
+8. **REQUIREMENT_PARSE**: Extract and structure clear requirements from the request
+9. **CONTRARIAN_THINK**: Challenge assumptions, identify risks, find edge cases
+10. **GENERAL_SOLUTION**: Focus on robust, generalizable solutions (not just passing tests)
+
+### Validation & Review Steps (11-15)
+11. **TEST_STRATEGY**: Define comprehensive test scenarios and coverage requirements
+12. **CODE_REVIEW**: If zen MCP available, trigger deep code analysis
+13. **ROLLBACK_PLAN**: Create recovery strategy for potential failures
+14. **MONITORING**: Define observability, metrics, and alerting requirements
+15. **VALIDATION_CRITERIA**: Set clear success metrics and acceptance criteria
+
+### Specialized Domain Steps (16-25)
+16. **SECURITY_AUDIT**: Vulnerability scanning, threat modeling, sanitization checks
+17. **MIGRATION_PLAN**: Schema changes, data transformation, backup verification
+18. **API_CONTRACT**: Interface compatibility, versioning, backward compatibility
+19. **ACCESSIBILITY**: ARIA labels, keyboard navigation, screen reader support
+20. **PERFORMANCE_PROFILE**: Bottleneck analysis, caching strategy, optimization
+21. **COMPLIANCE_CHECK**: GDPR, SOC2, PCI, regulatory requirements
+22. **SCALING_REVIEW**: Load handling, capacity planning, resource limits
+23. **FEATURE_FLAG**: Progressive rollout, A/B testing, kill switch
+24. **INCIDENT_PREP**: Runbook creation, alert configuration, on-call setup
+25. **ARCHITECTURE_REVIEW**: System design implications, dependency impacts
+
+## Phase 4: Generate Enhanced Prompt
+
+### For DEBUG_MODE = true (verbose output):
+
+Use the FULL format with all details:
+
 ```
-Original: "Add a search feature"
+Enhanced Prompt: [Clear, action-oriented title]
 
-Enhanced:
-- Search scope (what's searchable?)
-- Search algorithm (fuzzy? exact?)
-- Performance requirements (<200ms?)
-- Result presentation (pagination? filters?)
-- Edge cases (empty results? special characters?)
+🔍 DEBUG: ANALYSIS RESULTS
+- Original request: "$ARGUMENTS"
+- Detected context: [What you identified]
+- Risk assessment: [Low/Medium/High/Critical]
+- Project size: [Small/Medium/Large]
+
+DETECTED TASK TYPE:
+Primary intent: [Implementation/Analysis/Debugging/Documentation/Architecture]
+Relevant contexts: [file-operations, testing, code-quality, etc.]
+Risk level: [Low/Medium/High/Critical]
+
+INTELLIGENT STEP SELECTION:
+Applied steps from dictionary: [1, 2, 7, 8, ...] 
+- Step 1 (BE_CLEAR_EXPLICIT): For precise requirements
+- Step 2 (PROVIDE_CONTEXT): To explain motivation
+- Step 7 (CONTEXT_LOAD): To read project rules
+[Continue for each selected step with reasoning]
+
+CONTEXT & MOTIVATION:
+[3-5 sentences explaining why this matters]
+[Background information and current situation]
+[Why each requirement is important]
+
+CONTRARIAN ANALYSIS:
+[If step 9 selected, include challenging questions]
+- Is this solving the real problem or just symptoms?
+- What assumptions are we making that could be wrong?
+- Could a simpler approach achieve the same result?
+- What if we did nothing instead?
+- Is there a 10x better solution we're missing?
+
+MEMORY & PAST SOLUTIONS:
+[Check for relevant past work]
+- If claude-self-reflect available: Search for "[relevant terms]"
+- If not available: Check git log for similar changes
+- Expected insights: [what we might learn from history]
+
+EXTERNAL TOOLS & RESOURCES:
+[Recommend MCP tools based on task and availability]
+- If zen MCP available: Use [specific zen tools] for [purpose]
+- If context7 available: Fetch documentation for [libraries/frameworks]
+- If claude-self-reflect available: Search past solutions for [pattern]
+- If grep MCP available: Search GitHub for [code examples]
+- Fallback tools: Use Read/Glob/Task for [specific purposes]
+
+PROJECT RULES (from CLAUDE.md):
+[Detected context: list categories]
+- [Specific rule relevant to this context]
+- [Another relevant rule]
+- [Only include rules that directly apply]
+
+OBJECTIVE:
+[One clear sentence stating what needs to be accomplished]
+
+REQUIREMENTS:
+Based on selected steps, the requirements are:
+- [Clear requirement 1] 🔄
+- [Clear requirement 2] 🔄
+- [Mark parallel operations with 🔄]
+- [Each should be measurable]
+- [Include validation steps from selected steps]
+
+ORCHESTRATION PLAN:
+[Intelligently select agents and skills based on task context]
+
+**Required Skills:**
+- If UI/design work → design-with-precision skill
+- If creating components → uxscii-component-creator skill
+- If TDD approach → test-driven-development skill
+- If needs clarification mid-workflow → Use /clarify command (NOT brainstorming)
+
+**Agent Waves (execute in parallel where possible):**
+
+Wave 1 - Planning & Analysis:
+  🔄 [If needs architecture] → system-architect agent
+  🔄 [If needs design/UX] → design-engineer agent
+
+Wave 2 - Implementation:
+  → [domain-specific agent] (e.g., ios-engineer, frontend-engineer, backend-engineer, android-engineer, cross-platform-mobile)
+  [Implementation agents run sequentially after planning completes]
+
+Wave 3 - Quality Gates (MANDATORY):
+  → quality-validator agent - MUST review before presenting
+  → [If security-sensitive] security-auditor agent
+
+**Task List with Agent Assignments:**
+1. [Task description] → Use [specific skill/agent]
+2. [Task description] → Use [specific skill/agent]
+3. Review implementation → Use quality-validator agent (MANDATORY)
+
+**Agent Selection Guide:**
+- UI/CSS/styling/UX → design-engineer agent
+- React/Next.js/Web → frontend-engineer agent
+- iOS/Swift/SwiftUI → ios-engineer agent
+- Android/Kotlin → android-engineer agent
+- Mobile cross-platform → cross-platform-mobile agent
+- Backend/API → backend-engineer agent
+- Code review → quality-validator agent (ALWAYS)
+- Security → security-auditor agent
+- Complex orchestration → workflow-orchestrator agent
+
+EDGE CASES & ROBUSTNESS:
+- [Boundary conditions: empty, null, maximum values]
+- [Concurrent access scenarios]
+- [External dependency failures]
+- [Security implications]
+- [Performance under load]
+- [Error recovery paths]
+
+CONSTRAINTS:
+- [Technical limitations]
+- [Time constraints]
+- [Resource constraints]
+- [Compatibility requirements]
+
+DELIVERABLES:
+- [Specific output 1]
+- [Specific output 2]
+- [Documentation updates]
+- [Test coverage if step 11 selected]
+
+SUCCESS CRITERIA:
+- [ ] [Measurable outcome 1]
+- [ ] [Measurable outcome 2]
+- [ ] All tests pass (if step 11 selected)
+- [ ] Code review passed (if step 12 selected)
+- [ ] Security validated (if step 16 selected)
+- [ ] Performance targets met (if step 20 selected)
+- [ ] Edge cases handled gracefully
+- [ ] Documentation updated
+
+MEASURABLE OUTCOMES:
+[Be realistic based on project scope and complexity]
+- [ ] [Achievable deliverable based on actual codebase size]
+- [ ] [Realistic quality metric - e.g., "10-20% improvement" not "50% reduction"]
+- [ ] [Practical performance target aligned with current baseline]
+- [ ] [User acceptance criteria that can be verified]
+
+IMPORTANT: Keep measurable outcomes realistic:
+- For small projects: Focus on incremental improvements (10-30%)
+- For bug discovery: 2-3 real bugs is more realistic than 5 critical bugs
+- For optimization: Consider current performance baseline
+- For new features: Account for learning curve and integration complexity
 ```
 
-### For Bug Reports
+### For DEBUG_MODE = false (compact output):
+
+Use this STREAMLINED format without verbose details:
+
 ```
-Original: "The app crashes sometimes"
+Enhanced Prompt: [Clear, action-oriented title]
 
-Enhanced:
-- Reproduction steps
-- Environment details
-- Expected vs actual behavior
-- Error messages/logs
-- Frequency and impact
+OBJECTIVE:
+[One clear sentence stating what needs to be accomplished]
+
+CONTEXT:
+[2-3 sentences on why this matters and current situation]
+
+APPROACH:
+Using intelligent analysis, I've selected [number] enhancement steps focusing on [key areas].
+
+REQUIREMENTS:
+- [Core requirement 1] 🔄
+- [Core requirement 2] 🔄
+- [Core requirement 3]
+[List 5-7 most important requirements with parallel markers]
+
+ORCHESTRATION PLAN:
+**Skills:** [e.g., brainstorming (if concept), design-with-precision (if UI)]
+**Agents:**
+- Wave 1: [Planning agents, parallel if possible] 🔄
+- Wave 2: [Implementation agents]
+- Wave 3: quality-validator (MANDATORY)
+
+**Todos:**
+1. [Task] → [agent/skill to use]
+2. [Task] → [agent/skill to use]
+3. Review → quality-validator
+
+KEY CONSIDERATIONS:
+- [Most important edge case or risk]
+- [Critical constraint]
+- [Primary validation need]
+
+TOOLS & RESOURCES:
+- Primary: [Most relevant MCP tool if available]
+- Memory: [Quick search term for past solutions]
+- Fallback: [Core allowed tools]
+
+DELIVERABLES:
+- [Main output 1]
+- [Main output 2]
+- [Test/validation requirement]
+
+SUCCESS CRITERIA:
+- [ ] [Most important measurable outcome]
+- [ ] [Second key metric - realistic target]
+- [ ] [Quality validation]
 ```
 
-### For Performance Issues
-```
-Original: "Make it faster"
+## Phase 5: Present Using exit_plan_mode
 
-Enhanced:
-- Current performance metrics
-- Target performance goals
-- Bottleneck identification
-- Optimization priorities
-- Measurement methods
+After generating and displaying the enhanced prompt above, call exit_plan_mode with the complete enhanced prompt:
+
+```
+exit_plan_mode(plan="[Your complete enhanced prompt here]")
 ```
 
-## Multi-Phase Enhancement
-
-### Phase 1: Requirement Enhancement
-Dispatch to requirement-analyst:
-- Elicit hidden requirements
-- Create user stories
-- Define acceptance criteria
-
-### Phase 2: Technical Enhancement
-Dispatch to system-architect:
-- Design technical approach
-- Identify components
-- Define interfaces
-
-### Phase 3: Implementation Enhancement
-Create detailed specifications for:
-- Frontend components
-- Backend services
-- Database schemas
-- API contracts
-
-## Quality Gates for Enhancement
-
-**Enhancement Completeness (Must achieve 95%):**
-- [ ] All assumptions explicitly stated
-- [ ] Success criteria defined
-- [ ] Edge cases identified
-- [ ] Technical approach clear
-- [ ] Risks assessed
-- [ ] Evidence requirements specified
-
-## Common Enhancement Mistakes to Avoid
-
-**#ASSUMPTION_BLINDNESS:**
-- Don't assume technology stack
-- Don't assume user expertise
-- Don't assume scope
-
-**#CARGO_CULT:**
-- Don't add microservices because it's trendy
-- Don't use complex patterns for simple problems
-- Don't copy solutions without understanding context
-
-**#PREMATURE_OPTIMIZATION:**
-- Start with working solution
-- Optimize based on actual metrics
-- Don't guess performance bottlenecks
-
-## Output Format
-
-Enhanced specifications should be:
-1. **Clear** - No ambiguity
-2. **Complete** - All aspects covered
-3. **Testable** - Verifiable outcomes
-4. **Prioritized** - MVP vs nice-to-have
-5. **Evidenced** - Proof requirements defined
+This will create the Yes/No arrow selection modal for user approval.
 
 ## Remember
 
-Enhancement is about clarity and completeness, not complexity. Simple, clear specifications lead to better implementations than complex, ambiguous ones.
+**For NORMAL mode (default):**
+- Use compact format - focus on essentials
+- Don't show step numbers or selection reasoning
+- Keep output concise and actionable
+- Include only the most critical requirements and success criteria
+- ALWAYS ask for approval before execution
 
-#CONTEXT_ROT prevention: Keep specifications separate from implementation details.
+**For DEBUG mode (--debug flag):**
+- Use verbose format with all sections
+- Show step selection reasoning
+- Include detailed analysis results
+- Display all requirements and considerations
+- Still ask for approval before execution
+
+**Both modes:**
+- Start with appropriate greeting (✨ or 🔍)
+- Trust Claude's intelligence to select relevant steps
+- Mark parallel operations with 🔄 for efficiency
+- Focus on clarity and context (Claude 4 fundamentals)
+- BE REALISTIC in measurable outcomes based on project scope
+- ALWAYS seek user approval before executing
+
+The goal is to provide the right level of detail: compact for quick enhancement, verbose for understanding the analysis process, but ALWAYS with user control over execution.

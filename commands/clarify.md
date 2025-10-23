@@ -1,228 +1,155 @@
 ---
-description: Quick focused clarification with metacognitive assumption checking
-allowed-tools: ["Read", "Grep", "Glob", "TodoWrite"]
+description: Quick focused clarification for mid-workflow questions without interrupting agent orchestration
+allowed-tools: [AskUserQuestion, Read]
+argument-hint: <what needs clarification>
 ---
 
-# Clarify - Metacognitive Assumption Checking
+# /clarify - Quick Mid-Workflow Clarification
 
-Quick, focused clarification for mid-workflow questions using Response Awareness to identify and verify assumptions.
+**PURPOSE**: Get a quick, focused answer to a specific question WITHOUT hijacking the current workflow.
 
-## Core Purpose
+**DO NOT**:
+- Explore alternatives (that's brainstorming)
+- Challenge assumptions (that's brainstorming)
+- Refine the entire concept (that's brainstorming)
+- Take over the workflow
 
-**Stop #ASSUMPTION_BLINDNESS before it causes problems.**
+**DO**:
+- Ask ONE focused question
+- Present clear options if applicable
+- Get the answer
+- Return to work IMMEDIATELY
 
-When you're unsure about something, this command helps you:
-1. Identify what assumptions you're making
-2. Check if those assumptions are valid
-3. Get clear answers before proceeding
-4. Prevent cascade failures from bad assumptions
+---
 
-## Metacognitive Checking Process
+## What Needs Clarification?
 
-### Step 1: Identify the Assumption
+**User's question:** $ARGUMENTS
 
-```markdown
-## What I Think I Know
+## Quick Analysis
 
-**Explicit Statement:**
-"I believe [specific assumption] because [reasoning]"
+Read the question and determine:
+1. What specifically is unclear?
+2. What are the likely options?
+3. Can this be answered with a simple choice?
 
-**Confidence Level:**
-- Certain (90-100%) - Based on explicit evidence
-- Probable (70-89%) - Based on strong patterns
-- Possible (50-69%) - Based on weak signals
-- Guessing (0-49%) - No real evidence
+## Present Options
 
-**Source:**
-- User stated explicitly
-- Inferred from context
-- Common pattern
-- Pure assumption
+Use AskUserQuestion with:
+- **Question**: Rephrase user's clarification need clearly
+- **Header**: Short label (max 12 chars)
+- **Options**: 2-4 clear choices
+- **MultiSelect**: Only if multiple options can be chosen
 
-#ASSUMPTION_BLINDNESS check: Is this actually true or am I assuming?
+**Example patterns:**
+
+**Which reference doc?**
+```javascript
+AskUserQuestion({
+  questions: [{
+    question: "Which document should we use as the source of truth?",
+    header: "Reference",
+    multiSelect: false,
+    options: [
+      {label: "CLAUDE.md", description: "Project-specific rules"},
+      {label: "Design System", description: "OBDN Design System v3.0"},
+      {label: "API Docs", description: "Backend API specification"}
+    ]
+  }]
+})
 ```
 
-### Step 2: Validate the Assumption
-
-```markdown
-## Validation Approach
-
-**Can be verified by:**
-- [ ] Reading existing code/documentation
-- [ ] Checking project structure
-- [ ] Reviewing previous decisions
-- [ ] Testing the assumption
-- [ ] Asking the user directly
-
-**Evidence that would confirm:**
-- [Specific file or pattern]
-- [Test result]
-- [Documentation excerpt]
-- [User confirmation]
-
-**Evidence that would refute:**
-- [Contradicting pattern]
-- [Alternative approach]
-- [Missing expected structure]
+**Which approach for implementation?**
+```javascript
+AskUserQuestion({
+  questions: [{
+    question: "Which implementation approach should we use?",
+    header: "Approach",
+    multiSelect: false,
+    options: [
+      {label: "Option A", description: "Faster but less flexible"},
+      {label: "Option B", description: "More robust but takes longer"},
+      {label: "Hybrid", description: "Combine both approaches"}
+    ]
+  }]
+})
 ```
 
-### Step 3: Check for Cascading Assumptions
-
-```markdown
-## Assumption Dependencies
-
-**If this assumption is wrong, what else breaks?**
-
-Primary Assumption: [main assumption]
-├── Dependent Assumption 1
-│   └── Sub-assumption 1.1
-├── Dependent Assumption 2
-└── Dependent Assumption 3
-
-#IMPLEMENTATION_SKEW risk: How far will we drift if this is wrong?
+**Which agents should handle this?**
+```javascript
+AskUserQuestion({
+  questions: [{
+    question: "Which agent should handle the design work?",
+    header: "Agent",
+    multiSelect: false,
+    options: [
+      {label: "design-engineer", description: "Full design system and UX approach"},
+      {label: "frontend-engineer", description: "Frontend implementation with design"},
+      {label: "ios-engineer", description: "iOS development with design systems"}
+    ]
+  }]
+})
 ```
 
-## Common Clarification Patterns
-
-### Technology Stack Assumptions
-```
-ASSUME: "This is a React project"
-CHECK:
-- Look for package.json
-- Check for React imports
-- Find .jsx/.tsx files
-VERIFY: Don't assume framework from file extensions alone
-```
-
-### Architecture Assumptions
-```
-ASSUME: "This uses microservices"
-CHECK:
-- Look for service boundaries
-- Check deployment configuration
-- Review API structure
-VERIFY: Monolith with modules ≠ microservices
+**What features are in scope?**
+```javascript
+AskUserQuestion({
+  questions: [{
+    question: "Which features should we include in this release?",
+    header: "Features",
+    multiSelect: true,  // Allow multiple selections
+    options: [
+      {label: "Authentication", description: "User login/signup"},
+      {label: "Payment", description: "Stripe integration"},
+      {label: "Analytics", description: "Usage tracking"},
+      {label: "Notifications", description: "Push notifications"}
+    ]
+  }]
+})
 ```
 
-### User Intent Assumptions
-```
-ASSUME: "User wants a complete rewrite"
-CHECK:
-- Review exact wording
-- Look for qualifiers ("update", "fix", "refactor")
-- Check scope indicators
-VERIFY: "Improve" doesn't mean "replace everything"
-```
+## After Getting Answer
 
-### State Assumptions
+1. Acknowledge the answer briefly
+2. State how this clarification affects the current work
+3. **Continue with the original agent orchestration** - don't restart from scratch
+
+**Example:**
 ```
-ASSUME: "The database exists and has this schema"
-CHECK:
-- Look for migrations
-- Check schema files
-- Review model definitions
-VERIFY: Don't assume structure from code alone
+✅ Got it - we'll use the OBDN Design System v3.0 as reference.
+
+This means the design-engineer agent will apply the existing spacing
+and typography rules rather than creating new ones.
+
+Continuing with Wave 1 agents...
 ```
 
-## Quick Clarification Checklist
+## Important Rules
 
-**Before proceeding with any assumption:**
+**This is NOT brainstorming:**
+- Don't ask "why" repeatedly
+- Don't explore alternatives the user didn't ask about
+- Don't challenge the premise
+- Don't turn one question into a full design session
 
-1. **#ASSUMPTION_BLINDNESS**
-   - [ ] Have I stated the assumption explicitly?
-   - [ ] Is there evidence for this assumption?
-   - [ ] What's my confidence level?
+**This IS clarification:**
+- One focused question
+- Clear options
+- Quick answer
+- Back to work
 
-2. **#CARGO_CULT**
-   - [ ] Am I assuming this because it's common?
-   - [ ] Does this pattern actually apply here?
-   - [ ] Am I copying without understanding?
+**When to use /clarify vs brainstorming:**
+- `/clarify` → Mid-workflow, specific question, agent work in progress
+- `brainstorming` → New project, concept undefined, need to explore alternatives
 
-3. **#FALSE_COMPLETION**
-   - [ ] Will this assumption lead to incomplete work?
-   - [ ] Can I verify completion without this being true?
-   - [ ] What evidence would prove this assumption?
+---
 
-4. **#IMPLEMENTATION_SKEW**
-   - [ ] Will this assumption cause drift from requirements?
-   - [ ] How can I stay aligned if I'm wrong?
-   - [ ] Where are the checkpoints?
+## Summary
 
-## Clarification Response Format
+1. Read what needs clarification
+2. Create focused AskUserQuestion with 2-4 clear options
+3. Get answer
+4. State how it affects current work
+5. **Continue with existing agent orchestration**
 
-```markdown
-## Clarification Result
-
-### Original Uncertainty
-[What you were unsure about]
-
-### Assumptions Identified
-1. [Assumption 1] - Confidence: X%
-2. [Assumption 2] - Confidence: X%
-
-### Verification Results
-✅ Confirmed: [What was verified]
-❌ Refuted: [What was wrong]
-⚠️ Uncertain: [Still needs clarification]
-
-### Recommendation
-Based on verification:
-- Proceed with: [validated approach]
-- Avoid: [invalidated approach]
-- Ask user about: [remaining uncertainties]
-
-### Impact if Wrong
-If assumptions prove incorrect:
-- Rework needed: [scope]
-- Time impact: [estimate]
-- Alternative approach: [backup plan]
-```
-
-## Integration with Workflow
-
-### When to Use /clarify
-
-**During Planning:**
-- Before making architectural decisions
-- When requirements seem ambiguous
-- Before choosing technology stack
-
-**During Implementation:**
-- When multiple approaches seem valid
-- Before making breaking changes
-- When pattern isn't clear
-
-**During Validation:**
-- When success criteria unclear
-- Before marking complete
-- When evidence is ambiguous
-
-### Quick Checks vs Deep Analysis
-
-**Use /clarify for quick checks:**
-- Single assumption verification
-- Binary decisions (A or B?)
-- Rapid validation (<2 minutes)
-
-**Dispatch to agents for deep analysis:**
-- Multiple interconnected assumptions
-- Complex architectural decisions
-- Comprehensive validation needed
-
-## Common Mistakes to Avoid
-
-**Don't Skip Clarification Because:**
-- "It's probably fine" → #FALSE_COMPLETION risk
-- "This is how it's usually done" → #CARGO_CULT risk
-- "I'll fix it later if wrong" → #IMPLEMENTATION_SKEW risk
-- "The user would have said" → #ASSUMPTION_BLINDNESS risk
-
-## Remember
-
-**Every assumption is a potential bug.**
-
-Better to spend 30 seconds clarifying than 30 minutes fixing wrong assumptions.
-
-When in doubt, check. When confident, still check.
-
-#ASSUMPTION_BLINDNESS is the root of most failures. This command is your defense.
+The goal is speed and focus - not exploration.
