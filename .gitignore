@@ -26,13 +26,19 @@ archive/originals/awesome-swift-claude-code-subagents/
 mcp/chrome-devtools-mcp/
 mcp/xcodebuildmcp/
 
-# Internal documentation and logs (not for GitHub)
+# Implementation (not ready for public GitHub yet)
+agents/
+commands/
+hooks/
+
+# Internal documentation and logs
 .claude-session-context.md
 .claude-orchestration-context.md
 CHANGELOG.md
 QA_AUDIT_*.md
 archive/
 examples/
-skills/skills/
+skills/
 docs/
 qa-logs/
+::archive/
