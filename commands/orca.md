@@ -125,53 +125,493 @@ Based on detection, select the appropriate predefined team:
 
 **When to Use**: iOS/SwiftUI apps, native iOS development
 
-**Team Composition**:
-- `ios-engineer` → Comprehensive iOS development: Swift 6.0, SwiftUI, modern iOS patterns, async/await, actors, networking, testing, App Store deployment, UI/UX implementation, design systems
-- `quality-validator` → Final verification before presenting to user
+**Team Composition**: Dynamic (7-15 agents based on complexity)
 
-**Verification**: Simulator screenshots + build verification required before completion
+#### Base Team (Always Included - 5 agents):
+
+1. **requirement-analyst** → Requirements analysis ONLY
+   - Analyzes user request
+   - Creates user stories with acceptance criteria
+   - Defines scope and constraints
+   - Hands off to: system-architect
+
+2. **system-architect** → Architecture design ONLY
+   - Designs iOS app architecture (state-first vs TCA)
+   - Defines data models and navigation patterns
+   - Makes tech decisions (SwiftUI vs UIKit, SwiftData vs Core Data)
+   - Creates API contracts and service boundaries
+   - **Detects app complexity** → recommends iOS specialists
+   - Hands off to: design-engineer
+
+3. **design-engineer** → UI/UX design ONLY
+   - Creates design system (colors, typography, spacing)
+   - Defines accessibility requirements (VoiceOver, Dynamic Type)
+   - Specifies UI components and interaction patterns
+   - Ensures WCAG 2.1 AA compliance
+   - Hands off to: iOS specialists
+
+4. **verification-agent** → Tag verification ONLY (MANDATORY)
+   - Searches for meta-cognitive tags (#COMPLETION_DRIVE, #FILE_CREATED, etc.)
+   - Runs actual verification commands (ls, grep, xcodebuild)
+   - Creates verification-report.md
+   - Blocks if any verification fails
+   - Hands off to: quality-validator
+
+5. **quality-validator** → Final validation ONLY (MANDATORY)
+   - Reads user-request.md to verify ALL requirements met
+   - Reviews verification-report.md for evidence
+   - Checks all acceptance criteria
+   - Blocks if <100% complete
+   - Approves delivery to user
+
+#### iOS Specialists (Choose 2-10 based on complexity):
+
+**Category 1: UI Implementation (choose 1-2)**
+- **swiftui-developer** → Modern SwiftUI (iOS 15+), @Observable, default MainActor isolation
+- **uikit-specialist** → UIKit for complex controls, legacy support (iOS 14 and earlier)
+- **ios-accessibility-tester** → WCAG 2.1 AA compliance, VoiceOver, accessibility audit
+
+**Category 2: Data Persistence (choose 0-2)**
+- **swiftdata-specialist** → SwiftData for iOS 17+ (@Model, ModelContext, @Query)
+- **coredata-expert** → Core Data for iOS 16 and earlier, CloudKit sync, complex models
+
+**Category 3: Networking (choose 0-2)**
+- **urlsession-expert** → URLSession with async/await for REST APIs
+- **combine-networking** → Combine for reactive patterns, complex data flows
+- **ios-api-designer** → Design mobile-optimized APIs (pagination, caching, offline-first)
+
+**Category 4: Architecture (choose 1)**
+- **state-architect** → State-first architecture (default), @Observable, unidirectional flow
+- **tca-specialist** → The Composable Architecture for complex apps
+- **observation-specialist** → @Observable optimization, performance tuning
+
+**Category 5: Testing (choose 1-2)**
+- **swift-testing-specialist** → Swift Testing framework (default for Swift 6.2)
+- **xctest-pro** → XCTest for legacy support (iOS 16 and earlier)
+- **ui-testing-expert** → XCUITest for UI automation
+
+**Category 6: Quality & Debugging (choose 0-2)**
+- **swift-code-reviewer** → Code quality, Swift 6.2 concurrency safety
+- **ios-debugger** → LLDB, Instruments, memory/performance debugging
+
+**Category 7: DevOps (choose 0-2)**
+- **xcode-cloud-expert** → Xcode Cloud CI/CD, TestFlight automation
+- **fastlane-specialist** → Fastlane for complex deployments, screenshots
+
+**Category 8: Performance (choose 0-1)**
+- **ios-performance-engineer** → Instruments profiling, optimization
+
+**Category 9: Security (choose 0-2)**
+- **ios-security-tester** → Keychain, CryptoKit, certificate pinning, biometric auth
+- **ios-penetration-tester** → Advanced penetration testing, OWASP Mobile Top 10
+
+#### Team Composition Examples:
+
+**Simple App (Calculator, Converter)**: 7 agents total
+```
+Base (5): requirement-analyst, system-architect, design-engineer, verification-agent, quality-validator
+iOS (2): swiftui-developer, swift-testing-specialist
+```
+
+**Medium App (Notes, To-Do List)**: 9-10 agents
+```
+Base (5): requirement-analyst, system-architect, design-engineer, verification-agent, quality-validator
+iOS (4-5): swiftui-developer, swiftdata-specialist, state-architect, swift-testing-specialist, [swift-code-reviewer]
+```
+
+**Complex App (Social Network, E-commerce)**: 12-14 agents
+```
+Base (5): requirement-analyst, system-architect, design-engineer, verification-agent, quality-validator
+iOS (7-9): swiftui-developer, swiftdata-specialist, urlsession-expert, tca-specialist, swift-testing-specialist, ui-testing-expert, ios-performance-engineer, [ios-debugger], [xcode-cloud-expert]
+```
+
+**Enterprise App (Banking, Healthcare)**: 15+ agents
+```
+Base (5): requirement-analyst, system-architect, design-engineer, verification-agent, quality-validator
+iOS (10+): swiftui-developer, coredata-expert, urlsession-expert, combine-networking, tca-specialist, swift-testing-specialist, xctest-pro, ui-testing-expert, swift-code-reviewer, ios-debugger, xcode-cloud-expert, fastlane-specialist, ios-performance-engineer, ios-security-tester, ios-penetration-tester
+```
+
+#### Automatic Specialist Selection:
+
+**system-architect will analyze requirements and recommend specialists:**
+
+Prompt keywords → Specialists:
+- "database", "storage", "persistence" → swiftdata-specialist or coredata-expert
+- "API", "networking", "REST" → urlsession-expert
+- "complex", "testability", "TCA" → tca-specialist
+- "performance", "slow" → ios-performance-engineer
+- "security", "encryption" → ios-security-tester
+- "CI/CD", "deployment" → xcode-cloud-expert or fastlane-specialist
+
+**Workflow**:
+```
+requirement-analyst → system-architect (recommends iOS specialists) →
+[Present team to user for confirmation] →
+design-engineer → [iOS specialists in parallel] → verification-agent → quality-validator
+```
+
+**Cannot skip (mandatory):**
+- Base 5 agents (always required)
+- At least 1 UI specialist (swiftui-developer or uikit-specialist)
+- At least 1 testing specialist (swift-testing-specialist or xctest-pro)
+- verification-agent (Response Awareness)
+- quality-validator (Final gate)
+
+**iOS simulator integration:**
+- 9 out of 19 specialists support ios-simulator-skill (96-99% token reduction)
+- Automatic usage for UI testing, debugging, accessibility audits
 
 ---
 
-### 🎨 Frontend Team
+### 🎨 Design Team (Specialized - Add to Any Project)
 
-**When to Use**: React, Next.js, web frontends
+**When to Use**: Design system creation, UI/UX work, visual design, accessibility audits
 
-**Team Composition**:
-- `workflow-orchestrator` → Coordinates frontend implementation work
-- `quality-validator` → Final verification before presenting
+**Team Composition**: Dynamic (3-8 agents based on design complexity)
 
-**Verification**: Browser screenshots + build verification required before completion
+#### Core Design Agents (Choose Based on Need):
 
-**Note**: Currently using workflow-orchestrator for non-iOS projects. Consider adding specialized frontend agents in the future.
+**Category 1: Foundation (choose 1-2)**
+- **design-system-architect** → Creates design systems from user references
+  - Collects 3-5 design references from user ("Show me designs you love")
+  - Extracts principles (color, typography, spacing, component patterns)
+  - Generates `.design-system.md` with design tokens
+  - Configures Tailwind v4 + daisyUI 5
+  - **Use when**: No design system exists, need to capture user taste
+
+- **ux-strategist** → UX optimization, journey mapping, interaction design
+  - Simplifies user flows (Hick's Law, progressive disclosure)
+  - Creates user journey maps
+  - Designs micro-interactions and transitions
+  - Defines data visualization strategy
+  - **Use when**: UX flows confusing, need journey mapping, complex interactions
+
+**Category 2: Visual & Accessibility (choose 1-2)**
+- **visual-designer** → Visual hierarchy, typography, color, composition
+  - Creates high-fidelity mockups
+  - Establishes visual hierarchy (F-pattern, Z-pattern)
+  - Designs typography scale and font pairing
+  - Creates color palettes (OKLCH for perceptual uniformity)
+  - **Use when**: Need mockups, visual refinement, typography/color design
+
+- **accessibility-specialist** → WCAG 2.1 AA compliance (MANDATORY for production)
+  - Keyboard navigation testing
+  - Screen reader testing (NVDA, VoiceOver)
+  - Color contrast validation (4.5:1 text, 3:1 graphics)
+  - Touch target sizing (≥44x44px)
+  - **Use when**: ALWAYS (accessibility is non-negotiable)
+
+**Category 3: Implementation (choose 1-3)**
+- **tailwind-specialist** → Tailwind v4 + daisyUI 5 implementation
+  - Translates design system → Tailwind config
+  - Implements components with daisyUI
+  - Container queries, responsive design
+  - Dark mode implementation
+  - **Use when**: Using Tailwind CSS (most common)
+
+- **css-specialist** → Pure CSS when Tailwind insufficient
+  - Complex Grid layouts
+  - Custom animations (keyframes, SVG)
+  - Framework-agnostic requirements
+  - **Use when**: Complex CSS Grid, custom animations, no framework
+
+- **ui-engineer** → React/Vue/Angular component engineering
+  - Implements UI components with TypeScript
+  - State management (Context, Zustand, Redux)
+  - Performance optimization (memo, lazy loading)
+  - Accessibility implementation
+  - **Use when**: Need component implementation (always for frontend)
+
+**Category 4: Quality (MANDATORY)**
+- **design-reviewer** → 7-phase design review (OneRedOak methodology)
+  - Playwright MCP integration for live browser testing
+  - Tests desktop (1440px), tablet (768px), mobile (375px)
+  - Validates visual polish, accessibility, robustness
+  - Captures screenshots for evidence
+  - **Use when**: ALWAYS before merge/launch (quality gate)
+
+#### Team Composition Examples:
+
+**Simple Design Task (Button component, single page)**: 3-4 agents
+```
+Foundation (1): design-system-architect (if no design system exists)
+Implementation (1-2): tailwind-specialist OR ui-engineer
+Quality (2): accessibility-specialist, design-reviewer
+```
+
+**Medium Design Task (Multi-page app, component library)**: 5-6 agents
+```
+Foundation (2): design-system-architect, ux-strategist
+Visual (1): visual-designer
+Implementation (2): tailwind-specialist, ui-engineer
+Quality (2): accessibility-specialist, design-reviewer
+```
+
+**Complex Design Task (Design system from scratch, complex UX)**: 7-8 agents
+```
+Foundation (2): design-system-architect, ux-strategist
+Visual (1): visual-designer
+Implementation (3): tailwind-specialist, css-specialist, ui-engineer
+Quality (2): accessibility-specialist, design-reviewer
+```
+
+#### Automatic Specialist Selection:
+
+**Prompt keywords → Specialists:**
+- "design system", "brand", "style guide" → design-system-architect
+- "UX", "user flow", "journey", "interaction" → ux-strategist
+- "mockup", "visual", "typography", "colors" → visual-designer
+- "accessibility", "WCAG", "screen reader" → accessibility-specialist (ALWAYS)
+- "Tailwind", "daisyUI", "utility classes" → tailwind-specialist
+- "CSS Grid", "animation", "custom CSS" → css-specialist
+- "React", "Vue", "Angular", "component" → ui-engineer
+- **ALWAYS**: design-reviewer (quality gate before launch)
+
+**Workflow**:
+```
+[Request comes in with design needs] →
+system-architect or ux-strategist (analyzes complexity, recommends design specialists) →
+[Present design team to user for confirmation] →
+Execute in phases (Foundation → Visual → Implementation → Quality Review)
+```
+
+**Integration with Other Teams:**
+- **iOS Team**: design-engineer → design-system-architect (creates iOS-specific design system)
+- **Frontend Team**: design-engineer → design-system-architect + tailwind-specialist
+- **Mobile Team**: design-system-architect → (creates cross-platform design tokens)
+- **Standalone**: Full design team for design-only projects (no code implementation)
+
+**Verification**: Screenshots + WCAG audit + design system documentation + Playwright tests
+
+---
+
+### 🌐 Frontend Team
+
+**When to Use**: React, Next.js, Vue.js web frontends
+
+**Team Composition (7 agents):**
+
+1. **requirement-analyst** → Requirements analysis ONLY
+   - Analyzes user request
+   - Creates user stories with acceptance criteria
+   - Defines scope and constraints
+   - Hands off to: system-architect
+
+2. **system-architect** → Frontend architecture ONLY
+   - Designs frontend architecture (state management, routing, etc.)
+   - Defines component hierarchy and data flow
+   - Makes tech decisions (Context API vs Redux, routing patterns)
+   - Creates API integration contracts
+   - Hands off to: design-engineer
+
+3. **design-engineer** → UI/UX design ONLY
+   - Creates design system (Tailwind v4 + daisyUI 5)
+   - Defines accessibility requirements (ARIA, keyboard navigation)
+   - Specifies UI components and interaction patterns
+   - Ensures WCAG 2.1 AA compliance
+   - Hands off to: frontend-engineer
+
+4. **frontend-engineer** → React/Vue implementation ONLY
+   - Implements code per architecture spec
+   - Implements UI per design spec
+   - Tags all assumptions with meta-cognitive tags
+   - Does NOT make architecture/design/testing decisions
+   - Hands off to: test-engineer
+
+5. **test-engineer** → Testing ONLY
+   - Writes unit tests (Vitest)
+   - Writes E2E tests (Playwright)
+   - Runs accessibility tests
+   - Measures performance
+   - Hands off to: verification-agent
+
+6. **verification-agent** → Tag verification ONLY
+   - Searches for meta-cognitive tags (#COMPLETION_DRIVE, #FILE_CREATED, etc.)
+   - Runs actual verification commands (ls, grep, npm test)
+   - Creates verification-report.md
+   - Blocks if any verification fails
+   - Hands off to: quality-validator
+
+7. **quality-validator** → Final validation ONLY
+   - Reads user-request.md to verify ALL requirements met
+   - Reviews verification-report.md for evidence
+   - Checks all acceptance criteria
+   - Blocks if <100% complete
+   - Approves delivery to user
+
+**Verification**: Browser screenshots + build verification + tests passing
+
+**Workflow**:
+```
+requirement-analyst → system-architect → design-engineer →
+frontend-engineer → test-engineer → verification-agent → quality-validator
+```
+
+**When to add:**
+- backend-engineer → If full-stack application
+- infrastructure-engineer → For deployment, SEO optimization
+
+**Can skip (if specs exist):**
+- requirement-analyst → If user provides detailed requirements
+- system-architect → If architecture already documented
+- design-engineer → If design system exists
+
+**Cannot skip (mandatory):**
+- frontend-engineer → Someone must write code
+- test-engineer → Code must be tested
+- verification-agent → Tags must be verified (Response Awareness)
+- quality-validator → Final gate must run
 
 ---
 
 ### 🐍 Backend Team
 
-**When to Use**: Python, APIs, backend services
+**When to Use**: APIs, server-side applications
 
-**Team Composition**:
-- `workflow-orchestrator` → Coordinates backend implementation work
-- `quality-validator` → Final verification before presenting
+**Team Composition (6 agents):**
 
-**Verification**: Test output + API responses required before completion
+1. **requirement-analyst** → Requirements analysis ONLY
+   - Analyzes user request
+   - Creates user stories with acceptance criteria
+   - Defines scope and constraints
+   - Hands off to: system-architect
 
-**Note**: Currently using workflow-orchestrator for backend work. Consider adding specialized Python agents in the future.
+2. **system-architect** → Backend architecture ONLY
+   - Designs backend architecture (API design, database schema)
+   - Defines data models and service boundaries
+   - Makes tech decisions (REST vs GraphQL, database choice)
+   - Creates API contracts and authentication strategy
+   - Hands off to: backend-engineer
+
+3. **backend-engineer** → API/server implementation ONLY
+   - Implements code per architecture spec
+   - Implements endpoints per API contract
+   - Tags all assumptions with meta-cognitive tags
+   - Does NOT make architecture/design/testing decisions
+   - Hands off to: test-engineer
+
+4. **test-engineer** → Testing ONLY
+   - Writes unit tests
+   - Writes API integration tests (Supertest)
+   - Runs load tests (k6)
+   - Measures performance
+   - Hands off to: verification-agent
+
+5. **verification-agent** → Tag verification ONLY
+   - Searches for meta-cognitive tags (#COMPLETION_DRIVE, #FILE_CREATED, etc.)
+   - Runs actual verification commands (ls, grep, pytest)
+   - Creates verification-report.md
+   - Blocks if any verification fails
+   - Hands off to: quality-validator
+
+6. **quality-validator** → Final validation ONLY
+   - Reads user-request.md to verify ALL requirements met
+   - Reviews verification-report.md for evidence
+   - Checks all acceptance criteria
+   - Blocks if <100% complete
+   - Approves delivery to user
+
+**Note**: Skip design-engineer unless building admin UI
+
+**Verification**: API tests + load tests + database verification
+
+**Workflow**:
+```
+requirement-analyst → system-architect → backend-engineer →
+test-engineer → verification-agent → quality-validator
+```
+
+**When to add:**
+- design-engineer → If building admin UI
+- infrastructure-engineer → For Docker, Kubernetes, cloud deployment
+
+**Can skip (if specs exist):**
+- requirement-analyst → If user provides detailed requirements
+- system-architect → If architecture already documented
+
+**Cannot skip (mandatory):**
+- backend-engineer → Someone must write code
+- test-engineer → Code must be tested
+- verification-agent → Tags must be verified (Response Awareness)
+- quality-validator → Final gate must run
 
 ---
 
 ### 📱 Mobile Team
 
-**When to Use**: React Native, Flutter, cross-platform mobile
+**When to Use**: React Native, Flutter cross-platform
 
-**Team Composition**:
-- `workflow-orchestrator` → Coordinates mobile implementation work
-- `quality-validator` → Final verification before presenting
+**Team Composition (7 agents):**
 
-**Verification**: Simulator/emulator screenshots + build verification required
+1. **requirement-analyst** → Requirements analysis ONLY
+   - Analyzes user request
+   - Creates user stories with acceptance criteria
+   - Defines scope and constraints
+   - Hands off to: system-architect
 
-**Note**: Currently using workflow-orchestrator for non-iOS mobile. Consider adding specialized mobile agents in the future.
+2. **system-architect** → Mobile architecture ONLY
+   - Designs mobile app architecture (navigation, state management)
+   - Defines data models and platform-specific patterns
+   - Makes tech decisions (navigation libraries, state solutions)
+   - Creates API integration contracts
+   - Hands off to: design-engineer
+
+3. **design-engineer** → UI/UX design ONLY
+   - Creates design system (platform-adaptive components)
+   - Defines accessibility requirements (TalkBack, VoiceOver)
+   - Specifies UI components and interaction patterns
+   - Ensures platform consistency (iOS & Android)
+   - Hands off to: cross-platform-mobile
+
+4. **cross-platform-mobile** → React Native/Flutter implementation ONLY
+   - Implements code per architecture spec
+   - Implements UI per design spec
+   - Tags all assumptions with meta-cognitive tags
+   - Does NOT make architecture/design/testing decisions
+   - Hands off to: test-engineer
+
+5. **test-engineer** → Testing ONLY
+   - Writes unit tests
+   - Writes integration tests (Detox, integration_test)
+   - Tests on both iOS and Android
+   - Measures performance
+   - Hands off to: verification-agent
+
+6. **verification-agent** → Tag verification ONLY
+   - Searches for meta-cognitive tags (#COMPLETION_DRIVE, #FILE_CREATED, etc.)
+   - Runs actual verification commands (ls, grep, build commands)
+   - Creates verification-report.md
+   - Blocks if any verification fails
+   - Hands off to: quality-validator
+
+7. **quality-validator** → Final validation ONLY
+   - Reads user-request.md to verify ALL requirements met
+   - Reviews verification-report.md for evidence
+   - Checks all acceptance criteria
+   - Blocks if <100% complete
+   - Approves delivery to user
+
+**Verification**: iOS + Android screenshots + build verification + tests passing
+
+**Workflow**:
+```
+requirement-analyst → system-architect → design-engineer →
+cross-platform-mobile → test-engineer → verification-agent → quality-validator
+```
+
+**When to add:**
+- infrastructure-engineer → For app store deployment, CI/CD
+
+**Can skip (if specs exist):**
+- requirement-analyst → If user provides detailed requirements
+- system-architect → If architecture already documented
+- design-engineer → If design system exists
+
+**Cannot skip (mandatory):**
+- cross-platform-mobile → Someone must write code
+- test-engineer → Code must be tested
+- verification-agent → Tags must be verified (Response Awareness)
+- quality-validator → Final gate must run
 
 ---
 

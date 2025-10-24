@@ -27,15 +27,25 @@
 
 ## 🌐 **3. Frontend Development**
 
-| Capability | frontend-engineer | tailwind-daisyui-expert |
-|------------|-------------------|-------------------------|
-| **React/Vue/Angular** | ✓ Modern frameworks | ✓ React/Vue integration |
+| Capability | frontend-engineer (ARCHIVED 2025-10-23) | tailwind-daisyui-expert |
+|------------|------------------------------------------|-------------------------|
+| **React/Vue/Angular** | ✓ Modern frameworks (1,323 lines - monolithic) | ✓ React/Vue integration |
 | **CSS/Styling** | ✓ CSS frameworks | ✓ Tailwind CSS v4 + daisyUI 5 |
 | **Responsive Design** | ✓ Mobile-first design | ✓ Container queries, responsive |
 | **Component Architecture** | ✓ Component systems | ✓ Utility-first components |
 | **Performance** | ✓ Frontend optimization | ✓ Bundle optimization |
 | **Accessibility** | ✓ WCAG compliance | ✓ Accessible components |
 | **Tools** | ✓ Modern build tools | ✓ Tailwind/daisyUI tools |
+
+**NOTE**: `frontend-engineer.md` was replaced by 6 specialized frontend agents on 2025-10-23:
+- `react-18-specialist.md` - React 18+ Server Components
+- `nextjs-14-specialist.md` - Next.js 14 App Router
+- `state-management-specialist.md` - UI/server/URL state separation
+- `styling-specialist.md` - Tailwind v4 + daisyUI 5
+- `frontend-performance-specialist.md` - Core Web Vitals, optimization
+- `frontend-testing-specialist.md` - Behavior-first testing
+
+See `/docs/FRONTEND_MIGRATION_GUIDE.md` for migration details.
 
 ## 📱 **4. Mobile & Cross-Platform**
 
@@ -101,12 +111,15 @@
 **Coverage Areas**:
 - **Swift/iOS**: 6 agents (swift-expert, swift-architect, swiftui-expert, swiftui-specialist, ios-expert, ios-dev)
 - **Design/UX**: 5 agents (ui-designer, design-master, design-verification, visual-storyteller, brand-guardian)
-- **Frontend**: 2 agents (frontend-engineer, tailwind-daisyui-expert)
+- **Frontend**: 2 agents (frontend-engineer [ARCHIVED 2025-10-23], tailwind-daisyui-expert)
 - **Mobile**: 1 agent (cross-platform-mobile)
 - **Quality**: 3 agents (code-reviewer, quality-gate, dx-optimizer)
 - **Business**: 2 agents (seo-specialist, app-store-optimizer)
 - **Research**: 3 agents (research-synthesizer, fact-checker, search-specialist)
 - **Workflow**: 2 agents (workflow-orchestrator, agent-organizer)
+
+**Frontend Migration (2025-10-23)**:
+The monolithic `frontend-engineer.md` (1,323 lines) was replaced by 6 specialized frontend agents totaling ~1,400 lines with deep expertise in focused domains. See `/docs/FRONTEND_MIGRATION_GUIDE.md` for details.
 
 **Key Differences from Current `/originals`**:
 - **Archive contains older versions** of some agents (swift-expert, ios-expert, ui-designer, swiftui-expert)
@@ -123,3 +136,4 @@
 - `agent-organizer.md` (293 lines) - Multi-agent orchestration expert
 
 This archive represents a rich collection of specialized AI agents that could be valuable for specific use cases not covered by the current streamlined `/originals` collection.
+
