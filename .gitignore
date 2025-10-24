@@ -26,8 +26,8 @@ archive/originals/awesome-swift-claude-code-subagents/
 mcp/chrome-devtools-mcp/
 mcp/xcodebuildmcp/
 
-# Separate project (not part of claude-vibe-code)
-obdn-design-automation/
+# Research and working projects directory
+explore/
 
 # Internal documentation and logs
 .claude-session-context.md
@@ -53,13 +53,3 @@ QUALITY_GATE_FIXES.md
 VISUAL_REVIEW_INTEGRATION.md
 test-scenario-response-awareness.md
 visual-verification-implementation-report.md
-claude-mem/
-
-# OBDN project internal files
-obdn-design-automation/COMPLETE_SYSTEM_SUMMARY.md
-obdn-design-automation/IMPLEMENTATION_REPORT.md
-obdn-design-automation/DELIVERY_SUMMARY.md
-obdn-design-automation/UNIVERSAL_DESIGN_AUTOMATION.md
-obdn-design-automation/test-results/*.md
-!obdn-design-automation/test-results/README.md
-obdn-design-automation/.claude-session-context.md
