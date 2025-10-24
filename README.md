@@ -23,12 +23,10 @@
 
 ```
 
-# Claude Vibe Code
+# Vibe Code / Claude Code
 
-> **🚧 ACTIVE DEVELOPMENT** - Building a 46-agent orchestration system with Response Awareness quality gates. System architecture complete, implementation in progress. Not ready for public use.
-
-**Stop telling Claude what to do. Let Claude figure it out.**
-
+> **🚧 /ORCA** -
+> 
 An intelligent auto-orchestration system for Claude Code that will detect your project, understand your intent, and dispatch the right specialists automatically - with **Response Awareness verification** to prevent false completions.
 
 ---
@@ -147,11 +145,9 @@ Every request is automatically classified and routed:
 
 ### 3. Response Awareness: How Quality Gates Actually Work
 
-**The Problem We Solved:**
-
 Traditional AI coding had a critical flaw: agents would claim "I built X" without actually verifying the files exist. Why? **LLMs can't stop mid-generation to check.** Once generating a response, they must complete it even if uncertain.
 
-**Our Solution: Response Awareness**
+**Solution: Response Awareness**
 
 We separate generation (agents code) from verification (separate agent checks). This prevents 99% of false completions.
 
@@ -214,7 +210,7 @@ We separate generation (agents code) from verification (separate agent checks). 
 
 **Key Innovation:** verification-agent operates in **search mode** (grep/ls), not generation mode. It can't rationalize "file probably exists" - it either finds it or doesn't.
 
-**Result:** <5% false completion rate (down from ~80% before)
+**Result:** <5% false completion rate (down from ~80% before for complex multi-agent tasks)
 
 See `docs/METACOGNITIVE_TAGS.md` for complete documentation.
 
@@ -309,7 +305,7 @@ All commands live in `commands/` and extend Claude Code workflows:
 |---------|-------------|------|
 | **/concept** | Creative exploration phase - study references, extract patterns, get approval BEFORE building | `concept.md` |
 | **/design** | Conversational design brainstorming with user-provided project-specific references | `design.md` |
-| **/inspire** | Analyze beautiful design examples to develop aesthetic taste before creating | `inspire.md` |
+| **/inspire** | Analyze design examples to develop aesthetic taste before creating | `inspire.md` |
 | **/save-inspiration** | Save design examples to your personal gallery with tags and vision analysis | `save-inspiration.md` |
 | **/visual-review** | Visual QA review of implemented UI using chrome-devtools to screenshot and analyze | `visual-review.md` |
 
@@ -475,7 +471,7 @@ User runs app: 💥 File doesn't exist, app crashes
 
 **Traditional approach:** You debug, write fix, hope it works
 
-**Claude Vibe Code:**
+**/orca Vibe Code:**
 
 ```
 You: "The calculator buttons are broken on mobile"
@@ -515,7 +511,7 @@ All tests: ✓ PASSING
 
 **Traditional approach:** Multiple back-and-forth about implementation details
 
-**Claude Vibe Code:**
+**/orca Vibe Code:**
 
 ```
 You: "Add dark mode toggle"
@@ -569,7 +565,7 @@ Total Time: 18 minutes (parallelized)
 
 **Traditional approach:** Vague debugging, random optimizations
 
-**Claude Vibe Code:**
+**/orca Vibe Code:**
 
 ```
 You: "Why does the app feel slow?"
