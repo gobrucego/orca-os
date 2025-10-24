@@ -53,7 +53,8 @@ You: "Add authentication"
 Claude: *detects Next.js project*
         *dispatches system-architect → designs OAuth flow*
         *dispatches backend-engineer → builds API*
-        *dispatches frontend-engineer → creates UI*
+        *dispatches nextjs-14-specialist → implements Next.js auth*
+        *dispatches design-system-architect → creates auth UI components*
         *dispatches test-engineer → writes tests*
         *quality-validator → verifies everything works*
         *provides screenshots + test results as proof*
@@ -94,10 +95,10 @@ On every session start, the system detects your project type:
 ```
 
 **Supported Project Types:**
-- iOS/Swift → 7-agent team (requirement-analyst, system-architect, design-engineer, ios-engineer, test-engineer, verification-agent, quality-validator)
-- Next.js/React → 7-agent team (same structure, frontend-engineer instead of ios-engineer)
-- Python/Backend → 6-agent team (skips design-engineer unless admin UI)
-- Flutter/React Native → 7-agent team (cross-platform-mobile instead of ios-engineer)
+- iOS/Swift → 8-16 agents (requirement-analyst, system-architect, 2-10 iOS specialists, 1-2 design specialists, test-engineer, verification-agent, quality-validator)
+- Next.js/React → 10-15 agents (requirement-analyst, system-architect, 3-5 design specialists, 2-4 frontend specialists, test-engineer, verification-agent, quality-validator)
+- Python/Backend → 6 base agents (or 10 with admin UI including design specialists)
+- Flutter/React Native → 10-13 agents (requirement-analyst, system-architect, 3-5 design specialists, cross-platform-mobile, test-engineer, verification-agent, quality-validator)
 - Unknown → General purpose team (system-architect, test-engineer, verification-agent, quality-validator)
 
 ### 2. Smart Request Routing
@@ -247,45 +248,22 @@ See `docs/METACOGNITIVE_TAGS.md` for complete documentation.
 └────────────────┘  └────────────────┘  └─────────────┘
 ```
 
-All agents live in `agents/` and are organized by function:
+All agents live in `agents/` and are organized by function.
 
-#### Implementation Specialists (`agents/implementation/`)
+**System Architecture: 46 Total Agents**
 
-| Agent | Expertise | File |
-|-------|-----------|------|
-| **frontend-engineer** | React, Vue, Next.js, Tailwind v4, TypeScript, performance, a11y | `frontend-engineer.md` |
-| **backend-engineer** | Node.js, Python, Go servers, REST/GraphQL APIs, databases, auth | `backend-engineer.md` |
-| **ios-engineer** | Swift 6.0, SwiftUI, UIKit, iOS ecosystem, App Store deployment | `ios-engineer.md` |
-| **android-engineer** | Kotlin, Jetpack Compose, Material 3, MVVM, coroutines | `android-engineer.md` |
-| **cross-platform-mobile** | React Native, Flutter, platform-specific optimization | `cross-platform-mobile.md` |
+- **iOS Specialists** (21 agents in `ios-specialists/`) - SwiftUI, SwiftData, networking, testing, architecture, performance, security, deployment
+- **Frontend Specialists** (5 agents in `frontend-specialists/`) - React 18, Next.js 14, state management, performance optimization, testing
+- **Design Specialists** (8 agents in `design-specialists/`) - Design systems, UX strategy, Tailwind v4, UI engineering, CSS, accessibility, design review, visual design
+- **Base Agents** (12 agents):
+  - **Planning**: requirement-analyst, system-architect
+  - **Quality**: verification-agent (🆕 meta-cognitive tag verification), test-engineer, quality-validator
+  - **Backend**: backend-engineer
+  - **Mobile**: android-engineer, cross-platform-mobile
+  - **DevOps**: infrastructure-engineer
+  - **Orchestration**: workflow-orchestrator, plan-synthesis-agent
 
-#### Planning Specialists (`agents/planning/`)
-
-| Agent | Expertise | File |
-|-------|-----------|------|
-| **requirement-analyst** | Requirements elicitation, user stories, acceptance criteria | `requirement-analyst.md` |
-| **system-architect** | System design, tech stacks, API specs, data models, scalability | `system-architect.md` |
-
-#### Quality Specialists (`agents/quality/`)
-
-| Agent | Expertise | File |
-|-------|-----------|------|
-| **verification-agent** | 🆕 Meta-cognitive tag verification, runs actual grep/ls commands, blocks on failures (part of base team for all projects) | `verification-agent.md` |
-| **test-engineer** | Unit, integration, E2E, security, performance testing | `test-engineer.md` |
-| **quality-validator** | Final validation (post-verification), requirements compliance, quality scoring | `quality-validator.md` |
-
-#### Specialized Agents (`agents/specialized/`)
-
-| Agent | Expertise | File |
-|-------|-----------|------|
-| **design-engineer** | UI/UX design, design systems, accessibility, Figma-to-code | `design-engineer.md` |
-| **infrastructure-engineer** | DevOps, CI/CD, Docker, Kubernetes, cloud platforms | `infrastructure-engineer.md` |
-
-#### Orchestration (`agents/orchestration/`)
-
-| Agent | Expertise | File |
-|-------|-----------|------|
-| **workflow-orchestrator** | Pure orchestration coordinator, multi-phase workflows, quality gates | `workflow-orchestrator.md` |
+See the `agents/` directory for detailed agent specifications and the complete file structure below.
 
 ### ⚡ Commands (13 Total)
 
@@ -349,7 +327,7 @@ Skills from the superpowers plugin are available. See `skills/` directory for th
 **Real failure (before Response Awareness):**
 ```
 User: "Build calculator view"
-ios-engineer: "✓ Created CalculatorView.swift (245 lines)"
+swiftui-developer: "✓ Created CalculatorView.swift (245 lines)"
 quality-validator: "✓ All requirements met"
 User runs app: 💥 File doesn't exist, app crashes
 ```
@@ -478,7 +456,8 @@ You: "The calculator buttons are broken on mobile"
 
 ┌─ Session Start ────────────────────────────────────────┐
 │ Detected: iOS project (*.xcodeproj found)              │
-│ Agent Team: ios-engineer, design-engineer              │
+│ Agent Team: swiftui-developer, ui-testing-expert,      │
+│             accessibility-specialist                   │
 │ Evidence: iOS Simulator screenshots required           │
 └────────────────────────────────────────────────────────┘
 
@@ -489,7 +468,7 @@ You: "The calculator buttons are broken on mobile"
 │  ├─ Identified: Button tap targets too small (30pt)    │
 │  └─ iOS HIG requires 44pt minimum                      │
 │                                                        │
-│  Phase 2: Fix (ios-engineer)                           │
+│  Phase 2: Fix (swiftui-developer)                      │
 │  ├─ Update button frame: .frame(height: 44)            │
 │  ├─ Add padding for visual balance                     │
 │  └─ Test on iPhone 15 simulator                        │
@@ -517,7 +496,8 @@ All tests: ✓ PASSING
 You: "Add dark mode toggle"
 
 ┌─ Detected: Next.js project ────────────────────────────┐
-│ Agent Team: frontend-engineer, design-engineer         │
+│ Agent Team: nextjs-14-specialist, state-management-   │
+│             specialist, design-system-architect        │
 │ Evidence: Browser screenshots required                 │
 └────────────────────────────────────────────────────────┘
 
@@ -526,7 +506,7 @@ You: "Add dark mode toggle"
 │  Agent: system-architect (2 min)                     │
 │  └─ Design: Context API + CSS variables approach     │
 │                                                      │
-│  Agent: frontend-engineer (8 min)                    │
+│  Agent: nextjs-14-specialist (8 min)                 │
 │  ├─ ThemeContext.tsx (React Context)                 │
 │  ├─ ThemeToggle.tsx (Toggle component)               │
 │  ├─ globals.css (dark mode variables)                │
@@ -747,7 +727,7 @@ Example: "Add authentication"
 ```javascript
 // All in ONE message with multiple Task tool calls
 Task(subagent_type="backend-engineer", prompt="Build API...")
-Task(subagent_type="frontend-engineer", prompt="Build UI...")
+Task(subagent_type="nextjs-14-specialist", prompt="Build Next.js UI...")
 Task(subagent_type="test-engineer", prompt="Write tests...")
 
 // Each agent gets its own context
@@ -827,25 +807,26 @@ Build Changes:
 
 ## Available Agents
 
-### Development Specialists
+**46 Total Agents organized into specialized teams:**
 
-| Agent | Expertise | Use For |
-|-------|-----------|---------|
-| **frontend-engineer** | React, Vue, Next.js, Tailwind v4 | UI components, state management, performance |
-| **backend-engineer** | Node.js, Python, Go | REST/GraphQL APIs, databases, auth |
-| **ios-engineer** | Swift 6.0, SwiftUI, UIKit | iOS apps, Apple ecosystem |
-| **android-engineer** | Kotlin, Jetpack Compose | Android apps, Material Design 3 |
-| **cross-platform-mobile** | React Native, Flutter | Multi-platform mobile apps |
+### iOS Specialists (21 agents)
+SwiftUI, SwiftData, Core Data, networking (URLSession), testing (Swift Testing, XCTest, XCUITest), architecture (State-first, TCA), performance optimization, security, code review, debugging, deployment (Xcode Cloud, Fastlane), accessibility, and API design.
 
-### Quality & Architecture
+### Frontend Specialists (5 agents)
+React 18+ (Server Components, Suspense, hooks), Next.js 14 (App Router, Server Actions), state management (strategic separation), performance optimization (code splitting, Core Web Vitals), and user-behavior-focused testing.
 
-| Agent | Expertise | Use For |
-|-------|-----------|---------|
-| **system-architect** | System design, tech stacks | Architecture, API specs, data models |
-| **test-engineer** | Unit, integration, E2E | Test suites, security, performance |
-| **quality-validator** | Final verification | Requirements compliance, evidence checks |
-| **design-engineer** | UI/UX, accessibility | Design systems, Figma-to-code |
-| **infrastructure-engineer** | DevOps, cloud platforms | CI/CD, Docker, Kubernetes, monitoring |
+### Design Specialists (8 agents)
+Design system architecture, UX strategy, Tailwind CSS v4 + daisyUI 5, UI engineering, pure CSS (when Tailwind insufficient), accessibility (WCAG 2.1 AA), design review (visual QA with Playwright), and visual design (hierarchy, typography, composition).
+
+### Base Agents (12 agents)
+- **Planning**: requirement-analyst, system-architect
+- **Quality**: verification-agent (meta-cognitive tag verification), test-engineer, quality-validator
+- **Backend**: backend-engineer
+- **Mobile**: android-engineer, cross-platform-mobile
+- **DevOps**: infrastructure-engineer
+- **Orchestration**: workflow-orchestrator, plan-synthesis-agent
+
+For detailed agent specifications, see the `agents/` directory.
 
 ---
 
