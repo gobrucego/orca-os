@@ -29,6 +29,18 @@ Thumbs.db
 .orchestration/.backup/
 .orchestration/work-orders/
 
+# Ignore generated evidence and checklists (ephemeral)
+.orchestration/evidence/
+.orchestration/proofpacks/*-proofpack.json
+.orchestration/oracles/frontend/*-playwright.test.ts
+.orchestration/oracles/ios/*UITests.swift
+.orchestration/oracles/backend/*-api-test.sh
+.orchestration/quality-checklist/*-checklist.json
+.orchestration/screenshot-diff/*-diff.png
+.orchestration/screenshot-diff/*-diff-report.json
+.orchestration/verification-budget/*-budget.json
+.orchestration/two-phase-commit/*-state.json
+
 # Track templates (seed data, safe reset point)
 # .orchestration/playbooks/*-template.json (tracked by default)
 # .orchestration/playbooks/*-template.md (tracked by default)
@@ -55,6 +67,8 @@ explore/
 # Internal documentation and logs
 .claude-session-context.md
 .claude-orchestration-context.md
+.claude-playbook-context.md
+.claude-design-dna-context.md
 CHANGELOG.md
 archive/
 examples/
@@ -63,3 +77,18 @@ skills/
 qa-logs/
 ::archive/
 dev-logs/
+
+# Internal build/session notes (keep local)
+.diagram-*.md
+.rebuilt-*.md
+.orchestration/*-analysis.md
+.orchestration/*-SESSION-*.md
+.orchestration/*-COMPLETE.md
+.orchestration/SYSTEM_AUDIT*.md
+.orchestration/synthesis-*.md
+.orchestration/*-log.md
+.orchestration/*-session-*.md
+.orchestration/agent-log.md
+.orchestration/plan-*.md
+.orchestration/success-criteria.md
+.orchestration/quality-*.md

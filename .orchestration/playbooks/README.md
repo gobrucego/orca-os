@@ -903,6 +903,332 @@ De-duplication only runs when:
 
 ---
 
+## Pattern Embeddings (Stage 1 Week 2 - STRATEGIC)
+
+**Added:** 2025-10-24
+**Strategic Value:** Enables semantic pattern matching beyond keyword matching
+
+### Why Embeddings Are Strategic
+
+**Problem with Keyword Matching:**
+
+User request: "Build login screen with email and password"
+
+**Keyword matching** searches for:
+- `login` OR `screen` OR `email` OR `password`
+
+**Misses semantically similar patterns:**
+- "Authentication UI with credential input"
+- "User sign-in form with username field"
+- "Login form implementation"
+
+These all describe the SAME thing but use different words.
+
+**Solution with Embeddings:**
+
+Pattern embeddings capture **semantic meaning**, not just keywords.
+
+```
+User request: "Build login screen"
+  → Embedding: [0.12, -0.45, 0.67, ...]
+
+Pattern: "Authentication UI implementation"
+  → Embedding: [0.15, -0.42, 0.69, ...]
+
+Cosine similarity: 0.94 (very similar!)
+  → Pattern MATCHED despite different words
+```
+
+---
+
+### How Pattern Embeddings Work
+
+#### 1. Embedding Generation
+
+When playbook-curator creates or updates a pattern:
+
+```javascript
+// Pattern without embedding (old)
+{
+  "id": "ios-pattern-001",
+  "context": "SwiftUI app with local data storage",
+  "strategy": "Dispatch swiftui-developer + swiftdata-specialist + state-architect"
+}
+
+// Pattern with embedding (new)
+{
+  "id": "ios-pattern-001",
+  "context": "SwiftUI app with local data storage",
+  "strategy": "Dispatch swiftui-developer + swiftdata-specialist + state-architect",
+  "embedding": [0.12, -0.45, 0.67, 0.89, -0.23, ...],  // ← 1536-dim vector
+  "embedding_model": "text-embedding-3-small",
+  "embedding_version": "2025-10"
+}
+```
+
+**Embedding Input:** `context + " " + strategy`
+**Embedding Model:** OpenAI `text-embedding-3-small` (1536 dimensions)
+**Storage:** Optional field in playbook JSON
+
+#### 2. Pattern Matching During Orchestration
+
+When /orca receives a user request:
+
+**Step 1: Generate Request Embedding**
+```javascript
+userRequest = "Build iOS app for tracking workouts"
+requestEmbedding = generateEmbedding(userRequest)
+  → [0.15, -0.42, 0.69, ...]
+```
+
+**Step 2: Compute Similarity to All Patterns**
+```javascript
+for (pattern of playbook.patterns) {
+  if (pattern.embedding) {
+    similarity = cosineSimilarity(requestEmbedding, pattern.embedding)
+    pattern.match_score = similarity
+  }
+}
+```
+
+**Step 3: Rank Patterns by Similarity**
+```javascript
+rankedPatterns = patterns
+  .filter(p => p.match_score > 0.7)  // Threshold
+  .sort((a, b) => b.match_score - a.match_score)
+  .slice(0, 5)  // Top 5 matches
+```
+
+**Step 4: Use Top Patterns for Orchestration**
+```javascript
+topPattern = rankedPatterns[0]
+
+// Apply strategy from best-matching pattern
+dispatch(topPattern.strategy.specialists)
+```
+
+---
+
+### Embedding Schema
+
+```json
+{
+  "embedding": {
+    "type": "array",
+    "items": {"type": "number"},
+    "minItems": 1536,
+    "maxItems": 1536,
+    "description": "1536-dimensional vector from text-embedding-3-small"
+  },
+  "embedding_model": {
+    "type": "string",
+    "enum": ["text-embedding-3-small", "text-embedding-3-large"],
+    "description": "Model used to generate embedding"
+  },
+  "embedding_version": {
+    "type": "string",
+    "pattern": "^\\d{4}-\\d{2}$",
+    "description": "YYYY-MM format for model version tracking"
+  }
+}
+```
+
+---
+
+### Example: Semantic Matching in Action
+
+**User Request:**
+```
+"Create authentication flow with biometric support"
+```
+
+**Request Embedding:**
+```
+[0.15, -0.42, 0.69, 0.34, -0.78, ...]
+```
+
+**Pattern Matching Results:**
+
+| Pattern ID | Title | Context (Keywords) | Similarity Score |
+|-----------|-------|-------------------|-----------------|
+| ios-pattern-012 | Biometric Auth Implementation | "Touch ID, Face ID, authentication" | **0.92** ✅ |
+| ios-pattern-003 | Login Screen with Password | "login, password, screen" | 0.71 |
+| ios-pattern-008 | SwiftUI + State-First Architecture | "SwiftUI, state management" | 0.45 |
+
+**Without embeddings:** Pattern 003 might match on "login" keyword, even though biometric auth is different.
+
+**With embeddings:** Pattern 012 matches best because "biometric support" and "Touch ID, Face ID" are semantically similar.
+
+**Result:** /orca dispatches biometric-specific specialists instead of generic login form specialists.
+
+---
+
+### Backward Compatibility
+
+**Embeddings are OPTIONAL:**
+- Patterns without `embedding` field still work (keyword matching)
+- New patterns can optionally include embeddings
+- playbook-curator generates embeddings lazily (not required)
+
+**Migration Path:**
+
+**Phase 1** (Current): Patterns use keyword matching
+```json
+{
+  "context": "iOS data persistence",
+  "strategy": "..."
+}
+```
+
+**Phase 2** (Optional): Add embeddings to high-value patterns
+```json
+{
+  "context": "iOS data persistence",
+  "strategy": "...",
+  "embedding": [...]  // ← Added
+}
+```
+
+**Phase 3** (Future): All patterns have embeddings
+```json
+// All patterns include embeddings for semantic matching
+```
+
+---
+
+### When to Generate Embeddings
+
+**Automatically:**
+- playbook-curator runs after session → generates embeddings for new patterns
+- Existing patterns get embeddings added during next curator run
+
+**Manually:**
+- `/playbook-review` command → forces embedding generation
+- Useful for adding embeddings to template patterns
+
+**Never (Optional):**
+- Small projects (<10 patterns) may not need embeddings
+- Keyword matching sufficient for simple use cases
+
+---
+
+### Cost Considerations
+
+**OpenAI Pricing (text-embedding-3-small):**
+- $0.02 per 1M tokens
+- Average pattern: ~50 tokens
+- 100 patterns: ~5,000 tokens = $0.0001
+- **Negligible cost for embedding generation**
+
+**Storage:**
+- 1536 floats × 4 bytes = ~6KB per embedding
+- 100 patterns × 6KB = 600KB total
+- **Minimal storage overhead**
+
+---
+
+### Advantages Over Keyword Matching
+
+1. **Semantic Understanding**
+   - "Login screen" matches "Authentication UI" (synonyms)
+   - "Build app" matches "Implement feature" (same intent)
+
+2. **Language Variations**
+   - "Create dashboard" matches "Build analytics view" (same concept)
+   - "Add search" matches "Implement filtering" (related features)
+
+3. **Context Awareness**
+   - "iOS weather app" matches "SwiftUI meteorology tracker" (domain knowledge)
+   - "API integration" matches "Backend connectivity" (technical equivalence)
+
+4. **Typo Resilience**
+   - Embeddings are less sensitive to typos than exact keyword matching
+   - "Athentication" still matches "Authentication" patterns
+
+---
+
+### Limitations
+
+1. **Model Dependency**
+   - Embeddings tied to specific model version
+   - Model updates may require re-embedding all patterns
+   - Mitigation: Track `embedding_version` in schema
+
+2. **Cold Start**
+   - First time using embeddings requires API calls for all patterns
+   - Mitigation: Generate embeddings during low-traffic periods
+
+3. **Similarity Threshold**
+   - Threshold too low (0.5) → Too many irrelevant matches
+   - Threshold too high (0.9) → Misses good matches
+   - Sweet spot: 0.7-0.8 for most use cases
+
+4. **Not a Silver Bullet**
+   - Embeddings improve discovery, not execution
+   - Bad patterns are still bad, even if well-matched
+   - Quality of patterns matters more than quality of matching
+
+---
+
+### Integration with ACE System
+
+**playbook-curator (Curator Agent):**
+```markdown
+After reflecting on session:
+1. Extract new pattern
+2. Generate embedding for `context + strategy`
+3. Check similarity against existing patterns (de-duplication)
+4. If similarity < 0.9: Add as new pattern with embedding
+5. If similarity >= 0.9: Merge with existing pattern
+6. Write updated playbook JSON with embeddings
+```
+
+**/orca (Generator Agent):**
+```markdown
+On receiving user request:
+1. Generate embedding for user request
+2. Load playbook with embeddings
+3. Compute cosine similarity to all pattern embeddings
+4. Rank patterns by similarity
+5. Use top 3-5 patterns to inform specialist selection
+6. Dispatch specialists based on proven strategies
+```
+
+**orchestration-reflector (Reflector Agent):**
+```markdown
+After session completion:
+1. Analyze which patterns were matched
+2. Log actual similarity scores vs outcomes
+3. Identify if embedding threshold needs tuning
+4. Report to curator for continuous improvement
+```
+
+---
+
+### Future Enhancements
+
+**Stage 2+:**
+- Multi-modal embeddings (code + text)
+- Fine-tuned embeddings on domain-specific patterns
+- Hybrid matching (keywords + embeddings)
+- Adaptive threshold based on pattern confidence
+
+**Stage 5 Week 10:**
+- A/B testing: keyword matching vs embedding matching
+- Measure: Which approach yields lower false completion rates?
+- Optimize: Use best approach or hybrid based on data
+
+---
+
+### Related Documentation
+
+- **Semantic De-duplication** (this README, section above) - How embeddings prevent duplicate patterns
+- **.orchestration/playbooks/playbook-curator.md** - Agent that generates embeddings
+- **.orchestration/playbooks/costs.json** - Tracks embedding generation costs
+- **OpenAI Embeddings API** - https://platform.openai.com/docs/guides/embeddings
+
+---
+
 ## Template vs Project-Specific Playbooks
 
 ### Templates

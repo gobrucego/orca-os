@@ -169,8 +169,9 @@ mcp__playwright__browser_take_screenshot --name "mobile-landscape-667px"
 **Goal:** Validate alignment, typography, colors, spacing, and visual hierarchy
 
 ```bash
-# Capture full-page screenshot for alignment check
-mcp__playwright__browser_take_screenshot --name "visual-polish-check" --full_page true
+# Capture VIEWPORT screenshot for alignment check
+# ⚠️ NEVER use --full_page true (causes 8000px API crash)
+mcp__playwright__browser_take_screenshot --name "visual-polish-check"
 
 # Inspect element styles
 mcp__playwright__browser_snapshot --selector "h1"

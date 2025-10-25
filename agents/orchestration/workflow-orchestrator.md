@@ -302,8 +302,79 @@ Before ANY agent dispatch:
      Proceed to Quality Gate 2 with note about manual tests needed
    ```
 
-4. **Quality Gate 2: Development Quality**
+4. **⚠️ MANDATORY ENFORCEMENT: Verification Gate (HARD BLOCK)**
    ```markdown
+   BEFORE dispatching quality-validator, MANDATORY checks:
+
+   CHECK 1: Verification Report Exists
+   Read .orchestration/verification-report.md
+
+   If file does NOT exist:
+     ❌ HARD BLOCK ACTIVATED
+
+     Report to user:
+     "🚫 WORKFLOW BLOCKED - Verification Not Run
+
+     verification-agent was not executed. This is a critical quality gate violation.
+
+     Required: verification-agent must run and create .orchestration/verification-report.md
+
+     Workflow cannot proceed to quality-validator without verification.
+
+     This is a HARD BLOCK - no overrides, no exceptions."
+
+     STOP HERE - Do not proceed
+     Dispatch verification-agent immediately
+     Re-run this check after verification completes
+
+   CHECK 2: Verification Verdict Check
+   Read verdict from .orchestration/verification-report.md
+
+   If verdict == "BLOCKED" OR contains "FAILED VERIFICATIONS":
+     ❌ HARD BLOCK ACTIVATED
+
+     Extract failed verification count and details from report
+
+     Report to user:
+     "🚫 WORKFLOW BLOCKED - Verification Failed
+
+     verification-agent found {N} failed verifications:
+
+     {List each failed verification from report}
+
+     Workflow CANNOT proceed to quality-validator with failed verifications.
+
+     Required actions:
+     1. Review failures in .orchestration/verification-report.md
+     2. Fix all failed verifications
+     3. Re-run verification-agent
+     4. Workflow will resume when ALL verifications pass
+
+     This is a HARD BLOCK - no overrides, no exceptions."
+
+     STOP HERE - Do not proceed
+     Wait for fixes
+     Re-run this check after fixes applied
+
+   CHECK 3: Proceed to Quality Validation
+   If verification-report.md exists AND verdict != "BLOCKED":
+     ✅ VERIFICATION GATE PASSED
+
+     Report to user:
+     "✅ Verification Gate Passed
+
+     All {N} verifications successful.
+     Proceeding to Quality Gate 2 (quality-validator).
+
+     Verification evidence: .orchestration/verification-report.md"
+
+     Continue to Quality Gate 2 below
+   ```
+
+5. **Quality Gate 2: Development Quality**
+   ```markdown
+   #CRITICAL: This section ONLY runs if Verification Gate passed above
+
    Dispatch test-engineer with:
    - Input: All implemented code
    - Task: Comprehensive test suite generation
@@ -311,29 +382,109 @@ Before ANY agent dispatch:
    - Test types: Unit, integration, security
 
    Dispatch quality-validator with:
-   - Input: All implementation + test results
+   - Input: All implementation + test results + .orchestration/verification-report.md
    - Task: Score code quality against Gate 2 criteria
    - Required: Score ≥85/100
+   - MANDATORY: Read verification-report.md FIRST before scoring
 
    Scoring criteria:
    - Code quality: 85%
    - Test coverage: 80%
    - Performance benchmarks: met
    - Security scan: no critical issues
+   - Verification gate: PASSED (prerequisite)
 
    #FALSE_COMPLETION: "Tests passing" needs evidence file showing 0 failures
+   #ENFORCEMENT_ACTIVE: Cannot reach here without passing verification gate
    ```
 
 ### PHASE 3: Validation & Deployment (15-20% of project time)
 
 **Quality Gate 3 Criteria: 95% Production Readiness**
 
-1. **Final Validation**
+1. **⚠️ MANDATORY ENFORCEMENT: Pre-Deployment Verification Check (HARD BLOCK)**
    ```markdown
+   BEFORE final validation, verify ALL previous quality gates passed:
+
+   CHECK 1: Verification Report Exists
+   Read .orchestration/verification-report.md
+
+   If file does NOT exist:
+     ❌ HARD BLOCK ACTIVATED
+
+     Report to user:
+     "🚫 DEPLOYMENT BLOCKED - No Verification Evidence
+
+     Cannot proceed to production deployment without verification-agent evidence.
+
+     This is a critical quality gate violation that should have been caught in Phase 2.
+
+     Required: verification-agent must have run and created verification-report.md
+
+     This is a HARD BLOCK - no production deployment allowed."
+
+     STOP HERE - Cannot deploy without verification
+
+   CHECK 2: Verification Passed
+   Read verdict from .orchestration/verification-report.md
+
+   If verdict == "BLOCKED" OR contains "FAILED VERIFICATIONS":
+     ❌ HARD BLOCK ACTIVATED
+
+     Report to user:
+     "🚫 DEPLOYMENT BLOCKED - Verification Failures Present
+
+     verification-agent reported failures that were never resolved.
+
+     Production deployment CANNOT proceed with failed verifications.
+
+     Review .orchestration/verification-report.md for details.
+
+     This is a HARD BLOCK - fix all failures before deployment."
+
+     STOP HERE
+
+   CHECK 3: Quality Gate 2 Passed
+   Read quality-validator reports from Phase 2
+
+   If score < 85/100:
+     ❌ HARD BLOCK ACTIVATED
+
+     Report to user:
+     "🚫 DEPLOYMENT BLOCKED - Quality Gate 2 Failed
+
+     Phase 2 quality validation scored below threshold.
+
+     Cannot proceed to production without meeting quality standards.
+
+     This is a HARD BLOCK."
+
+     STOP HERE
+
+   If ALL checks pass:
+     ✅ PRE-DEPLOYMENT CHECKS PASSED
+
+     Report to user:
+     "✅ Pre-Deployment Verification Complete
+
+     - Verification gate: PASSED
+     - Quality Gate 2: PASSED
+     - Ready for final production validation
+
+     Proceeding to Quality Gate 3..."
+
+     Continue to Final Validation below
+   ```
+
+2. **Final Validation**
+   ```markdown
+   #CRITICAL: This section ONLY runs if all pre-deployment checks passed above
+
    Dispatch quality-validator with:
-   - Input: Complete codebase + all artifacts
+   - Input: Complete codebase + all artifacts + verification-report.md + Gate 2 report
    - Task: Production readiness assessment
    - Required: Final validation report ≥95/100
+   - MANDATORY: Verify verification-report.md shows ALL VERIFIED
 
    Final checklist:
    - [ ] All user requirements met (100%)
@@ -341,6 +492,8 @@ Before ANY agent dispatch:
    - [ ] No critical security issues (100%)
    - [ ] Documentation complete (95%)
    - [ ] Performance validated (95%)
+   - [ ] Verification gate passed (100%) ← NEW REQUIREMENT
+   - [ ] Quality Gate 2 passed (100%) ← NEW REQUIREMENT
    ```
 
 2. **User Requirement Frame Verification**
@@ -425,23 +578,109 @@ When task requires sub-coordination:
 
 ## Progress Tracking Integration
 
-### TodoWrite Protocol
+### TodoWrite Protocol (Two-Phase Commit - Stage 2)
+
+**CRITICAL:** Tasks use two-phase commit state machine. Specialists CANNOT mark tasks "completed" directly.
+
 ```markdown
 At project start:
-TodoWrite: Create comprehensive task list
+TodoWrite: Create comprehensive task list with two-phase commit states
 
-Example todo structure:
+Example todo structure (UPDATED):
 [
-  {"content": "Capture user requirements", "status": "in_progress", "activeForm": "Capturing user requirements"},
-  {"content": "Design system architecture", "status": "pending", "activeForm": "Designing system architecture"},
-  {"content": "Implement authentication", "status": "pending", "activeForm": "Implementing authentication"},
-  {"content": "Run quality gate validation", "status": "pending", "activeForm": "Running quality gate validation"}
+  {
+    "content": "Capture user requirements",
+    "status": "in_progress",
+    "activeForm": "Capturing user requirements",
+    "phase": "implementation"
+  },
+  {
+    "content": "Design system architecture",
+    "status": "pending",
+    "activeForm": "Designing system architecture",
+    "phase": "implementation"
+  },
+  {
+    "content": "Implement authentication",
+    "status": "pending",
+    "activeForm": "Implementing authentication",
+    "phase": "implementation"
+  }
 ]
 
-#COMPLETION_DRIVE prevention:
+State Machine (MANDATORY):
+PENDING → in_progress → CLAIMED → VERIFIED → COMPLETED
+                            ↓ (if verification fails)
+                          BLOCKED → back to PENDING
+
+#COMPLETION_DRIVE prevention (TWO-PHASE COMMIT):
 - Mark "in_progress" when agent dispatched
-- Mark "completed" ONLY after evidence verified
-- NEVER mark complete based on agent's claim alone
+- Specialist marks "claimed" when implementation done (NOT "completed")
+- verification-agent marks "verified" after checks pass
+- workflow-orchestrator marks "completed" ONLY after "verified"
+- BLOCKED if verification fails (cannot proceed)
+- NEVER skip CLAIMED → VERIFIED transition
+```
+
+### Two-Phase Commit Enforcement
+
+```markdown
+After specialist completes implementation:
+
+Step 1: Check Task Status
+Read TodoWrite task list
+
+For EACH task with status="claimed":
+  #CRITICAL: Task claimed but NOT verified yet
+
+  CHECK 1: Was verification-agent dispatched?
+  if NOT verification-agent_dispatched:
+    ❌ VIOLATION DETECTED
+
+    Report to user:
+    "🚫 TWO-PHASE COMMIT VIOLATION
+
+    Task: {task.content}
+    Status: CLAIMED (by {task.claimed_by})
+    Problem: Specialist marked task as claimed but verification never ran
+
+    This violates two-phase commit protocol.
+
+    Required: Dispatch verification-agent immediately"
+
+    Dispatch verification-agent for this task
+    STOP until verification completes
+
+  CHECK 2: What is verification verdict?
+  Read task.verified_by and task.status
+
+  if task.status === "verified":
+    ✅ Verification passed
+    Proceed to mark task as completed
+
+  if task.status === "blocked":
+    ❌ Verification failed
+    Read task.failures
+    Report failures to user
+    HARD BLOCK - cannot proceed
+
+  if task.status === "claimed" (still):
+    ⏳ Verification in progress
+    Wait for verification to complete
+
+Step 2: Enforce State Transitions
+For EACH task:
+  if (task.status === "claimed" && task.verified_by === null):
+    VIOLATION: Must dispatch verification-agent
+
+  if (task.status === "completed" && task.status_was_not_verified):
+    VIOLATION: Cannot skip from CLAIMED to COMPLETED
+    Revert to CLAIMED
+    Force verification
+
+  if (task.status === "blocked"):
+    HARD BLOCK: Report failures
+    Cannot proceed until fixed and re-verified
 ```
 
 ### Status Reporting

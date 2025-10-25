@@ -358,6 +358,73 @@ Next audit due: [After next major change]
 
 ---
 
+### Phase 8: File Organization Audit (5 min)
+
+**Task:** Verify file organization follows strict rules (no logs in docs/, no extra docs in main/).
+
+**Commands:**
+```bash
+# Run verification script
+./scripts/verify-file-organization.sh
+
+# Manual checks if script unavailable
+ls *.md | grep -v "README\|QUICK_REFERENCE\|CHANGELOG"  # Should be empty
+ls docs/ | grep -E '(COMPLETE|LOG|session-|\.diagram-|\.log|\.txt)$'  # Should be empty
+```
+
+**Questions:**
+- [ ] Main folder contains ONLY: README.md, QUICK_REFERENCE.md, CHANGELOG.md?
+- [ ] docs/ folder contains NO logs (*-COMPLETE.md, *.log, *.txt)?
+- [ ] docs/ folder contains NO session files (session-*.md)?
+- [ ] docs/ folder contains NO temporary diagram files (.diagram-*.md)?
+- [ ] All files in docs/ are permanent public documentation?
+
+**If NO to any:** Fix file organization immediately.
+
+**Common violations:**
+- STAGES-1-6-COMPLETE.md in docs/ (it's a log, should be deleted)
+- session-*.md in docs/ (temporary, should be gitignored)
+- .diagram-*.md in docs/ (temporary work files, should be deleted)
+
+---
+
+### Phase 9: My Own Completion Claims Audit (5 min)
+
+**Task:** Verify MY work follows same quality standards as agents' work.
+
+**Commands:**
+```bash
+# Check if I used TodoWrite
+ls .claude-todo-*.json 2>/dev/null  # Should exist if used
+
+# Check if I provided verification evidence
+# Review completion messages for verification commands and outputs
+```
+
+**Questions:**
+- [ ] Did I use TodoWrite BEFORE starting work (not after)?
+- [ ] Did I extract user's constraints explicitly (exact quotes)?
+- [ ] Did I run verification commands BEFORE claiming complete?
+- [ ] Did I provide verification output as evidence?
+- [ ] Did I classify file types (log vs documentation) before file operations?
+- [ ] Did I re-read user's original instruction before completion?
+
+**If NO to any:** I'm operating OUTSIDE the quality system.
+
+**Red flags:**
+- User asked "did you check X?" → I didn't verify proactively
+- User found errors after I claimed complete → I didn't verify
+- No verification evidence in completion message → I just claimed without proof
+- Files in wrong locations → I didn't classify file types
+
+**Action if failed:**
+1. Acknowledge I bypassed quality gates
+2. Run proper verification NOW
+3. Fix any issues found
+4. Use forcing functions next time (todowrite-first skill, completion-checklist skill)
+
+---
+
 ## Summary
 
 **This protocol prevents:**
@@ -366,6 +433,8 @@ Next audit due: [After next major change]
 - ❌ Stale references (design-engineer in /orca)
 - ❌ Missing integration (design specialists in frontend teams)
 - ❌ Incomplete deprecation (agents marked but still used)
+- ❌ File organization errors (logs in docs/, extra docs in main/) **[NEW - Phase 8]**
+- ❌ Bypassing quality gates (claiming done without verification) **[NEW - Phase 9]**
 
 **This protocol enforces:**
 - ✅ Holistic system view after major changes
@@ -373,18 +442,22 @@ Next audit due: [After next major change]
 - ✅ Taxonomy boundary enforcement
 - ✅ Mandatory specialist coverage
 - ✅ Complete deprecation process
+- ✅ File organization rules **[NEW - Phase 8]**
+- ✅ Quality gates for MY work (not just agents) **[NEW - Phase 9]**
 
 **Trigger conditions:**
 - After creating 3+ agents
 - After deprecating any agent
 - After modifying /orca
 - After rebuilding a specialist category
+- After ANY file organization work **[NEW - Phase 8]**
+- After claiming ANY task complete **[NEW - Phase 9]**
 - Use #AUDIT_REQUIRED tag in code
 
-**Time investment:** 50-60 minutes per audit (worth it to prevent systemic failures)
+**Time investment:** 60-70 minutes per audit (worth it to prevent systemic failures)
 
 ---
 
-**Last Updated:** 2025-10-23
+**Last Updated:** 2025-10-25 (Added Phase 8 and 9)
 **Status:** Active - Use immediately
 **Next Review:** After next major agent change

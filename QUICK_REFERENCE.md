@@ -1,598 +1,600 @@
-# Claude Vibe Code - Quick Reference
+# Quick Reference
 
-**Fast lookup for all agents, commands, teams, and workflows**
-
----
-
-## 🤖 Agents (47 Total)
-
-### Implementation Specialists
-
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **frontend-engineer (DEPRECATED)** | Legacy - use Frontend specialists below | Monolithic frontend agent - replaced by 5 specialists | `agents/implementation/frontend-engineer.md` (backup) |
-| **backend-engineer** | Building APIs, server logic | Node.js, Python, Go, REST/GraphQL, databases, auth | `agents/implementation/backend-engineer.md` |
-| **ios-engineer (DEPRECATED)** | Legacy - use iOS specialists below | Monolithic iOS agent - replaced by 21 specialists | `agents/implementation/ios-engineer.md` (backup) |
-| **android-engineer** | Building Android apps | Kotlin, Jetpack Compose, Material 3, MVVM, coroutines | `agents/implementation/android-engineer.md` |
-| **cross-platform-mobile** | Multi-platform mobile | React Native, Flutter, platform optimization | `agents/implementation/cross-platform-mobile.md` |
-
-### iOS Specialists (21 Total)
-
-#### UI Implementation
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **swiftui-developer** | Modern iOS 15+ apps | SwiftUI, @Observable, Swift 6.2, MainActor | `agents/ios-specialists/ui/swiftui-developer.md` |
-| **uikit-specialist** | Legacy iOS or complex controls | UIKit, Auto Layout, UIKit+SwiftUI interop | `agents/ios-specialists/ui/uikit-specialist.md` |
-| **ios-accessibility-tester** | Accessibility compliance | VoiceOver, WCAG 2.1 AA, Dynamic Type | `agents/ios-specialists/ui/ios-accessibility-tester.md` |
-
-#### Data Persistence
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **swiftdata-specialist** | iOS 17+ data persistence | SwiftData, @Model, ModelContext, @Query | `agents/ios-specialists/data/swiftdata-specialist.md` |
-| **coredata-expert** | iOS 16 or complex models | Core Data, CloudKit, NSManagedObject | `agents/ios-specialists/data/coredata-expert.md` |
-
-#### Networking
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **urlsession-expert** | REST APIs | URLSession, async/await, Codable, auth | `agents/ios-specialists/networking/urlsession-expert.md` |
-| **combine-networking** | Reactive networking | Combine, publishers, operators, real-time | `agents/ios-specialists/networking/combine-networking.md` |
-| **ios-api-designer** | API design for mobile | Pagination, caching, mobile-first design | `agents/ios-specialists/networking/ios-api-designer.md` |
-
-#### Architecture
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **state-architect** | State-first architecture (default) | @Observable, unidirectional flow, state composition | `agents/ios-specialists/architecture/state-architect.md` |
-| **tca-specialist** | Complex apps with TCA | The Composable Architecture, @Reducer | `agents/ios-specialists/architecture/tca-specialist.md` |
-| **observation-specialist** | Observation optimization | @Observable internals, performance tuning | `agents/ios-specialists/architecture/observation-specialist.md` |
-
-#### Testing
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **swift-testing-specialist** | Modern testing (default) | Swift Testing, @Test, #expect, #require | `agents/ios-specialists/testing/swift-testing-specialist.md` |
-| **xctest-pro** | Legacy XCTest support | XCTest, XCTestCase, XCTAssert family | `agents/ios-specialists/testing/xctest-pro.md` |
-| **ui-testing-expert** | UI automation | XCUITest, accessibility-based testing | `agents/ios-specialists/testing/ui-testing-expert.md` |
-
-#### Quality & Debugging
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **swift-code-reviewer** | Code review | Swift 6.2 concurrency, code quality, best practices | `agents/ios-specialists/quality/swift-code-reviewer.md` |
-| **ios-debugger** | Complex debugging | LLDB, Instruments, memory/performance debugging | `agents/ios-specialists/quality/ios-debugger.md` |
-
-#### DevOps
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **xcode-cloud-expert** | Xcode Cloud CI/CD | Xcode Cloud workflows, TestFlight automation | `agents/ios-specialists/devops/xcode-cloud-expert.md` |
-| **fastlane-specialist** | Complex deployments | Fastlane lanes, match, gym, scan, deliver | `agents/ios-specialists/devops/fastlane-specialist.md` |
-
-#### Performance & Security
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **ios-performance-engineer** | Performance optimization | Instruments, profiling, optimization | `agents/ios-specialists/performance/ios-performance-engineer.md` |
-| **ios-security-tester** | Security hardening | Keychain, CryptoKit, certificate pinning, biometrics | `agents/ios-specialists/security/ios-security-tester.md` |
-| **ios-penetration-tester** | Advanced security audits | OWASP Mobile Top 10, reverse engineering, Frida | `agents/ios-specialists/security/ios-penetration-tester.md` |
-
-### Frontend Specialists (5 Total)
-
-#### Frameworks
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **react-18-specialist** | Modern React 18+ apps | Server Components, Suspense, hooks, React Query, concurrent rendering | `agents/frontend-specialists/frameworks/react-18-specialist.md` |
-| **nextjs-14-specialist** | Next.js 14 apps | App Router, SSR/SSG/ISR, Server Actions, SEO, image optimization | `agents/frontend-specialists/frameworks/nextjs-14-specialist.md` |
-
-#### State & Performance
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **state-management-specialist** | Complex state needs | UI/server/URL state separation, Zustand, React Query, state colocation | `agents/frontend-specialists/state/state-management-specialist.md` |
-| **frontend-performance-specialist** | Performance optimization | Code splitting, memoization, virtual scrolling, Core Web Vitals, bundle analysis | `agents/frontend-specialists/performance/frontend-performance-specialist.md` |
-
-#### Testing
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **frontend-testing-specialist** | Frontend testing (behavior-first) | React Testing Library, Vitest, Playwright, accessibility testing, E2E | `agents/frontend-specialists/testing/frontend-testing-specialist.md` |
-
-### Planning Specialists
-
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **requirement-analyst** | Need to clarify requirements | User stories, acceptance criteria, requirements docs | `agents/planning/requirement-analyst.md` |
-| **system-architect** | Need system design | Architecture, tech stacks, API specs, data models, scalability | `agents/planning/system-architect.md` |
-
-### Quality Specialists
-
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **test-engineer** | Writing tests, QA | Unit, integration, E2E, security, performance testing | `agents/quality/test-engineer.md` |
-| **quality-validator** | Final verification before delivery | Requirements compliance, evidence validation, blocking gates | `agents/quality/quality-validator.md` |
-
-### Design Specialists (8 Total)
-
-#### Foundation
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **design-system-architect** | Creating design systems | Reference-based taste capture, design tokens, Tailwind v4 config, OKLCH colors | `agents/design-specialists/foundation/design-system-architect.md` |
-| **ux-strategist** | UX optimization, journey mapping | Flow simplification, Hick's Law, progressive disclosure, interaction design, data viz | `agents/design-specialists/foundation/ux-strategist.md` |
-
-#### Visual
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **visual-designer** | Visual design, mockups | Visual hierarchy, typography, color theory, layout composition, OKLCH | `agents/design-specialists/visual/visual-designer.md` |
-
-#### Implementation
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **tailwind-specialist** | Tailwind CSS implementation | Tailwind v4, daisyUI 5, container queries, OKLCH, mobile-first | `agents/design-specialists/implementation/tailwind-specialist.md` |
-| **css-specialist** | Complex CSS (when Tailwind insufficient) | CSS Grid, animations, CSS Variables, browser compatibility | `agents/design-specialists/implementation/css-specialist.md` |
-| **ui-engineer** | Component engineering | React/Vue/Angular, TypeScript, state management, performance, a11y | `agents/design-specialists/implementation/ui-engineer.md` |
-
-#### Quality
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **accessibility-specialist** | WCAG compliance (ALWAYS use) | WCAG 2.1 AA, keyboard nav, screen readers, contrast, touch targets | `agents/design-specialists/quality/accessibility-specialist.md` |
-| **design-reviewer** | Design QA before launch (MANDATORY) | 7-phase review (OneRedOak), Playwright MCP, visual verification, evidence-based feedback | `agents/design-specialists/quality/design-reviewer.md` |
-
-### Specialized Agents
-
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **design-engineer (DEPRECATED)** | Legacy - use design specialists above | Monolithic design agent - replaced by 8 specialists | `agents/specialized/design-engineer.md` (backup) |
-| **infrastructure-engineer** | DevOps, deployment | CI/CD, Docker, Kubernetes, AWS/GCP/Azure, monitoring | `agents/specialized/infrastructure-engineer.md` |
-
-### Orchestration & Learning
-
-| Agent | Use When | Key Skills | File |
-|-------|----------|------------|------|
-| **workflow-orchestrator** | Complex multi-phase workflows | Pure coordination, quality gates, parallel dispatch, evidence collection | `agents/orchestration/workflow-orchestrator.md` |
-| **orchestration-reflector** | After /orca sessions (automatic) | Session analysis, pattern performance evaluation, new pattern discovery (ACE Reflector) | `agents/specialized/orchestration-reflector.md` |
-| **playbook-curator** | After reflection (automatic) | Delta updates, apoptosis, semantic de-duplication, playbook maintenance (ACE Curator) | `agents/specialized/playbook-curator.md` |
+**Fast lookup for commands, practical examples, and how systems work**
 
 ---
 
-## ⚡ Commands (11 Total)
+## ⚡ Commands (What You Type)
 
-### Core Orchestration
+### /orca - Full Orchestration
+**Use for:** Complex multi-step features, full implementations, architecture changes
 
-| Command | When to Use | What It Does |
-|---------|-------------|--------------|
-| **/orca** | Complex multi-step tasks | Smart multi-agent orchestration with tech stack detection and team confirmation |
-| **/enhance** | Vague or unclear requests | Transforms requests into well-structured prompts and executes |
-| **/ultra-think** | Need deep analysis without code changes | Multi-dimensional problem analysis and reasoning |
+**What it does:**
+1. Detects your project type (iOS/React/Backend)
+2. Dispatches specialist team automatically
+3. Executes in parallel (3-5x faster)
+4. Provides evidence (screenshots, tests, logs)
 
-### Design Workflow
-
-| Command | When to Use | What It Does |
-|---------|-------------|--------------|
-| **/concept** | Before building UI/UX | Creative exploration - study references, extract patterns, get approval BEFORE building |
-| **/visual-review** | After implementing UI | Visual QA review using chrome-devtools to screenshot and analyze |
-
-### ACE Playbook System
-
-| Command | When to Use | What It Does |
-|---------|-------------|--------------|
-| **/playbook-review** | After /orca sessions | Manually trigger reflection and curation to update playbooks with learned patterns |
-| **/playbook-pause** | Debugging or testing | Temporarily disable playbook system to run /orca without pattern influence |
-
-### Workflow & Utilities
-
-| Command | When to Use | What It Does |
-|---------|-------------|--------------|
-| **/clarify** | Quick mid-workflow question | Focused clarification without full orchestration |
-| **/completion-drive** | Mid-generation assumption tracking | Two-tier assumption tracking system for meta-cognitive awareness |
-| **/session-save** | End of session | Save current session context for automatic resumption |
-| **/session-resume** | Start of session | Manually reload session context (normally auto-loads) |
-
----
-
-## 🎯 Suggested Teams by Project Type
-
-### iOS/Swift Project
-**Auto-detected when:** `*.xcodeproj` or `*.xcworkspace` found
-
-**Team Composition:** Dynamic (7-15 agents based on complexity)
-
-#### Core Planning Agents (Always - 2):
-1. requirement-analyst → Requirements analysis
-2. system-architect → iOS architecture design + specialist recommendation
-
-#### iOS Specialists (2-10 agents - chosen by system-architect):
-- See "iOS Specialists (21 Total)" section above for full list
-- system-architect recommends specialists based on app complexity and keywords
-
-#### Quality Gates (Always - 2):
-- verification-agent → Meta-cognitive tag verification (MANDATORY)
-- quality-validator → Final validation gate (MANDATORY)
-
-**Dynamic Team Sizing Examples:**
-
-**Simple App (Calculator):** 7 total
-- Core: requirement-analyst, system-architect (2)
-- iOS: swiftui-developer, swift-testing-specialist (2)
-- Quality: verification-agent, quality-validator (2)
-- Optional: test-engineer for comprehensive testing (1)
-
-**Medium App (Notes):** 9-10 total
-- Core: requirement-analyst, system-architect (2)
-- iOS: swiftui-developer, swiftdata-specialist, state-architect, swift-testing-specialist (4)
-- Quality: test-engineer, verification-agent, quality-validator (3)
-
-**Complex App (Social Network):** 12-14 total
-- Core: requirement-analyst, system-architect (2)
-- iOS: swiftui-developer, swiftdata-specialist, urlsession-expert, tca-specialist, swift-testing-specialist, ui-testing-expert, ios-performance-engineer (7+)
-- Quality: test-engineer, verification-agent, quality-validator (3)
-
-**Enterprise App (Banking):** 15+ total
-- Core: requirement-analyst, system-architect (2)
-- iOS: 10+ specialists including security, performance, DevOps (10+)
-- Quality: test-engineer, verification-agent, quality-validator (3)
-
-**See /orca command for full specialist selection logic**
-
-**Cannot skip (mandatory):**
-- Core planning agents (2)
-- At least 1 UI specialist
-- At least 1 testing specialist
-- verification-agent (Response Awareness)
-- quality-validator (Final gate)
-
-**Recommended Commands:**
-- /orca (complex features)
-- /enhance (quick tasks)
-
----
-
-### Frontend/React/Next.js Project
-**Auto-detected when:** `package.json` with "react" or "next"
-
-**Team Composition:** Dynamic (8-13 agents based on complexity)
-
-#### Core Planning Agents (Always):
-1. requirement-analyst → Requirements analysis
-2. system-architect → Frontend architecture + specialist recommendation
-
-#### Design Agents (Choose Based on Need):
-3. design-system-architect → If new project or design system work
-4. visual-designer → If design work needed
-5. accessibility-specialist → WCAG 2.1 AA compliance (ALWAYS for production)
-
-#### Frontend Implementation Specialists:
-
-**Category 1: Framework (choose 1-2):**
-6. react-18-specialist → React 18+ apps
-7. nextjs-14-specialist → Next.js App Router apps
-
-**Category 2: State & Performance (choose 0-2):**
-8. state-management-specialist → Complex state needs
-9. frontend-performance-specialist → Optimization required
-
-**Category 3: Styling (MANDATORY - from design-specialists/):**
-10. tailwind-specialist → Tailwind v4 + daisyUI 5 implementation
-
-**Category 4: Testing (MANDATORY):**
-11. frontend-testing-specialist → Behavior-first testing
-
-#### Quality Gates (Always):
-12. verification-agent → Meta-cognitive tag verification (MANDATORY)
-13. quality-validator → Final validation gate (MANDATORY)
-
-#### Example Team Compositions:
-
-**Simple React App (8 agents):**
-- Core: requirement-analyst, system-architect
-- Design: accessibility-specialist
-- Implementation: react-18-specialist, tailwind-specialist, frontend-testing-specialist
-- Quality: verification-agent, quality-validator
-
-**Complex React App (10 agents):**
-- Add: design-system-architect, state-management-specialist
-
-**Next.js App (9 agents):**
-- Use nextjs-14-specialist (replaces react-18-specialist)
-
-**Performance-Critical App (11 agents):**
-- Add: visual-designer, frontend-performance-specialist
-
-**When to add:**
-- backend-engineer → If full-stack
-- infrastructure-engineer → Deployment, SEO optimization
-
-**Can skip (if specs exist):**
-- requirement-analyst, system-architect, design specialists
-
-**Cannot skip:**
-- At least 1 framework specialist (react-18 or nextjs-14)
-- tailwind-specialist (from design-specialists/)
-- frontend-testing-specialist
-- verification-agent, quality-validator
-
-**See /orca command for full specialist selection logic**
-
-**Recommended Commands:**
-- /orca (full features)
-- /concept (design exploration)
-- /enhance (component work)
-
----
-
-### Backend/Python Project
-**Auto-detected when:** `requirements.txt` or `*.py` files
-
-**Primary Team (6 agents):**
-1. requirement-analyst → Requirements analysis
-2. system-architect → Backend architecture (API design, database schema)
-3. backend-engineer → API/server implementation ONLY
-4. test-engineer → Supertest/k6 load testing
-5. verification-agent → Meta-cognitive tag verification
-6. quality-validator → Final validation gate
-
-**When to add (admin UI):**
-- Design specialists: ux-strategist, tailwind-specialist, ui-engineer, design-reviewer
-- infrastructure-engineer → Docker, Kubernetes, cloud deployment
-
-**Can skip (if specs exist):**
-- requirement-analyst, system-architect
-
-**Cannot skip:**
-- backend-engineer, test-engineer, verification-agent, quality-validator
-
-**Recommended Commands:**
-- /orca (API development)
-- /enhance (endpoint work)
-- /ultra-think (performance analysis)
-
----
-
-### React Native/Flutter Project
-**Auto-detected when:** `package.json` with `ios/` and `android/` dirs, or `pubspec.yaml`
-
-**Primary Team (10-13 agents):**
-- Core: requirement-analyst, system-architect
-- Design: ux-strategist, ui-engineer, accessibility-specialist, design-reviewer
-- Implementation: cross-platform-mobile
-- Quality: test-engineer, verification-agent, quality-validator
-
-**When to add:**
-- iOS specialists like swiftui-developer (iOS-specific features)
-- android-engineer (Android-specific features)
-- infrastructure-engineer (app store deployment)
-
-**Recommended Commands:**
-- /orca (cross-platform features)
-- /concept (design exploration)
-- /visual-review (multi-device verification)
-
----
-
-### Unknown/General Project
-**Auto-detected when:** No specific project markers found
-
-**Primary Team:**
-- system-architect (figure out the architecture)
-- test-engineer (testing)
-- quality-validator (verification)
-
-**When to add:**
-- Appropriate implementation specialist once project type is known
-
-**Recommended Commands:**
-- /ultra-think (understand the codebase)
-- /orca (with explicit agent selection)
-- /enhance (after understanding project)
-
----
-
-## 🔄 Common Workflows
-
-### Workflow 1: Add a New Feature
-
-```
-1. /orca "Add [feature name]"
-   └─ Auto-detects project type
-   └─ Dispatches: requirement-analyst → system-architect
-   └─ Implementation agents in parallel
-   └─ test-engineer writes tests
-   └─ quality-validator verifies
-
-2. Review evidence
-   └─ Screenshots (UI changes)
-   └─ Test output (functionality)
-   └─ Build logs (compilation)
-
-3. Done!
-```
-
----
-
-### Workflow 2: Fix a Bug
-
-```
-1. Describe the problem naturally
-   "The login button doesn't work on mobile"
-
-2. Auto-orchestration:
-   └─ Appropriate agent investigates
-   └─ Identifies root cause
-   └─ Implements fix
-   └─ test-engineer adds regression test
-   └─ quality-validator verifies
-
-3. Evidence provided:
-   └─ Before/after screenshots
-   └─ Test showing bug is fixed
-```
-
----
-
-### Workflow 3: Design Exploration
-
-```
-1. /concept "Dashboard with analytics"
-   └─ Studies reference examples
-   └─ Extracts design patterns
-   └─ Brainstorms approach
-   └─ Gets your approval
-
-2. Once approved, /orca executes
-   └─ Design specialists (design-system-architect, tailwind-specialist) create design system
-   └─ Frontend specialists (react-18-specialist or nextjs-14-specialist) implement
-   └─ test-engineer validates
-   └─ quality-validator checks a11y
-
-3. /visual-review for final check
-```
-
----
-
-### Workflow 4: Performance Investigation
-
-```
-1. /ultra-think "Why is the app slow?"
-   └─ Deep analysis (no code changes)
-   └─ Identifies bottlenecks
-   └─ Provides recommendations
-
-2. Review recommendations
-
-3. /orca "Implement [specific optimization]"
-   └─ Appropriate agents implement
-   └─ test-engineer benchmarks
-   └─ Evidence shows improvement
-```
-
----
-
-### Workflow 5: Iterative Feedback
-
-```
-1. Work gets completed
-
-2. /agentfeedback "The spacing is too tight and colors are off"
-   └─ Parses into actionable points:
-      a) Increase spacing
-      b) Adjust colors
-   └─ Dispatches Design specialists (tailwind-specialist, design-reviewer)
-   └─ Updates with evidence
-
-3. Optionally: /agentfeedback --learn
-   └─ Extracts design rules
-   └─ Prevents repeated mistakes
-```
-
----
-
-## 🪝 Auto-Orchestration Hook
-
-**File:** `hooks/detect-project-type.sh`
-
-**Runs:** Every session start (< 50ms)
-
-**Does:**
-1. Checks for project markers (*.xcodeproj, package.json, requirements.txt, etc.)
-2. Detects project type
-3. Loads appropriate agent team
-4. Sets evidence requirements
-5. Writes `.claude-orchestration-context.md`
-
-**Install:**
+**Examples:**
 ```bash
-cp hooks/detect-project-type.sh ~/.claude/hooks/
-chmod +x ~/.claude/hooks/detect-project-type.sh
+/orca Add dark mode toggle to settings
+
+/orca Build authentication with OAuth (Google + Apple)
+
+/orca Implement shopping cart with local persistence
+
+/orca Fix memory leak in ImageCache
 ```
 
-**Configure in `.claude/settings.local.json`:**
+**You get:** Complete implementation + proof it works
+
+---
+
+### /concept - Design Exploration
+**Use for:** Before building UI/UX, when you need creative exploration
+
+**What it does:**
+1. Studies reference examples and design patterns
+2. Extracts principles from your inspirations
+3. Brainstorms approach specific to your project
+4. Gets your approval BEFORE building
+
+**Examples:**
+```bash
+/concept Premium dashboard with analytics and data visualizations
+
+/concept Onboarding flow for meditation app
+
+/concept Settings screen with nested categories
+```
+
+**Then:** Use `/orca` to build after you approve the concept
+
+**You get:** Design proposal + rationale + visual direction
+
+---
+
+### /enhance - Quick Focused Changes
+**Use for:** Small improvements, single-component work, quick iterations
+
+**What it does:**
+1. Transforms vague request into structured task
+2. Executes with appropriate specialists
+3. Tests automatically
+
+**Examples:**
+```bash
+/enhance Make the calculator button text larger
+
+/enhance Add loading spinner to submit button
+
+/enhance Improve contrast on disabled form fields
+```
+
+**You get:** Implementation + automatic testing
+
+---
+
+### /visual-review - Visual QA
+**Use for:** After implementing UI, before shipping to production
+
+**What it does:**
+1. Screenshots at multiple breakpoints (desktop/tablet/mobile)
+2. Analyzes: hierarchy, spacing, typography, colors
+3. Checks Design DNA rules (if your project has them)
+4. "Eyes test" - does attention go to the right element?
+
+**Examples:**
+```bash
+/visual-review http://localhost:3000/dashboard
+
+/visual-review http://localhost:3000/checkout
+
+/visual-review Check the new card component at localhost:8080/components
+```
+
+**You get:** Multi-device screenshots + visual analysis report + DNA violations (if applicable)
+
+---
+
+### /ultra-think - Deep Analysis
+**Use for:** Understanding problems before solving, architectural decisions, performance investigations
+
+**What it does:**
+1. Multi-dimensional analysis (no code changes)
+2. Identifies root causes and bottlenecks
+3. Explores multiple solution approaches
+4. Provides recommendations with trade-offs
+
+**Examples:**
+```bash
+/ultra-think Why is the app slow on startup?
+
+/ultra-think Should we use SwiftData or Core Data for this project?
+
+/ultra-think How should we structure state management for this feature?
+
+/ultra-think What's causing the memory leak in ImageLoader?
+```
+
+**Then:** Use `/orca` to implement the recommended fix
+
+**You get:** Comprehensive analysis + recommendations
+
+---
+
+### /playbook-review - Reinforce Learning
+**Use for:** After major /orca sessions when you want to explicitly teach the system
+
+**What it does:**
+1. Analyzes recent session outcomes
+2. Extracts successful and failed patterns
+3. Updates learned patterns (helpful_count, harmful_count)
+4. Makes system smarter for next time
+
+**Examples:**
+```bash
+/playbook-review
+
+# After session where design-reviewer caught critical bugs:
+# System learns: "design-reviewer prevents production bugs" → helpful_count++
+
+# After session where wrong architecture chosen:
+# System learns: "Pattern X failed for use case Y" → harmful_count++
+```
+
+**You get:** Updated playbooks (system gets smarter over time)
+
+**Note:** This happens automatically after /orca sessions - manual use is optional
+
+---
+
+### /playbook-pause - Disable Learning
+**Use for:** Testing, debugging, when you want clean slate behavior
+
+**What it does:** Temporarily disables ACE playbook system so /orca doesn't use learned patterns
+
+**Examples:**
+```bash
+/playbook-pause
+
+# Then test /orca without pattern influence
+# When done: Learning re-enables automatically next session
+```
+
+**Use case:** "I want to see how /orca behaves without historical patterns"
+
+---
+
+### /clarify - Quick Focused Questions
+**Use for:** Mid-workflow questions without full orchestration
+
+**What it does:** Answers specific questions without launching full agent teams
+
+**Examples:**
+```bash
+/clarify What's the difference between SwiftData and Core Data?
+
+/clarify How do I use Design DNA for a new project?
+
+/clarify When should I use /concept vs /orca?
+```
+
+**You get:** Direct answer without orchestration overhead
+
+---
+
+### /session-save - Save Context
+**Use for:** End of session to preserve state for next time
+
+**What it does:** Saves current session context for automatic resumption
+
+**Example:**
+```bash
+/session-save
+
+# Next session: Context auto-loads via SessionStart hook
+```
+
+**Note:** Usually not needed - SessionStart hook loads context automatically
+
+---
+
+### /session-resume - Reload Context
+**Use for:** Manually reload session context if auto-load failed
+
+**What it does:** Reloads saved session context
+
+**Example:**
+```bash
+/session-resume
+
+# Loads: .claude-session-context.md
+```
+
+**Note:** Rarely needed - SessionStart hook does this automatically
+
+---
+
+### /completion-drive - Track Assumptions
+**Use for:** Meta-cognitive awareness during complex work
+
+**What it does:** Two-tier assumption tracking for preventing false completions
+
+**Example:**
+```bash
+/completion-drive
+
+# System prompts you to tag assumptions:
+# #COMPLETION_DRIVE: Assuming theme.colors exists
+# #FILE_CREATED: src/Calculator.tsx
+```
+
+**Use case:** When you need explicit assumption tracking for quality gates
+
+**Note:** Response Awareness system does this automatically - manual use is rare
+
+---
+
+## 🎯 Practical Examples (I Want To...)
+
+### I want to build a feature
+```bash
+# Just describe it naturally (no command needed)
+"Add authentication with OAuth"
+
+# Or use /orca explicitly
+/orca Add shopping cart with local storage
+```
+→ System detects project → Dispatches team → Builds → Tests → Provides evidence
+
+---
+
+### I want to fix a bug
+```bash
+# Describe the problem
+"Login button doesn't work on mobile"
+
+# Or for complex debugging
+/ultra-think Why does the app crash on launch?
+# Then: /orca [implement the fix]
+```
+→ System investigates → Identifies root cause → Fixes → Tests → Provides proof
+
+---
+
+### I want to explore a design idea
+```bash
+/concept Dashboard with analytics and real-time data
+
+# After approval:
+/orca Build the approved dashboard design
+```
+→ Explores references → Proposes approach → Gets approval → Then builds
+
+---
+
+### I want to improve something visually
+```bash
+/enhance Make the buttons more prominent
+
+/enhance Improve spacing in the card layout
+
+/enhance Add subtle animation to the menu
+```
+→ Quick focused changes with automatic testing
+
+---
+
+### I want to verify UI quality
+```bash
+/visual-review http://localhost:3000/checkout
+
+# After implementing new UI
+/visual-review Check the new premium card component
+```
+→ Screenshots + visual analysis + Design DNA checks (if applicable)
+
+---
+
+### I want to understand a problem deeply
+```bash
+/ultra-think Why is the app slow on first load?
+
+/ultra-think Should we use Redux or Zustand for state?
+
+/ultra-think How do we scale this to handle 10x users?
+```
+→ Deep analysis → Recommendations → Then use /orca to implement
+
+---
+
+### I want to teach the system
+```bash
+# After a great session with design-reviewer catching bugs:
+/playbook-review
+
+# System learns: "design-reviewer prevents bugs" → helpful_count++
+```
+→ System gets smarter for future sessions
+
+---
+
+### I want to ask a quick question
+```bash
+/clarify When should I use SwiftData vs Core Data?
+
+/clarify How do I add Design DNA to a new project?
+```
+→ Direct answer without full orchestration
+
+---
+
+## 🧬 How Systems Work (Automatically)
+
+### Auto-Orchestration (Always Active)
+
+**What it does:** Detects your project type → Loads appropriate team → You just describe intent
+
+**When it triggers:** Every code change request
+
+**How it works:**
+- SessionStart hook checks for: `*.xcodeproj` (iOS), `package.json` (React/Next.js), `requirements.txt` (Python)
+- Loads team: 8-18 agents for iOS, 10-17 for Frontend, 6-12 for Backend
+- You never specify agents or project type
+
+**Example:**
+```
+You: "Add authentication"
+System: [Detects Next.js] → Dispatches nextjs-14-specialist, backend-engineer, etc.
+You: [Get complete auth implementation]
+```
+
+---
+
+### Design DNA (Active for OBDN + Projects with DNA)
+
+**What it does:** Programmatic taste enforcement - prevents "looks like shit" first iterations
+
+**When it triggers:** Any UI/design work in projects with `.claude/design-dna/*.json` files
+
+**The pipeline:**
+```
+Your Request ("Build premium card")
+    ↓
+style-translator: Request → Design DNA tokens
+    ↓
+design-compiler: Generates code using tokens as constraints
+    ↓
+design-dna-linter: Checks spacing, fonts, colors, forbidden patterns
+    ↓
+Implementation: ui-engineer, swiftui-developer, etc.
+    ↓
+visual-reviewer-v2: Screenshots + "eyes test" + DNA validation
+    ↓
+Result: Code that matches your taste (80-90% first-iteration acceptance)
+```
+
+**How to use:**
+- **If project has DNA:** Just build UI normally - pipeline auto-injects
+- **Add DNA to new project:** Create `.claude/design-dna/project-name.json` with rules
+
+**Example DNA rules:**
 ```json
 {
-  "hooks": {
-    "SessionStart": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/detect-project-type.sh 2>/dev/null || echo '# Auto-Orchestration: Detection failed'"
-          }
-        ]
-      }
-    ]
-  }
+  "typography": {
+    "card_titles": "Domaine Sans Display / 28px minimum",
+    "labels": "Supreme LL 400 / UPPERCASE / NEVER italic"
+  },
+  "spacing": {
+    "base_grid": 4,
+    "rule": "ALL spacing must be 4px multiples - NO EXCEPTIONS"
+  },
+  "colors": {
+    "gold_accent": "#C9A961",
+    "usage_limit": "<10% of elements"
+  },
+  "forbidden": ["gradients", "random_spacing", "gold_overuse"]
 }
 ```
 
+**Result:** First iteration matches your taste - no iteration loops
+
+**Files:**
+- `.claude/design-dna/obdn.json` - OBDN project rules
+- `.claude/design-dna/universal-taste.json` - Cross-project principles
+
+**Full guide:** `docs/DESIGN_DNA_SYSTEM.md`
+
 ---
 
-## 📊 Quick Decision Tree
+### ACE Playbooks (Learning System)
+
+**What it does:** System learns from outcomes → Gets better over time
+
+**When it triggers:** Automatically after every /orca session
+
+**What gets learned:**
+- ✓ **Helpful patterns:** "SwiftUI + SwiftData works" → helpful_count++
+- ✗ **Harmful patterns:** "Skipping design-reviewer causes bugs" → harmful_count++
+- 💀 **Apoptosis:** If harmful > helpful × 3 → Pattern deleted (after 7-day grace)
+
+**How to reinforce learning:**
+1. **Automatic (default):** System logs outcomes after every session
+2. **Explicit:** `/playbook-review` to manually trigger reflection
+3. **See what's learned:** Check `.orchestration/playbooks/*.json`
+
+**Example learned pattern:**
+```json
+{
+  "pattern_id": "ios-pattern-012",
+  "title": "SwiftUI + SwiftData for iOS 17+",
+  "helpful_count": 15,
+  "harmful_count": 0,
+  "confidence": 0.95,
+  "strategy": "Use swiftui-developer + swiftdata-specialist"
+}
+```
+
+**Result:** Session 50 is smarter than Session 1
+
+**Playbook templates:** `.orchestration/playbooks/` (59 seed patterns)
+
+**Full guide:** `.orchestration/playbooks/README.md`
+
+---
+
+### Response Awareness (Quality Gates)
+
+**What it does:** Prevents false completions by separating generation from verification
+
+**The problem:** LLMs can't stop mid-generation to verify files exist - they must complete responses even if uncertain
+
+**The solution:** Agents tag assumptions → verification-agent checks with grep/bash
+
+**Example:**
+```
+Implementation agent: "I created Calculator.tsx"
+  Tags: #FILE_CREATED: src/Calculator.tsx
+
+verification-agent: ls src/Calculator.tsx
+  Result: ✅ EXISTS (verified)
+
+quality-validator: All tags verified → Approve delivery
+```
+
+**Meta-cognitive tags:**
+- `#FILE_CREATED:` - Claims file was created
+- `#SCREENSHOT_CLAIMED:` - Claims screenshot exists
+- `#COMPLETION_DRIVE:` - Making an assumption
+- `#PLAN_UNCERTAINTY:` - Needs clarification
+
+**Result:** <5% false completion rate (down from ~80% without verification)
+
+**Full guide:** `docs/RESPONSE_AWARENESS_TAGS.md`
+
+---
+
+## 🤖 Agents (Auto-Selected by /orca)
+
+You don't pick agents - /orca does it automatically based on your project type.
+
+### Your Project Determines Available Specialists
+
+**iOS Project** (21 iOS specialists)
+- Auto-detected: `*.xcodeproj` found
+- Team size: 8-18 agents (dynamic)
+- **You just:** Describe iOS feature → /orca picks team
+
+**Frontend Project** (5 frontend + 12 design specialists)
+- Auto-detected: `package.json` with "react" or "next"
+- Team size: 10-17 agents (dynamic)
+- **You just:** Describe frontend feature → /orca picks team
+
+**Backend Project** (3 base specialists)
+- Auto-detected: `requirements.txt`, `*.py`, or `package.json` with backend deps
+- Team size: 6-12 agents (6 base, +design if admin UI)
+- **You just:** Describe backend feature → /orca picks team
+
+### Specialist Categories (52 Total)
+
+- **iOS** (21): SwiftUI, SwiftData, networking, testing, architecture, performance, security
+- **Frontend** (5): React 18, Next.js 14, state management, performance, testing
+- **Design** (12): Design systems, UX, Tailwind v4, CSS, accessibility, Design DNA
+- **Planning** (3): Requirements, architecture, plan synthesis
+- **Quality** (3): Testing, verification, validation
+- **Implementation** (3): Backend, Android, cross-platform mobile
+- **Orchestration & Learning** (5): Workflow orchestration, meta-orchestration, reflection, curation
+
+**How it works:**
+```
+You: "Build iOS calculator app"
+    ↓
+Auto-detection: Finds *.xcodeproj
+    ↓
+system-architect recommends: swiftui-developer, state-architect, swift-testing-specialist
+    ↓
+Team dispatched in parallel
+    ↓
+You: [Get complete implementation]
+```
+
+**Full agent catalog:** See `agents/` directory (for deep reference only - you rarely need this)
+
+---
+
+## 📖 Quick Decision Trees
+
+### Which Command Should I Use?
 
 ```
-Got a task?
-│
-├─ Is it a question? → Answer directly (no agents)
-│
-├─ Is it ideation/exploration?
-│  └─ Use: /concept, /ultra-think, or /clarify
-│
-├─ Is it a code change?
-│  │
-│  ├─ Simple/focused?
-│  │  └─ Use: /enhance (smart task execution)
-│  │
-│  └─ Complex/multi-step?
-│     └─ Use: /orca (full orchestration)
-│
-└─ Is it design-related?
-   ├─ Exploration: /concept
-   ├─ Inspiration: /inspire or /save-inspiration
-   ├─ Brainstorming: /design
-   └─ Verification: /visual-review
+Is it a question?
+├─ Yes → Just ask directly (no command)
+└─ No → Is it code/design work?
+    ├─ Need to explore first?
+    │   ├─ Design exploration → /concept
+    │   └─ Problem analysis → /ultra-think
+    ├─ Simple focused change?
+    │   └─ /enhance
+    └─ Complex multi-step work?
+        └─ /orca
+```
+
+### When Does Design DNA Apply?
+
+```
+Does .claude/design-dna/{project}.json exist?
+├─ Yes → Design DNA auto-active
+│   └─ First iteration: 80-90% acceptance
+└─ No → Standard design
+    └─ First iteration: ~20% acceptance
+    └─ To add DNA: Create {project}.json
+```
+
+### How Do I Make the System Learn?
+
+```
+After /orca session:
+├─ Automatic → Reflection + curation happen automatically
+├─ Explicit → /playbook-review (optional)
+└─ See learning → cat .orchestration/playbooks/*.json
 ```
 
 ---
 
 ## 💡 Pro Tips
 
-**1. Trust Auto-Detection**
-- The hook detects your project type automatically
-- Loads the right agent team
-- Just describe what you want
-
-**2. Use Evidence**
-- Screenshots for UI changes
-- Test output for functionality
-- Build logs for compilation
-- No evidence = not done
-
-**3. Leverage Parallel Execution**
-- /orca dispatches multiple agents simultaneously
-- 3-5x faster than sequential
-- Same cost, better results
-
-**4. Save Feedback as Rules**
-- /agentfeedback --learn extracts design rules
-- Prevents repeating mistakes
-- Builds personal design language
-
-**5. Browse the Repo**
-- All agents in `agents/*/`
-- All commands in `commands/`
-- Easy to reference and edit
+1. **Commands are muscle memory** - `/orca` for features, `/concept` before design, `/visual-review` after UI
+2. **Trust auto-detection** - Don't specify agents or project type
+3. **Design DNA prevents iteration loops** - 80-90% first-iteration acceptance vs 20% without
+4. **System learns over time** - Session 50 > Session 1 (ACE playbooks)
+5. **Evidence always required** - No "it's done" without screenshots/tests/logs
+6. **Parallel execution** - /orca runs multiple agents simultaneously (3-5x faster)
 
 ---
 
-## 📁 File Locations
+## 🔍 Where To Find More
 
-```
-~/.claude/
-├── agents/              ← Copy from repo: agents/*
-├── commands/            ← Copy from repo: commands/*
-├── hooks/               ← Copy from repo: hooks/*
-└── settings.local.json  ← Configure hook here
-
-claude-vibe-code/       (this repo)
-├── agents/              ← All 45 agents (11 base + 21 iOS + 5 frontend + 8 design) organized by function
-├── commands/            ← All 13 slash commands
-├── hooks/               ← Auto-detection hook
-├── skills/              ← Superpowers plugin skills
-├── examples/            ← Real-world examples
-└── archive/             ← Historical/deprecated files
-```
+| Topic | Location |
+|-------|----------|
+| Full documentation | `docs/` directory |
+| Agent specifications | `agents/` directory (52 total) |
+| Design DNA guide | `docs/DESIGN_DNA_SYSTEM.md` |
+| ACE system details | `.orchestration/playbooks/README.md` |
+| Quality gates | `docs/RESPONSE_AWARENESS_TAGS.md` |
+| Troubleshooting | `docs/TROUBLESHOOTING.md` |
+| Agent taxonomy | `docs/AGENT_TAXONOMY.md` |
 
 ---
 
-**Need more details?** Check the full README.md or browse specific agent/command files.
+## 🎯 Remember
+
+**Your workflow:**
+1. Describe what you want (natural language)
+2. System detects project → Picks team automatically
+3. Implementation with evidence (screenshots, tests, logs)
+4. System learns from outcome (ACE)
+
+**You don't:** Pick agents, specify project type, configure teams
+
+**You just:** Describe intent → System handles complexity
