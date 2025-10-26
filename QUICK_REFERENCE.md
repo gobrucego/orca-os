@@ -11,9 +11,10 @@
 
 **What it does:**
 1. Detects your project type (iOS/React/Backend)
-2. Dispatches specialist team automatically
-3. Executes in parallel (3-5x faster)
-4. Provides evidence (screenshots, tests, logs)
+2. Proposes specialist team (auto-proceeds in bypass mode)
+3. Dispatches team with quality gates
+4. Executes in parallel (3-5x faster)
+5. Provides evidence (screenshots, tests, logs)
 
 **Examples:**
 ```bash

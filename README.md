@@ -834,7 +834,7 @@ All commands live in `commands/` and extend Claude Code workflows:
 
 | Command | Description | File |
 |---------|-------------|------|
-| **/orca** | Smart multi-agent orchestration with tech stack detection and team confirmation | `orca.md` |
+| **/orca** | Smart multi-agent orchestration with tech stack detection and team confirmation (auto-proceeds in bypass mode) | `orca.md` |
 | **/enhance** | Transform vague requests into well-structured prompts and execution | `enhance.md` |
 | **/ultra-think** | Deep analysis and problem solving with multi-dimensional thinking | `ultra-think.md` |
 

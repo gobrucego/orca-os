@@ -1245,44 +1245,99 @@ Phase 8: quality-validator (Final gate)
 
 ## Phase 3: User Confirmation
 
-**CRITICAL**: You MUST confirm the agent team with the user before dispatching.
+**Present your proposed team** (Phase 2 output) and get confirmation.
 
-### Confirmation Format
+### Detection: Is User Response Available?
 
-Use the `AskUserQuestion` tool:
+**FIRST**: Check if bypass permissions is enabled by attempting confirmation.
+
+Use the `AskUserQuestion` tool with your proposed team:
 
 ```
-Question: "I've detected an iOS/SwiftUI project. Should I proceed with the iOS Team?"
+Question: "I've detected [project-type]. Should I proceed with [Team Name]?"
 
 Options:
-1. "Yes, use iOS Team" (default)
+1. "Yes, proceed with proposed team" (default)
 2. "Modify team composition"
-3. "Suggest different team"
-
-Show proposed team:
-- requirement-analyst → Requirements analysis
-- system-architect → iOS architecture design
-- swiftui-developer → SwiftUI implementation
-- swiftdata-specialist → Data persistence (if needed)
-- swift-testing-specialist → Testing
-- verification-agent → Tag verification (MANDATORY)
-- quality-validator → Final validation (MANDATORY)
+3. "Suggest different approach"
 ```
 
-**CRITICAL: Validate User Response**
+**After AskUserQuestion returns, CHECK the response:**
 
+```python
+# Pseudo-code for detection
+response = AskUserQuestion(...)
+
+if response is empty OR response.answers is empty:
+    # BYPASS MODE DETECTED
+    # User cannot respond (bypass permissions enabled or non-interactive mode)
+
+    Output:
+    "---
+    ⚠️ Proceeding with proposed team (bypass mode detected - confirmation unavailable)
+
+    If you need to modify the team, you can:
+    - Interrupt and specify team changes
+    - Use /clarify to discuss approach
+    - Let me proceed and adjust later if needed
+    ---"
+
+    # PROCEED IMMEDIATELY with proposed team from Phase 2
+    # Skip to Phase 4: Workflow Execution
+
+else:
+    # INTERACTIVE MODE
+    # User can respond - process their answer
+
+    if user selected "Yes":
+        Proceed to Phase 4 with proposed team
+
+    if user selected "Modify":
+        Ask: "Which agents to add/remove?"
+        Adjust team composition
+        Show revised team
+        Confirm again (one more attempt)
+        Proceed to Phase 4
+
+    if user selected "Suggest different":
+        Re-analyze request
+        Propose alternative team
+        Confirm again (one more attempt)
+        Proceed to Phase 4
 ```
-After AskUserQuestion, CHECK:
-1. Did user provide an answer? (not blank, not "Interrupted")
-2. If NO → Re-ask: "I didn't receive a response about the team. Let me ask again..."
-3. If YES → Proceed with selected option
 
-NEVER proceed with blank/interrupted responses
+### Two Modes
+
+**Interactive Mode** (normal - user can respond):
+- Get user confirmation via AskUserQuestion
+- Allow modifications
+- Proceed with confirmed team
+
+**Bypass Mode** (auto-proceed - bypass permissions enabled):
+- Detect blank response immediately
+- Show "proceeding with proposed team" message
+- Skip directly to Phase 4
+- User can interrupt if team is wrong
+
+### NEVER Re-Ask Multiple Times
+
+**DON'T:**
+```
+❌ Ask for confirmation
+❌ Get blank response
+❌ "I didn't receive a response, asking again..."
+❌ Get blank response again
+❌ "Still no response, one more time..."
+❌ Infinite loop of asking
 ```
 
-### If User Wants Modifications
-
-Ask which agents to add/remove, then confirm final team.
+**DO:**
+```
+✅ Ask for confirmation once
+✅ Check response
+✅ If blank → Bypass mode → Proceed immediately with message
+✅ If answered → Process response → Proceed
+```
 
 ---
 
@@ -1706,7 +1761,7 @@ Deliverables:
 
 **Step 2**: Select appropriate agent team
 
-**Step 3**: Confirm team with user (use AskUserQuestion)
+**Step 3**: Confirm team with user (detect bypass mode - auto-proceed if unavailable)
 
 **Step 4**: Execute workflow with quality gates
 
