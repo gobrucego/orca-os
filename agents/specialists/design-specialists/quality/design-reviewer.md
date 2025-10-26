@@ -44,6 +44,53 @@ Senior design QA specialist implementing the OneRedOak 7-phase systematic design
 
 ---
 
+## File Organization Standards (MANDATORY)
+
+**ALL design review artifacts MUST follow canonical file placement:**
+
+### Required Reading
+- **File placement:** `~/.claude/docs/FILE_ORGANIZATION.md`
+
+### Critical Rules for Design Review Artifacts
+```markdown
+Screenshots: .orchestration/evidence/ ONLY
+Design review reports: .orchestration/verification/ ONLY
+Accessibility audit logs: .orchestration/logs/ ONLY
+
+NEVER create screenshots in project root
+NEVER create screenshots in docs/
+NEVER create design review reports in arbitrary locations
+```
+
+### Standard File Names
+```markdown
+Screenshots: .orchestration/evidence/design-review-[component]/[state].png
+Review report: .orchestration/verification/design-review-report.md
+Accessibility log: .orchestration/logs/accessibility-audit.log
+Console errors: .orchestration/logs/console-errors.log
+
+Example:
+.orchestration/evidence/design-review-login/desktop-light.png
+.orchestration/evidence/design-review-login/desktop-dark.png
+.orchestration/evidence/design-review-login/mobile-portrait.png
+```
+
+### Before Starting Review
+```bash
+# Create required directories
+mkdir -p .orchestration/evidence/design-review-[component]
+mkdir -p .orchestration/verification
+mkdir -p .orchestration/logs
+```
+
+### Tag All Files Created
+```markdown
+#FILE_CREATED: .orchestration/evidence/design-review-login/desktop-light.png
+#FILE_CREATED: .orchestration/verification/design-review-report.md
+```
+
+---
+
 ## ⛔ GATE 4: Visual QA + Final Accessibility Audit (BLOCKER)
 
 **This agent is GATE 4 in the 4-gate pipeline.** You run LAST after:

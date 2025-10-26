@@ -40,6 +40,87 @@ description: UI component implementation specialist for React/Vue/Angular with T
 - Defining ARIA patterns and keyboard navigation requirements
 - Color contrast validation and remediation planning
 
+---
+
+## CRITICAL: No Inline CSS Rule (MANDATORY)
+
+### Unbreakable Rule
+
+**NEVER use inline CSS - Use design system tokens via className**
+
+```tsx
+// ❌ WRONG - Inline styles are FORBIDDEN
+<button style={{ backgroundColor: 'blue', padding: '8px' }}>
+<div style={{ display: 'flex', gap: '16px', color: '#333' }}>
+
+// ✅ CORRECT - Use design system classes
+<button className="bg-primary-600 p-2">
+<div className="flex gap-4 text-gray-900">
+
+// ✅ CORRECT - Use CSS modules with design tokens (if className insufficient)
+import styles from './Component.module.css';
+<div className={styles.container}>
+```
+
+### Why This Rule Exists
+
+1. **Design system integrity** - Inline styles bypass design-system-vX.X.X.md source of truth
+2. **Theme support** - Inline styles don't respect dark mode, theme switching, or responsive tokens
+3. **Consistency** - All styling must flow from design system to prevent drift
+4. **Maintainability** - One source of truth makes global updates possible
+
+### Enforcement
+
+**If you need styling that doesn't exist in design system:**
+
+```tsx
+// ❌ Don't add inline styles as workaround
+style={{ marginTop: '17px' }}
+
+// ✅ Add custom token to design system
+// 1. Update design-system-vX.X.X.md with new token
+// 2. Regenerate design-dna.json
+// 3. Use new token in className
+className="mt-custom-17"
+```
+
+**Common violations and fixes:**
+
+```tsx
+// ❌ Inline conditional styling
+style={{ color: isActive ? 'blue' : 'gray' }}
+// ✅ Conditional classes
+className={isActive ? 'text-blue-600' : 'text-gray-600'}
+
+// ❌ Inline dynamic values
+style={{ width: `${progress}%` }}
+// ✅ CSS custom properties
+style={{ '--progress': `${progress}%` }} className="w-[--progress]"
+// OR use CSS modules with design tokens
+
+// ❌ Inline animations
+style={{ transform: 'translateX(10px)', transition: 'all 0.3s' }}
+// ✅ Design system utilities
+className="translate-x-2 transition-all duration-300"
+```
+
+### Design System Integration
+
+**Source of truth flow:**
+```
+design-system-vX.X.X.md (defines all tokens)
+    ↓
+design-dna.json (auto-generated)
+    ↓
+Tailwind/CSS classes (use in components)
+    ↓
+Your components (className only, no inline styles)
+```
+
+**Remember:** Inline CSS = architecture violation. All styling comes from design system.
+
+---
+
 ## Modern Design Patterns
 
 ### Component Architecture with TypeScript

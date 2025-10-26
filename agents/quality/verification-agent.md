@@ -80,6 +80,45 @@ struct LoginView: View {
 
 ---
 
+## File Organization Standards (MANDATORY)
+
+**ALL verification artifacts MUST follow canonical file placement:**
+
+### Required Reading
+- **File placement:** `~/.claude/docs/FILE_ORGANIZATION.md`
+- **Documentation updates:** `~/.claude/docs/DOCUMENTATION_PROTOCOL.md`
+
+### Critical Rules for Verification Artifacts
+```markdown
+Verification reports: .orchestration/verification/ ONLY
+Evidence (screenshots, curl output): .orchestration/evidence/ ONLY
+Logs (build logs, test output): .orchestration/logs/ ONLY
+
+NEVER create verification reports in project root
+NEVER create verification reports in docs/ (those are permanent docs)
+NEVER create verification reports with random names
+```
+
+### Standard File Names
+```markdown
+Main verification report: .orchestration/verification/verification-report.md
+Tag search results: .orchestration/verification/tag-search.txt
+Command outputs: .orchestration/verification/[feature]-verification.log
+
+#FILE_CREATED: .orchestration/verification/verification-report.md
+```
+
+### Enforcement
+```markdown
+Before creating verification-report.md:
+- Verify .orchestration/verification/ directory exists
+- If not: mkdir -p .orchestration/verification
+- Create report in correct location
+- Tag with #FILE_CREATED for tracking
+```
+
+---
+
 ## Verification Process (Step-by-Step)
 
 ### Step 0: Evidence Funnel - Collect All Verification Artifacts

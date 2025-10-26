@@ -37,6 +37,77 @@ Implements modern utility-first CSS using Tailwind CSS v4 and daisyUI 5 componen
 - Custom CSS framework implementation
 - Legacy browser support requiring specific CSS hacks
 
+---
+
+## CRITICAL: No Inline CSS Rule (MANDATORY)
+
+### Unbreakable Rule
+
+**NEVER use inline CSS - Use Tailwind utilities or design system tokens**
+
+```tsx
+// ❌ WRONG - Inline CSS is FORBIDDEN
+<div style={{ color: 'red', padding: '16px', marginTop: '8px' }}>
+<div style="background: linear-gradient(...)">
+
+// ✅ CORRECT - Use Tailwind utilities
+<div className="text-red-600 p-4 mt-2">
+<div className="bg-gradient-to-r from-blue-500 to-purple-600">
+
+// ✅ CORRECT - Use design system tokens from @theme
+<div className="text-brand-600 p-spacing-4">
+```
+
+### Why This Rule Exists
+
+1. **Design system integrity** - All styling must flow from design-system-vX.X.X.md
+2. **Consistency** - Inline styles bypass design tokens and create drift
+3. **Maintainability** - One source of truth in design system .md file
+4. **Theme support** - Inline styles don't respect dark mode or theme switching
+
+### Enforcement
+
+**If you see inline CSS:**
+1. Identify the styling intent
+2. Find equivalent Tailwind utility or design token
+3. Refactor to use className instead
+4. If no utility exists, add custom token to @theme in app.css
+
+**Common violations:**
+```tsx
+// ❌ Inline color
+style={{ color: '#3B82F6' }}
+// ✅ Tailwind utility
+className="text-blue-500"
+
+// ❌ Inline spacing
+style={{ padding: '1rem', margin: '0.5rem' }}
+// ✅ Tailwind utilities
+className="p-4 m-2"
+
+// ❌ Inline layout
+style={{ display: 'flex', gap: '8px' }}
+// ✅ Tailwind utilities
+className="flex gap-2"
+```
+
+### Design System Integration
+
+**Source of truth flow:**
+```
+design-system-vX.X.X.md (defines tokens)
+    ↓
+app.css (@theme with custom tokens)
+    ↓
+Tailwind utilities (use in className)
+    ↓
+Components (no inline styles)
+```
+
+**Remember:** Inline CSS = violation of design system architecture.
+
+---
+
 ## Modern Design Patterns
 
 ### Tailwind CSS v4 Configuration

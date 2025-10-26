@@ -4,7 +4,7 @@
 
 ---
 
-## ⚡ Commands (14 Total - What You Type)
+## ⚡ Commands (16 Total - What You Type)
 
 ### /orca - Full Orchestration
 **Use for:** Complex multi-step features, full implementations, architecture changes
@@ -285,6 +285,45 @@
 **Use case:** When you need explicit assumption tracking for quality gates
 
 **Note:** Response Awareness system does this automatically - manual use is rare
+
+---
+
+### /organize - Verify Project Organization
+**Use for:** Checking file locations and documentation consistency
+
+**What it does:** Runs global organization verification to ensure:
+- Files in correct locations (evidence in `.orchestration/evidence/`, logs in `.orchestration/logs/`)
+- Documentation matches actual structure (agent/command counts)
+- No loose files in project root
+
+**Example:**
+```bash
+/organize
+
+# Checks:
+# - File locations (evidence, logs, loose files)
+# - Documentation consistency (QUICK_REFERENCE.md vs actual files)
+# - Directory structure (.gitignore entries)
+```
+
+**Use case:** Before committing, after adding agents/commands, when git hooks block commit
+
+---
+
+### /cleanup - Clean Generated Files
+**Use for:** Removing generated or temporary files from project
+
+**What it does:** Safely removes generated files while preserving source code and committed files
+
+**Example:**
+```bash
+/cleanup
+
+# Removes: Build artifacts, logs, temporary files
+# Preserves: Source code, documentation, committed files
+```
+
+**Use case:** After testing, before committing, to reduce repo size
 
 ---
 
@@ -694,7 +733,7 @@ You don't pick agents - /orca does it automatically based on your project type.
 - Team size: 6-12 agents (base + implementation, +design if admin UI)
 - **You just:** Describe backend feature → /orca picks team
 
-### Specialist Categories (47 Total)
+### Specialist Categories (51 Total)
 
 - **iOS** (21): SwiftUI, SwiftData, Core Data, networking, testing, architecture, performance, security, UI/accessibility
 - **Frontend** (5): React 18, Next.js 14, state management, performance, testing

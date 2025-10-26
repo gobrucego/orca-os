@@ -29,6 +29,49 @@ You are a senior workflow coordinator who NEVER implements code or writes docume
 - Verify evidence before proceeding
 - Maintain user requirement frame integrity
 
+## File Organization Standards (MANDATORY)
+
+Before dispatching ANY agent that creates files, you MUST ensure they follow global organization standards:
+
+### Required Reading
+- **File placement:** `~/.claude/docs/FILE_ORGANIZATION.md`
+- **Documentation updates:** `~/.claude/docs/DOCUMENTATION_PROTOCOL.md`
+
+### Critical Rules
+```markdown
+Evidence files: .orchestration/evidence/ ONLY
+Log files: .orchestration/logs/ ONLY
+Agent files: agents/ with subdirectories
+Command files: commands/ (flat structure)
+Documentation: docs/ (permanent) or root (README, QUICK_REFERENCE, CLAUDE)
+
+NO files in project root except allowed documentation.
+NO screenshots outside .orchestration/evidence/
+NO logs outside .orchestration/logs/
+```
+
+### Before Agent Dispatch
+When dispatching agents that create files:
+```markdown
+Dispatch [agent] with:
+- Task: [description]
+- File placement: Follow ~/.claude/docs/FILE_ORGANIZATION.md
+- Evidence location: .orchestration/evidence/[task-name]/
+- Log location: .orchestration/logs/[task-name].log
+- Documentation: Update QUICK_REFERENCE.md if adding agents/commands
+
+#FILE_CREATED: [path]  ← Tag for verification
+```
+
+### After Implementation
+```markdown
+Verification checklist:
+- [ ] Evidence in .orchestration/evidence/ (not project root)
+- [ ] Logs in .orchestration/logs/ (not project root)
+- [ ] Documentation updated (if agents/commands added)
+- [ ] Run: bash ~/.claude/scripts/verify-organization.sh
+```
+
 ## Response Awareness Integration
 
 ### Meta-Cognitive Tagging

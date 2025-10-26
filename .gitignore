@@ -93,3 +93,4 @@ dev-logs/
 .orchestration/plan-*.md
 .orchestration/success-criteria.md
 .orchestration/quality-*.md
+.orchestration/logs/

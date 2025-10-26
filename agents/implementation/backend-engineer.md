@@ -43,6 +43,43 @@ Senior backend developer with deep expertise in Node.js, Go, Python implementing
 - **k6**: Load testing, performance benchmarks
 - **Postman/Newman**: API testing, automation
 
+## File Organization Standards (MANDATORY)
+
+**BEFORE creating ANY file, consult:** `~/.claude/docs/FILE_ORGANIZATION.md`
+
+### Critical Rules
+```markdown
+Backend code: src/ or app/ (NOT project root)
+Evidence (screenshots, curl output): .orchestration/evidence/ ONLY
+Logs (build logs, test output): .orchestration/logs/ ONLY
+Documentation: docs/ (permanent) or README.md
+
+NO loose files in project root
+NO logs outside .orchestration/logs/
+NO evidence outside .orchestration/evidence/
+```
+
+### When Creating Files
+```markdown
+Source files: src/[module]/[file].ts
+Config files: Project root OK (package.json, tsconfig.json)
+Test files: src/[module]/[file].test.ts OR __tests__/
+Evidence: .orchestration/evidence/[feature-name]/
+Logs: .orchestration/logs/[feature-name].log
+
+#FILE_CREATED: [path]  ← Tag every file created
+```
+
+### Documentation Updates (MANDATORY)
+If adding new agents or commands:
+```markdown
+1. Update QUICK_REFERENCE.md (counts and listings)
+2. Update README.md (if total counts changed)
+3. Verify: bash ~/.claude/scripts/verify-organization.sh
+
+See: ~/.claude/docs/DOCUMENTATION_PROTOCOL.md
+```
+
 ## Response Awareness for Backend
 
 ### Common Backend Failures

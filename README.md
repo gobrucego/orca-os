@@ -165,7 +165,170 @@ Every request is automatically classified and routed:
                         └──────────────────────────────────────┘
 ```
 
-### 3. Response Awareness: How Quality Gates Actually Work
+### 3. Two-Tier Memory System: How Context Persists Across Sessions
+
+One of the fundamental challenges in AI-assisted development is context loss across sessions. Claude Code sessions are stateless - each session starts from zero, repeating solved problems and making the same mistakes.
+
+**The Solution: Hierarchical Memory Architecture**
+
+We implement a two-tier memory system that combines static curated knowledge with dynamic learned patterns:
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                  TWO-TIER MEMORY SYSTEM                      │
+└──────────────────────────────┬───────────────────────────────┘
+                               │
+            ┌──────────────────┼──────────────────┐
+            │                  │                  │
+            ▼                  ▼                  ▼
+  ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
+  │   CLAUDE.md      │ │   Workshop DB    │ │   ACE Playbooks  │
+  │  (Static Rules)  │ │  (Dynamic Memory)│ │  (Learned Pattern│
+  └────────┬─────────┘ └────────┬─────────┘ └────────┬─────────┘
+           │                    │                    │
+           ▼                    ▼                    ▼
+  ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
+  │ Global:          │ │ Per-Project:     │ │ Per-Project:     │
+  │ ~/.claude/       │ │ .workshop/       │ │ .orchestration/  │
+  │ CLAUDE.md        │ │ workshop.db      │ │ playbooks/       │
+  │                  │ │                  │ │                  │
+  │ Universal        │ │ SQLite database  │ │ Pattern library  │
+  │ principles and   │ │ with FTS5 search │ │ with helpful/    │
+  │ preferences      │ │                  │ │ harmful counts   │
+  │                  │ │ - Decisions      │ │                  │
+  │ Auto-loads every │ │ - Gotchas        │ │ - Success cases  │
+  │ session via      │ │ - Preferences    │ │ - Anti-patterns  │
+  │ native Claude    │ │ - Summaries      │ │ - Evidence       │
+  │ Code system      │ │                  │ │                  │
+  └──────────────────┘ └──────────────────┘ └──────────────────┘
+           │                    │                    │
+           └────────────────────┴────────────────────┘
+                                │
+                                ▼
+                ┌──────────────────────────────────────┐
+                │   Loaded automatically at session    │
+                │   start via SessionStart hooks       │
+                └──────────────────────────────────────┘
+```
+
+**Tier 1: CLAUDE.md (Static Curated Knowledge)**
+
+**Location:** `~/.claude/CLAUDE.md` (global) + `./CLAUDE.md` (project-specific)
+
+**Purpose:** The "constitution" - static rules, standards, and principles that apply consistently
+
+**Content:**
+- Universal principles (evidence over claims, systematic quality checks)
+- Design standards and mathematical spacing systems
+- Communication preferences and working style
+- Quality gate definitions and verification requirements
+- Tool usage protocols
+
+**How it works:**
+- Native Claude Code auto-loads `~/.claude/CLAUDE.md` at every session start
+- Project-specific `./CLAUDE.md` provides additional context
+- Changes require manual curation and updates
+- Static content that doesn't evolve automatically
+
+**Tier 2: Workshop (Dynamic Learned Memory)**
+
+**Location:** `.workshop/workshop.db` (SQLite database, per-project)
+
+**Purpose:** The "case law" - searchable history of decisions, constraints, and learned patterns
+
+**Content:**
+- **Decisions with reasoning:** "We chose PostgreSQL over MySQL because of better JSONB support"
+- **Gotchas and constraints:** "xcodebuild requires clean build after schema changes"
+- **User preferences:** "Prefers mathematical spacing systems over arbitrary values"
+- **Session summaries:** Files modified, what was worked on, duration, outcomes
+
+**How it works:**
+```
+SessionStart
+    ↓
+workshop-session-start.sh (hook)
+    ↓
+Loads recent context from workshop.db
+    ↓
+Displayed as system reminder
+    ↓
+During session
+    ↓
+Commands like "workshop decision" capture knowledge
+    ↓
+SessionEnd
+    ↓
+workshop-session-end.sh (hook)
+    ↓
+Parses transcript, extracts key information
+    ↓
+Stores session summary in workshop.db
+    ↓
+Available for next session
+```
+
+**Workshop CLI Commands:**
+
+```bash
+# Query knowledge
+workshop context                    # View current context
+workshop search "authentication"    # Search entries
+workshop recent --limit 10         # View recent entries
+
+# Add knowledge
+workshop decision "Chose React Query for data fetching" -r "Simpler than Redux for API state"
+workshop gotcha "API rate limit is 100 req/min"
+workshop note "User prefers dark mode"
+
+# Search by type
+workshop search --type decision
+workshop search --type gotcha
+```
+
+**Installation:**
+
+```bash
+# Install Workshop
+pipx install claude-workshop
+
+# Initialize in project
+cd your-project
+workshop init
+
+# Import historical sessions (optional)
+workshop import --from sessions/*.json
+```
+
+**Database:**
+- SQLite with FTS5 full-text search
+- Per-project isolation (`.workshop/workshop.db`)
+- Zero cost (no APIs, no embeddings)
+- Fully local, privacy-preserving
+
+**Why This Architecture?**
+
+**Static + Dynamic = Complete Context:**
+- **CLAUDE.md** provides consistent baseline behavior across all sessions
+- **Workshop** captures project-specific history and learned constraints
+- **Together:** Universal principles + accumulated project knowledge
+
+**Benefits:**
+1. **Context Preservation:** Decisions and constraints persist across sessions
+2. **Searchable History:** Full-text search finds relevant past decisions
+3. **Automatic Capture:** SessionEnd hooks extract knowledge without manual intervention
+4. **Zero Cost:** No API calls, no embeddings, fully local
+5. **Project Isolation:** Each project has its own Workshop database
+
+**Integration with ACE Playbooks:**
+
+Workshop complements ACE Playbooks (documented below):
+- **Workshop:** Session-level decisions and constraints
+- **ACE Playbooks:** Pattern-level strategies and proven approaches
+- **Both:** Form complete learning system that improves over time
+
+---
+
+### 4. Response Awareness: How Quality Gates Actually Work
 
 Traditional AI coding had a critical flaw: agents would claim "I built X" without actually verifying the files exist. Why? **LLMs can't stop mid-generation to check.** Once generating a response, they must complete it even if uncertain.
 
@@ -246,7 +409,7 @@ See `docs/METACOGNITIVE_TAGS.md` for complete documentation.
 
 ---
 
-### 4. Auto-Verification Injection: Enforcing Evidence Collection
+### 5. Auto-Verification Injection: Enforcing Evidence Collection
 
 While Response Awareness works excellently within `/orca` workflows, we identified a gap: **main Claude responses (outside `/orca`) could still bypass verification**.
 
@@ -330,7 +493,7 @@ Evidence: Oracle shows chips NOT equal width
 
 ---
 
-### 5. Behavior Guard: Tool-Level Enforcement
+### 6. Behavior Guard: Tool-Level Enforcement
 
 While Response Awareness and Auto-Verification work within Claude's generation process, we identified a fundamental limitation: **information ≠ constraints**. After 21+ sessions of repeated failures despite loaded skills and protocols, we built a different approach.
 
@@ -596,15 +759,15 @@ Patterns from:
 
 ## What's Included
 
-### 🤖 Agents (52 Total)
+### 🤖 Agents (51 Total)
 
-**Active agents: 14 base + 21 iOS + 5 frontend + 12 design + 0 orchestration/learning = 52 total**
+**Active agents: 11 base + 21 iOS + 5 frontend + 9 design + 4 orchestration + 1 meta = 51 total**
 
-(Base = 3 planning + 3 quality + 3 implementation + 1 orchestration + 4 specialized/learning)
+(Base = 3 planning + 3 quality + 4 implementation + 1 meta-orchestrator)
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│                 AGENT ECOSYSTEM (52 Total)                   │
+│                 AGENT ECOSYSTEM (51 Total)                   │
 └──────────────────────────────┬───────────────────────────────┘
                                │
         ┌──────────────────────┼──────────────────────┐
@@ -612,68 +775,58 @@ Patterns from:
         ▼                      ▼                      ▼
   ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
   │   BASE AGENTS    │ │  iOS SPECIALISTS │ │ FRONTEND/DESIGN  │
-  │      (11)        │ │       (21)       │ │    (5 + 8)       │
+  │      (11)        │ │       (21)       │ │    (5 + 9)       │
   └────────┬─────────┘ └────────┬─────────┘ └────────┬─────────┘
            │                    │                    │
            ▼                    ▼                    ▼
   ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
-  │  Planning (3)    │ │  UI (3)          │ │  React (2)       │
+  │  Planning (3)    │ │  UI (2)          │ │  React (2)       │
   │  Quality (3)     │ │  Data (2)        │ │  State (1)       │
-  │  Backend (1)     │ │  Network (3)     │ │  Performance (1) │
-  │  Mobile (2)      │ │  Arch (3)        │ │  Testing (1)     │
-  │  Specialized (2) │ │  Testing (3)     │ │                  │
-  │                  │ │  Quality (2)     │ │  Design (8)      │
-  │                  │ │  DevOps (2)      │ │   System (2)     │
-  │                  │ │  Perf (1)        │ │   Visual (1)     │
+  │  Implementation  │ │  Network (3)     │ │  Performance (1) │
+  │    Backend (1)   │ │  Arch (3)        │ │  Testing (1)     │
+  │    Mobile (2)    │ │  Testing (3)     │ │                  │
+  │    Infra (1)     │ │  Quality (2)     │ │  Design (9)      │
+  │  Orchestration   │ │  DevOps (2)      │ │   System (2)     │
+  │    (2)           │ │  Perf (1)        │ │   Visual (1)     │
   │                  │ │  Security (2)    │ │   Build (3)      │
   │                  │ │                  │ │   Review (2)     │
+  │                  │ │                  │ │   Verification(1)│
   └──────────────────┘ └──────────────────┘ └──────────────────┘
            │                    │                    │
-           │                    │                    ▼
-           │                    │          ┌──────────────────┐
-           │                    │          │  ORCHESTRATION   │
-           │                    │          │  & LEARNING (3)  │
-           │                    │          │                  │
-           │                    │          │ meta-orchestrator│
-           │                    │          │ orchestration-   │
-           │                    │          │   reflector      │
-           │                    │          │ playbook-curator │
-           │                    │          │                  │
-           │                    │          │ Cross-session    │
-           │                    │          │ learning & meta- │
-           │                    │          │ optimization     │
-           │                    │          └──────────────────┘
-           │                    │
-           └────────────────────┴─────────────────────────────┐
-                                                              │
-                                                              ▼
-                                ┌──────────────────────────────────────┐
-                                │  All agents organized by function    │
-                                └──────────────────────────────────────┘
+           └────────────────────┴────────────────────┘
+                                │
+                                ▼
+                ┌──────────────────────────────────────┐
+                │  All agents organized by function    │
+                │  + Workshop memory system            │
+                │  + ACE Playbook learning             │
+                └──────────────────────────────────────┘
 ```
 
 All agents live in `agents/` and are organized by function.
 
-**System Architecture: 50 Total Agents**
+**System Architecture: 51 Total Agents**
 
 **Organized by function:**
 
-- **Specialists** (36 agents in `specialists/`)
-  - iOS (20) - SwiftUI, SwiftData, networking, testing, architecture, performance, security
+- **Specialists** (35 agents in `specialists/`)
+  - iOS (21) - SwiftUI, SwiftData, networking, testing, architecture, performance, security
   - Frontend (5) - React 18, Next.js 14, state management, performance optimization, testing
-  - Design (11) - Design systems, UX strategy, Tailwind v4, UI engineering, CSS, accessibility, Design DNA
+  - Design (9) - Design systems, UX strategy, Tailwind v4, UI engineering, CSS, accessibility, design review, Design DNA linter
 
 - **Implementation** (4 agents) - backend-engineer, android-engineer, cross-platform-mobile, infrastructure-engineer
 
-- **Orchestration** (4 agents) - workflow-orchestrator, meta-orchestrator, orchestration-reflector, playbook-curator
+- **Orchestration** (4 agents) - workflow-orchestrator, orchestration-reflector, playbook-curator, meta-orchestrator
 
 - **Planning** (3 agents) - requirement-analyst, system-architect, plan-synthesis-agent
 
 - **Quality** (3 agents) - verification-agent, test-engineer, quality-validator
 
+- **Memory & Learning** - Workshop (dynamic memory), ACE Playbooks (pattern learning)
+
 See the `agents/` directory for detailed agent specifications and the complete file structure below.
 
-### ⚡ Commands (14 Total)
+### ⚡ Commands (15 Total)
 
 All commands live in `commands/` and extend Claude Code workflows:
 
@@ -685,11 +838,11 @@ All commands live in `commands/` and extend Claude Code workflows:
 | **/enhance** | Transform vague requests into well-structured prompts and execution | `enhance.md` |
 | **/ultra-think** | Deep analysis and problem solving with multi-dimensional thinking | `ultra-think.md` |
 
-#### ACE Playbook System (Self-Improving Orchestration)
+#### Memory & Learning
 
 | Command | Description | File |
 |---------|-------------|------|
-| **/memory** | Manually trigger reflection and curation to update memory with learned patterns | `memory-learn.md` |
+| **/memory-learn** | Manually trigger reflection and curation to update ACE playbooks with learned patterns | `memory-learn.md` |
 | **/memory-pause** | Temporarily disable memory system to run /orca without pattern influence | `memory-pause.md` |
 
 #### Design Workflow
@@ -703,23 +856,109 @@ All commands live in `commands/` and extend Claude Code workflows:
 
 | Command | Description | File |
 |---------|-------------|------|
-| **/finalize** | MANDATORY completion gate - verifies evidence (builds, tests, screenshots) before allowing "done" claims. Blocks git commits/pushes without proof. | `finalize.md` |
-| **/force** | Legacy verification enforcement (replaced by /finalize + Behavior Guard system) | `force.md` |
-| **/clarify** | Quick focused clarification for mid-workflow questions | `clarify.md` |
-| **/completion-drive** | Meta-cognitive strategy for two-tier assumption tracking during implementation | `completion-drive.md` |
-| **/session-save** | Save current session context for automatic resumption | `session-save.md` |
-| **/session-resume** | Manually reload session context (normally auto-loads) | `session-resume.md` |
+| **/organize** | Verify project organization - checks file locations, documentation consistency, and directory structure | `organize.md` |
+| **/cleanup** | Clean generated files while preserving source code and committed files | `cleanup.md` |
+| **/force** | Emergency verification enforcement when automated systems fail (normally CLAUDE.md + Workshop + quality-validator prevent issues) | `force.md` |
+| **/clarify** | Quick focused clarification for mid-workflow questions without interrupting orchestration | `clarify.md` |
+| **/session-save** | ⚠️ DEPRECATED - Save current session context (replaced by Workshop auto-capture) | `session-save.md` |
+| **/session-resume** | ⚠️ DEPRECATED - Manually reload session context (replaced by Workshop auto-load) | `session-resume.md` |
+| **/completion-drive** | Meta-cognitive strategy for two-tier assumption tracking | `completion-drive.md` |
+| **/all-tools** | List all available tools and their capabilities | `all-tools.md` |
 
 ### 🪝 Hooks
 
 | Hook | Description | File |
 |------|-------------|------|
 | **detect-project-type.sh** | Auto-detects project type on session start (< 50ms) and loads appropriate agent team | `hooks/detect-project-type.sh` |
-| **load-playbooks.sh** | Auto-loads playbooks on session start - provides pattern-guided orchestration to /orca | `hooks/load-playbooks.sh` |
+| **load-playbooks.sh** | Auto-loads ACE playbooks on session start - provides pattern-guided orchestration to /orca | `hooks/load-playbooks.sh` |
+| **workshop-session-start.sh** | Loads Workshop dynamic memory context at session start | `.claude/workshop-session-start.sh` |
+| **workshop-session-end.sh** | Captures session summary to Workshop database at session end | `.claude/workshop-session-end.sh` |
+| **workshop-pre-compact.sh** | Preserves context to Workshop before conversation compaction | `.claude/workshop-pre-compact.sh` |
 
 ### 🎯 Skills
 
 Skills from the superpowers plugin are available. See `skills/` directory for the complete list.
+
+---
+
+## 📁 Global Organization System
+
+**The Problem:** Agents were creating files anywhere, documentation drifted from reality, git became chaotic.
+
+**The Solution:** Three-layer global organization system enforced across ALL projects.
+
+### Layer 1: Standards
+
+**Universal file placement rules:**
+- `~/.claude/docs/FILE_ORGANIZATION.md` - Canonical file locations for all file types
+- `~/.claude/docs/DOCUMENTATION_PROTOCOL.md` - Mandatory documentation update requirements
+
+**Key rules:**
+```
+Evidence (screenshots, curl output):  .orchestration/evidence/ ONLY
+Logs (build logs, test output):      .orchestration/logs/ ONLY
+Agent definitions:                    agents/ with subdirectories
+Slash commands:                       commands/ (flat structure)
+Documentation (permanent):            docs/ or root (README, QUICK_REFERENCE, CLAUDE)
+
+NO files in project root except allowed docs
+NO screenshots/logs outside .orchestration/
+```
+
+### Layer 2: Verification
+
+**Automated checking:**
+- `~/.claude/scripts/verify-organization.sh` - Comprehensive verification script
+- Checks: File locations, documentation consistency, agent/command counts
+- Returns: exit 0 (pass) or exit 1 (fail)
+
+**Run via slash command:**
+```bash
+/organize   # Instant verification with clear pass/fail output
+```
+
+### Layer 3: Enforcement
+
+**Git hooks (auto-installed):**
+- `pre-commit` - Blocks commits if verification fails or documentation not updated
+- `pre-push` - Final safety check before pushing to remote
+
+**Installation for new projects:**
+```bash
+bash ~/.claude/scripts/install-organization-system.sh
+```
+
+Creates:
+- Git hooks (`.git/hooks/pre-commit`, `.git/hooks/pre-push`)
+- Required directories (`.orchestration/evidence/`, `.orchestration/logs/`, etc.)
+- `.gitignore` entries for ephemeral data
+
+### Benefits
+
+1. **Prevents chaos** - Files have ONE canonical location, enforced automatically
+2. **Catches documentation drift** - Agent/command counts must match actual files
+3. **Automated enforcement** - Git hooks block bad commits before they happen
+4. **Works globally** - Same standards across ALL projects (installed in `~/.claude/`)
+5. **Easy to use** - Just run `/organize` or let git hooks handle it
+
+### Agent Integration
+
+Key agents updated with organization standards:
+- **workflow-orchestrator** - Ensures all dispatched agents follow standards
+- **backend-engineer** - Knows canonical locations for server files and evidence
+- **verification-agent** - Creates reports in `.orchestration/verification/`
+- **design-reviewer** - Places screenshots in `.orchestration/evidence/design-review-[component]/`
+
+### Documentation Updates Are Mandatory
+
+When adding/removing agents or commands:
+1. Create/delete file in `agents/` or `commands/`
+2. Update `QUICK_REFERENCE.md` (counts and listings)
+3. Update `README.md` (if total counts changed)
+4. Run `/organize` to verify
+5. Commit everything together
+
+Git hooks enforce this - commits are blocked if documentation not updated.
 
 ---
 
@@ -1041,30 +1280,56 @@ Add to your `.claude/settings.local.json`:
 }
 ```
 
-### 4. Install agents, commands, and scripts
+### 4. Install Workshop (Memory System)
 
 ```bash
-# Copy all agents (organized by function)
-cp -r agents/* ~/.claude/agents/
+# Install Workshop via pipx
+pipx install claude-workshop
 
-# Copy all commands
-cp commands/*.md ~/.claude/commands/
+# Initialize in your project
+cd your-project
+workshop init
 
-# Copy custom scripts (statusline, design tools)
-cp -r scripts/* ~/.claude/scripts/
-
-# Optional: Copy skills
-cp -r skills/* ~/.claude/skills/
+# Optional: Import historical sessions
+workshop import --from ~/.claude/sessions/*.json
 ```
 
+**Workshop provides:**
+- Dynamic memory (decisions, gotchas, preferences)
+- Searchable history via SQLite + FTS5
+- Automatic session capture via hooks
+- Zero cost, fully local
+
+### 5. Deploy the system to ~/.claude
+
+**Use the automated deployment script:**
+
+```bash
+# Deploy canonical system (with safety backup)
+./scripts/deploy-to-global.sh
+
+# Or dry-run first to see what will change:
+./scripts/deploy-to-global.sh --dry-run
+```
+
+**What the deployment script does:**
+- ✅ Creates safety backup of existing ~/.claude
+- ✅ Archives large directories (project histories, debug logs) to ~/.claude-archive
+- ✅ Removes deprecated commands and stale documentation
+- ✅ Deploys canonical system (agents, commands, hooks, scripts, playbooks)
+- ✅ Verifies deployment (counts match manifest)
+
 **What you get:**
-- **50 specialized agents** (14 base + 20 iOS + 5 frontend + 11 design) for implementation, planning, quality, and self-improvement
-- **17 slash commands** for enhanced workflows (including ACE playbook commands)
-- **ACE Playbook System** with 59 seed patterns for self-improving orchestration
+- **51 specialized agents** (4 orchestration + 3 planning + 3 quality + 4 implementation + 11 design + 5 frontend + 21 iOS) for comprehensive development
+- **15 slash commands** (13 active + 2 deprecated) for enhanced workflows
+- **Workshop memory system** with automatic session capture
+- **ACE Playbook System** with learned patterns for self-improving orchestration
 - **Response Awareness verification** system (meta-cognitive tags + verification)
 - **Project-specific skills** from the superpowers plugin
 
-### 5. Verify installation
+See the [Deployment & Sync](#deployment--sync) section for details on keeping ~/.claude in sync with repo changes.
+
+### 6. Verify installation
 
 ```bash
 # Start a new Claude Code session in any project
@@ -1076,6 +1341,194 @@ cp -r skills/* ~/.claude/skills/
 │ Auto-Orchestration: ACTIVE                                  │
 └──────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## Deployment & Sync
+
+### The Problem: Filesystem Drift
+
+**Before automated deployment:**
+- Global `~/.claude/` became an archaeological dig site (21+ sessions of cruft)
+- 935MB of historical data (project histories, debug logs, shell snapshots)
+- Deprecated commands and stale documentation mixed with active files
+- No clear distinction between "canonical system" and "runtime data"
+- Manual `cp` commands meant files got out of sync with repo
+
+**Result:** Documentation says one thing, filesystem has another.
+
+### The Solution: Source of Truth + Automated Deployment
+
+**claude-vibe-code repo = Source of Truth** (git-controlled, version-managed)
+**~/.claude = Clean Deployment Target** (synced replica of canonical system)
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ Deployment Flow                                             │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  claude-vibe-code/                                          │
+│  (Git Repo - Source of Truth)                               │
+│    ├── agents/           (51 .md files)                     │
+│    ├── commands/         (15 .md files)                     │
+│    ├── hooks/            (3 .sh files)                      │
+│    ├── scripts/          (deployment + utilities)           │
+│    └── .orchestration/   (playbooks, verification)          │
+│                                                             │
+│         │                                                   │
+│         │ ./scripts/deploy-to-global.sh                     │
+│         ▼                                                   │
+│                                                             │
+│  ~/.claude/                                                 │
+│  (Deployment Target - Clean Mirror)                         │
+│    ├── agents/           (51 deployed)                      │
+│    ├── commands/         (15 deployed, deprecated marked)   │
+│    ├── hooks/            (3 deployed)                       │
+│    ├── scripts/          (deployed)                         │
+│    ├── .orchestration/   (playbooks synced, runtime data    │
+│    │                      preserved)                        │
+│    ├── plugins/          (preserved - user installed)       │
+│    └── skills/           (preserved - user skills)          │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Deployment Script: `scripts/deploy-to-global.sh`
+
+**What it does (6 phases):**
+
+**Phase 0: Pre-flight Checks**
+- Verifies repo structure (51 agents, 15 commands, 3 hooks)
+- Aborts if counts are suspicious (prevents deploying broken state)
+
+**Phase 1: Safety Backup**
+- Creates timestamped backup: `~/.claude-backup-YYYYMMDD-HHMMSS.tar.gz`
+- Preserves entire state before any changes
+
+**Phase 2: Archive Large Directories**
+- Moves runtime data to `~/.claude-archive/`
+- `projects/` (748MB) - 203 session histories
+- `debug/` (141MB) - debug logs
+- `shell-snapshots/` (1.3MB)
+- `file-history/` (45MB)
+- **Total freed: ~935MB**
+
+**Phase 3: Delete Stale Files**
+- Deprecated commands: `session-save.md`, `session-resume.md`
+- Old audit reports: `QA_AUDIT_*.md`, `ORCA_FIXES_*.md`
+- Session artifacts: `.claude-*-context.md`, `.diagram-*.md`
+- Stale docs: `USER_PROFILE.md`, `SETUP_REFERENCE.md`
+
+**Phase 4: Deploy Canonical System**
+- Uses `rsync --delete` to ensure clean mirror
+- Deploys: agents, commands, hooks, scripts, playbooks
+- Preserves runtime data: `plugins/`, `skills/`, `.orchestration/sessions/`
+
+**Phase 5: Verify Deployment**
+- Counts match manifest (51 agents, 15 commands)
+- Deprecated files removed
+- Critical files exist
+
+**Phase 6: Report**
+- Summary of changes
+- Backup location
+- Archive location
+- Deployment size
+
+### Usage
+
+**Initial deployment:**
+```bash
+cd ~/claude-vibe-code
+./scripts/deploy-to-global.sh
+```
+
+**Dry run (see what will change):**
+```bash
+./scripts/deploy-to-global.sh --dry-run
+```
+
+**After making changes to agents/commands:**
+```bash
+# Edit files in repo
+git add agents/new-agent.md
+git commit -m "Add new agent"
+
+# Deploy to ~/.claude
+./scripts/deploy-to-global.sh
+```
+
+### What Gets Preserved
+
+**User data (never touched):**
+- `plugins/` - installed plugins
+- `skills/` - user skills
+- `.orchestration/sessions/` - session data
+- `.orchestration/signals/` - learning signals
+- `todos/` - active todos
+- `history.jsonl` - session history
+
+**Runtime data:**
+- Workshop database (`.workshop/workshop.db`)
+- Agent skill vectors
+- Knowledge graph
+
+### What Gets Cleaned
+
+**Deprecated:**
+- Old commands replaced by Workshop
+- Superseded documentation
+
+**Cruft:**
+- Session artifacts (`.claude-*-context.md`)
+- Audit reports from past sessions
+- Temporary files
+
+**Archived (not deleted):**
+- Project histories → `~/.claude-archive/projects-YYYYMMDD/`
+- Debug logs → `~/.claude-archive/debug-YYYYMMDD/`
+
+### Deployment Manifest
+
+**Source of truth document:** `.claude/DEPLOYMENT_MANIFEST.md`
+
+Defines exactly what SHOULD exist in `~/.claude`:
+- System counts (51 agents, 15 commands, 3 hooks)
+- File-by-file deployment mapping
+- Cleanup rules
+- Preservation rules
+- Verification checklist
+
+**Update this file when the canonical system changes.**
+
+### Verification
+
+**After deployment:**
+```bash
+# Verify counts
+find ~/.claude/agents -name "*.md" | wc -l      # Should be 51
+find ~/.claude/commands -name "*.md" | grep -v "\.claude-" | wc -l  # Should be 15
+ls ~/.claude/hooks/*.sh | wc -l                 # Should be 3
+
+# Verify deprecated removed
+ls ~/.claude/commands/session-*.md              # Should show "No such file"
+
+# Check size
+du -sh ~/.claude                                # Should be < 100MB
+```
+
+### Why This Matters
+
+**Before:** "Why does the system say 48 agents but I only see 47 deployed?"
+**After:** System counts match filesystem. Always.
+
+**Before:** "Is session-save.md still active or deprecated?"
+**After:** If it exists in the repo, deployment status is clear in manifest.
+
+**Before:** "~/.claude is 1.2GB and I don't know what's in it"
+**After:** Clean deployment (~50MB) + clear separation of runtime data
+
+**Pattern:** Automated deployment prevents the "documentation drift" problem that plagued past sessions.
 
 ---
 
@@ -1561,15 +2014,16 @@ A: Yes. Questions and ideation work too (auto-classified).
 
 ## Development Status
 
-**Current Status:** Production Ready with Complete Meta-Learning System
+**Current Status:** Production Ready with Complete Meta-Learning & Memory System
 
-This repository contains a complete multi-agent orchestration system for Claude Code with 48 specialized agents, 17 slash commands, auto-detection hooks, and a comprehensive meta-learning infrastructure that achieves **<5% false completion rate** (down from ~80% before implementation).
+This repository contains a complete multi-agent orchestration system for Claude Code with 48 specialized agents, 10 slash commands, Workshop memory integration, auto-detection hooks, and a comprehensive meta-learning infrastructure that achieves **<5% false completion rate** (down from ~80% before implementation).
 
 **Complete and Deployed (Stages 1-6):**
 
 ### Stage 1-4: Foundation & Quality Gates ✅
-- ✅ 48 specialized agents (11 base + 21 iOS + 5 frontend + 8 design + 3 orchestration/learning)
-- ✅ 17 slash commands with quality gates
+- ✅ 48 specialized agents (11 base + 21 iOS + 5 frontend + 9 design + 2 orchestration/learning)
+- ✅ 10 slash commands with quality gates
+- ✅ Two-tier memory system (CLAUDE.md + Workshop)
 - ✅ ACE Playbook System (59 seed patterns across 3 templates)
 - ✅ Auto-detection and orchestration system (/orca)
 - ✅ Response Awareness verification framework

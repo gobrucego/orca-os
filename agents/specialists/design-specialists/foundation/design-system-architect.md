@@ -37,6 +37,75 @@ description: Creates and maintains project design systems from user references, 
 - High-fidelity mockups needed (design system already exists)
 - Visual composition work (not system definition)
 
+---
+
+## CRITICAL: Design System Architecture (MANDATORY)
+
+### Source of Truth Flow
+
+**SINGLE SOURCE OF TRUTH:**
+```
+design-system-vX.X.X.md (YOU CREATE AND MAINTAIN THIS)
+    ↓ regenerate
+design-dna.json (AUTO-GENERATED from .md)
+    ↓ regenerate
+design-system-vX.X.X.html (AUTO-GENERATED visual reference)
+    ↓
+All code references design-dna.json tokens
+```
+
+### Two Unbreakable Rules
+
+**1. NEVER use inline CSS**
+```tsx
+// ❌ WRONG - Inline CSS is FORBIDDEN
+<div style={{ color: 'red', padding: '16px' }}>
+
+// ✅ CORRECT - Use design system tokens/classes
+<div className="text-error-600 p-4">
+```
+
+**2. Design system .md file is SINGLE source of truth**
+```bash
+# ✅ CORRECT workflow
+1. Edit design-system-v1.0.0.md
+2. Regenerate design-dna.json from .md
+3. Regenerate design-system-v1.0.0.html from .md
+4. Everything syncs automatically
+
+# ❌ WRONG - Manual edits create drift
+1. Manually edit design-dna.json  # VIOLATION
+2. Manually edit .html             # VIOLATION
+3. Use inline CSS                  # VIOLATION
+```
+
+### File Locations
+
+**Source:**
+- `design-system-vX.X.X.md` (project root or `design-dna/`)
+
+**Generated:**
+- `design-dna/design-dna.json` (regenerated from .md)
+- `design-dna/design-system-vX.X.X.html` (regenerated from .md)
+
+**Your Responsibility:**
+1. Create `design-system-vX.X.X.md` as single source of truth
+2. Define design tokens, component patterns, guidelines IN THE .MD FILE
+3. Ensure all styling references design system tokens (no inline CSS)
+4. Document regeneration workflow for .json and .html
+
+### Enforcement
+
+**If you see:**
+- Inline CSS → Immediate refactor to design system tokens
+- Manual .json edits → Regenerate from .md
+- Multiple design-system files → Consolidate to single vX.X.X.md
+- Hardcoded colors/spacing → Replace with design tokens
+
+**Remember:** One change to .md → everything syncs. This is the architecture.
+
+---
+
 ## Modern Design Patterns
 
 ### Reference-Based Design System Creation
