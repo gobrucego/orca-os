@@ -1,740 +1,416 @@
 ---
-description: Creative exploration phase for design/UX work - study references, extract patterns, brainstorm approach, get approval BEFORE building
-allowed-tools: [Read, Glob, Bash, Skill, AskUserQuestion, exit_plan_mode]
-argument-hint: <design/UX request to conceptualize>
+description: Iterate on existing layout - AI assesses current design, suggests improvements, conversational iteration until satisfied, generate mockup, build
+allowed-tools: [Read, Glob, Bash, Skill, AskUserQuestion, exit_plan_mode, WebFetch]
+argument-hint: <page/component to redesign>
 ---
 
-# /concept - Creative Concept Phase (Design/UX Only)
+# /concept - Iterate on Existing Layout
 
-**PURPOSE**: Bridge the gap between vague design request and elegant execution through systematic reference study and creative exploration.
+**PURPOSE**: Conversational design iteration on existing pages/components.
 
-**Use this for:**
-- Page redesigns
-- New UI features
-- UX flows
-- Information architecture
-- Visual design work
+**Use this when:**
+- Redesigning an existing page
+- Improving current layout
+- Exploring new ideas for something that already exists
+- "Make this better/more elegant"
 
-**DO NOT use for:**
-- Pure development work (use /enhance directly)
-- Bug fixes
-- Performance optimization
-- Backend work
+**For brand new layouts:** Use `/concept-new` instead
+
+---
+
+## Your Role
+
+You are a design critic and creative partner. Your job:
+1. Look at the current implementation
+2. Give honest assessment (what works, what doesn't)
+3. Suggest creative improvements
+4. Iterate conversationally with user
+5. Generate mockup when satisfied
+6. Build it
 
 ---
 
 ## User Request
 
-**Design request:** $ARGUMENTS
+**What to redesign:** $ARGUMENTS
 
 ---
 
-## ⚠️ CRITICAL DESIGN PHILOSOPHY
+## Phase 1: Assess Current Implementation
 
-**Reference examples are NOT templates to copy.**
+### Step 1.1: Find the Current File
 
-Your job:
-1. **Study reference** → Extract WHY it works (principles)
-2. **Understand elegance** → What creates sophistication, clarity, flow
-3. **Design something MORE thoughtful** → Improve on the reference
-4. **Creative UX thinking required** → Not layout copying
-
-**Anti-pattern:**
-- ❌ "Anti-aging page has timeline → copy that layout"
-- ❌ Treating references as templates
-- ❌ Generic, uninspired copying
-
-**Correct pattern:**
-- ✅ "Anti-aging timeline works because it makes protocol the hero"
-- ✅ "Can I design something EVEN BETTER that makes protocol more accessible?"
-- ✅ Creative, thoughtful improvement
-
-**User feedback from real session:**
-> "The anti-aging page is NOT a bible for UI. It's just better than what you had made. What you SHOULD be building is something that's a much more thoughtful and improved UI/UX."
-
-Lesson: Use references to understand what works better, then design something MORE elegant.
-
----
-
-## Phase 0: Confirm Project Design System ⚠️ MANDATORY
-
-**BEFORE any reference discovery or design work**, you MUST establish the project's design system as your foundation.
-
-### Step 0.1: Locate Design System Guide
-
-Check these locations in order:
-1. `/docs/design-guide-v3.md` (or similar version)
-2. `/docs/design-system*.md`
-3. `/docs/typography-rules.md` + `/docs/color-rules.md` + `/docs/alignment-rules.md`
-4. Root directory `design-system-guide.md`
-5. `/design-system/` directory
-
-**If not found**: Use /clarify to ask user where the design system guide is located.
-
-### Step 0.2: Read ALL Design System Files
-
-**REQUIRED READING** (if they exist):
-```bash
-Read {project-root}/docs/design-guide-v3.md
-Read {project-root}/docs/typography-rules.md
-Read {project-root}/docs/color-rules.md
-Read {project-root}/docs/alignment-rules.md
-```
-
-### Step 0.3: Extract & Confirm Design System Rules
-
-From the design system docs, identify:
-
-**Typography**:
-- Authorized font families (with weights)
-- Font usage rules (which font for what purpose)
-- Minimum font sizes
-- Hard rules (e.g., "Domaine Sans Display ONLY for card titles 24px+")
-
-**Colors**:
-- Background color (is it light or dark?)
-- Text color hierarchy
-- Accent colors
-- Surface/border colors
-- **CRITICAL**: Never assume light or dark - READ the actual values
-
-**Spacing**:
-- Grid system (4px, 8px, etc.)
-- Spacing scale variables
-- Section spacing rules
-
-**Components**:
-- Card styles
-- Button styles
-- Form elements
-- Any project-specific patterns
-
-### Step 0.4: Present Design System Summary
-
-**Before proceeding to Phase 1**, create and present this summary:
-
-```
-✅ PROJECT DESIGN SYSTEM CONFIRMED
-
-Typography:
-- Font 1: {name} ({weights}) → {usage}
-- Font 2: {name} ({weights}) → {usage}
-- ...
-
-Colors:
-- Background: {hex/rgba} → {description}
-- Text Primary: {hex/rgba}
-- Accent: {hex/rgba}
-- ...
-
-Spacing:
-- Base grid: {px}
-- Scale: {values}
-
-Components:
-- Cards: {style specs}
-- Buttons: {style specs}
-- ...
-
-Critical Rules:
-- {Rule 1}
-- {Rule 2}
-- ...
-
-This design system is the SOURCE OF TRUTH for all design decisions.
-References and /inspire principles will be applied WITHIN these constraints.
-```
-
-**This summary establishes the guardrails for all creative exploration.**
-
----
-
-## Phase 1: Reference Strategy (Choose Approach)
-
-**CRITICAL: Ask user which reference approach to use**
-
-### Step 1.0: Ask About References
-
-**Before searching anywhere, ask user:**
-
-```javascript
-AskUserQuestion({
-  questions: [{
-    question: "Do you have specific design references for this project, or should I find them?",
-    header: "References",
-    multiSelect: false,
-    options: [
-      {
-        label: "I have specific refs",
-        description: "I have screenshots, folder of examples, or URLs I want to use as inspiration"
-      },
-      {
-        label: "Search our codebase",
-        description: "Look for similar work in this project (existing pages, components, patterns)"
-      },
-      {
-        label: "Browse design collections",
-        description: "Find industry examples from curated design galleries (CSS Awards, etc.)"
-      }
-    ]
-  }]
-})
-```
-
-### Step 1.1: Route to Appropriate Tool
-
-**Based on user selection:**
-
-**If "I have specific refs" → Trigger `/design`:**
-
-```
-✅ ROUTING TO /DESIGN
-
-You have specific design references. I'll use the /design command for conversational brainstorming with your refs.
-
-/design will:
-1. Confirm design system and flexibility scale (already done in Phase 0)
-2. Ask where your refs are (folder/paste/URLs)
-3. Analyze your refs with vision
-4. Ask clarifying questions about which elements to use
-5. Generate actionable design brief
-
-Triggering /design now...
-
-[Execute: SlashCommand("/design $ARGUMENTS")]
-
-[After /design completes, skip to Phase 5: After Approval]
-```
-
-**If "Search our codebase" → Continue to Phase 2 (current flow):**
-
-```
-✅ SEARCHING CODEBASE FOR REFERENCES
-
-I'll look for similar work in this project to use as reference patterns.
-
-Proceeding to codebase reference discovery...
-
-[Continue to current Phase 1.0-1.3 below, now renumbered as Phase 2]
-```
-
-**If "Browse design collections" → Trigger `/discover`:**
-
-```
-✅ ROUTING TO /DISCOVER
-
-You don't have specific refs, so I'll browse curated design collections to find relevant examples.
-
-/discover will:
-1. Map your request to relevant collections (CSS Awards, SiteInspire, etc.)
-2. Browse collections strategically
-3. Find 3-5 relevant examples
-4. Analyze with vision (if possible)
-5. Extract common patterns
-6. Create application plan
-
-Triggering /discover now...
-
-[Execute: SlashCommand("/discover $ARGUMENTS")]
-
-[After /discover completes, proceed to Phase 3: Brainstorm with discovered examples]
-```
-
----
-
-## Phase 2: Codebase Reference Discovery
-
-**ONLY IF user selected "Search our codebase" in Phase 1**
-
-**CRITICAL: Do this FIRST before any planning**
-
-### Step 2.0: Read Design Pattern Library
-
-**ALWAYS read this first:**
-```
-Read .claude/DESIGN_PATTERNS.md
-```
-
-This contains curated examples of elegant designs with:
-- What makes them work (PRINCIPLES, not layouts)
-- Visual hierarchy patterns
-- Spacing/typography rules
-- Anti-patterns to avoid
-
-Check if there's a relevant pattern for this request.
-
-### Step 2.1: Search Codebase for Similar Work
+Based on the request, locate the file:
 
 ```bash
-# If request mentions specific page/feature, find it
-ls -la app/*/  # All app routes
-ls -la app/protocols/  # If protocol-related
-ls -la components/  # Component patterns
-ls -la app/(marketing)/  # Marketing pages
+# If it's a page
+ls -la app/         # Next.js pages
+ls -la app/**/*     # Nested routes
+
+# If it's a component
+ls -la components/
+ls -la src/components/
+
+# If mentioned by name
+find . -name "*[keyword]*" -type f
 ```
 
-### Step 2.2: Identify Reference Files
+### Step 1.2: Read Current Implementation
 
-Based on the request, identify similar existing work:
-
-**Request patterns → Reference locations:**
-- "protocol page" → Check app/protocols/ for existing protocols
-- "landing page" → Check app/ for homepage patterns
-- "component redesign" → Check components/ for similar components
-- "form" → Search for existing form patterns
-- "navigation" → Find existing nav implementations
-
-### Step 2.3: Present Discovered References
-
-```
-🔍 REFERENCE DISCOVERY
-
-Found similar work in codebase:
-1. app/protocols/anti-aging/page.tsx - Existing protocol page
-2. app/protocols/[slug]/page.tsx - Protocol template
-3. components/ProtocolCard.tsx - Related component
-
-Should I study these as references? (If no, please provide reference URLs/files)
+```bash
+Read [filepath]
 ```
 
-**Wait for user confirmation before proceeding.**
+Read the ENTIRE current implementation. Understand:
+- What it currently does
+- How it's structured
+- What components it uses
+- Current layout approach
+
+### Step 1.3: Take Screenshot (If Possible)
+
+If there's a running dev server or the page is accessible:
+
+```bash
+# Check if server is running
+lsof -i :3000  # or :8080, :4200, etc.
+
+# If running, use visual-review to capture current state
+/visual-review http://localhost:3000/[route]
+```
+
+If screenshot available → Store in `.orchestration/evidence/screenshots/current-[name].png`
 
 ---
 
-## Phase 3: Study References & Extract Patterns
+## Phase 2: AI Assessment & Ideas
 
-**For codebase references OR /discover results**
-
-**Note:** If `/design` was used in Phase 1, skip this phase (design brief already generated)
-
-For each confirmed reference file:
-
-### Step 3.1: Deep Read & Analysis
-
-```javascript
-// Read the reference file completely
-Read(file_path)
-
-// Analyze for patterns:
-- Layout structure (what comes first, what's prominent)
-- Information hierarchy (what's hero, what's secondary)
-- Interaction patterns (how do users engage)
-- Visual rhythm (spacing, typography, color usage)
-- Component composition (how it's built)
-```
-
-### Step 3.2: Extract "What Makes It Work"
-
-Ask yourself:
-- **Why is this effective?** What makes users successful?
-- **What's the pattern?** Timeline first? Modal for details? Cards grid?
-- **What's the hierarchy?** What leaps off the page vs. what's subtle?
-- **How does it flow?** User journey from landing to action
-- **What makes it elegant?** Simple? Compact? Scannable?
-
-### Step 3.3: Document Pattern Analysis
+**Present your analysis:**
 
 ```
-📚 PATTERN ANALYSIS: [Reference Name]
+🔍 CURRENT IMPLEMENTATION ASSESSMENT
 
-PURPOSE:
-[What this reference accomplishes for users]
+FILE: [filepath]
 
-KEY PATTERNS:
-1. [Pattern name]: [How it works]
-   Why it works: [User benefit]
+WHAT IT DOES:
+[Brief description of current purpose and functionality]
 
-2. [Pattern name]: [How it works]
-   Why it works: [User benefit]
+CURRENT LAYOUT:
+[Describe the structure - hero, sections, components used]
+
+WHAT WORKS:
+✓ [Thing 1 that's good]
+✓ [Thing 2 that's good]
+✓ [Thing 3 that's good]
+
+WHAT COULD BE BETTER:
+⚠️ [Issue 1] - [Why this is a problem]
+⚠️ [Issue 2] - [Why this is a problem]
+⚠️ [Issue 3] - [Why this is a problem]
+
+CREATIVE IDEAS FOR IMPROVEMENT:
+💡 Idea 1: [Specific suggestion]
+   - How: [How to implement]
+   - Why: [What this improves for users]
+
+💡 Idea 2: [Specific suggestion]
+   - How: [How to implement]
+   - Why: [What this improves for users]
+
+💡 Idea 3: [Specific suggestion]
+   - How: [How to implement]
+   - Why: [What this improves for users]
+
+[If screenshot exists, reference it]
+Current state captured: .orchestration/evidence/screenshots/current-[name].png
+
+---
+
+What direction do you want to explore?
+- Share any inspiration/examples you have
+- React to these ideas
+- Suggest your own approach
+```
+
+---
+
+## Phase 3: Conversational Iteration
+
+**Listen to user response and iterate:**
+
+**If user shares inspiration/examples:**
+```
+📸 ANALYZING YOUR INSPIRATION
+
+[If URL] → Use WebFetch to analyze
+[If local file] → Read file
+[If description] → Understand the pattern
+
+What I see in your inspiration:
+- Pattern: [Key layout pattern]
+- Why it works: [User benefit]
+- How we could adapt: [Specific application]
+
+Should we go in this direction?
+```
+
+**If user reacts to your ideas:**
+```
+Great, let's explore [idea] further.
+
+Here's how that could work:
+[More detailed breakdown]
+
+Thinking through the user journey:
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
+
+Visual hierarchy:
+- Hero: [What's prominent]
+- Secondary: [Supporting elements]
+- Tertiary: [Details]
+
+Does this feel right? Any adjustments?
+```
+
+**If user suggests their own approach:**
+```
+I like that direction. Building on your idea:
+
+[Expand on their suggestion with specific implementation details]
+
+Potential challenges:
+- [Challenge 1] → [How to solve]
+- [Challenge 2] → [How to solve]
+
+This could look like:
+[Describe the vision]
+
+Want me to mock this up?
+```
+
+**Keep iterating** until user is satisfied with the direction.
+
+---
+
+## Phase 4: Generate Mockup
+
+**When user says they're happy with the direction:**
+
+```
+✅ DIRECTION CONFIRMED
+
+Let me create a mockup of this concept.
+
+CONCEPT SUMMARY:
+[1-2 paragraph description of the approved direction]
 
 LAYOUT STRUCTURE:
-- Hero: [What's prominent]
-- Secondary: [Supporting information]
-- Tertiary: [Nice-to-have details]
+[ASCII diagram showing the layout]
 
-INTERACTION PATTERNS:
-- [How users engage with content]
-- [Progressive disclosure approach]
+┌─────────────────────────────────────────┐
+│  [HERO SECTION]                         │
+│  [Description of hero]                  │
+└─────────────────────────────────────────┘
 
-VISUAL HIERARCHY:
-- Typography: [Header scales, body text]
-- Spacing: [Rhythm and breathing room]
-- Color: [Emphasis strategy]
+┌─────────────────────────────────────────┐
+│  [SECONDARY SECTION]                    │
+│  [Description]                          │
+└─────────────────────────────────────────┘
 
-WHAT MAKES IT ELEGANT:
-[The secret sauce - why users love it]
-```
-
-Repeat for all reference files.
-
----
-
-## Phase 4: Brainstorm Creative Approach
-
-**Note:** If `/design` was used in Phase 1, skip this phase (design brief already generated)
-
-**Now use the brainstorming skill to explore approaches:**
-
-```javascript
-Skill("superpowers:brainstorming")
-
-Prompt for brainstorming:
-"Based on the reference patterns I've studied:
-- [Reference 1] uses [pattern] for [purpose]
-- [Reference 2] uses [pattern] for [purpose]
-
-For this new request: $ARGUMENTS
-
-How should we adapt these patterns?
-- What should be the hero?
-- What's the user's primary goal?
-- How do we make it elegant and simple?
-- What makes this different from the references?"
-```
-
-**During brainstorming, explore:**
-- Multiple creative approaches
-- Adaptation of reference patterns
-- User journey and flow
-- What makes this unique vs. reference
-
-**Outcome:** Refined creative direction with clear vision
-
----
-
-## Phase 5: Present Concept Brief
-
-**Note:** If `/design` was used in Phase 1, the design brief from `/design` becomes the concept brief
-
-Create a comprehensive concept brief showing:
-
-### 5.1: References Studied
-```
-📖 REFERENCES STUDIED:
-
-1. app/protocols/anti-aging/page.tsx
-   - Pattern: Timeline-first with modal protocol
-   - Why it works: Protocol accessible, not buried
-   - Key takeaway: Make protocol the hero
-
-2. [Other references]
-```
-
-### 5.2: Proposed Approach
-```
-🎨 PROPOSED APPROACH:
-
-CONCEPT:
-[One paragraph describing the vision]
-Example: "Protocol reference page where the 3-phase protocol is
-immediately visible via interactive timeline, with compound details
-in compact problem→solution cards that expand on demand."
+┌─────────────────────────────────────────┐
+│  [TERTIARY SECTION]                     │
+│  [Description]                          │
+└─────────────────────────────────────────┘
 
 USER JOURNEY:
-1. Land → See timeline visually
-2. Click phase → Protocol details expand
-3. Scan compounds → Problem→peptide cards
-4. Deep dive → Click to expand mechanism details
-
-VISUAL HIERARCHY:
-- HERO: 3-phase timeline (Domaine Sans Display, large)
-- Secondary: Compound problem→solution cards (compact grid)
-- Tertiary: Safety warnings (visible but not dominant)
-- Background: Detailed mechanisms (on-demand)
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
 
 INTERACTION PATTERNS:
-- Timeline phases: Click to expand protocol details
-- Compound cards: Hover for preview, click for full mechanism
-- Safety: Persistent subtle callout, expands for full details
+- [Pattern 1]: [Behavior]
+- [Pattern 2]: [Behavior]
 
-LAYOUT STRUCTURE:
-[ASCII mockup or description]
-
-┌─────────────────────────────────────┐
-│  3-PHASE INJURY RECOVERY TIMELINE   │ ← Hero
-│  [Phase 1] [Phase 2] [Phase 3]      │
-│  Click phase → Protocol expands      │
-└─────────────────────────────────────┘
-
-┌─────────────────────────────────────┐
-│  COMPOUND REFERENCE                  │ ← Secondary
-│  [Problem → BPC-157 fixes it]        │
-│  [Problem → TB-500 fixes it]         │
-│  Click for mechanisms →              │
-└─────────────────────────────────────┘
+VISUAL HIERARCHY:
+- Typography: [Specific fonts and sizes]
+- Spacing: [Grid and rhythm]
+- Colors: [Emphasis strategy]
 
 DESIGN SYSTEM COMPLIANCE:
-- Typography: Domaine Sans Display headers, GT Pantheon body, Supreme LL labels
-- Spacing: 8px base unit, mathematical scale
-- Colors: Gold accent (#D4AF37) for emphasis
-- All design-with-precision rules followed
-```
+[How this follows the project's design system]
 
-### 5.3: Adaptations from Reference
-```
-🔄 ADAPTATIONS FROM ANTI-AGING PAGE:
-
-What we're keeping:
-- Timeline pattern (proven effective)
-- Protocol modal/expansion (keeps it accessible)
-- Compact cards (not overwhelming)
-
-What we're changing:
-- 3 phases instead of timeline progression
-- Problem→solution cards instead of benefit cards
-- Interactive phase expansion instead of modal
-
-Why these changes:
-- Injury recovery is phase-based, not time-based
-- Users need to match problem to solution quickly
-- Phase details need to be inline, not in modal
-```
-
-### 5.4: Seek Approval
-
-```
-✅ CONCEPT BRIEF COMPLETE
-
-This concept is based on:
-- Studying [X] reference files
-- Brainstorming creative adaptations
-- User journey mapping
-- Design system compliance
-
-Approve this concept before I proceed to /enhance and build?
-
-[Present using exit_plan_mode for Yes/No selection]
-```
+IMPROVEMENTS FROM CURRENT:
+✓ [Improvement 1]
+✓ [Improvement 2]
+✓ [Improvement 3]
 
 ---
 
-## Phase 6: After Approval
+Approve this mockup to proceed to implementation?
+```
 
-Once approved, output:
+Use `exit_plan_mode` to present for approval.
+
+---
+
+## Phase 5: Build
+
+**Once approved:**
 
 ```
-✅ CONCEPT APPROVED
+✅ MOCKUP APPROVED
+
+Proceeding to build this redesign.
 
 Next steps:
-1. Run /enhance with this concept as foundation
-2. Agents will build following this creative direction
-3. design-with-precision skill will enforce elegance
-4. quality-validator will verify pattern compliance
+1. Update [filepath] with new layout
+2. Create/modify components as needed
+3. Apply design system styles
+4. Test interactions
+5. Take screenshot of result
+6. Compare before/after
 
-Ready to proceed to /enhance?
+Building now...
 ```
+
+Then implement the redesign directly (don't call /enhance, you're already in a command).
 
 ---
 
 ## Critical Rules
 
-### DO:
-- ✅ Search codebase for references FIRST (ls app/protocols/)
-- ✅ Read ALL reference files completely
-- ✅ Extract patterns and explain why they work
-- ✅ Use brainstorming skill for creative exploration
-- ✅ Present concept brief with mockup/description
-- ✅ Get approval BEFORE building
+**DO:**
+- ✅ Read current implementation completely
+- ✅ Give honest assessment (good AND bad)
+- ✅ Suggest specific, creative improvements
+- ✅ Iterate conversationally (not one-shot)
+- ✅ Listen to user's vision and inspiration
+- ✅ Generate mockup before building
+- ✅ Get approval on mockup
 
-### DON'T:
-- ❌ Skip reference discovery
-- ❌ Assume you know the pattern without studying references
-- ❌ Jump straight to /enhance without concept
-- ❌ Build generically without creative direction
-- ❌ Ignore what makes references elegant
-
-### For /enhance Integration:
-
-When /concept is approved, the enhanced prompt should include:
-
-```
-CREATIVE DIRECTION (from /concept):
-- References studied: [list]
-- Pattern to follow: [description]
-- Visual hierarchy: [hero, secondary, tertiary]
-- Interaction patterns: [specific behaviors]
-- User journey: [flow]
-
-AGENTS MUST:
-- Read concept brief
-- Follow established patterns
-- Apply creative direction
-- Verify against reference elegance
-```
-
----
-
-## When to Use /concept
-
-**ALWAYS use for:**
-- Page redesigns
-- New page layouts
-- Complex UI features
-- Information architecture changes
-- "Make it elegant" requests
-
-**NEVER use for:**
-- Bug fixes (use /enhance directly)
-- Performance work (not creative)
-- Backend logic (not design)
-- Simple CSS tweaks (too small)
-
-**The test:**
-If the request needs creative thinking about "how it should feel" or "what makes it elegant" → Use /concept
+**DON'T:**
+- ❌ Jump straight to solutions without assessing current state
+- ❌ Be vague ("make it better" - specify HOW)
+- ❌ Ignore user's inspiration/examples
+- ❌ Build without mockup approval
+- ❌ Overcomplicate with routing to other commands
 
 ---
 
 ## Example Flow
 
-**User:** "Redesign the injury protocol page"
+**User:** `/concept injury protocol page`
 
-**Phase 1:** Search codebase
+**Phase 1: Assess**
 ```bash
-ls app/protocols/
-# Found: anti-aging/, [slug]/
+Read app/protocols/injury/page.tsx
+
+🔍 CURRENT IMPLEMENTATION
+- Has injury intro, phases section, supplements grid
+- Layout is vertical stack, no timeline
+- Supplements are just cards in grid
 ```
 
-**Phase 2:** Study anti-aging page
+**Phase 2: AI Ideas**
 ```
-Pattern: Timeline-first, protocol in modal, compact cards
-Why it works: Protocol accessible, not buried
+WHAT WORKS:
+✓ Clear phases section
+✓ Supplements are organized
+
+WHAT COULD BE BETTER:
+⚠️ No visual timeline - hard to see 3-phase structure at a glance
+⚠️ Supplements lack problem→solution framing
+⚠️ Protocol details buried in text
+
+IDEAS:
+💡 Interactive 3-phase timeline as hero
+💡ompounds as problem→solution cards
+💡 Protocol expands inline per phase
+
+What do you think?
 ```
 
-**Phase 3:** Brainstorm
+**Phase 3: User Responds**
 ```
-Use brainstorming to explore:
-- How to adapt timeline for 3 phases
-- Problem→solution card pattern
-- Where protocol should live
+User: "Love the timeline idea. Here's an example [shares screenshot]"
+
+AI: Analyzes screenshot
+"I see - compact timeline with phase badges.
+Let me adapt that with our gold accent colors..."
 ```
 
-**Phase 4:** Present concept
+**Phase 4: Iterate**
 ```
-CONCEPT: 3-phase timeline hero, protocol expands inline,
-compound cards show problem→peptide solution
+User: "What if we make clicking a phase scroll to its section?"
 
-[ASCII mockup]
+AI: "Great idea - smooth scroll anchor links.
+Timeline stays fixed at top? Or scrolls away?"
 
-Approve? → Yes
+User: "Fixed at top"
+
+AI: "Perfect - sticky timeline. Ready for mockup?"
 ```
 
-**Phase 5:** Proceed to /enhance with concept
+**Phase 5: Mockup**
 ```
-Enhanced prompt includes creative direction
-Agents build following the concept
-Result: Elegant, not generic
+[ASCII mockup with sticky timeline, scrollable sections, etc.]
+
+User: Approves ✅
+```
+
+**Phase 6: Build**
+```
+Updates app/protocols/injury/page.tsx
+Creates TimelineNav component
+Implements smooth scroll
+Takes screenshot
+Shows before/after
 ```
 
 ---
 
-## Integration with Design Commands
+## When to Use
 
-**/concept now orchestrates three reference approaches:**
+**/concept (this command):**
+- Redesigning existing page: ✅
+- Improving current layout: ✅
+- "Make [existing thing] better": ✅
 
-1. **/inspire** → Personal design aesthetic (global gallery)
-   - Use when: Understanding your aesthetic preferences
-   - Trigger: Optionally during `/design` pre-flight
-   - Output: Taste principles to inform design brief
+**/concept-new:**
+- Brand new page/layout: ✅
+- Starting from scratch: ✅
+- No current implementation: ✅
 
-2. **/design** → Project direction (user-provided refs)
-   - Use when: You have specific screenshots/examples/URLs
-   - Trigger: Phase 1 → "I have specific refs"
-   - Output: Actionable design brief with conversational brainstorming
+**The test:** If it exists already → Use `/concept`. If it's new → Use `/concept-new`.
 
-3. **/discover** → Fallback (browse collections)
-   - Use when: No specific refs, need industry examples
-   - Trigger: Phase 1 → "Browse design collections"
-   - Output: Curated examples from CSS Awards, SiteInspire, etc.
+---
 
-**The decision tree:**
+## Integration with Design System
 
-```
-/concept starts
-    ↓
-Phase 0: Load design system (MANDATORY)
-    ↓
-Phase 1: "Do you have specific refs?"
-    ├─ "Yes, I have refs" → /design (conversational, 5-10 min)
-    ├─ "Search codebase" → Phase 2-6 (current flow, 10-15 min)
-    └─ "Browse collections" → /discover (curated search, 20-30 min)
-    ↓
-Phase 2-6: (varies based on Phase 1 choice)
-    ↓
-Output: Concept brief → Approve → /enhance
-```
+**Before generating mockup, verify design system compliance:**
+
+1. Check project design system (if exists)
+2. Ensure mockup uses authorized fonts, colors, spacing
+3. Call out design system compliance in mockup
+
+**If no design system exists:**
+- Design freely but maintain consistency with existing pages
+- Document the patterns you're establishing
 
 ---
 
 ## Summary
 
-**/concept solves:**
-1. ❌ "I didn't study references" → ✅ Three reference strategies (design/codebase/discover)
-2. ❌ "I didn't understand the pattern" → ✅ Pattern extraction & analysis
-3. ❌ "I built generically" → ✅ Creative brainstorming & direction
-4. ❌ "No approval before building" → ✅ Concept brief with user approval
+**/concept** is conversational design iteration:
 
-**/concept ensures:**
-- Design system loaded FIRST (Phase 0)
-- User chooses reference strategy (Phase 1)
-- References are studied thoroughly (Phase 2-4)
-- Patterns are understood, not assumed (Phase 3)
-- Creative direction is established (Phase 4)
-- User approves vision before building (Phase 5)
-- Agents get clear creative direction (Phase 6)
+1. ✅ Look at current implementation
+2. ✅ Give assessment and creative ideas
+3. ✅ User reacts, shares inspiration
+4. ✅ Iterate until satisfied
+5. ✅ Generate mockup
+6. ✅ Get approval
+7. ✅ Build it
 
-**The complete workflow:**
-```
-Design Request → /concept → Choose refs → Concept brief → Approve → /enhance → Build → /visual-review → Ship
-```
-
-**Three paths through /concept:**
-
-**Path A: User has specific refs**
-```
-Phase 0: Design system → Phase 1: User selects "I have refs" → /design → Design brief → Phase 6: Approve
-```
-
-**Path B: Search codebase**
-```
-Phase 0: Design system → Phase 1: "Search codebase" → Phase 2: Find refs → Phase 3: Extract → Phase 4: Brainstorm → Phase 5: Brief → Phase 6: Approve
-```
-
-**Path C: Browse collections**
-```
-Phase 0: Design system → Phase 1: "Browse collections" → /discover → Examples → Phase 3: Extract → Phase 4: Brainstorm → Phase 5: Brief → Phase 6: Approve
-```
-
-**After building, ALWAYS run /visual-review:**
-
-This ensures the implemented design:
-- Matches the approved concept
-- Follows AESTHETIC_PRINCIPLES.md
-- Has proper spacing, typography, colors
-- Demonstrates sophistication through restraint
-- Compares favorably to inspiration gallery examples
-
-**Visual review workflow:**
-1. Build implementation from concept brief
-2. Run /visual-review [page-url]
-3. Fix any violations found
-4. Re-run visual review until ✅ APPROVED
-5. THEN present to user
-
-No more jumping straight to /enhance for design work.
-No more generic layouts.
-No more missing the point.
-No more shipping without visual QA.
-
----
-
-## Response Awareness for Conceptual Work
-
-During design exploration, tag uncertainties:
-
-- Use `#PATTERN_CONFLICT:` when multiple design approaches compete
-- Use `#COMPLETION_DRIVE:` for assumed design patterns without user confirmation
-- Use `#CONTEXT_DEGRADED:` when earlier design context becomes unclear
-
-When concept work leads to implementation, verification-agent verifies all tagged assumptions.
-
-See: `docs/RESPONSE_AWARENESS_TAGS.md` for complete tag taxonomy.
+**Simple. Conversational. No complex routing. Just design iteration.**
