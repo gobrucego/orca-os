@@ -1,275 +1,234 @@
 ---
 name: cleanup
-description: Review and clean up old evidence and log files with interactive options
+description: Clean up orphaned logs and files created in wrong locations by agents
 ---
 
-# Evidence & Log Cleanup Command
+# /cleanup - Remove Orphaned Logs and Files
 
-Manually review and clean up old evidence and log files in .orchestration/
+**Purpose:** Delete logs and generated files that agents mistakenly created outside `.orchestration/`
 
-## Usage
-
-```bash
-/cleanup                    # Interactive cleanup with options
-/cleanup --keep-for 30      # Extend retention to 30 days
-/cleanup --dry-run          # Show what would be deleted without deleting
-/cleanup --force            # Delete all files >7 days old without asking
-```
+**When to use:**
+- After running agents and noticing logs in main directory
+- Before committing to clean up project
+- When starting fresh on a project
 
 ---
 
-## Interactive Cleanup Process
+## What This Command Does
 
-### Step 1: Analyze Current State
+Searches your project for orphaned files created by agents in WRONG locations and removes them.
 
-**Check for .orchestration directory:**
+**Files it removes:**
+- `implementation-log.md` (main directory) → Should be in `.orchestration/`
+- `verification-report.md` (main directory) → Should be in `.orchestration/verification/`
+- `docs/completion_drive_plans/` → Should be in `.orchestration/plans/`
+- `design-dna-context.md` (anywhere except `.orchestration/`) → Context file
+- Any `.log` files in main directory → Should be in `.orchestration/`
+
+**What it NEVER touches:**
+- `.orchestration/` directory (this is CORRECT location)
+- `.claude/design-dna/` (this is CORRECT location)
+- `design-system.md` (this is YOUR file)
+- `design-system.html` (this is generated HTML for you)
+- Your actual project code
+
+---
+
+## How It Works
+
 ```bash
-if [ ! -d ".orchestration" ]; then
-  echo "✓ No .orchestration directory found - nothing to clean up"
-  exit 0
-fi
+# 1. Scan for orphaned files
+# 2. Show what will be deleted
+# 3. Ask for confirmation
+# 4. Delete confirmed files
+# 5. Report what was cleaned
 ```
 
-**Calculate current state:**
+---
+
+## Execution
+
+**Step 1: Detect orphaned files**
+
 ```bash
-# Evidence files
-evidence_count=$(find .orchestration/evidence -type f 2>/dev/null | wc -l | tr -d ' ')
-evidence_size=$(du -sh .orchestration/evidence 2>/dev/null | cut -f1 || echo "0B")
+# Find implementation logs outside .orchestration
+find . -maxdepth 1 -name "implementation-log.md" -not -path "./.orchestration/*"
 
-# Log files
-logs_count=$(find .orchestration/logs -type f 2>/dev/null | wc -l | tr -d ' ')
-logs_size=$(du -sh .orchestration/logs 2>/dev/null | cut -f1 || echo "0B")
+# Find verification reports outside .orchestration
+find . -maxdepth 1 -name "verification-report.md" -not -path "./.orchestration/*"
 
-# Old files (>7 days)
-old_evidence_count=$(find .orchestration/evidence -type f -mtime +7 2>/dev/null | wc -l | tr -d ' ')
-old_logs_count=$(find .orchestration/logs -type f -mtime +7 2>/dev/null | wc -l | tr -d ' ')
+# Find completion_drive_plans in docs
+find ./docs -name "completion_drive_plans" -type d 2>/dev/null
 
-echo "📊 Current State:"
-echo ""
-echo "  Evidence: $evidence_count files ($evidence_size)"
-echo "    └─ >7 days old: $old_evidence_count files"
-echo ""
-echo "  Logs: $logs_count files ($logs_size)"
-echo "    └─ >7 days old: $old_logs_count files"
-echo ""
+# Find .log files in main directory
+find . -maxdepth 1 -name "*.log"
+
+# Find orphaned context files
+find . -maxdepth 2 -name "*-context.md" -not -path "./.orchestration/*"
 ```
 
-### Step 2: Present Options
+**Step 2: List files to delete**
 
-**If no old files:**
-```
-✓ No files older than 7 days found
+```markdown
+# Cleanup Report
 
-Current retention policy: 7 days (SessionEnd hook)
-To extend retention: touch .orchestration/evidence/.keep
+## Files to be deleted:
+
+### Orphaned implementation logs:
+- ./implementation-log.md → Should be in .orchestration/
+
+### Orphaned verification reports:
+- ./verification-report.md → Should be in .orchestration/verification/
+
+### Misplaced plan directories:
+- ./docs/completion_drive_plans/ → Should be in .orchestration/plans/
+
+### Orphaned log files:
+- ./build.log → Should be in .orchestration/verification/
+- ./test.log → Should be in .orchestration/verification/
+
+### Total files to delete: 5
 ```
 
-**If old files exist:**
+**Step 3: Ask for confirmation**
+
+Use AskUserQuestion tool:
+
 ```
-Found $total_old_files old files (>7 days)
+Question: "Clean up 5 orphaned files?"
 
 Options:
-1. Delete files >7 days old (recommended)
-2. Delete files >30 days old (conservative)
-3. Delete files >90 days old (very conservative)
-4. List old files for manual review
-5. Keep all files (create .keep file to disable auto-cleanup)
-6. Cancel
+- "Yes, delete all" → Proceed with cleanup
+- "Show details first" → Print file paths with cat/head
+- "Cancel" → Exit without deleting
 ```
 
-### Step 3: Execute Based on User Choice
+**Step 4: Delete files**
 
-**Option 1: Delete >7 days:**
 ```bash
-find .orchestration/evidence -type f -mtime +7 ! -name ".keep" -delete
-find .orchestration/logs -type f -mtime +7 -delete
-find .orchestration/evidence -type d -empty -delete
-find .orchestration/logs -type d -empty -delete
+# If user confirms "Yes, delete all"
 
-echo "🧹 Deleted $deleted_count files"
+# Remove implementation logs
+rm -f ./implementation-log.md
+
+# Remove verification reports  
+rm -f ./verification-report.md
+
+# Remove completion_drive_plans
+rm -rf ./docs/completion_drive_plans/
+
+# Remove orphaned logs
+rm -f ./*.log
+
+# Remove orphaned context files
+find . -maxdepth 2 -name "*-context.md" -not -path "./.orchestration/*" -delete
+
+echo "✅ Cleanup complete"
 ```
 
-**Option 2: Delete >30 days:**
-```bash
-find .orchestration/evidence -type f -mtime +30 ! -name ".keep" -delete
-find .orchestration/logs -type f -mtime +30 -delete
-```
+**Step 5: Report results**
 
-**Option 3: Delete >90 days:**
-```bash
-find .orchestration/evidence -type f -mtime +90 ! -name ".keep" -delete
-find .orchestration/logs -type f -mtime +90 -delete
-```
+```markdown
+# Cleanup Complete
 
-**Option 4: List old files:**
-```bash
-echo "📋 Files older than 7 days:"
-echo ""
-echo "Evidence:"
-find .orchestration/evidence -type f -mtime +7 -exec ls -lh {} \; 2>/dev/null | \
-  awk '{print "  " $9 " (" $5 ", " $(NF-2) " " $(NF-1) " " $NF ")"}'
+## Deleted:
+✅ ./implementation-log.md (243 bytes)
+✅ ./verification-report.md (1.2 KB)
+✅ ./docs/completion_drive_plans/ (3 files, 4.5 KB)
+✅ ./build.log (892 bytes)
+✅ ./test.log (1.1 KB)
 
-echo ""
-echo "Logs:"
-find .orchestration/logs -type f -mtime +7 -exec ls -lh {} \; 2>/dev/null | \
-  awk '{print "  " $9 " (" $5 ", " $(NF-2) " " $(NF-1) " " $NF ")"}'
+## Total freed: 7.9 KB
 
-echo ""
-echo "Run /cleanup again to delete these files"
-```
+## Correct locations reminder:
+- Logs → .orchestration/verification/
+- Plans → .orchestration/plans/
+- Implementation logs → .orchestration/implementation-log.md
+- Playbooks → .orchestration/playbooks/
+- Design DNA → .claude/design-dna/
 
-**Option 5: Keep all (create .keep):**
-```bash
-touch .orchestration/evidence/.keep
-touch .orchestration/logs/.keep
-
-echo "🔒 Auto-cleanup disabled"
-echo "  Created .keep files in evidence/ and logs/"
-echo "  SessionEnd hook will no longer delete old files"
-echo "  To re-enable: rm .orchestration/evidence/.keep .orchestration/logs/.keep"
-```
-
-**Option 6: Cancel:**
-```bash
-echo "Cleanup cancelled - no changes made"
+Run verification to ensure nothing broken:
+  ls .orchestration/
+  ls .claude/design-dna/
 ```
 
 ---
 
-## Command-Line Flags
+## Safety Features
 
-### --keep-for N
+**Never deletes:**
+- Files in `.orchestration/` (correct location)
+- Files in `.claude/design-dna/` (correct location)
+- `design-system.md` (your master reference)
+- `design-system.html` (generated HTML for you)
+- Source code files (`.swift`, `.ts`, `.js`, etc.)
+- Configuration files (`package.json`, `*.xcodeproj`, etc.)
 
-Extend retention to N days:
-```bash
-RETENTION_DAYS=30
-find .orchestration/evidence -type f -mtime +$RETENTION_DAYS ! -name ".keep" -delete
-find .orchestration/logs -type f -mtime +$RETENTION_DAYS -delete
-```
+**Always asks confirmation before deleting.**
 
-### --dry-run
-
-Show what would be deleted without deleting:
-```bash
-echo "📋 Dry Run - Would Delete:"
-find .orchestration/evidence -type f -mtime +7 ! -name ".keep" | \
-  while read file; do
-    size=$(ls -lh "$file" | awk '{print $5}')
-    echo "  $file ($size)"
-  done
-
-find .orchestration/logs -type f -mtime +7 | \
-  while read file; do
-    size=$(ls -lh "$file" | awk '{print $5}')
-    echo "  $file ($size)"
-  done
-```
-
-### --force
-
-Delete immediately without confirmation:
-```bash
-deleted_count=$(find .orchestration/evidence -type f -mtime +7 ! -name ".keep" | wc -l | tr -d ' ')
-deleted_count=$((deleted_count + $(find .orchestration/logs -type f -mtime +7 | wc -l | tr -d ' ')))
-
-find .orchestration/evidence -type f -mtime +7 ! -name ".keep" -delete
-find .orchestration/logs -type f -mtime +7 -delete
-find .orchestration/evidence -type d -empty -delete
-find .orchestration/logs -type d -empty -delete
-
-echo "🧹 Force cleanup: Deleted $deleted_count files (>7 days old)"
-```
+**Shows file contents before deleting if user requests.**
 
 ---
 
-## Safety Checks
+## When to Run
 
-**NEVER delete:**
-- Source files (Sources/, src/, etc.)
-- Documentation (docs/)
-- Permanent evidence (docs/evidence/)
-- Files in directories with .keep file
-- Files less than 7 days old (unless user explicitly requests)
+**After these scenarios:**
 
-**ALWAYS ask for confirmation:**
-- Unless --force flag used
-- Show file count and total size before deleting
-- Provide cancel option
-
-**ALWAYS verify:**
-- User is in a git repository
-- .orchestration directory exists
-- Not deleting from wrong directory
+1. **After workflow-orchestrator finishes** - Agents may have created logs in wrong places
+2. **Before git commit** - Clean project before committing
+3. **Starting fresh** - Remove old logs from previous runs
+4. **After finding orphaned files** - User notices `implementation-log.md` in main directory
 
 ---
 
-## Integration with File Organization System
+## Example Usage
 
-**This command is part of the File Organization System:**
-- Standards: ~/.claude/docs/FILE_ORGANIZATION.md
-- Auto-cleanup: ~/.claude/hooks/cleanup-evidence.sh (SessionEnd)
-- Verification: ~/.claude/scripts/verify-organization.sh
+```markdown
+User: "Clean up the project"
 
-**Related commands:**
-- /organize - Verify file organization compliance
-- /orca - Includes Phase 8: Evidence Management
+Agent: "Running /cleanup to scan for orphaned files..."
 
----
+[Scans project]
 
-## Example Session
+Agent: "Found 5 orphaned files:
+- ./implementation-log.md (main directory)
+- ./verification-report.md (main directory)  
+- ./docs/completion_drive_plans/ (3 files)
+- ./build.log (main directory)
 
-```bash
-$ /cleanup
+Delete all?"
 
-📊 Current State:
+User: "Yes"
 
-  Evidence: 47 files (2.3GB)
-    └─ >7 days old: 32 files
+Agent: [Deletes files]
+"✅ Cleanup complete. 5 files deleted, 7.9 KB freed.
 
-  Logs: 18 files (145MB)
-    └─ >7 days old: 12 files
-
-Found 44 old files (>7 days)
-
-Options:
-1. Delete files >7 days old (recommended)
-2. Delete files >30 days old (conservative)
-3. Delete files >90 days old (very conservative)
-4. List old files for manual review
-5. Keep all files (create .keep file to disable auto-cleanup)
-6. Cancel
-
-User selects: 1
-
-🧹 Deleted 44 files (2.1GB freed)
-
-📊 New State:
-  Evidence: 15 files (234MB)
-  Logs: 6 files (23MB)
-
-✓ Cleanup complete
+All logs should now be in .orchestration/
+Run ls .orchestration/ to verify."
 ```
 
 ---
 
-## When to Use This Command
+## After Cleanup
 
-**Use /cleanup when:**
-- .orchestration directory is >100MB
-- Manually reviewing old evidence before auto-deletion
-- Extending retention period for specific session
-- Disabling auto-cleanup temporarily
-- Freeing disk space
+**Verify correct structure:**
 
-**Don't use /cleanup when:**
-- Auto-cleanup is working fine (SessionEnd hook handles it)
-- Files are <7 days old and still needed
-- In the middle of active work (wait until session ends)
+```bash
+# Should exist (correct locations)
+ls .orchestration/
+ls .orchestration/verification/
+ls .orchestration/playbooks/
+ls .orchestration/plans/
+ls .claude/design-dna/
+
+# Should NOT exist (orphaned locations)
+ls implementation-log.md 2>/dev/null && echo "⚠️ Still exists"
+ls verification-report.md 2>/dev/null && echo "⚠️ Still exists"
+ls docs/completion_drive_plans/ 2>/dev/null && echo "⚠️ Still exists"
+```
 
 ---
 
-## Related Documentation
-
-- FILE_ORGANIZATION.md - Platform-specific file structure rules
-- DOCUMENTATION_PROTOCOL.md - When to update docs
-- cleanup-evidence.sh - SessionEnd hook auto-cleanup script
+**Created:** 2025-10-25  
+**Purpose:** Clean up orphaned logs from agents creating files in wrong locations  
+**Safety:** Always confirms before deleting, never touches .orchestration/ or project code
