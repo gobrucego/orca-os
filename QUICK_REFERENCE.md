@@ -4,7 +4,7 @@
 
 ---
 
-## ⚡ Commands (16 Total - What You Type)
+## ⚡ Commands (17 Total - What You Type)
 
 ### /orca - Full Orchestration
 **Use for:** Complex multi-step features, full implementations, architecture changes
@@ -31,8 +31,31 @@
 
 ---
 
-### /concept - Design Exploration
-**Use for:** Before building UI/UX, when you need creative exploration
+### /concept - Iterate on Existing Layout
+**Use for:** Improving existing pages/components, redesigning current UI
+
+**What it does:**
+1. Looks at current implementation and gives honest assessment
+2. Suggests creative improvements with specific ideas
+3. Iterates conversationally (you react, share inspiration, refine)
+4. Generates mockup when you're satisfied
+5. Builds after approval
+
+**Examples:**
+```bash
+/concept injury protocol page
+
+/concept Make the dashboard more elegant
+
+/concept Improve the settings screen layout
+```
+
+**You get:** Assessment + ideas → iteration → mockup → implementation
+
+---
+
+### /concept-new - Design Exploration for New Layouts
+**Use for:** Before building brand new UI/UX, when starting from scratch
 
 **What it does:**
 1. Studies reference examples and design patterns
@@ -42,16 +65,39 @@
 
 **Examples:**
 ```bash
-/concept Premium dashboard with analytics and data visualizations
+/concept-new Premium dashboard with analytics and data visualizations
 
-/concept Onboarding flow for meditation app
+/concept-new Onboarding flow for meditation app
 
-/concept Settings screen with nested categories
+/concept-new Settings screen with nested categories
 ```
 
 **Then:** Use `/orca` to build after you approve the concept
 
 **You get:** Design proposal + rationale + visual direction
+
+---
+
+### /survey - Bulk Q&A
+**Use for:** When agent has 5-20+ questions after review (design decisions, feature preferences, priority rankings)
+
+**What it does:**
+1. Reads questions from `/tmp/survey-questions.json`
+2. Batches into groups of 4 (terminal-friendly)
+3. Shows progress indicators (e.g., "Hero Layout (3/20)")
+4. Collects all responses
+5. Returns aggregated results in `/tmp/survey-responses.json`
+
+**Examples:**
+```bash
+# After design review with 15 decisions needed:
+# Agent prepares questions, writes to /tmp/survey-questions.json
+/survey
+# User answers in manageable batches
+# Agent reads /tmp/survey-responses.json and proceeds
+```
+
+**You get:** Organized Q&A session with clear progress tracking
 
 ---
 

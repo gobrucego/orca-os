@@ -826,7 +826,7 @@ All agents live in `agents/` and are organized by function.
 
 See the `agents/` directory for detailed agent specifications and the complete file structure below.
 
-### ⚡ Commands (15 Total)
+### ⚡ Commands (17 Total)
 
 All commands live in `commands/` and extend Claude Code workflows:
 
@@ -834,7 +834,7 @@ All commands live in `commands/` and extend Claude Code workflows:
 
 | Command | Description | File |
 |---------|-------------|------|
-| **/orca** | Smart multi-agent orchestration with tech stack detection and team confirmation (auto-proceeds in bypass mode) | `orca.md` |
+| **/orca** | Smart multi-agent orchestration with tech stack detection and team confirmation using skill-based encapsulation (no retry loops) | `orca.md` |
 | **/enhance** | Transform vague requests into well-structured prompts and execution | `enhance.md` |
 | **/ultra-think** | Deep analysis and problem solving with multi-dimensional thinking | `ultra-think.md` |
 
@@ -849,7 +849,9 @@ All commands live in `commands/` and extend Claude Code workflows:
 
 | Command | Description | File |
 |---------|-------------|------|
-| **/concept** | Creative exploration phase - study references, extract patterns, get approval BEFORE building | `concept.md` |
+| **/concept** | Iterate on existing layouts - AI assesses current design, suggests improvements, conversational iteration until satisfied, then build | `concept.md` |
+| **/concept-new** | Systematic creation for brand new layouts - study references, extract patterns, brainstorm, get approval BEFORE building | `concept-new.md` |
+| **/survey** | Handle bulk Q&A (5-20+ questions) by batching into terminal-friendly format with progress indicators | `survey.md` |
 | **/visual-review** | Visual QA review of implemented UI using chrome-devtools to screenshot and analyze | `visual-review.md` |
 
 #### Workflow & Utilities
