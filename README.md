@@ -613,6 +613,208 @@ User: "Run /finalize"
 
 ## ACE Playbook System: Self-Improving Orchestration
 
+---
+
+## Rebuild v5 — What’s Implemented Now
+
+This repository contains a lean, evidence‑gated, design‑first orchestration system optimized for mobile‑first web and iOS/RN apps.
+
+Key capabilities (Phase 1–8):
+- Core Gate: `/finalize` builds evidence and writes `.verified` (required by git hooks)
+- Zero‑Tag Gate: Structural `.orchestration/implementation-log.md` with required tags
+- Design Guard (DNA‑scoped): Warn‑only checks for 4px grid, raw colors, typography
+- Design Atlas: Generates `docs/design-atlas.md` and per‑route pages (when source exists)
+- Orchestrator Firewall: Stops the orchestrator from implementing (mode‑aware)
+- Workshop: Records finalize outcomes to `.workshop/workshop.db` for learning
+- Deployment: `scripts/deploy-to-global.sh` backs up, archives, deploys and verifies
+- Evaluation: `scripts/eval-run.sh` runs canned scenarios and collects KPIs
+
+Tweak Mode and Verification Modes
+- Quick Confirm (no screenshots): `bash scripts/design-tweak.sh run` → writes `.tweak_verified` and a short diff report
+- Verification Modes (hook-aware): `bash scripts/verification-mode.sh [strict|tweak|off]`
+  - strict: require `.verified` (full finalize)
+  - tweak: accept `.tweak_verified` (quick-confirm)
+  - off: bypass verification checks (use for trusted sprints)
+- Toggle UI Guard warnings during exploration: `bash scripts/design-tweak.sh guard off|warn`
+
+Files of interest:
+- Commands: `commands/finalize.md`
+- Scripts: `scripts/finalize.sh`, `scripts/design_ui_guard.py`, `scripts/generate-design-atlas.py`, `scripts/orchestrator_firewall.sh`, `scripts/workshop_log.py`, `scripts/workshop_curator.py`, `scripts/deploy-to-global.sh`, `scripts/eval-run.sh`
+- Hooks: `githooks/pre-commit`, `githooks/pre-push`, `hooks/orchestrator-firewall.sh`
+- DNA: `.claude/design-dna/design-dna.json`
+- Mode: `.orchestration/mode.json`
+
+---
+
+## End‑to‑End Flow (Evidence Over Claims)
+
+```
++----------------------------------------------------------------------------+
+|                            Developer Workflow                               |
++----------------------------------------------------------------------------+
+| Implement -> Tag work -> Screenshot (if visual) -> /finalize -> Commit     |
++----------------------------------------------------------------------------+
+
+                    +-------------------------------+
+                    | /finalize (finalize.sh)       |
+                    +-------------------------------+
+ build logs     -->  .orchestration/logs/build.log
+ test output    -->  .orchestration/logs/test-output.log
+ design report  -->  .orchestration/verification/design-guard-report.md
+ verification   -->  .orchestration/verification/verification-report.md
+ screenshots    -->  .orchestration/evidence/*.{png,jpg,webp}
+ result         -->  .verified (required by pre-commit/pre-push)
+
+Git hooks enforce `.verified` freshness:
+- pre-commit: blocks commit when `.verified` is missing or stale
+- pre-push:   blocks push when `.verified` is missing or stale
+```
+
+---
+
+## Example Workflow — Frontend (Next.js)
+
+```
+                 Requirements                  Design DNA (optional)
+                      |                                   |
+                      v                                   v
+ +-------------------------+       +---------------------------+
+ | nextjs-14-specialist    | ----> | state-management-specialist|
+ +-------------------------+       +---------------------------+
+                      |                                   |
+                      v                                   v
+ +-------------------------+       +---------------------------+
+ | frontend-testing-       | ----> | design-reviewer           |
+ | specialist              |       +---------------------------+
+ +-------------------------+
+                      |
+                      v
+                 /finalize  ---->  .verified
+
+Artifacts:
+- Implementation log with tags: `.orchestration/implementation-log.md`
+- Evidence screenshots: `.orchestration/evidence/feature-*/after.png`
+- Design Guard report: `.orchestration/verification/design-guard-report.md`
+```
+
+---
+
+## Example Workflow — iOS (SwiftUI)
+
+```
+               Requirements                 Design DNA (optional)
+                    |                               |
+                    v                               v
+ +-------------------------+     +---------------------------+
+ | swiftui-developer       | --> | swift-testing-specialist  |
+ +-------------------------+     +---------------------------+
+                    |                               |
+                    v                               v
+ +-------------------------+     +---------------------------+
+ | ui-testing-expert       | --> | design-reviewer           |
+ +-------------------------+     +---------------------------+
+                    |
+                    v
+               /finalize  ---->  .verified
+
+Artifacts:
+- Implementation log with tags: `.orchestration/implementation-log.md`
+- Simulator screenshots: `.orchestration/evidence/feature-*/after.png`
+- Design Guard report: `.orchestration/verification/design-guard-report.md`
+```
+
+---
+
+## Design Guard (Phase 2 — Warn Only)
+
+- Reads Design DNA at `.claude/design-dna/*.json`
+- CSS/React checks: 4px grid alignment, raw color usage, font-weight whitelist, letter-spacing sanity
+- SwiftUI checks: spacing multiples (padding/frame/cornerRadius/offset), raw Color initializers, fontWeight names, kerning/tracking sanity
+- Output: `.orchestration/verification/design-guard-report.md` (summaries added to verification report)
+- Behavior: warn‑only in Phase 2; can be tightened later
+
+Run standalone:
+`python3 scripts/design_ui_guard.py`
+
+---
+
+## Design Atlas (Phase 3)
+
+- Generator: `python3 scripts/generate-design-atlas.py`
+- Scans `src/`, `app/`, `pages/`, `components/`, `styles/`, and falls back to `out/` static HTML
+- Outputs:
+  - `docs/design-atlas.md` (overview: routes, classes, tokens, evidence links)
+  - `docs/atlas/route-*.md` when routes are detected in source
+- Resolves CSS variables → shows concrete values next to token names (from styles/ and out/*.css)
+
+---
+
+## Orchestrator Firewall (Phase 5)
+
+- Blocks dangerous actions (write/edit/delete) for the pure orchestrator
+- Mode file: `.orchestration/mode.json` with `{ "firewall": "on" | "off" }`
+- Wrapper: `hooks/orchestrator-firewall.sh` (used by git hooks and tool hooks)
+- Manual checks:
+  - `ORCHESTRATION_ACTOR=workflow-orchestrator ./scripts/orchestrator_firewall.sh write src/foo.ts` → blocked
+  - `ORCHESTRATION_ACTOR=nextjs-14-specialist ./scripts/orchestrator_firewall.sh write src/foo.ts` → allowed
+
+---
+
+## Workshop (Phase 6)
+
+- Logs finalize outcomes to `.workshop/workshop.db` (SQLite)
+- Logger: `python3 scripts/workshop_log.py finalize --status PASS --score 5 ...`
+- Curator (stub): `python3 scripts/workshop_curator.py` writes trend summaries to `.orchestration/logs/curator.log`
+
+---
+
+## Deployment (Phase 7)
+
+`bash scripts/deploy-to-global.sh [--dry-run] [--target <path>]`
+
+What it does:
+- Safety backup: `~/.claude-backup-*.tar.gz`
+- Archives large runtime directories to `~/.claude-archive/`
+- Deploys: agents, commands, hooks, scripts, playbooks, reference docs
+- Legacy cleanup: removes deprecated commands from target
+- Verifies counts and critical files
+
+---
+
+## Evaluation (Phase 8)
+
+`bash scripts/eval-run.sh`
+
+Outputs to `.orchestration/verification/eval/<ts>/`:
+- `summary.md` with compact results
+- `kpis.csv` with scenario metrics (status, score, build, tests, zeroTag, screenshots, designGuard, duration)
+- Isolated `workspaces/` per scenario
+
+Scenarios (default):
+- PASS with artifact + tags + screenshot
+- FAIL (forced) — Zero‑Tag Gate
+- FAIL (forced) — Screenshot claim
+- PASS with Design Guard violations (warn‑only)
+
+---
+
+## Tweak Mode Flow (No Screenshots)
+
+```
++------------------------------+            +-------------------+
+| Edit CSS/Tailwind/JSX/Swift  |   then     | quick-confirm.sh  |
+| (run dev server/simulator)   | ---------->| (diff + guard)    |
++------------------------------+            +-------------------+
+             |                                   |
+             v                                   v
+    .tweak_verified (PASS)           tweak-report.md (diffs + warnings)
+
+Verification modes:
+- strict → require .verified (full finalize)
+- tweak  → accept .tweak_verified (quick-confirm)
+- off    → bypass (trusted sprints)
+```
+
 **/orca now learns from every session** using Agentic Context Engineering (ACE).
 
 ### The Problem: Every Session Started From Zero

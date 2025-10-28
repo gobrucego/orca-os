@@ -1,22 +1,26 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Blocks push if `.verified` is missing or stale vs working tree
+# Orchestrator firewall integration: block orchestrator from pushing when firewall is on
+if [ -x "scripts/orchestrator_firewall.sh" ]; then
+  ORCHESTRATION_ACTOR="${ORCHESTRATION_ACTOR:-unknown}" ./scripts/orchestrator_firewall.sh write repo || exit $?
+fi
+
 ROOT_DIR="$(git rev-parse --show-toplevel)"
 cd "$ROOT_DIR"
 
-VERIFIED_FILE=".verified"
-
 err() { echo "pre-push: $*" >&2; }
 
-if [ ! -f "$VERIFIED_FILE" ]; then
-  err "Missing .verified — run: bash scripts/finalize.sh"
-  exit 1
+# Bypass options
+if [ "${VERIFY_BYPASS:-}" = "1" ] || [ "${GIT_VERIFY:-on}" = "off" ]; then
+  err "Verification bypassed by environment"
+  exit 0
 fi
 
-if ! grep -q '^status: PASS' "$VERIFIED_FILE"; then
-  err ".verified does not indicate PASS — run: bash scripts/finalize.sh"
-  exit 1
+VERIFY_MODE="strict"
+if [ -f ".orchestration/mode.json" ]; then
+  VM=$(sed -n 's/.*"verify_mode"\s*:\s*"\([^"]*\)".*/\1/p' .orchestration/mode.json | head -1)
+  VERIFY_MODE=${VM:-strict}
 fi
 
 # Cross-platform file mtime
@@ -28,26 +32,52 @@ file_mtime() {
   fi
 }
 
-VERIFIED_MTIME=$(file_mtime "$VERIFIED_FILE")
+if [ "$VERIFY_MODE" = "off" ]; then
+  err "Verification disabled (verify_mode=off)"
+  exit 0
+fi
 
-# Compare against all tracked files (excluding orchestration artifacts)
+MARKER=".verified"
+if [ "$VERIFY_MODE" = "tweak" ]; then
+  MARKER=".tweak_verified"
+fi
+
+if [ ! -f "$MARKER" ]; then
+  if [ "$VERIFY_MODE" = "tweak" ]; then
+    err "Missing $MARKER — run: bash scripts/quick-confirm.sh"
+  else
+    err "Missing .verified — run: bash scripts/finalize.sh"
+  fi
+  exit 1
+fi
+
+if ! grep -q '^status: PASS' "$MARKER"; then
+  err "$MARKER does not indicate PASS — run the appropriate confirmation"
+  exit 1
+fi
+
+MARKER_MTIME=$(file_mtime "$MARKER")
+
 STALE=0
 while IFS= read -r f; do
   [ -e "$f" ] || continue
   case "$f" in
-    .verified|.orchestration/*) continue ;;
+    .verified|.tweak_verified|.orchestration/*) continue ;;
   esac
   FMTIME=$(file_mtime "$f")
-  if [ "$FMTIME" -gt "$VERIFIED_MTIME" ]; then
-    err "Stale verification: '$f' modified after .verified. Run finalize."
+  if [ "$FMTIME" -gt "$MARKER_MTIME" ]; then
+    if [ "$VERIFY_MODE" = "tweak" ]; then
+      err "Stale tweak verification: '$f' modified after $MARKER. Run quick-confirm."
+    else
+      err "Stale verification: '$f' modified after .verified. Run finalize."
+    fi
     STALE=1
   fi
 done < <(git ls-files)
 
 if [ "$STALE" -eq 1 ]; then
-  err "Push blocked. Run: bash scripts/finalize.sh"
+  err "Push blocked."
   exit 1
 fi
 
 exit 0
-

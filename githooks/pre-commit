@@ -1,23 +1,27 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Blocks commit if `.verified` is missing or older than staged file mtimes
+# Orchestrator firewall integration: block orchestrator from committing when firewall is on
+if [ -x "scripts/orchestrator_firewall.sh" ]; then
+  ORCHESTRATION_ACTOR="${ORCHESTRATION_ACTOR:-unknown}" ./scripts/orchestrator_firewall.sh write repo || exit $?
+fi
+
 ROOT_DIR="$(git rev-parse --show-toplevel)"
 cd "$ROOT_DIR"
 
-VERIFIED_FILE=".verified"
-
 err() { echo "pre-commit: $*" >&2; }
 
-if [ ! -f "$VERIFIED_FILE" ]; then
-  err "Missing .verified — run: bash scripts/finalize.sh"
-  exit 1
+# Bypass options for trusted/tweak sessions
+if [ "${VERIFY_BYPASS:-}" = "1" ] || [ "${GIT_VERIFY:-on}" = "off" ]; then
+  err "Verification bypassed by environment"
+  exit 0
 fi
 
-# Ensure .verified indicates PASS
-if ! grep -q '^status: PASS' "$VERIFIED_FILE"; then
-  err ".verified does not indicate PASS — run: bash scripts/finalize.sh"
-  exit 1
+# Read verification mode from mode file
+VERIFY_MODE="strict"
+if [ -f ".orchestration/mode.json" ]; then
+  VM=$(sed -n 's/.*"verify_mode"\s*:\s*"\([^"]*\)".*/\1/p' .orchestration/mode.json | head -1)
+  VERIFY_MODE=${VM:-strict}
 fi
 
 # Cross-platform file mtime
@@ -29,7 +33,37 @@ file_mtime() {
   fi
 }
 
-VERIFIED_MTIME=$(file_mtime "$VERIFIED_FILE")
+# Allow commit without checks when verification is OFF
+if [ "$VERIFY_MODE" = "off" ]; then
+  err "Verification disabled (verify_mode=off)"
+  exit 0
+fi
+
+USE_TWEAK=0
+if [ "$VERIFY_MODE" = "tweak" ]; then
+  USE_TWEAK=1
+fi
+
+MARKER=".verified"
+if [ "$USE_TWEAK" -eq 1 ]; then
+  MARKER=".tweak_verified"
+fi
+
+if [ ! -f "$MARKER" ]; then
+  if [ "$USE_TWEAK" -eq 1 ]; then
+    err "Missing $MARKER — run: bash scripts/quick-confirm.sh"
+  else
+    err "Missing .verified — run: bash scripts/finalize.sh"
+  fi
+  exit 1
+fi
+
+if ! grep -q '^status: PASS' "$MARKER"; then
+  err "$MARKER does not indicate PASS — run the appropriate confirmation"
+  exit 1
+fi
+
+MARKER_MTIME=$(file_mtime "$MARKER")
 
 # Files staged for commit
 STAGED=$(git diff --cached --name-only)
@@ -39,10 +73,9 @@ if [ -z "$STAGED" ]; then
   exit 0
 fi
 
-# Exclusions (files updated by finalize itself)
 exclude_path() {
   case "$1" in
-    .verified) return 0 ;;
+    .verified|.tweak_verified) return 0 ;;
     .orchestration/*) return 0 ;;
     *) return 1 ;;
   esac
@@ -55,16 +88,18 @@ while IFS= read -r f; do
     continue
   fi
   FMTIME=$(file_mtime "$f")
-  if [ "$FMTIME" -gt "$VERIFIED_MTIME" ]; then
-    err "Stale verification: '$f' modified after .verified. Run finalize."
+  if [ "$FMTIME" -gt "$MARKER_MTIME" ]; then
+    if [ "$USE_TWEAK" -eq 1 ]; then
+      err "Stale tweak verification: '$f' modified after $MARKER. Run: bash scripts/quick-confirm.sh"
+    else
+      err "Stale verification: '$f' modified after .verified. Run finalize."
+    fi
     STALE=1
   fi
 done <<< "$STAGED"
 
 if [ "$STALE" -eq 1 ]; then
-  err "Commit blocked. Run: bash scripts/finalize.sh"
   exit 1
 fi
 
 exit 0
-
