@@ -8,9 +8,18 @@ OUTPUT_FILE=".claude-orchestration-context.md"
 
 # Fast detection (file existence checks only)
 detect_project_type() {
+  # Perf: optional timing
+  local _perf=0 _t0=0 _t1=0
+  if [ -f "scripts/perf-log.sh" ]; then
+    . scripts/perf-log.sh
+    _perf=1
+    _t0="$(now_ms)"
+    perf_log detect_start
+  fi
   # iOS/Swift
   if ls *.xcodeproj >/dev/null 2>&1 || ls *.xcworkspace >/dev/null 2>&1; then
     echo "ios"
+    if [ "$_perf" = "1" ]; then _t1="$(now_ms)"; perf_log detect_end project_type=ios duration_ms=$(( _t1 - _t0 )); fi
     return
   fi
 
@@ -18,9 +27,11 @@ detect_project_type() {
   if [ -f "package.json" ]; then
     if grep -q "\"next\"" package.json 2>/dev/null; then
       echo "nextjs"
+      if [ "$_perf" = "1" ]; then _t1="$(now_ms)"; perf_log detect_end project_type=nextjs duration_ms=$(( _t1 - _t0 )); fi
       return
     elif grep -q "\"react\"" package.json 2>/dev/null; then
       echo "react"
+      if [ "$_perf" = "1" ]; then _t1="$(now_ms)"; perf_log detect_end project_type=react duration_ms=$(( _t1 - _t0 )); fi
       return
     fi
   fi
@@ -28,23 +39,27 @@ detect_project_type() {
   # Python/Backend
   if [ -f "requirements.txt" ] || [ -f "pyproject.toml" ]; then
     echo "python"
+    if [ "$_perf" = "1" ]; then _t1="$(now_ms)"; perf_log detect_end project_type=python duration_ms=$(( _t1 - _t0 )); fi
     return
   fi
 
   # Flutter
   if [ -f "pubspec.yaml" ]; then
     echo "flutter"
+    if [ "$_perf" = "1" ]; then _t1="$(now_ms)"; perf_log detect_end project_type=flutter duration_ms=$(( _t1 - _t0 )); fi
     return
   fi
 
   # React Native
   if [ -f "package.json" ] && [ -d "ios" ] && [ -d "android" ]; then
     echo "react-native"
+    if [ "$_perf" = "1" ]; then _t1="$(now_ms)"; perf_log detect_end project_type=react-native duration_ms=$(( _t1 - _t0 )); fi
     return
   fi
 
   # Unknown/Generic
   echo "unknown"
+  if [ "$_perf" = "1" ]; then _t1="$(now_ms)"; perf_log detect_end project_type=unknown duration_ms=$(( _t1 - _t0 )); fi
 }
 
 # Get team for project type

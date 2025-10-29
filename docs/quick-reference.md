@@ -2,6 +2,8 @@
 
 ## Slash Commands (Top)
 
+- /creative-strategist
+  - Strategic analysis via creative-strategist agent (brand + performance + psychology). Reads brand memory first; uses sequential reasoning. See: `commands/creative-strategist.md`
 - /ascii-mockup
   - Generate Fluxwing‑style ASCII wireframes (4‑space grid; widths 20/30/40/60; box‑drawing chars)
   - See: `commands/ascii-mockup.md`
@@ -47,6 +49,8 @@
 
 ## Agent Briefs
 
+- creative-strategist
+  - Senior brand strategist and advertising analyst. Connects creative, funnel data, psychology, and market context to business outcomes. Reads brand memory first (e.g., Marina Moscone), then uses sequential thinking to analyze and recommend.
 - workflow-orchestrator (pure)
   - Coordinates work; never implements; enforces gates. See: `agents/orchestration/workflow-orchestrator.md`
 - nextjs-14-specialist

@@ -4,6 +4,14 @@ set -euo pipefail
 # Vibe Code — Phase 1: Core Gate (/finalize)
 # Behavior: build → tests → screenshots → tag verification → evidence score → .verified + report
 
+# Perf timing (optional)
+PERF_T0=""
+if [ -f "scripts/perf-log.sh" ]; then
+  . scripts/perf-log.sh
+  PERF_T0="$(now_ms)"
+  perf_log finalize_start
+fi
+
 if [ -n "${FINALIZE_FORCE_ROOT:-}" ]; then
   ROOT_DIR="$FINALIZE_FORCE_ROOT"
 elif [ "${FINALIZE_USE_PWD:-}" = "1" ]; then
@@ -331,6 +339,8 @@ if [ "$STATUS" = "PASS" ]; then
   fi
   # Non-blocking memory refresh to keep local DB hot (best-effort)
   nohup python3 scripts/memory-index.py update-changed >/dev/null 2>&1 &
+  # Perf end
+  if [ -n "$PERF_T0" ]; then PERF_T1="$(now_ms)"; perf_log finalize_end status=PASS duration_ms=$(( PERF_T1 - PERF_T0 )) score=$SCORE build=$BUILD_STATUS tests=$TEST_STATUS zero_tag=$ZERO_TAG_STATUS screenshots=$SCREENSHOT_COUNT; fi
   exit 0
 else
   rm -f "$VERIFIED_FILE" 2>/dev/null || true
@@ -364,5 +374,7 @@ else
   fi
   # Non-blocking memory refresh to keep local DB hot (best-effort)
   nohup python3 scripts/memory-index.py update-changed >/dev/null 2>&1 &
+  # Perf end
+  if [ -n "$PERF_T0" ]; then PERF_T1="$(now_ms)"; perf_log finalize_end status=FAIL duration_ms=$(( PERF_T1 - PERF_T0 )) score=$SCORE build=$BUILD_STATUS tests=$TEST_STATUS zero_tag=$ZERO_TAG_STATUS screenshots=$SCREENSHOT_COUNT; fi
   exit 1
 fi

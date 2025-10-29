@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: tweak finalize atlas mem-index mem-search guard-warn guard-off guard-strict guard-tweak session-start
+.PHONY: tweak finalize atlas mem-index mem-search guard-warn guard-off guard-strict guard-tweak session-start perf-latest
 
 tweak:
 	@bash scripts/design-tweak.sh run
@@ -34,3 +34,6 @@ guard-strict:
 
 session-start:
 	@bash hooks/session-start.sh
+
+perf-latest:
+	@bash scripts/perf-report.sh

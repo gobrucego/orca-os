@@ -18,6 +18,14 @@ MARKER=".tweak_verified"
 
 mkdir -p "$VER_DIR"
 
+# Perf timing (optional)
+PERF_T0=""
+if [ -f "scripts/perf-log.sh" ]; then
+  . scripts/perf-log.sh
+  PERF_T0="$(now_ms)"
+  perf_log quick_confirm_start
+fi
+
 ui_guard_mode() {
   # env overrides file
   if [ -n "${TWEAK_GUARD:-}" ]; then echo "$TWEAK_GUARD"; return; fi
@@ -130,5 +138,11 @@ echo "Quick confirm $STATUS — $REASON"
 echo "See $REPORT_MD"
 # Non-blocking memory refresh to keep local DB hot (best-effort)
 nohup python3 scripts/memory-index.py update-changed >/dev/null 2>&1 &
+
+# Perf end
+if [ -n "$PERF_T0" ]; then
+  PERF_T1="$(now_ms)"
+  perf_log quick_confirm_end status=$STATUS duration_ms=$(( PERF_T1 - PERF_T0 )) files_changed=${#UI_FILES[@]} lines_changed=$TOTAL_LINES
+fi
 
 if [ "$STATUS" = "PASS" ]; then exit 0; else exit 1; fi
