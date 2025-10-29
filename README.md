@@ -493,121 +493,14 @@ Evidence: Oracle shows chips NOT equal width
 
 ---
 
-### 6. Behavior Guard: Tool-Level Enforcement
+### 6. Behavior Guard (Concept)
 
-While Response Awareness and Auto-Verification work within Claude's generation process, we identified a fundamental limitation: **information ≠ constraints**. After 21+ sessions of repeated failures despite loaded skills and protocols, we built a different approach.
+Status: Not deployed in this repository. We retain the concept for future work, but practical enforcement here is provided by:
+- Git hooks (pre-commit, pre-push) requiring fresh `.verified`/`.tweak_verified`
+- Finalize gate (`scripts/finalize.sh`) with evidence score and reports
+- Design UI Guard (warn-only) and Design Atlas generation
 
-**The Problem:**
-```
-Session 1: Claude deletes project files thinking they're cleanup
-Session 5: Claude claims "Fixed!" without running tests
-Session 10: Claude deletes committed files again
-Session 21: Same patterns, despite MANDATORY protocol skills
-```
-
-**Why loaded skills fail:**
-- Skills are passive context, not active constraints
-- LLMs can "rationalize away" protocols
-- Newer context (user message) outweighs older (skills)
-- No enforcement mechanism - only suggestions
-
-**The Solution: Stop trying to teach the LLM. Constrain the tools.**
-
-```
-┌──────────────────────────────────────────────────────────────┐
-│            Claude Behavior Guard Architecture                │
-└──────────────────────────────┬───────────────────────────────┘
-                               │
-           ┌───────────────────┼───────────────────┐
-           │                   │                   │
-           ▼                   ▼                   ▼
-  ┌─────────────────┐ ┌──────────────────┐ ┌─────────────────┐
-  │  Tool Wrappers  │ │ Evidence Budget  │ │   Git Hooks     │
-  │   (safe-ops)    │ │  (evidencectl)   │ │  (pre-commit)   │
-  └────────┬────────┘ └────────┬─────────┘ └────────┬────────┘
-           │                   │                   │
-           ▼                   ▼                   ▼
-  ┌─────────────────┐ ┌──────────────────┐ ┌─────────────────┐
-  │ Block rm/mv/sed │ │ Score evidence   │ │ Require .verified│
-  │ without token   │ │ (min 5 points)   │ │ marker to commit│
-  └────────┬────────┘ └────────┬─────────┘ └────────┬────────┘
-           │                   │                   │
-           └───────────────────┴───────────────────┘
-                               │
-                               ▼
-                ┌──────────────────────────────────────┐
-                │   Hard Constraints (Non-Bypassable)  │
-                │   - rm exits 78 if no token          │
-                │   - git commit exits 1 if not verified│
-                │   - Cannot rationalize around OS blocks│
-                └──────────────────────────────────────┘
-```
-
-**Three Enforcement Layers:**
-
-1. **Destructive Operations Require Confirmation**
-   - Protected: `rm`, `mv`, `sed`, `truncate`
-   - Wrapped by `safe-ops` interceptor
-   - Requires per-session `CONFIRM_TOKEN`
-   - Blocks if missing (exit 78)
-   - Violations logged
-
-2. **Completion Requires Evidence (/finalize)**
-   - Cannot claim "done" without `/finalize` passing
-   - Auto-runs builds, tests, screenshots
-   - Scores evidence (minimum 5 points)
-   - Creates `.verified` marker if passed
-   - Git operations blocked without it
-
-3. **Violation Tracking & Escalation**
-   - PostToolUse hook monitors blocks
-   - Escalating warnings (NOTICE → WARNING → CRITICAL)
-   - Persists across sessions
-   - Forces accountability
-
-**How It Works:**
-```
-Claude: rm old-file.txt
-→ safe-ops intercepts
-→ Check: CONFIRM_TOKEN set? NO
-→ Exit 78 (blocked)
-→ Log violation
-→ Force either:
-   a) Ask what to delete (AskUserQuestion)
-   b) Explicitly set token (deliberate action)
-
-Claude: "Done!"
-User: "Run /finalize"
-→ Auto-runs build, tests, screenshots
-→ evidencectl scores: 3/5 points
-→ FAIL - insufficient evidence
-→ Cannot commit (pre-commit blocks)
-→ Must gather more evidence
-```
-
-**What It Prevents:**
-- ✅ Deleting files without confirmation (hard block)
-- ✅ Claims without verification (/finalize fails, git blocked)
-- ✅ Commits without evidence (pre-commit hook blocks)
-- ✅ Pushes without finalization (pre-push hook blocks)
-
-**What It Can't Prevent:**
-- ❌ Not asking clarifying questions (conversation, not tools)
-- ❌ Not escalating thinking (conversation, not tools)
-
-**Why:** Claude Code hooks can intercept tools but can't block response generation.
-
-**Installation:** Already installed at `~/.claude/guard/`. Restart Claude Code to activate.
-
-**Files:**
-- `~/.claude/guard/bin/safe-ops` - Command wrappers
-- `~/.claude/guard/bin/evidencectl` - Evidence scoring
-- `~/.claude/commands/finalize.md` - /finalize command
-- `~/.claude/guard/hooks/` - Git hook templates
-
-**Documentation:** `~/.claude/guard/README.md` (347 lines, complete theory & usage)
-
-**Credit:** Designed by GPT-5 feedback on Ultra-Think analysis
+If/when tool-level wrappers (safe-ops) are introduced, this section will be expanded with concrete installation and usage.
 
 ---
 
@@ -1040,7 +933,7 @@ All agents live in `agents/` and are organized by function.
 
 See the `agents/` directory for detailed agent specifications and the complete file structure below.
 
-### ⚡ Commands (17 Total)
+### ⚡ Commands (21 Total)
 
 All commands live in `commands/` and extend Claude Code workflows:
 
@@ -1067,6 +960,13 @@ All commands live in `commands/` and extend Claude Code workflows:
 | **/concept-new** | Systematic creation for brand new layouts - study references, extract patterns, brainstorm, get approval BEFORE building | `concept-new.md` |
 | **/survey** | Handle bulk Q&A (5-20+ questions) by batching into terminal-friendly format with progress indicators | `survey.md` |
 | **/visual-review** | Visual QA review of implemented UI using chrome-devtools to screenshot and analyze | `visual-review.md` |
+| **/ascii-mockup** | Generate Fluxwing‑style ASCII wireframes (4‑space grid; widths 20/30/40/60; box‑drawing chars) | `ascii-mockup.md` |
+
+#### Strategy & Analysis
+
+| Command | Description | File |
+|---------|-------------|------|
+| **/creative-strategist** | Brand + performance strategist. Reads brand memory first, then applies sequential reasoning to produce actions. | `creative-strategist.md` |
 
 #### Workflow & Utilities
 
@@ -1080,6 +980,13 @@ All commands live in `commands/` and extend Claude Code workflows:
 | **/session-resume** | ⚠️ DEPRECATED - Manually reload session context (replaced by Workshop auto-load) | `session-resume.md` |
 | **/completion-drive** | Meta-cognitive strategy for two-tier assumption tracking | `completion-drive.md` |
 | **/all-tools** | List all available tools and their capabilities | `all-tools.md` |
+| **/finalize** | Evidence gate: builds/tests/screenshots, guard + atlas; writes `.verified` | `finalize.md` |
+
+#### iOS Tools
+
+| Command | Description | File |
+|---------|-------------|------|
+| **/ios-debug** | Helpers for iOS simulator/device debug tasks | `ios-debug.md` |
 
 ### Opus Usage Control
 
