@@ -1,12 +1,12 @@
 # Verification Report
 
-- Timestamp: 2025-10-28T22:19:51Z
+- Timestamp: 2025-10-29T19:23:06Z
 - Build: PASS (artifact)
 - Tests: SKIP
 - Zero-Tag Gate: PASS
 - Screenshots: 1
 - Design Guard: 0 (mode )
-- Design Atlas: python-missing
+- Design Atlas: docs/design-atlas.md (generated)
 - Evidence Score: 5 (min 3)
 - Profile: none
 

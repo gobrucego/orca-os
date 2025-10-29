@@ -26,30 +26,27 @@ perf_log() {
   local event="$1"; shift || true
   local ts
   ts="$(now_ms)"
-  local json="{\"ts_ms\":$ts,\"event\":\"$event\""
-  local kv
-  for kv in "$@"; do
-    # Expect key=value; value may contain spaces — pass as key==value to preserve spaces
-    local k="${kv%%=*}"
-    local v="${kv#*=}"
-    # Escape quotes in value
-    v=${v//"/\"}
-    json+ =
-  done
-  # Rebuild to avoid bash quirks with inline appends
-  json="{\"ts_ms\":$ts,\"event\":\"$event\""
-  for kv in "$@"; do
-    local k="${kv%%=*}"
-    local v="${kv#*=}"
-    v=${v//"/\"}
-    # numeric detection
-    if [[ "$v" =~ ^[0-9]+$ ]]; then
-      json+=" ,\"$k\":$v"
-    else
-      json+=" ,\"$k\":\"$v\""
-    fi
-  done
-  json+="}"
-  echo "$json" >> "$PERF_LOG_FILE"
+  if command -v python3 >/dev/null 2>&1; then
+    python3 - "$PERF_LOG_FILE" "$ts" "$event" "$@" << 'PY'
+import json, sys
+out = sys.argv[1]
+ts = int(sys.argv[2])
+event = sys.argv[3]
+pairs = sys.argv[4:]
+obj = {"ts_ms": ts, "event": event}
+for kv in pairs:
+    if "=" not in kv:
+        continue
+    k, v = kv.split("=", 1)
+    try:
+        obj[k] = int(v)
+    except ValueError:
+        obj[k] = v
+with open(out, "a", encoding="utf-8") as f:
+    f.write(json.dumps(obj, ensure_ascii=False) + "\n")
+PY
+  else
+    # Fallback: write minimal line
+    echo "{\"ts_ms\":$ts,\"event\":\"$event\"}" >> "$PERF_LOG_FILE"
+  fi
 }
-
