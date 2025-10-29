@@ -2,6 +2,9 @@
 
 ## Slash Commands (Top)
 
+- /ascii-mockup
+  - Generate Fluxwing‑style ASCII wireframes (4‑space grid; widths 20/30/40/60; box‑drawing chars)
+  - See: `commands/ascii-mockup.md`
 - /finalize
   - Verifies completion via builds/tests/screenshots, design guard, atlas, and writes `.verified`.
   - Run: `bash scripts/finalize.sh`

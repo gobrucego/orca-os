@@ -11,6 +11,15 @@ cd "$ROOT_DIR"
 
 err() { echo "pre-push: $*" >&2; }
 
+# Cross-platform file mtime
+file_mtime() {
+  if stat -f %m "$1" >/dev/null 2>&1; then
+    stat -f %m "$1"
+  else
+    stat -c %Y "$1"
+  fi
+}
+
 # Bypass options
 if [ "${VERIFY_BYPASS:-}" = "1" ] || [ "${GIT_VERIFY:-on}" = "off" ]; then
   err "Verification bypassed by environment"
@@ -45,15 +54,6 @@ if [ "$newer_files" -gt 0 ] && [ "$doc_only_newer" -eq 1 ]; then
   err "Doc-only newer changes — bypassing verification"
   exit 0
 fi
-
-# Cross-platform file mtime
-file_mtime() {
-  if stat -f %m "$1" >/dev/null 2>&1; then
-    stat -f %m "$1"
-  else
-    stat -c %Y "$1"
-  fi
-}
 
 if [ "$VERIFY_MODE" = "off" ]; then
   err "Verification disabled (verify_mode=off)"
