@@ -1,5 +1,5 @@
 {
   "profile": "Design-Strict",
   "firewall": "on"
-}
+, "verify_mode": "off"}
 
