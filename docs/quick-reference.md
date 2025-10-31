@@ -108,6 +108,11 @@
 - Set via: `bash scripts/verification-mode.sh [strict|tweak|off]`
 - One-off bypass: `VERIFY_BYPASS=1 git commit ...` or `GIT_VERIFY=off git commit ...`
 
+Slash helpers:
+- `/mode-tweak` — enable Tweak Mode and iterate fast
+- `/mode-strict` — enable Strict Mode for close-out
+- `/mode-off` — disable verification entirely (trusted sprints)
+
 ---
 
 ## Useful Scripts
