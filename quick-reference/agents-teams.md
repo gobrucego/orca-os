@@ -1,30 +1,68 @@
 # Agents and Teams Overview
 
-Vibe Code assembles small, purpose‑built teams. You confirm the team before work begins.
+ORCA assembles small, focused teams from 65 specialist agents. User confirms before dispatch.
 
-Categories
-- Planning: requirement‑analyst, plan‑synthesis — clarify goals, produce blueprints
-- Orchestration: workflow‑orchestrator, playbook‑curator, orchestration‑reflector — coordinate phases and learning
-- Implementation: iOS (SwiftUI/SwiftData), Frontend (React/Next.js), Backend (Node/Go/Python), Mobile (RN/Flutter)
-- Design: design‑system‑architect, UI designer, design‑dna‑linter, design‑reviewer
-- Quality: verification‑agent, test‑engineer, quality‑validator
+## Agent Categories
 
-Typical Teams
-- iOS feature: system‑architect, swiftdata‑specialist, state‑architect, swiftui‑developer, swift‑testing
-- Frontend feature: frontend‑developer, api‑integrator, state‑architect, ui‑reviewer
-- Backend feature: backend‑engineer, db‑specialist, api‑designer, test‑engineer
-- Design pass: design‑system‑architect, UI designer, design‑reviewer
+### Planning (2 agents)
+- `requirement-analyst` — Elicit requirements, user stories, acceptance criteria
+- `system-architect` — Technical design, API specs, data models
 
-Selection Rules
-- Start minimal. Add specialists only for known risks (security, performance, data migration, i18n).
-- Always ask user to confirm the team.
-- Swap agents, don’t grow the team, if the plan changes.
+### Implementation (15+ agents)
+- **iOS**: `swiftui-developer`, `swiftdata-specialist`, `state-architect`, `ios-performance-engineer`
+- **Frontend**: `react-18-specialist`, `nextjs-14-specialist`, `css-specialist`, `state-management-specialist`
+- **Backend**: `backend-engineer`, `infrastructure-engineer`
+- **Mobile**: `android-engineer`, `cross-platform-mobile`
 
-Verification Roles
-- verification‑agent — proves claims by reading files, running builds/tests, capturing evidence
-- test‑engineer — creates and runs tests
-- quality‑validator — final readiness checks
+### Quality (3 agents)
+- `verification-agent` — Evidence collection (builds, tests, screenshots)
+- `test-engineer` — Test creation and execution
+- `quality-validator` — Final quality gates
 
-Where to look
-- agents/ — all agent specs
-- commands/orca.md — orchestration behavior and confirmation rules
+### Specialists (40+ agents)
+- **iOS** (20): `combine-networking`, `coredata-expert`, `tca-specialist`, `ios-security-tester`
+- **Frontend** (15): `frontend-performance-specialist`, `tailwind-specialist`, `frontend-testing-specialist`
+- **Data** (7): `ads-creative-analyst`, `bf-sales-analyst`, `merch-lifecycle-analyst`
+
+## Typical Teams by Task
+
+### iOS Feature (5-6 agents)
+```
+requirement-analyst → system-architect → swiftui-developer
+                                      → swiftdata-specialist
+                                      → verification-agent
+```
+
+### React Feature (4-5 agents)
+```
+system-architect → react-18-specialist → css-specialist
+                                       → test-engineer
+```
+
+### Full Stack (6-8 agents)
+```
+Planning: requirement-analyst, system-architect
+Backend: backend-engineer, infrastructure-engineer
+Frontend: nextjs-14-specialist, state-management-specialist
+Quality: verification-agent, quality-validator
+```
+
+## Team Selection Rules
+
+1. **Start minimal** — 3-5 agents for most tasks
+2. **Add specialists for risks** — security, performance, migrations
+3. **User confirms always** — No blind dispatch
+4. **Evidence required** — Every team includes verification
+
+## Directory Structure
+```
+agents/
+├── core/                 # Orchestrators
+├── planning/            # Requirements & architecture
+├── implementation/      # Builders
+├── quality/            # Verification
+└── specialists/        # Platform-specific
+    ├── ios/           # 20 iOS specialists
+    ├── frontend/      # 15 frontend specialists
+    └── data/          # 7 data analysts
+```

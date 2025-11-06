@@ -1,0 +1,63 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/adilkalam/.claude/**)",
+      "WebFetch(domain:asciidiagrams.github.io)",
+      "WebSearch",
+      "Bash(npx claude-code-templates@latest --agent=ai-specialists/search-specialist --yes)",
+      "Bash(cat:*)",
+      "Bash(find:*)",
+      "Read(//Users/adilkalam/.config/claude-code/**)",
+      "Read(//Users/adilkalam/**)",
+      "WebFetch(domain:github.com)",
+      "Bash(pm2 list:*)",
+      "SlashCommand(/ultra-think How can we improve the claude-vibe-code orchestration system? User proposed: (A) Meta-orchestration agent that learns when to apply fast-path vs deep-path based on telemetry, (B) Multi-objective optimizer balancing speed/cost/quality with reward model, (C) Agentic knowledge graph with nodes for patterns/agents/outcomes and edges for correlations, (D) Pattern embeddings for semantic strategy matching, (E) Continual reflection logging failures to retrain classifiers. For evidence: (A) Unified proof artifact with cryptographic hashing, (B) Trusted execution in sandboxed containers with signed hashes, (C) Behavioral oracles (Playwright/XCTest/curl) for measurable \"it works\" proofs. For agents: (A) Agent skill vectors tracking success_rate/cost/domains for cosine similarity team composition, (B) Elastic teaming with ephemeral micro-agents spawned from templates, (C) Agent apprenticeship where new agents clone successful behavior until parity. Analyze these proposals critically, identify gaps, generate additional improvement ideas, assess tradeoffs, and prioritize by impact vs effort given the system's goal of <5% false completion rate.)"
+    ],
+    "deny": [],
+    "ask": [
+      "AskUserQuestion"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/detect-project-type.sh 2>/dev/null || echo '# Auto-Orchestration: Detection failed'"
+          },
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/load-playbooks.sh 2>/dev/null || echo '# ACE Playbook System: Not initialized'"
+          },
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PROJECT_DIR}/workshop-session-start.sh 2>/dev/null || echo '# Workshop: Not initialized'"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/workshop-session-end.sh ${CLAUDE_TRANSCRIPT_FILE}"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/workshop-pre-compact.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "enableAllProjectMcpServers": false
+}

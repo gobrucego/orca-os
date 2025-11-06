@@ -22,5 +22,5 @@ Tips
 - Prefer `/memory-search` over manual hunting; Workshop remembers decisions and gotchas.
 
 Where to find details
-- Commands: `docs/quick-reference/commands.md`
-- Agents/Teams: `docs/quick-reference/agents-teams.md`
+- Commands: `quick-reference/commands.md`
+- Agents/Teams: `quick-reference/agents-teams.md`

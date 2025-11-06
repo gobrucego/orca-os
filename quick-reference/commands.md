@@ -1,28 +1,64 @@
 # Command Quick Reference
 
-Concise guide to the most-used slash commands.
+Essential commands for ORCA orchestration and workflow control.
 
-- /orca — Orchestrate multi‑agent development with plan → implement → verify. Always asks you to confirm the team.
-- /response-awareness — Full protocol with meta‑cognitive tags. Use when risk/ambiguity is high.
-- /response-awareness-plan — Produce and confirm a blueprint, no code.
-- /response-awareness-implement — Implement from an approved blueprint.
-- /introspect — Predict failure modes; emit risk (0–1), tags, and a gate decision.
-- /visual-review — Capture screenshots and run visual QA.
-- /finalize — Evidence gate: build+tests+screenshots+report (orca sessions only).
-- /memory-search — Query Workshop memory quickly (no MCP required).
-- /memory-learn — Reflect and update playbooks after work.
-- /organize — Tidy files/folders with references.
-- /cleanup — Remove stale logs and artifacts.
-- /concept — Iterate on an existing layout.
-- /concept-new — Explore a new layout direction.
-- /enhance — Small improvements to existing UI.
-- /clarify — Quick answer without orchestration.
-- /survey — Batch Q&A for many clarifications.
-- /ultra-think — Deep analysis before implementation.
+## Core Orchestration
+- `/orca` — Multi-agent orchestration with team confirmation
+- `/enhance` — Transform vague requests into structured plans
+- `/clarify` — Quick focused clarification without orchestration
+- `/ultra-think` — Deep analysis and problem solving
 
-Examples
-- Plan first: `/response-awareness-plan Build OAuth with Google + Apple`
-- Implement blueprint: `/response-awareness-implement docs/blueprints/auth.md`
-- Orchestrate directly: `/orca Dark mode toggle in settings`
-- Visual QA: `/visual-review http://localhost:3000/checkout`
-- Memory: `/memory-search interval timer`
+## Planning & Implementation
+- `/response-awareness-plan` — Create blueprint, no code
+- `/response-awareness-implement` — Execute approved blueprint
+- `/introspect` — Predict failure modes and risks
+
+## Verification & Evidence
+- `/finalize` — Evidence check: build + tests + screenshots
+- `/visual-review` — Browser screenshot and visual QA
+- `/ios-debug` — iOS layout debugging with evidence
+
+## Memory & Learning
+- `/memory-search` — Query Workshop memory
+- `/memory-learn` — Reflect and update playbooks
+- `/memory-pause` — Temporarily disable learning
+
+## UI & Design
+- `/concept` — Iterate on existing layout
+- `/concept-new` — Explore new design direction
+- `/ascii-mockup` — Generate ASCII UI mockups
+
+## Verification Modes
+- `/mode-strict` — Require .verified file (highest rigor)
+- `/mode-tweak` — Accept .tweak_verified (moderate)
+- `/mode-off` — Disable verification (development)
+- `/force` — Force verification workflows
+
+## Maintenance
+- `/organize` — Verify file organization standards
+- `/cleanup` — Remove stale artifacts
+- `/session-save` — Save session context
+- `/session-resume` — Restore session context
+
+## Specialized
+- `/creative-strategist` — Brand and performance analysis
+- `/completion-drive` — Meta-cognitive assumption tracking
+- `/all-tools` — List all available tools
+
+## Examples
+```bash
+# Start feature with orchestration
+/orca "Add dark mode to settings"
+
+# Plan complex work first
+/enhance Build OAuth with Google + Apple Sign-In
+
+# Debug iOS layouts
+/ios-debug Navigation bar overlaps content
+
+# Check visual implementation
+/visual-review http://localhost:3000
+
+# Search past decisions
+/memory-search "CSS framework decision"
+```

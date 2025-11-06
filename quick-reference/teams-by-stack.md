@@ -1,33 +1,115 @@
 # Teams by Stack
 
-Small, purpose‑built teams for common stacks. Confirm and adjust before work begins.
+Pre-configured teams for common tech stacks. ORCA proposes, user confirms.
 
 ## iOS (SwiftUI + SwiftData)
-- Core: system‑architect, swiftui‑developer, swiftdata‑specialist, state‑architect, swift‑testing‑specialist
-- Add‑ons (when): ui‑testing‑expert (UI automation), ios‑performance‑engineer (jank/battery), networking‑specialist (auth/API), notifications‑specialist
-- Verify: xcodebuild logs, unit tests, UI tests, screenshots via /visual-review
 
-## Frontend (Next.js/React)
-- Core: frontend‑developer, api‑integrator, state‑architect, ui‑reviewer
-- Add‑ons: design‑system‑architect (tokens), performance‑analyst (LCP/CLS/TTI), seo‑specialist (meta/schema), a11y‑reviewer
-- Verify: /visual-review, component/unit tests, E2E tests
+### Core Team (5 agents)
+```
+requirement-analyst      → Define features & user flows
+system-architect        → Design data model & architecture
+swiftui-developer       → Build views & navigation
+swiftdata-specialist    → Implement persistence
+swift-testing-specialist → Write tests
+```
 
-## Backend (Node/Go/Python)
-- Core: backend‑engineer, db‑specialist, api‑designer, test‑engineer
-- Add‑ons: security‑reviewer (auth/OWASP), performance‑analyst (profiling), migrations‑specialist (data safety)
-- Verify: unit/integration tests, migration dry‑runs, load test logs
+### When to Add Specialists
+- **Performance issues**: `ios-performance-engineer`
+- **Complex networking**: `urlsession-expert` or `combine-networking`
+- **Legacy data**: `coredata-expert`
+- **Complex state**: `tca-specialist` or `state-architect`
+- **Security audit**: `ios-security-tester`
 
-## Mobile (React Native / Flutter)
-- Core: cross‑platform‑mobile, platform‑engineer (iOS or Android), api‑integrator, test‑engineer
-- Add‑ons: native‑bridge‑specialist (device APIs), performance‑analyst (startup/frames), release‑engineer (store readiness)
-- Verify: device/simulator runs, screenshots, unit/UI tests
+### Evidence Required
+- Clean build: `xcodebuild clean && xcodebuild build`
+- Tests pass: `swift test`
+- Screenshot: `.orchestration/evidence/*.png`
 
-## Design Pass (Any Stack)
-- Core: design‑system‑architect, ui‑designer, design‑reviewer
-- Add‑ons: design‑dna‑linter (if DNA present), accessibility‑reviewer
-- Verify: multi‑breakpoint screenshots, DNA checks, a11y notes
+## Frontend (React/Next.js)
 
-Guidelines
-- Start minimal; add specialists only for known risks (security, performance, data migration, i18n).
-- Prefer swapping roles over growing the team when scope shifts.
-- Always require evidence (tests/logs/screenshots) before claiming “done.”
+### Core Team (4-5 agents)
+```
+system-architect         → API design & data flow
+react-18-specialist     → Components & hooks
+css-specialist          → Global CSS (no Tailwind)
+state-management-specialist → Redux/Zustand/Context
+test-engineer           → Jest/Vitest tests
+```
+
+### When to Add Specialists
+- **Next.js app router**: `nextjs-14-specialist`
+- **Performance**: `frontend-performance-specialist`
+- **Tailwind conversion**: `tailwind-specialist`
+- **Accessibility**: `accessibility-specialist`
+
+### Evidence Required
+- Build succeeds: `npm run build`
+- Dev server runs: `npm run dev`
+- Browser screenshot: `/visual-review http://localhost:3000`
+
+## Backend (Python/Node/Go)
+
+### Core Team (4 agents)
+```
+system-architect        → API design & database schema
+backend-engineer        → Business logic & endpoints
+infrastructure-engineer → Docker, CI/CD, deployment
+test-engineer          → Unit & integration tests
+```
+
+### When to Add Specialists
+- **Complex queries**: Database specialist
+- **Authentication**: Security specialist
+- **High traffic**: Performance engineer
+- **Data migration**: Migration specialist
+
+### Evidence Required
+- Tests pass: `pytest` or `npm test`
+- Server starts: No errors in logs
+- API responds: curl/Postman verification
+
+## Data Analysis
+
+### Core Team (5-7 agents)
+```
+requirement-analyst     → Define metrics & KPIs
+ads-creative-analyst   → Ad performance analysis
+bf-sales-analyst       → Sales event analysis
+merch-lifecycle-analyst → Product journey tracking
+story-synthesizer      → Narrative & recommendations
+```
+
+### Evidence Required
+- Numbers verified: `grep` from source files
+- Calculations checked: No fabrication
+- Granular data: Not aggregated
+- Clear narrative: Actionable insights
+
+## Full Stack
+
+### Typical Team (6-8 agents)
+```
+Planning:
+  requirement-analyst
+  system-architect
+
+Backend:
+  backend-engineer
+  infrastructure-engineer
+
+Frontend:
+  react-18-specialist
+  state-management-specialist
+
+Quality:
+  verification-agent
+  quality-validator
+```
+
+## Selection Principles
+
+1. **Start with 3-5 agents** — Minimal viable team
+2. **Add specialists for known risks** — Don't speculate
+3. **Swap, don't grow** — Replace agents as needs change
+4. **Evidence always** — No "done" without proof
+5. **User confirms** — Never auto-dispatch
