@@ -6,11 +6,113 @@
 
 ---
 
-## Overview
+## Executive Summary
 
 SEO-ORCA is a five-stage agentic workflow that automates SEO content research, brief generation, and multi-agent drafting while maintaining rigorous quality gates. The system combines SERP scraping, AI research (Perplexity), keyword analysis (RapidAPI), and specialized writing agents to produce long-form, citation-backed content optimized for search ranking and E-E-A-T signals.
 
-**Core Principle:** Automated research + human-curated quality = scalable content that ranks.
+### The Problem
+
+Traditional SEO content creation faces a scaling paradox: high-quality, well-researched articles that rank require 8-12 hours of human work per piece, but maintaining competitive SERP presence demands publishing 4-8 articles weekly. Teams choose between:
+
+1. **Quality at low volume** — 2-3 excellent articles/month that rank but can't capture enough keywords
+2. **Volume at low quality** — 10+ thin articles/month that damage domain authority and fail to convert
+3. **Expensive hybrid** — Large content teams ($15-25K/month) producing 15-20 mixed-quality pieces
+
+None of these approaches solve the core tension: **search engines reward depth, freshness, and authority, but producing those signals at scale is prohibitively expensive.**
+
+### The SEO-ORCA Solution
+
+SEO-ORCA resolves this paradox by **automating the research-intensive foundation while preserving human editorial control over final output.** The system executes the time-consuming, repeatable work (competitor analysis, keyword research, outline structuring, citation gathering) and surfaces high-quality briefs for human writers—or generates complete drafts that humans review and approve.
+
+**Key Innovation:** Multi-layered research depth combined with enforced quality gates at every stage.
+
+- **Stage 1-3 (Research):** Scrape top-ranking competitor content, extract structure and key points, layer AI research (Perplexity for market trends) and keyword data (search volume, competition scores). Output: comprehensive brief with citations, target keywords, and E-E-A-T requirements.
+- **Stage 4 (Brief Generation):** Structured content blueprint with meta optimization (title, description, schema), governance flags (missing citations, weak authority signals), and outline validated against SEO best practices.
+- **Stage 5 (Multi-Agent Drafting):** Specialized agents (headline, intro, body, conclusion, editor) produce long-form content following the brief, citing research, and maintaining natural keyword density.
+- **Quality Pod:** Content Auditor + Authority Builder run automated checks (citation coverage, E-E-A-T gaps, keyword stuffing, readability) and flag issues for human review.
+- **Human Review Gate:** 100% pre-publication approval with automated prioritization (YMYL content, competitor mentions, low audit scores escalate to HIGH priority; standard content flows through MEDIUM queue).
+
+**Result:** Research depth of a senior content strategist + writing consistency of a trained editor + quality control of a brand guardian—at $2.30-$4.00 per article vs. $200-$400 for equivalent human-produced work.
+
+### Why This Approach Works
+
+**1. Research Grounding Prevents AI Hallucination**
+
+Most AI content tools generate from training data alone, producing plausible-sounding but factually dubious output. SEO-ORCA grounds every article in three data layers:
+- **SERP scraping:** What's currently ranking (real-time competitive intelligence)
+- **Perplexity research:** Market trends, emerging terms, entity relationships
+- **Keyword APIs:** Search volume, competition scores, related queries
+
+Agents cite sources for factual claims, enabling human reviewers to verify accuracy efficiently. This research-first architecture mirrors how expert human writers work—understand the landscape before writing.
+
+**2. Quality Gates at Pipeline Stages (Not Post-Hoc)**
+
+Traditional automation workflows generate content first, then audit quality. SEO-ORCA builds quality checks into the pipeline:
+- **Stage 2:** Outline validation (H1 → H2 → H3 hierarchy, semantic keyword integration)
+- **Stage 3:** Citation capture (research findings linked to authoritative sources)
+- **Stage 4:** E-E-A-T gap analysis before drafting begins (missing author credentials, weak trust signals flagged)
+- **Stage 5:** Keyword density checks during generation (prevent stuffing)
+- **Quality Pod:** Automated audit before human review (surface issues proactively)
+
+This staged approach catches problems early when they're cheap to fix, rather than discovering broken content after 3000 words have been generated.
+
+**3. Human-in-the-Loop Governance for Brand Safety**
+
+SEO-ORCA enforces 100% human review pre-publication—automated flags prioritize attention rather than replace judgment. This prevents the catastrophic failure mode of pure automation: technically correct content that damages brand reputation or violates Google guidelines.
+
+- **YMYL content** (health, finance, legal) requires expert reviewer with relevant credentials
+- **Competitor mentions** trigger legal review for claims accuracy
+- **First 10 articles** in new topic verticals undergo full editorial calibration
+- **Automated flags** (missing citations, weak authority, keyword stuffing risk) escalate to HIGH priority queue with 24-hour SLA
+
+The system generates efficiently; humans approve strategically.
+
+**4. Cost Model Enables Experimentation**
+
+At $2.30-$4.00 per article (vs. $200-$400 human baseline), teams can afford to:
+- **Test 10 keyword variations** to identify highest-converting topics
+- **Publish defensive content** for competitor terms (protect market share)
+- **Build topic clusters** (30+ interlinked articles around core pillar page)
+- **Refresh stale content** quarterly (maintain ranking freshness)
+
+Low marginal cost transforms SEO from "bet on 3 hero articles" to "saturate search landscape systematically."
+
+**5. Continuous Improvement Through Telemetry**
+
+Every run logs cost breakdown, quality scores, execution time, and human feedback. Post-publication monitoring tracks ranking changes, traffic, and conversion. This telemetry feeds back into the system:
+- **Keyword targeting refinement:** Which low-competition terms actually convert?
+- **Quality threshold tuning:** Do articles scoring 7.5+ on audit rank better than 6.5+?
+- **Agent prompt optimization:** Which intro structures drive higher engagement?
+
+The system gets smarter with each article published—learning what works for your specific domain and audience.
+
+### What Makes SEO-ORCA Novel
+
+**Most SEO automation tools are single-stage:** keyword research OR content generation OR optimization. SEO-ORCA is **end-to-end pipeline automation** with enforced quality gates.
+
+**Most AI writing tools are black boxes:** input keyword, output article, hope it's good. SEO-ORCA is **transparent and auditable:** every stage produces inspectable artifacts (scraped HTML, research summaries, outlines, briefs, quality scorecards). Humans review evidence, not just final output.
+
+**Most content workflows are fire-and-forget:** publish and pray. SEO-ORCA includes **post-publication monitoring:** ranking drops trigger refresh workflows, data staleness flags articles for updates, competitor SERP feature captures prompt gap analysis.
+
+**Most automation systems are rigid:** built for one use case, breaks when requirements change. SEO-ORCA is **composable:** n8n prototype (Rep 1-3) validates workflow logic quickly, then migrates to agent framework (Rep 4+) for unified orchestration with existing quality systems. You're not locked into a vendor—you own the architecture.
+
+### Strategic Value
+
+SEO-ORCA transforms SEO from a cost center to a growth engine:
+
+- **Capture long-tail keywords** at scale (100+ articles/month economically feasible)
+- **Respond to competitor content** within days (not weeks)
+- **Build topical authority** systematically (comprehensive coverage signals expertise)
+- **Maintain content freshness** without manual tracking (automated refresh triggers)
+- **Reduce content team overhead** by 60-70% (shift humans from research to strategic review)
+
+For organizations where organic search drives significant revenue (SaaS, e-commerce, media, professional services), SEO-ORCA compounds competitive advantage: **more content, higher quality, better targeting, faster iteration—at a fraction of traditional cost.**
+
+### Core Principle
+
+**Automated research + human-curated quality = scalable content that ranks.**
+
+The system handles what machines do well (data aggregation, pattern matching, consistent execution). Humans handle what requires judgment (brand voice, strategic positioning, editorial nuance). Neither replaces the other—both operate at the top of their capability range.
 
 ---
 
