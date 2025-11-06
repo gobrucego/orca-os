@@ -5,7 +5,7 @@ Lightweight SEO research pipeline.
 Steps:
 1. Retrieve top search results for the target keyword (DuckDuckGo).
 2. Fetch and extract readable article text (trafilatura).
-3. Generate concise summaries and insight phrases (sumy + RAKE).
+3. Generate concise summaries and heuristic insight phrases.
 4. Aggregate keyword suggestions from extracted content.
 5. Persist a structured JSON report for downstream agents.
 
@@ -184,45 +184,8 @@ def extract_insights(text: str, max_phrases: int = 12) -> List[str]:
 
 def suggest_keywords(text: str, top_n: int = 20) -> List[Dict[str, Any]]:
     """Generate keyword suggestions using word frequency heuristics."""
-    ensure_nltk_resources()
     tokens = re.findall(r"[A-Za-z][A-Za-z\-]+", text.lower())
-    stopwords = {
-        "the",
-        "and",
-        "for",
-        "with",
-        "that",
-        "from",
-        "this",
-        "into",
-        "about",
-        "your",
-        "have",
-        "their",
-        "will",
-        "such",
-        "which",
-        "when",
-        "been",
-        "within",
-        "while",
-        "where",
-        "should",
-        "these",
-        "those",
-        "because",
-        "through",
-        "using",
-        "between",
-        "during",
-        "before",
-        "after",
-        "could",
-        "would",
-        "there",
-        "other",
-    }
-    filtered = [tok for tok in tokens if tok not in stopwords and len(tok) > 3]
+    filtered = [tok for tok in tokens if tok not in STOPWORDS and len(tok) > 3]
     counts = Counter(filtered)
     suggestions = []
     for keyword, score in counts.most_common(top_n):
@@ -291,14 +254,6 @@ def assemble_report(keyword: str) -> Dict[str, Any]:
         "keyword_suggestions": keyword_suggestions,
     }
     return report
-
-
-def ensure_nltk_resources() -> None:
-    """Download required NLTK resources if they are missing."""
-    try:
-        nltk_data.find("corpora/stopwords")
-    except LookupError:
-        nltk_download("stopwords")
 
 
 def save_report(report: Dict[str, Any]) -> pathlib.Path:
