@@ -1,196 +1,134 @@
 # SEO-ORCA
 
-AI-assisted research and drafting support for the 3–4 flagship pieces we publish each month.  
-SEO-ORCA blends rapid machine research with deliberate human storytelling—letting the system sweep the landscape while we stay focused on insight, positioning, and polish.
-
-## Why this approach is different
-
-1. **Research-first DNA** – Every article starts with live competitors, not “AI memory.” The pipeline scrapes the current SERP, reads what’s working now, and hands us summaries, takeaways, and tone cues.
-2. **Dual-brain strategy** – GPT‑5 distills the heavy reading, while GPT‑5 Pro + Claude 4.5 Sonnet collaborate on angles, follow-up questions, and guardrails. We decide what belongs in the narrative.
-3. **Right-sized for our cadence** – It’s built for a handful of deep pieces each month, not a 50-post content mill. The output is a reusable research pack we can drop into Airtable, Notion, or our own outlines.
-4. **Human gate remains firm** – Automation ends at the brief. Drafting, fact-checking, and final voice stay human so we keep the credibility and personality that make our pieces land.
-5. **Efficient and rapid experimentation** – Move fast on new keywords, test POVs, and reduce manual research load while keeping the edit cycle focused on strategy, fact-checking, and final voice.
-
-```
-                     ┌────────────────────────────┐
-                     │        Keyword Input       │
-                     └─────────────┬──────────────┘
-                                   │
-                                   ↓
-                   ┌─────────────────────────────────┐
-                   │  Python Research Pipeline       │
-                   │  (SERP → Extraction → GPT/CLAUDE│
-                   │   summaries + research brief)   │
-                   └─────────────┬───────────────────┘
-                                   │
-                                   ↓
-                  ┌──────────────────────────────────┐
-                  │  Research Pack (JSON report)     │
-                  │  ─ summaries & key takeaways     │
-                  │  ─ combined outline & keywords   │
-                  │  ─ GPT‑5 + Sonnet recommendations│
-                  └─────────────┬────────────────────┘
-                                   │
-                 (Rep 2+)          ↓
-             ┌────────────────────────────────────────┐
-             │ Airtable / Context Manager ingest      │
-             │ ─ tracking, briefing, task assignments │
-             └─────────────┬──────────────────────────┘
-                                   │
-                 (Rep 3‑5)          ↓
-          ┌─────────────────────────────────────────┐
-          │ Agent Team (Meta, Outline, Draft)       │
-          │ Human review gate before publication    │
-          └─────────────────────────────────────────┘
-```
+Elite SEO orchestration that mirrors our iOS and data-analysis stacks: a deterministic research pipeline feeds a dedicated agent team, all mediated through ORCA’s confirmation gate. The goal is to let automation do the grinding (SERP, knowledge graph, outline, draft) so humans can focus on POV, compliance, and final polish—about 3–4 flagship pieces a month.
 
 ---
 
+## Architecture Overview
 
-## What Exists Today
+```
+Keyword / Brief Idea
+        │
+        ▼
+┌───────────────────────────┐
+│  `/seo-orca` (slash cmd)  │  ← ORCA prompts for inputs & confirms team
+└─────────────┬─────────────┘
+              │
+              ▼
+┌────────────────────────────────────────────┐
+│  Specialist Pod (in execution order)       │
+│  1. seo-research-specialist                │
+│     • runs python pipeline                 │
+│     • merges SERP + curated research + KG  │
+│     • exports report / brief / draft       │
+│                                             │
+│  2. seo-brief-strategist                   │
+│     • refines brief.md with marketing play │
+│                                             │
+│  3. seo-draft-writer                       │
+│     • generates draft.md (LLM or heuristic)│
+│                                             │
+│  4. seo-quality-guardian                   │
+│     • audits brief + draft, writes qa.md   │
+└─────────────┬──────────────────────────────┘
+              │
+              ▼
+┌──────────────────────────────┐
+│  Human Review & Publishing   │
+│  • check QA notes & TODOs    │
+│  • edit draft, add citations │
+│  • publish / schedule        │
+└──────────────────────────────┘
+```
 
-| Step | Output | Where it lives |
-|------|--------|----------------|
-| 1. SERP gather | Top 3 organic results for a keyword | In-memory during run |
-| 2. Content extraction | Clean article text (when accessible) | `outputs/seo/<slug>-report.json` |
-| 3. GPT / heuristic analysis | Per-article summaries, key takeaways, tone notes | Same JSON report |
-| 4. Combined insights | Cross-article themes, starter outline, keyword list | Same JSON report |
-| 5. Research brief (optional GPT) | Market context, angles, follow-up questions | Same JSON report |
+Outputs land in `outputs/seo/<slug>-{report|brief|draft|qa}.(json|md)`.
 
-All of this is generated by a single script:
+---
+
+## Quick Start
+
+### The ORCA way (recommended)
+Inside Claude Code run:
 
 ```bash
-python3 scripts/seo_auto_pipeline.py "YOUR KEYWORD"
+/seo-orca
 ```
 
-Example: `python3 scripts/seo_auto_pipeline.py "GLOW Peptide"`  
-Output: `outputs/seo/glow-peptide-report.json`
+When prompted, provide:
+- **Primary keyword** (e.g., `Semax Selank ADHD`)
+- **Research docs** (one or more paths such as `/Users/adilkalam/Desktop/OBDN/obdn_site/docs/semax-selank.md`)
+- **Knowledge graph JSON** (default: `/Users/adilkalam/Desktop/OBDN/obdn_site/docs/meta/kg.json`)
+- **Knowledge root directory** (default: `/Users/adilkalam/Desktop/OBDN/obdn_site`)
+- **Extra focus terms** (`anxiety`, `neuroprotective`, etc.)
 
-Each run takes ~3 seconds and lays down a research pack you can drop into Airtable or your personal notes before outlining the piece.
+ORCA will propose the specialist team, you confirm, and the workflow executes automatically.
 
----
+### Manual fallback (no ORCA)
 
-## Using GPT-5 / GPT-Pro
-
-The script automatically upgrades its summaries and research brief when an OpenAI key is available.
-
-1. Set `OPENAI_API_KEY` in your shell.
-2. (Optional) Override models:
-   ```bash
-   export SEO_GPT_SUMMARIZER_MODEL="gpt-5"
-   export SEO_GPT_RESEARCH_MODEL="gpt-5"     # default already uses GPT-5 Pro
-   ```
-3. (Optional) Bring in Claude 3.5 Sonnet for strategy and guardrails:
-   ```bash
-   export ANTHROPIC_API_KEY="your_anthropic_key"
-   export SEO_SONNET_MODEL="claude-3-5-sonnet-20241022"
-   ```
-4. Run the script as normal.
-
-If the key is missing or the call fails, the script falls back to the built-in heuristic summariser so you still get a usable report.
-
----
-
-## Working With the Report
-
-Each JSON file contains:
-
-```json
-{
-  "keyword": "GLOW Peptide",
-  "articles_analyzed": 3,
-  "articles": [
-    {
-      "title": "...",
-      "url": "...",
-      "summary": "...",
-      "key_takeaways": ["..."],
-      "tone_notes": "Clinical and research-backed",
-      "insights": ["Glow peptide protocol", "Tissue repair", "..."]
-    }
-  ],
-  "combined_summary": "...",
-  "combined_insights": ["..."],
-  "outline": [
-    "Introduction: Overview of GLOW Peptide",
-    "Glow peptide protocol",
-    "Tissue repair",
-    "Conclusion and next steps"
-  ],
-  "keyword_suggestions": [
-    {"keyword": "peptide", "score": 57},
-    {"keyword": "collagen", "score": 39}
-  ],
-  "research_brief": {
-    "market_context": "...",
-    "angles_to_cover": ["..."],
-    "questions_to_answer": ["..."],
-    "data_points_to_hunt": ["..."],
-    "storytelling_hooks": ["..."],
-    "risk_flags": ["..."],
-    "expert_sources": ["..."],
-    "refresh_triggers": ["..."]
-  }
-}
+```bash
+python3 scripts/seo_auto_pipeline.py \
+  "Semax Selank ADHD" \
+  --research-doc /Users/adilkalam/Desktop/OBDN/obdn_site/docs/semax-selank.md \
+  --knowledge-graph /Users/adilkalam/Desktop/OBDN/obdn_site/docs/meta/kg.json \
+  --knowledge-root /Users/adilkalam/Desktop/OBDN/obdn_site \
+  --focus-term anxiety \
+  --focus-term neuroprotective \
+  --draft
 ```
 
-Suggested workflow for our monthly cadence:
-
-1. **Kickoff** – Run the script for the month’s focus keyword(s). Skim the summaries and key takeaways.
-2. **Outline review** – Use the suggested outline and combined insights as a starting point. Adjust for voice, POV, and current offers.
-3. **Manual validation** – Fact-check anything you carry forward. The script does not browse or verify live data.
-4. **Draft** – Either brief a writer or continue into the existing agent stack (to be wired in Reps 2–5).
-5. **Human review** – Every draft still gets a full editorial pass before publication.
+This produces the same artifacts without the ORCA check, useful for quick experiments or debugging.
 
 ---
 
-## Example | “GLOW Peptide”
+## Specialist Team
 
-Running `python3 scripts/seo_auto_pipeline.py "GLOW Peptide"` produced:
+| Agent | Responsibilities | Key references |
+|-------|-----------------|----------------|
+| **seo-research-specialist** | Runs `seo_auto_pipeline.py`, merges SERP + curated research + KG, writes report/brief/draft files | `AI Content Research and SEO on Auto-Pilot with n8n.txt`, `seo-content-planner`, KG docs |
+| **seo-brief-strategist** | Polishes `*-brief.md` (outline, angles, compliance) | `seo-content-planner`, `seo-keyword-strategist`, `seo-meta-optimizer`, `seo-authority-builder` |
+| **seo-draft-writer** | Generates review-ready Markdown draft with inline citations/TODOs | `seo-content-writer`, knowledge graph evidence |
+| **seo-quality-guardian** | Audits brief + draft (keywords, E‑E‑A‑T, freshness), logs findings in `*-qa.md` | `seo-content-auditor`, `seo-content-refresher`, `seo-authority-builder` |
 
-- **Articles analysed:** 3 (AllAboutPeptides, MuscleAndBrawn, UKSARMS) with full summaries, tone notes (“clinical”, “promotional”), and 5 key takeaways each.
-- **Combined outline:** Sections suggested “Glow peptide protocol”, “Tissue repair benefits”, “Safety and side effects”, “At-home vs clinic delivery”.
-- **Keyword list:** `peptide`, `collagen`, `recovery`, `inflammation`, `bpc-157`, `ghk-cu`.
-- **GPT‑5 brief:** Market framing (“post-injury recovery programs are repositioning peptides as mainstream wellness”), five differentiation angles, four follow-up questions, and “data points to hunt” (post-surgery recovery stats, collagen synthesis rates, price comparisons).
-- **Sonnet addendum:** Narrative hooks (e.g., “rehab diary comparing week-by-week healing”), compliance cautions (medical disclaimers, FDA posture), expert source suggestions (sports med physicians, compounding pharmacists), plus refresh triggers (upcoming regulatory hearings).
-
-It’s enough to shape a POV, gather supporting data, and brief a writer without rereading every Google result from scratch.
-
----
-
-## Why This Matters For Us
-
-- **Faster research** – Cut the initial reconnaissance pass from ~2 hours to minutes while still reading the original sources.
-- **Consistent briefs** – Each piece starts with the same baseline: competitor landscape, summary, angles, and questions to answer.
-- **Flexible output** – A JSON file slots into Airtable, Notion, or the upcoming orchestration layer.
-- **Scales to 3–4 pieces/month** – Enough structure to stay consistent, without the overhead of a high-volume publishing machine.
+All instructions live in `agents/specialists/seo-*.md`.
 
 ---
 
-## Next Enhancements (Upcoming Reps)
+## Outputs & Locations
 
-1. **Phase II – Summaries & Outline to Airtable**  
-   Parse the JSON into Airtable/context-manager so the research pack is one click away inside the broader agent workflow.
+After a successful run you’ll find:
 
-2. **Phase III – Metric enrichment + telemetry**  
-   Pair the research pack with search-volume/difficulty data and log run telemetry for each article.
+| File | Purpose |
+|------|---------|
+| `outputs/seo/<slug>-report.json` | Full research pack (SERP summaries, insights, KG data, raw brief data) |
+| `outputs/seo/<slug>-brief.json` | Structured brief for downstream tooling |
+| `outputs/seo/<slug>-brief.md` | Human-friendly brief (drop into Obsidian or share with partner) |
+| `outputs/seo/<slug>-draft.md` | First-pass article draft (LLM or heuristic fallback) |
+| `outputs/seo/<slug>-qa.md` | QA summary & outstanding TODOs from the quality guardian |
 
-3. **Phase IV – Structured brief + governance flags**  
-   Auto-generate the final brief (title/meta/schema suggestions, E‑E‑A‑T requirements) and surface review flags.
-
-4. **Phase V – Multi-agent drafting**  
-   Bring Sonnet 4.5 / GPT-5 writers online for section-level drafting, still gated by human review.
-
-Throughout every stage we keep two non-negotiables: **100% human review before anything publishes** and **manual validation of facts and claims**, especially for health or product-related pages.
+LLM quotas: if OpenAI/Anthropic APIs are unavailable, the pipeline automatically falls back to heuristic summaries/drafts so automation never fails silently—the QA file will note the fallback.
 
 ---
 
-## Troubleshooting
+## Human Responsibilities
 
-- **“Could not extract readable text”** – The site blocks scraping. Open the article manually and copy key sections into your notes.
-- **Empty `keyword_suggestions`** – Happens when only one short article was retrievable. Add supporting research manually.
-- **GPT errors or empty `gpt_research_brief`** – Check your API key or model names; the rest of the report is still usable.
+1. **Review QA notes & TODOs** – fix flagged sections, validate claims, add missing citations.
+2. **Edit the draft** – ensure tone, POV, and compliance match brand standards.
+3. **Publish** – once satisfied, move the article into your CMS/Obsidian workflow, schedule social promos, etc.
+
+Optional: record key decisions in Workshop (`/memory-search`, `/memory-learn`) so the system remembers learnings for future runs.
 
 ---
 
-Questions? Drop findings in our shared workspace as you try different keywords so we can keep refining the prompts and downstream tooling. Handmade craftsmanship on top of machine-speed research is the goal.
+## Roadmap / Enhancements
+- Swap DuckDuckGo with a Google SERP provider (SerpAPI or Bright Data) once credentials are ready.
+- Add MCP integrations (Ahrefs, GSC) for richer keyword/traffic data.
+- Hook the QA summary into your validation checklist (Notion/Obsidian template).
+- Build “refresh” mode that reruns the workflow for existing pieces and compares against the last brief/draft.
+
+---
+
+## References
+- `_explore/_AGENTS/marketing-SEO/*`  
+- `_explore/_AGENTS/marketing-SEO/AI Content Research and SEO on Auto-Pilot with n8n.txt`  
+- `_explore/_AGENTS/marketing-SEO/Ship-Learn-Next Plan - Build AI Content Automation System.md`  
+- Knowledge graph: `/Users/adilkalam/Desktop/OBDN/obdn_site/docs/meta/kg.json`

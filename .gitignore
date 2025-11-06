@@ -7,7 +7,9 @@
 /.workshop
 /ext
 /outputs
+/skills
 Makefile
+
 
 # OS
 .DS_Store
