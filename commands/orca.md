@@ -113,6 +113,66 @@ Task({
 
 ---
 
+## Parallel vs Sequential Execution Rules
+
+### When to Run Agents in PARALLEL (Same Message)
+✅ **Independent data sources:** Analysts working on different datasets
+✅ **Different layers:** Backend + Frontend implementation
+✅ **Different domains:** Unit tests + Integration tests + UI tests
+✅ **Complementary analysis:** requirement-analyst + ux-strategist
+
+### When to Run Agents SEQUENTIALLY (Separate Messages)
+❌ **Direct dependencies:** system-architect needs requirement-analyst output
+❌ **Build on prior work:** story-synthesizer needs all analyst data
+❌ **Verification chains:** quality-validator needs verification-agent results
+❌ **Progressive refinement:** design-reviewer after UI implementation
+
+### Example Parallel Dispatch Patterns
+
+**Frontend Team - Optimal Parallelism:**
+```javascript
+// Group 1: Planning (Parallel)
+Task({ subagent_type: "requirement-analyst", prompt: "Analyze requirements..." })
+Task({ subagent_type: "ux-strategist", prompt: "Plan UX strategy..." })
+
+// Wait for Group 1 to complete, then...
+
+// Group 2: Architecture (Sequential)
+Task({ subagent_type: "system-architect", prompt: "Design system architecture..." })
+
+// Wait for architecture, then...
+
+// Group 3: Implementation (Parallel)
+Task({ subagent_type: "react-18-specialist", prompt: "Implement React components..." })
+Task({ subagent_type: "css-specialist", prompt: "Create styles..." })
+Task({ subagent_type: "frontend-performance-specialist", prompt: "Optimize performance..." })
+```
+
+**Data Analysis Team - Optimal Parallelism:**
+```javascript
+// Group 1: All analysts run in parallel (different data sources)
+Task({
+  subagent_type: "general-purpose",
+  prompt: "Follow merch-lifecycle-analyst.md methodology..."
+})
+Task({
+  subagent_type: "general-purpose",
+  prompt: "Follow ads-creative-analyst.md methodology..."
+})
+Task({
+  subagent_type: "general-purpose",
+  prompt: "Follow bf-sales-analyst.md methodology..."
+})
+
+// Wait for all data collection, then...
+
+// Group 2: Synthesis (needs all data)
+Task({
+  subagent_type: "general-purpose",
+  prompt: "Follow story-synthesizer.md to connect all findings..."
+})
+```
+
 ## Workflow Overview
 
 **Phase 0**: Reference Capture (if user mentions reference app/design)
@@ -164,9 +224,83 @@ If using custom data analysts, map them to general-purpose:
 **Phase 4**: Workflow Execution
 1. Write user request to `.orchestration/user-request.md`
 2. Create TodoWrite list
-3. Dispatch agents sequentially with clear deliverables
+3. Dispatch agents using **Intelligent Parallel Execution** (see below)
 4. Each agent writes to `.orchestration/implementation-log.md` with meta-cognitive tags
 5. Collect evidence in `.orchestration/evidence/`
+
+### Intelligent Parallel Execution Strategy
+
+**Dispatch agents in dependency groups for maximum parallelism:**
+
+#### Group 1: Planning Phase (Parallel)
+- requirement-analyst
+- ux-strategist (if UI work)
+- These can run in parallel as they analyze different aspects
+
+#### Group 2: Architecture Phase (Sequential after Group 1)
+- system-architect (needs requirements from Group 1)
+- design-system-architect (if Frontend, needs system architecture)
+
+#### Group 3: Implementation Phase (Parallel after Group 2)
+**Can run in parallel:**
+- backend-engineer
+- frontend specialists (react-18-specialist, css-specialist, etc.)
+- swiftui-developer
+- database specialists
+- **Why:** These work on different layers/components
+
+**Must be sequential within sub-groups:**
+- state-management-specialist AFTER react-18-specialist
+- ui-engineer AFTER css-specialist
+
+#### Group 4: Testing Phase (Parallel after Group 3)
+**Can run in parallel:**
+- test-engineer (unit tests)
+- frontend-testing-specialist
+- ui-testing-expert
+- **Why:** Different test domains
+
+#### Group 5: Verification Phase (Sequential after Group 4)
+**Must be sequential:**
+- verification-agent (checks implementation)
+- design-reviewer (if UI, needs verification first)
+- quality-validator (final gate, needs all prior checks)
+
+### How to Dispatch in Parallel
+
+**Instead of this (sequential):**
+```javascript
+// Message 1
+Task({ subagent_type: "requirement-analyst", ... })
+// Wait for completion
+
+// Message 2
+Task({ subagent_type: "ux-strategist", ... })
+// Wait for completion
+```
+
+**Do this (parallel within groups):**
+```javascript
+// Single message - both run in parallel
+Task({ subagent_type: "requirement-analyst", ... })
+Task({ subagent_type: "ux-strategist", ... })
+// Both execute simultaneously
+```
+
+### Data Analysis Team Parallel Strategy
+
+**Group 1: Data Collection (Parallel)**
+- merch-lifecycle-analyst
+- ads-creative-analyst
+- general-performance-analyst OR bf-sales-analyst
+- **Run these in parallel** - they analyze different data sources
+
+**Group 2: Synthesis (Sequential after Group 1)**
+- story-synthesizer (needs all data from Group 1)
+
+**Group 3: Validation (Sequential after Group 2)**
+- verification-agent
+- quality-validator
 
 **Phase 5**: Verification (MANDATORY)
 - **Data Analysis**: Verify all numbers with grep/read → check calculations → validate against source data
