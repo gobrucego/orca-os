@@ -1,3 +1,22 @@
+# ⚠️ CRITICAL: claude-vibe-code Repository Purpose ⚠️
+
+**THIS IS A CONFIGURATION ADMINISTRATIVE TOOL FOR GLOBAL CLAUDE CODE**
+
+## What This Repository Is:
+- **Configuration management** for the GLOBAL `~/.claude` directory
+- **NOT a regular project** - it's an admin tool for Claude Code itself
+- Agents, commands, MCPs, skills deploy to `~/.claude` GLOBALLY
+- All Claude Code sessions use these global configurations
+
+## Critical Directory Rules:
+- **`_explore/`** = **MY PERSONAL FOLDER - READ ONLY - NEVER TOUCH**
+  - NEVER move, install, delete, add, or point configs here
+- **`mcp/`** = Local development copies (deploy globally)
+- **`agents/`** = Deploy to `~/.claude/agents/`
+- **`.claude/commands/`** = Deploy to `~/.claude/commands/`
+
+---
+
 # ORCA
 
 **Multi-agent orchestration for Claude Code that learns from outcomes and prevents false completions**
@@ -438,6 +457,24 @@ requirements.txt      → Backend
 **Backend Team:**
 - backend-engineer (Python/Node/Go)
 - test-engineer (pytest, vitest)
+
+---
+
+## Design/FE Lane — Task Tool Dispatch Mapping
+
+Some new specialist files are not yet registered in the Task tool. Use this mapping while retaining methodologies from their agent files:
+- design-system-architect → dispatch directly
+- css-system-architect → dispatch `css-specialist` (follow `agents/specialists/css-system-architect.md`)
+- html-architect → dispatch `ui-engineer` (follow `agents/specialists/html-architect.md`)
+- migration-specialist (migrate) → dispatch `ui-engineer` (follow `agents/specialists/migration-specialist.md`)
+
+Example:
+```ts
+Task({ subagent_type: "css-specialist", prompt: "Follow methodology in agents/specialists/css-system-architect.md; emit src/styles/{base.css,components/*,themes/*}; tag #FILE_CREATED; save evidence to .orchestration/evidence/" })
+Task({ subagent_type: "ui-engineer", prompt: "Follow methodology in agents/specialists/html-architect.md; produce semantic templates only using approved classes; run html-validate; save evidence" })
+```
+
+Quality gates (ESLint/Stylelint/html-validate/a11y/perf) continue to enforce policy. Proper fix: register these agents in the Task tool.
 
 ---
 
