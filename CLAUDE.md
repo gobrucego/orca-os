@@ -48,23 +48,3 @@ If you skip step 1, session ends.
 ---
 
 _Last updated: 2025-11-12_
-
-## Context7 Usage
-
-When answering coding tasks that involve library/framework APIs, setup, or config:
-- Automatically use the Context7 MCP tools (resolve-library-id, get-library-docs)
-- Prefer version-specific docs when available
-- You do not need the user to type "use context7"
-
-## Visual Development
-
-### Quick Visual Check
-Immediately after implementing any front-end change:
-- Identify what changed and navigate to affected views
-- Use Playwright MCP to visit the page and capture evidence
-  - Desktop 1440x900, Tablet 768x1024, Mobile 375x812
-  - Save to `.orchestration/evidence/screenshots/`
-- Check console for errors via Playwright MCP and save logs to `.orchestration/evidence/logs/`
-- Compare against design principles and style guide (if present)
-
-Tip: run the `/design-review` command for a guided flow with standardized outputs.
