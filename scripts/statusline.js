@@ -30,12 +30,12 @@ function getCPUUsage() {
         if (rounded >= 80) color = "\x1b[31m"; // red
         else if (rounded >= 60) color = "\x1b[33m"; // yellow
 
-        return `${color}󰻠 ${rounded}%\x1b[0m`;
+        return `${color}CPU ${rounded}%\x1b[0m`;
       }
     }
-    return "\x1b[90m󰻠 --%\x1b[0m";
+    return "\x1b[90mCPU --%\x1b[0m";
   } catch {
-    return "\x1b[90m󰻠 --%\x1b[0m";
+    return "\x1b[90mCPU --%\x1b[0m";
   }
 }
 
@@ -70,11 +70,11 @@ function getMemoryUsage() {
       if (usagePercent >= 90) color = "\x1b[31m"; // red
       else if (usagePercent >= 75) color = "\x1b[33m"; // yellow
 
-      return `${color}󰍛 ${usagePercent}%\x1b[0m`;
+      return `${color}MEM ${usagePercent}%\x1b[0m`;
     }
-    return "\x1b[90m󰍛 --%\x1b[0m";
+    return "\x1b[90mMEM --%\x1b[0m";
   } catch {
-    return "\x1b[90m󰍛 --%\x1b[0m";
+    return "\x1b[90mMEM --%\x1b[0m";
   }
 }
 
@@ -103,21 +103,23 @@ function getGitStatus() {
     const lines = status.trim().split("\n").filter(Boolean);
 
     let modified = 0;
-    let untracked = 0;
     let staged = 0;
 
     lines.forEach((line) => {
       const statusCode = line.substring(0, 2);
-      if (statusCode === "??") untracked++;
-      else if (statusCode[0] !== " " && statusCode[0] !== "?") staged++;
-      else if (statusCode[1] !== " ") modified++;
+      if (statusCode === "??") {
+        // Skip untracked files
+      } else if (statusCode[0] !== " " && statusCode[0] !== "?") {
+        staged++;
+      } else if (statusCode[1] !== " ") {
+        modified++;
+      }
     });
 
     const parts = [];
     // Add space between icon and number as requested
-    if (staged > 0) parts.push(`\x1b[32m${staged} 󰄬\x1b[0m`);
-    if (modified > 0) parts.push(`\x1b[33m${modified} 󰛿\x1b[0m`);
-    if (untracked > 0) parts.push(`\x1b[31m${untracked} 󰋗\x1b[0m`);
+    if (staged > 0) parts.push(`\x1b[32m${staged} staged\x1b[0m`);
+    if (modified > 0) parts.push(`\x1b[33m${modified} modified\x1b[0m`);
 
     return parts.length > 0 ? `[${parts.join(" • ")}]` : "";
   } catch {
@@ -135,9 +137,9 @@ function getGitAheadBehind() {
     const [ahead, behind] = result.split("\t").map(Number);
     const parts = [];
 
-    // Add space between number and icon
-    if (ahead > 0) parts.push(`\x1b[32m${ahead} 󰜷\x1b[0m`);
-    if (behind > 0) parts.push(`\x1b[31m${behind} 󰜮\x1b[0m`);
+    // Add space between number and text label
+    if (ahead > 0) parts.push(`\x1b[32m${ahead} ahead\x1b[0m`);
+    if (behind > 0) parts.push(`\x1b[31m${behind} behind\x1b[0m`);
 
     return parts.length > 0 ? parts.join(" ") : "";
   } catch {
@@ -281,8 +283,8 @@ if (!usage) {
 
   // Line 2: CPU • Memory | folder • branch | git status
   const systemMetrics = [cpu, memory].filter(Boolean).join(" \x1b[90m•\x1b[0m ");
-  const folderInfo = folder ? `\x1b[36m📁 ${folder}\x1b[0m` : "";
-  const branchInfo = branch ? `\x1b[32m ${branch}\x1b[0m` : "";
+  const folderInfo = folder ? `\x1b[36m${folder}\x1b[0m` : "";
+  const branchInfo = branch ? `\x1b[32m${branch}\x1b[0m` : "";
   const gitInfo = [gitStatus, gitAheadBehind].filter(Boolean).join(" \x1b[90m•\x1b[0m ");
 
   const line2Parts = [folderInfo, branchInfo].filter(Boolean);
@@ -308,8 +310,8 @@ let tokenColor = "\x1b[32m"; // green
 if (pct >= 90) tokenColor = "\x1b[31m"; // red
 else if (pct >= 70) tokenColor = "\x1b[33m"; // yellow
 
-// Build token usage string: [icon] (50.2%) 100,427/200,000
-const tokenUsage = `${tokenColor}📊 (${pct.toFixed(1)}%) ${comma(used)}/${comma(CONTEXT_WINDOW)}\x1b[0m`;
+// Build token usage string: (50.2%) 100,427/200,000
+const tokenUsage = `${tokenColor}(${pct.toFixed(1)}%) ${comma(used)}/${comma(CONTEXT_WINDOW)}\x1b[0m`;
 
 // Auto-compact indicator - abbreviated tokens remaining, grey text
 const autoCompactInfo = `\x1b[90m${abbreviate(tokensRemaining)} until auto-compact\x1b[0m`;
@@ -319,7 +321,7 @@ const line1 = `${name} \x1b[90m|\x1b[0m ${tokenUsage} \x1b[90m|\x1b[0m ${autoCom
 
 // LINE 2: CPU • Memory | folder • branch | git status • ahead/behind
 const systemMetrics = [cpu, memory].filter(Boolean).join(" \x1b[90m•\x1b[0m ");
-const folderInfo = folder ? `\x1b[36m📁 ${folder}\x1b[0m` : "";
+const folderInfo = folder ? `\x1b[36m${folder}\x1b[0m` : "";
 const branchInfo = branch ? `\x1b[32m ${branch}\x1b[0m` : "";
 const gitInfo = [gitStatus, gitAheadBehind].filter(Boolean).join(" \x1b[90m•\x1b[0m ");
 

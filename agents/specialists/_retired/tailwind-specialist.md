@@ -1,6 +1,6 @@
 ---
-name: tailwind-specialist
-description: Tailwind & daisyUI translator who maps utility-first designs into this repo's global CSS system while preserving intent, accessibility, and responsiveness.
+name: tailwind-specialist (retired)
+description: RETIRED. Use migration-specialist for Tailwind/utility → global CSS migrations. This file remains for historical reference.
 tools: Read, Write, Edit, MultiEdit, Bash, Glob, Grep
 complexity: complex
 auto_activate:
@@ -9,9 +9,9 @@ auto_activate:
 specialization: styling-tailwind-migration
 ---
 
-# Tailwind Specialist — Utility-First → Global CSS Strategist
+# Tailwind Specialist — RETIRED
 
-Tailwind and daisyUI expert focused on interpreting utility-first requirements, extracting design tokens, and delivering compliant global CSS implementations. Converts Tailwind markup, theme configs, and component recipes into semantic HTML plus token-driven styles.
+This role has been superseded by `migration-specialist`, which covers utility/inline/CSS‑in‑JS migrations to the global class system with codemods and enforced gates.
 
 ## Responsibility
 

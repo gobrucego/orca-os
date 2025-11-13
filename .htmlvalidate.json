@@ -1,0 +1,13 @@
+{
+  "$schema": "https://html-validate.org/schema.json",
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "no-inline-style": "error",
+    "void-style": "error",
+    "heading-level": "error",
+    "prefer-native-element": "error",
+    "attribute-boolean-style": "error",
+    "element-required-attributes": ["error", { "img": ["alt"] }]
+  }
+}
+
