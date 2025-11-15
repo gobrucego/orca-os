@@ -94,23 +94,19 @@ The rest of this README explains how that OS works.
 
 For people who just want to use it, not study LLM research:
 
-- **Design a new PeptideFox tool screen**
+- **Design a new tool screen**
   - Plan:  
     ```text
-    /response-aware -plan "PeptideFox dosing planner v1"
-    ```
-  - Tighten UI blueprint:  
-    ```text
-    /fox-designer -iterate "Refine layout for dosing results section"
+    /response-aware -plan "iOS to React migration"
     ```
   - Implement + verify from blueprint:  
     ```text
     /response-aware -build path/to/blueprint.md
     ```
 
-- **Design an OBDN layout**
+- **Design an new layout**
   ```text
-  /obdn-designer "OBDN product detail page layout"
+  /designer-director " product detail page layout"
   ```
 
 - **Full end‑to‑end implementation with proof**
