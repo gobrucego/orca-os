@@ -418,7 +418,6 @@ Live config used by Claude Code:
   - Live command definitions:
     - `creative-strategist.md`
     - `design-director.md`
-    - `brand-designer.md`
     - `response-aware.md`
     - `orca.md`
     - and others.
