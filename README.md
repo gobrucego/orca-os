@@ -26,8 +26,6 @@
 
 
 # Vibe Code / Claude Agentic OS
-
-> **CRITICAL — Repo Purpose**
 >
 > This repo is a **version‑controlled mirror** of your global Claude config in `~/.claude`.  
 > **`~/.claude` is the source of truth.**  
