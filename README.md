@@ -607,6 +607,183 @@ project-root/
 
 ---
 
+## Project-Specific Frontend Agents & Commands
+
+This repo defines a **meta frontend agent pair** and three **project-specific pairs** that follow the same pattern:
+
+- Concept agents → Design-only, blueprint/spec output, no file edits.
+- Builder agents → Implementation-only, read-before-write, minimal-safe changes.
+- Commands → Project entrypoints that:
+  - Load design DNA + system rules.
+  - Route to Concept or Builder mode via flags.
+  - Save/load specs under `.orchestration/specs/`.
+
+### Meta Frontend Agents (Blueprint Layer)
+
+- `agents/frontend-concept-agent.md`
+  - Generic methodology for UI concept work: design-system-first → multi-concept exploration → implementation handoff.
+  - Stays stack-agnostic and brand-agnostic; talks in tokens, components, and flows, not code.
+
+- `agents/frontend-builder-agent.md`
+  - Generic implementation loop: understand → small plan → read-before-write → minimal edits → lint/tests → design compliance.
+  - Assumes a Next.js + TypeScript + Tailwind/shadcn-like stack, but is intended as a base template.
+
+Each project-specific pair **inherits the behavior pattern from these**, then hard-codes brand DNA, precedents, and anti-patterns.
+
+### Marina Moscone (MM) – `/mm`
+
+**Design DNA Source**
+- External MM design-dna folder (brand system + agent guides).
+- Repo-level DNA:
+  - `docs/design/design-dna/design-dna.json`
+  - `docs/design/design-system-guide.md`
+
+**Agents**
+- Concept:
+  - `agents/project-specific/mm-concept-agent.md`
+  - Role:
+    - Quiet-luxury editorial designer.
+    - Mandatory context recall (Avenir, tonal neutrals, Atmospheric vs Reporting spacing).
+    - Uses MM scaffold: FRAME → STRUCTURE → SURFACE → CALCULATE → CHECK ANTI-PATTERNS.
+    - Enforces **precedent-driven design**:
+      - NEVER/ALWAYS patterns for heroes, product listing/detail, navigation/footer, product cards, buttons/forms.
+      - Generic pattern detector (centered hero + buttons, 3-column rows, SaaS card grids, etc.).
+    - Outputs an **MM DESIGN BLUEPRINT** with explicit spacing math and an `IMPLEMENTATION HANDOFF FOR MM BUILDER` section.
+
+- Builder:
+  - `agents/project-specific/mm-builder-agent.md`
+  - Role:
+    - Implementation agent for MM’s web app.
+    - Summarizes MM design DNA at the top of each task.
+    - Implements from specs, mapping each change to:
+      - Tokens (colors, spacing, type).
+      - Named MM precedents (Editorial Opener, Editorial Product Card, Atmospheric vs Reporting layouts).
+    - Includes a required **Token & Pattern Mapping** section per task.
+    - Enforces generic-guard rails (no SaaS hero, no default grids) and stops once request is satisfied.
+
+**Command**
+- `commands/project-specific/mm.md`
+  - `/mm --concept <task>`:
+    - Mode: CONCEPT.
+    - Loads MM design-dna and `mm-concept-agent`.
+    - Produces multi-concept spec and saves it under `.orchestration/specs/…`.
+  - `/mm --build <task>`:
+    - Mode: BUILD.
+    - Loads `mm-builder-agent`.
+    - Optionally loads a saved spec via “Using spec from …”.
+    - Implements minimal compliant changes, then summarizes files touched.
+
+### PeptideFox – `/fox`
+
+**Design DNA Source**
+- `/Users/adilkalam/Desktop/peptidefox/design-dna/`:
+  - `design-system-v7.0.md`
+  - `DESIGN_RULES_v7.0.md`
+  - `peptidefox_designer_prompt.md` (legacy design prompt).
+
+**Agents**
+- Concept:
+  - `agents/project-specific/fox-concept-agent.md`
+  - Role:
+    - PeptideFox Scientific Premium Minimalism™ designer.
+    - Mandatory context recall: Clean Future Blue, Lavender haze, Brown LL / Brown Mono / Brown Inline, tool vs library vs education modes.
+    - Enforces a **Generic Pattern Guard** (no generic SaaS hero, 3-col features, card grids, etc.).
+    - Uses FRAME → STRUCTURE → SURFACE → CALCULATE → PRECEDENT CHECK.
+    - Defines NEVER/ALWAYS precedents for:
+      - Tools/calculators (tiered layout: context → inputs → primary result → explanation → detail).
+      - Library views (peptide cards as scientific catalog, not generic tiles).
+      - Protocol/education views (structured “what/why/how” blocks).
+      - Peptide cards (Brown Inline for peptide names, identity vs data zones).
+    - Outputs **PEPTIDEFOX DESIGN BLUEPRINT** + `IMPLEMENTATION HANDOFF FOR FOX BUILDER`.
+
+- Builder:
+  - `agents/project-specific/fox-builder-agent.md`
+  - Role:
+    - Implementation agent for `/Users/adilkalam/Desktop/peptidefox`.
+    - Summarizes design-dna v7.0; enforces:
+      - Tokens for Light/Dark, Blue/Lavender roles, spacing.
+      - Typography roles (Brown LL, Brown Mono, Brown Inline rules).
+    - Uses a core loop: understand → small plan → read → minimal edit → lint/tests → design compliance.
+    - Requires **Token & Pattern Mapping** for non-trivial changes (tokens, spacing, type roles, structural patterns).
+
+**Command**
+- `commands/project-specific/fox.md`
+  - `/fox --concept <task>`:
+    - Mode: CONCEPT.
+    - Loads PeptideFox design-dna + `fox-concept-agent`.
+    - Saves spec to `.orchestration/specs/…` with a Fox blueprint and handoff.
+  - `/fox --build <task>`:
+    - Mode: BUILD.
+    - Loads `fox-builder-agent`.
+    - Optional spec-loading if arguments reference “Using spec from …”.
+
+### OBDN – `/obdn`
+
+**Design DNA Source**
+- `/Users/adilkalam/Desktop/OBDN/obdn_site/design-system/`:
+  - `design-dna-v2.0.md`
+  - `system_rules-v2.0.md`
+  - `design-system-v2.0.md`
+  - `obdn_designer_prompt.md` (legacy prompt).
+
+**Agents**
+- Concept:
+  - `agents/project-specific/obdn-concept-agent.md`
+  - Role:
+    - Luxury alchemical system designer (Obsidian + Gold + White).
+    - Mandatory context recall: materials, type stack (Domaine/Pantheon/Supreme/Unica), spacing tokens, bento zones, dark-mode-first.
+    - Uses FRAME → STRUCTURE → SURFACE → GOLD → CALCULATE → PRECEDENT CHECK.
+    - Enforces NEVER/ALWAYS precedents for:
+      - Product/stack presentations (bento card sets, not generic feature grids).
+      - Editorial/education screens (Domaine + Pantheon editorial hierarchy, gold bullets, spacing).
+      - Bento cards (zones 1–6 with fixed heights and flexing bodies).
+    - Outputs an **OBDN DESIGN BLUEPRINT** + `IMPLEMENTATION HANDOFF FOR OBDN BUILDER`.
+
+- Builder:
+  - `agents/project-specific/obdn-builder-agent.md`
+  - Role:
+    - Implementation agent for `/Users/adilkalam/Desktop/OBDN/obdn_site`.
+    - Summarizes OBDN design-dna/system rules before changes.
+    - Enforces:
+      - Material tokens (Obsidian, Gold, White, minimal semantics).
+      - Type roles (Domaine/Pantheon/Supreme/Unica).
+      - Spacing tokens and bento alignment.
+    - Uses a standard builder loop + required **Token & Pattern Mapping** section.
+
+**Command**
+- `commands/project-specific/obdn.md`
+  - `/obdn --concept <task>`:
+    - Mode: CONCEPT.
+    - Loads OBDN design-dna + `obdn-concept-agent`.
+    - Produces and saves an OBDN blueprint spec under `.orchestration/specs/…`.
+  - `/obdn --build <task>`:
+    - Mode: BUILD.
+    - Loads `obdn-builder-agent`.
+    - Optionally loads a blueprint via “Using spec from …”.
+
+### Example Flows
+
+- Full MM design → build:
+  - `/mm Product listing page`  
+  - Then: `/mm --build Using spec from .orchestration/specs/2025...-product-listing.md`
+
+- PeptideFox tool from scratch:
+  - `/fox --concept New metabolic protocol calculator`  
+  - Then: `/fox --build Using spec from .orchestration/specs/2025...-protocol-calculator.md`
+
+- OBDN bento screen refactor:
+  - `/obdn --concept Refine [screen] into full bento layout`  
+  - Then: `/obdn --build Using spec from .orchestration/specs/2025...-bento-screen.md`
+
+Each of these flows guarantees:
+- Design work runs through a brand-specific Concept agent with precedents and genericness checks.
+- Implementation runs through a brand-specific Builder agent that:
+  - Reads before it writes.
+  - Enforces tokens and spacing.
+  - Maps changes back to the design system explicitly.
+
+---
+
 ## Usage Recipes
 
 ### Full End-to-End Implementation with Verification

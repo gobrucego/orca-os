@@ -1,44 +1,89 @@
 ---
-description: Quiet-luxury design director for layouts, UI, and frontend output (luxe minimal + Swiss clarity)
-allowed-tools: [Read, AskUserQuestion, WebFetch, exit_plan_mode]
-argument-hint: <screen / flow / artifact to design, critique, or refactor>
+description: Generic design concept director - uses frontend-concept-agent with quiet-luxury defaults
+allowed-tools: [Read, AskUserQuestion, WebFetch, exit_plan_mode, Task]
+argument-hint: [--project mm|fox|obdn] <screen / flow / artifact to design, critique, or refactor>
 ---
 
-# /design-director — Quiet Luxury Interface & Layout
+# /design-director — Generic Design Concept Director
 
-Purpose: Invoke the design-director specialist to design or refactor layouts, UI flows, and frontend output for brands with a luxe minimal, Swiss-structured aesthetic.
+Purpose: Invoke design concept creation for any project, using the frontend-concept-agent methodology with optional project-specific overrides.
 
-This is NOT a general “make it pretty” persona. It is a narrow, opinionated system tuned for:
-- Calm, high-end interfaces
-- Information-dense reporting layouts
-- Editorial-level clarity and hierarchy
-- Design-first thinking before code
+This command:
+- Routes to the appropriate concept agent based on project
+- Defaults to quiet-luxury aesthetic if no project specified
+- Produces implementation-ready specs with handoff sections
+- Focuses on design-first thinking before code
 
-/design-director is a **blueprint and critique brain**, not an implementation pipeline. System-level token/CSS work should flow through ORCA with your chosen frontend specialists (React/Next) and verification agents.
-
----
-
-## 1. Context Recall (MANDATORY)
-
-Before doing anything:
-
-1. Read global + project design DNA / design guides:
-   - `~/.claude/CLAUDE.md` (Design-OCD + verification rules)
-   - Any `.claude-design-dna-context.md` files (if present)
-   - Project design/system docs, e.g.:
-     - `design-system-v*.md`
-     - Brand/system docs under `docs/` (e.g. Marina Moscone, OBDN, or project-specific guides)
-2. Summarize context in 3–6 bullets:
-   - Brand personality (voice, target user, luxury level)
-   - Visual DNA (typefaces, palettes, spacing philosophy)
-   - Functional context (marketing page, reporting/dashboard, internal tooling, etc.)
-   - Hard constraints (framework, breakpoints, accessibility requirements)
-
-All later decisions must align with this context.
+/design-director is a **concept and spec generator**, not an implementation tool. For implementation, use project-specific build commands (e.g., `/mm --build`, `/fox --build`).
 
 ---
 
-## 2. Mode & Scope
+## 1. Project Detection & Routing
+
+Parse `$ARGUMENTS`:
+- If contains `--project mm`: Route to `mm-concept-agent.md`
+- If contains `--project fox`: Route to `fox-concept-agent.md`
+- If contains `--project obdn`: Route to `obdn-concept-agent.md`
+- Otherwise: Use `frontend-concept-agent.md` with quiet-luxury defaults
+
+Extract the actual design request after the flag.
+
+---
+
+## 2. Agent Delegation
+
+### For Project-Specific Requests
+
+Use Task tool with the appropriate project agent:
+
+```javascript
+Task({
+  subagent_type: "general-purpose",
+  description: "Design concept for [project]",
+  prompt: `
+    Follow the methodology in agents/project-specific/[project]-concept-agent.md.
+
+    REQUEST: ${extracted_request}
+
+    Produce a complete design spec with:
+    - Design system application
+    - 2-3 concept explorations (if appropriate)
+    - Selected concept with rationale
+    - IMPLEMENTATION HANDOFF section
+  `
+})
+```
+
+### For Generic Requests (No Project Flag)
+
+Use Task tool with generic concept agent + quiet-luxury defaults:
+
+```javascript
+Task({
+  subagent_type: "general-purpose",
+  description: "Design concept",
+  prompt: `
+    Follow the methodology in agents/frontend-concept-agent.md.
+
+    REQUEST: ${extracted_request}
+
+    DESIGN DEFAULTS (Quiet Luxury):
+    - Calm, high-end interfaces
+    - Swiss-structured layouts
+    - Editorial clarity
+    - Mostly neutrals, minimal accents
+    - 8px grid, 4px baseline
+    - Hairline dividers
+    - No decoration, only structure
+
+    Produce implementation-ready spec with IMPLEMENTATION HANDOFF section.
+  `
+})
+```
+
+---
+
+## 3. Legacy Mode Support (Backward Compatibility)
 
 Interpret `$ARGUMENTS` and classify work type (state explicitly):
 
