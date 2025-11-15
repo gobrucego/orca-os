@@ -11,7 +11,7 @@ Makefile
 /commands/_archive/
 /.deprecated
 /.
-
+*.
 
 # OS
 .DS_Store
