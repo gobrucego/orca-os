@@ -13,8 +13,8 @@ Common Triggers → Actions
 - “Small UI tweak” → `/enhance ...`
 - “I have ten questions for you” → `/survey`
 - “Help me think this through” → `/ultra-think ...`
-- “I want a better layout” → `/concept ...`
-- “Explore a new design” → `/concept-new ...`
+- “I want a better layout” → `/design-director ...`
+- “Explore a new design” → `/ascii-mockup ...`
 
 Tips
 - Start with `/orca` for most feature work; add `/introspect` and Response Awareness as risk rises.

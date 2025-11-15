@@ -449,11 +449,11 @@ When agents create reports, analysis documents, or other non-code files, you MUS
 - Base (4): requirement-analyst, system-architect, verification-agent, quality-validator
 - Specialists (2-11): swiftui-developer, swiftdata-specialist, state-architect, swift-testing-specialist, ui-testing-expert, etc.
 
-**Frontend Team (10-15 agents):**
+**Frontend Team (6-8 agents):**
 - Planning (2): requirement-analyst, system-architect
-- Design (5): ux-strategist, design-system-architect, css-specialist, ui-engineer, accessibility-specialist
-- Implementation (2-4): react-18-specialist OR nextjs-14-specialist, state-management-specialist, frontend-performance-specialist
-- QA (3): frontend-testing-specialist, design-reviewer, verification-agent, quality-validator
+- Design (1): design-ocd-enforcer
+- Implementation (1-2): react-18-specialist OR nextjs-14-specialist
+- QA (3): design-reviewer, verification-agent, quality-validator
 
 **Backend Team (6 agents):**
 - requirement-analyst, system-architect, backend-engineer, test-engineer, verification-agent, quality-validator
@@ -463,9 +463,9 @@ When agents create reports, analysis documents, or other non-code files, you MUS
 - Implementation (3): cross-platform-mobile OR android-engineer, backend-engineer (for APIs)
 - QA (2): test-engineer, verification-agent, quality-validator
 
-**Design Team (3-8 agents):**
-- Core (3): ux-strategist, design-system-architect, visual-designer
-- Extended (5): ui-engineer, css-specialist, frontend-performance-specialist, accessibility-specialist, design-ocd-enforcer
+**Design Team (3-4 agents):**
+- Core (2): design-director, creative-strategist
+- Extended (2): design-ocd-enforcer, design-reviewer
 
 ---
 

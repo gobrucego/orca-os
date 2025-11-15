@@ -124,7 +124,6 @@ MCP servers provide structured tool interfaces for agents. All I/O goes through 
 - design-reviewer (visual verification)
 - verification-agent (functional testing)
 - ui-testing-expert (E2E flows)
-- accessibility-specialist (WCAG compliance)
 
 **Evidence Capture:**
 - Screenshots → `.claude/orchestration/evidence/`
@@ -165,7 +164,6 @@ MCP servers provide structured tool interfaces for agents. All I/O goes through 
 
 **Usage by Agents:**
 - design-reviewer (inspect live styles)
-- frontend-performance-specialist (Core Web Vitals)
 - verification-agent (DOM validation)
 
 **Performance Analysis:**

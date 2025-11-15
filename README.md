@@ -1,84 +1,67 @@
-```
-░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓███████▓▒░░▒▓████████▓▒░       ░▒▓██████▓▒░ ░▒▓███████▓▒░      ░▒▓███████▓▒░       ░▒▓████████▓▒░ 
-░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░             ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░                    ░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░ 
- ░▒▓█▓▒▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░             ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░                    ░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░ 
- ░▒▓█▓▒▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░░▒▓██████▓▒░        ░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░        ░▒▓██████▓▒░       ░▒▓█▓▒░░▒▓█▓▒░ 
-  ░▒▓█▓▓█▓▒░ ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░             ░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓█▓▒░             ░▒▓█▓▒░░▒▓█▓▒░ 
-  ░▒▓█▓▓█▓▒░ ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░             ░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓█▓▒░      ░▒▓██▓▒░▒▓█▓▒░░▒▓█▓▒░ 
-   ░▒▓██▓▒░  ░▒▓█▓▒░▒▓███████▓▒░░▒▓████████▓▒░       ░▒▓██████▓▒░░▒▓███████▓▒░       ░▒▓████████▓▒░▒▓██▓▒░▒▓████████▓▒░ 
-                                                                                                                        
-```                                                                                                                        
+# Vibe Code — A Constrained, Evidence-Driven OS for Claude
 
-
-# A Context-Aware, IMemory Persistent OS for Claude Code
+> **An opinionated orchestration framework that transforms Claude Code from a helpful chat into a disciplined engineering system.**
 
 ```
-┌────────────────────────────────────────────────────────────────┐
-│                                                                │
-│   Vibe Coding with High Quality Results and Outputs            │
-│                                                                │
-│   • Context & Memory-First Architecture                        │
-│   • Introspective Response Awareness                           │
-│   • Evidence Based Completion with Quality Gates               │ 
-│   • Multi-Agent Parallel Orchestration                         │
-│   • Workflow Specific Pipelines and Phase Schema               │
-│                                                                │
-└────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│                                                            │
+│  Beyond "Ask AI" → Systematic Software Development        │
+│                                                            │
+│  • Memory-First Architecture                              │
+│  • Evidence-Based Completion                              │
+│  • Design-OCD Quality Gates                               │
+│  • Multi-Agent Orchestration with Guardrails              │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
 ## The Problem This Solves
 
-**Claude Code is extremely powerful but has the memory of a goldfish. It also lies. A lot.**
+**Generic AI assistants drift.** They say "done" when code doesn't compile, tests fail, and UI is broken. They hallucinate design systems, ignore constraints, and produce janky outputs that require endless iteration loops.
 
-**Generic AI assistants drift, forget, and go rogue.** They say "done" when code doesn't compile, tests fail, and UI is broken. They hallucinate design systems, ignore constraints, and produce janky outputs. Without guardrails and scope, an AI assistant will default to what it believes are 'best-practice' behaviors and over-optimize for effeciency at the expense of proper execution. When working with complex projects (or even smaller ones), they can be incredibly slow as they need to repeatedly gather context in order to execute a task.
-
-The result is endless iteration loops, and a high level of frustration -- and often an undesireable result.
-
-**This framework enforces awareness and discipline:**
-- Projects are indexed locally with **persistent context** that utilizes vectors for fast queries
-- **An orchestration layer** that ONLY coordinates sub-agents to execute a task
+**This framework enforces discipline:**
+- Work isn't "done" until there's **evidence** (tests, builds, screenshots, logs)
 - Agents operate in **strict lanes** with hard scopes
 - **Memory persists** across sessions (no re-explaining decisions)
 - **Quality gates** catch issues before humans see them
-- Work isn't "done" until there's **evidence** (tests, builds, screenshots, logs)
 
 ---
 
 ## System Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         VIBE CODE OS 2.0                            │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│  ┌──────────────┐      ┌──────────────┐      ┌──────────────┐       │
-│  │   Commands   │      │   Agents     │      │     MCPs     │       │
-│  │  (/orca,     │◄────►│ (Orchestrate │◄────►│  (Browser,   │       │
-│  │  /response-  │      │  + Execute)  │      │   Memory,    │       │
-│  │   aware)     │      │              │      │   DevTools)  │       │
-│  └──────┬───────┘      └──────┬───────┘      └──────┬───────┘       │
-│         │                     │                     │               │
-│         └─────────────┬───────┴─────────────────────┘               │
-│                       │                                             │
-│                       ▼                                             │ 
-│         ┌─────────────────────────────┐                             │
-│         │   Verification Engine       │                             │
-│         │  • Meta-tag resolution      │                             │
-│         │  • Evidence capture         │                             │
-│         │  • Quality gates            │                             │
-│         └─────────────────────────────┘                             │
-│                       │                                             │
-│                       ▼                                             │
-│         ┌─────────────────────────────┐                             │
-│         │   Memory Layer              │                             │
-│         │  • Project decisions        │                             │
-│         │  • Design DNA               │                             │
-│         │  • Learned patterns         │                             │
-│         └─────────────────────────────┘                             │  
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│                      VIBE CODE OS                          │
+├────────────────────────────────────────────────────────────┤
+│                                                            │
+│  ┌──────────┐    ┌──────────┐    ┌──────────┐            │
+│  │ Commands │    │  Agents  │    │   MCPs   │            │
+│  │ (/orca,  │◄───┤Orchestr. ├───►│(Browser, │            │
+│  │/response-│    │+ Execute)│    │ Memory,  │            │
+│  │  aware)  │    │          │    │DevTools) │            │
+│  └────┬─────┘    └────┬─────┘    └────┬─────┘            │
+│       │               │               │                   │
+│       └───────────────┼───────────────┘                   │
+│                       │                                   │
+│                       ▼                                   │
+│            ┌────────────────────┐                         │
+│            │Verification Engine │                         │
+│            │ • Meta-tag resolve │                         │
+│            │ • Evidence capture │                         │
+│            │ • Quality gates    │                         │
+│            └─────────┬──────────┘                         │
+│                      │                                    │
+│                      ▼                                    │
+│            ┌────────────────────┐                         │
+│            │   Memory Layer     │                         │
+│            │ • Project decisions│                         │
+│            │ • Design DNA       │                         │
+│            │ • Learned patterns │                         │
+│            └────────────────────┘                         │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -86,219 +69,323 @@ The result is endless iteration loops, and a high level of frustration -- and of
 ## Request Flow: From Idea to Verified Implementation
 
 ```
-┌────────────┐
-│   Human    │  "Add dark mode to dashboard"
-│   Request  │
-└─────┬──────┘
-      │
-      ▼
+      ┌────────────────────┐
+      │  Human Request     │  "Add dark mode to dashboard"
+      └─────────┬──────────┘
+                │
+                ▼
 ┌────────────────────────────────────────────────────────────┐
-│ PHASE 1: CONTEXT LOADING                                   │
-│ ┌─────────────┐     ┌─────────────┐     ┌─────────────┐    │
-│ │   Memory    │────►│  Design DNA │────►│   Project   │    │
-│ │   Search    │     │   (Brand)   │     │   CLAUDE.md │    │
-│ └─────────────┘     └─────────────┘     └─────────────┘    │
+│ PHASE 1: CONTEXT LOADING                                  │
+│ ┌────────┐    ┌────────┐    ┌────────┐                   │
+│ │ Memory │───►│Design  │───►│Project │                   │
+│ │ Search │    │  DNA   │    │CLAUDE  │                   │
+│ └────────┘    └────────┘    └────────┘                   │
 └────────────────────────────────────────────────────────────┘
-      │
-      ▼
+                │
+                ▼
 ┌────────────────────────────────────────────────────────────┐
-│ PHASE 2: ORCHESTRATION                                     │
-│ ┌─────────────┐                                            │
-│ │ /orca or    │  • Detect stack (Next.js, iOS, etc.)       │
-│ │ /response-  │  • Propose specialist team                 │
-│ │  aware      │  • Get user confirmation                   │
-│ └─────────────┘                                            │
+│ PHASE 2: ORCHESTRATION                                    │
+│ ┌────────┐                                                │
+│ │ /orca  │  • Detect stack (Next.js, iOS, etc.)          │
+│ │/resp-  │  • Propose specialist team                    │
+│ │ aware  │  • Get user confirmation                      │
+│ └────────┘                                                │
 └────────────────────────────────────────────────────────────┘
-      │
-      ▼
+                │
+                ▼
 ┌────────────────────────────────────────────────────────────┐
-│ PHASE 3: PLANNING (Parallel)                               │
-│ ┌──────────┐  ┌──────────┐  ┌──────────┐                   │
-│ │ Designer │  │ Architect│  │ Strategy │                   │
-│ │  Plans   │  │  Plans   │  │  Plans   │                   │
-│ └────┬─────┘  └────┬─────┘  └────┬─────┘                   │
-│      └─────────────┬──────────────┘                        │
-│                    ▼                                       │
-│         ┌──────────────────────┐                           │
-│         │  Synthesis Agent     │                           │
-│         │  • Resolve conflicts │                           │
-│         │  • Create blueprint  │                           │
-│         │  • Tag uncertainties │                           │
-│         └──────────────────────┘                           │
+│ PHASE 3: PLANNING (Parallel)                              │
+│ ┌──────┐      ┌──────┐      ┌──────┐                     │
+│ │Design│      │Archit│      │Strat.│                     │
+│ │Plans │      │Plans │      │Plans │                     │
+│ └───┬──┘      └───┬──┘      └───┬──┘                     │
+│     └─────────────┼─────────────┘                         │
+│                   ▼                                        │
+│        ┌──────────────────┐                               │
+│        │ Synthesis Agent  │                               │
+│        │ • Resolve issues │                               │
+│        │ • Create plan    │                               │
+│        │ • Tag uncertain  │                               │
+│        └──────────────────┘                               │
 └────────────────────────────────────────────────────────────┘
-      │
-      ▼
+                │
+                ▼
 ┌────────────────────────────────────────────────────────────┐
-│ PHASE 4: IMPLEMENTATION                                    │
-│ ┌──────────┐  ┌──────────┐  ┌──────────┐                   │
-│ │ Frontend │  │ Backend  │  │  Tests   │                   │
-│ │  Agent   │  │  Agent   │  │  Agent   │                   │
-│ └────┬─────┘  └────┬─────┘  └────┬─────┘                   │
-│      │             │             │                         │
-│      │   Tag assumptions & file operations                 │
-│      │   #FILE_CREATED, #COMPLETION_DRIVE                  │
-│      └─────────────┬──────────────┘                        │
-└─────────────────────┴──────────────────────────────────────┘
-      │
-      ▼
+│ PHASE 4: IMPLEMENTATION                                   │
+│ ┌──────┐      ┌──────┐      ┌──────┐                     │
+│ │Front-│      │Back- │      │Tests │                     │
+│ │ end  │      │ end  │      │Agent │                     │
+│ └───┬──┘      └───┬──┘      └───┬──┘                     │
+│     │             │             │                         │
+│     │   Tag assumptions & file operations                 │
+│     │   #FILE_CREATED, #COMPLETION_DRIVE                  │
+│     └─────────────┼──────────────┘                        │
+└───────────────────┼─────────────────────────────────────────┘
+                │
+                ▼
 ┌────────────────────────────────────────────────────────────┐
-│ PHASE 5: VERIFICATION                                      │
-│ ┌─────────────────────────────────────────────────────┐    │
-│ │  Verification Agent                                 │    │
-│ │  • Resolve ALL meta-tags                            │    │
-│ │  • Run tests          → Capture output              │    │
-│ │  • Run build          → Capture logs                │    │
-│ │  • Take screenshots   → Visual evidence             │    │
-│ │  • Check memory tags  → No orphaned claims          │    │
-│ └─────────────────────────────────────────────────────┘    │
+│ PHASE 5: VERIFICATION                                     │
+│ ┌──────────────────────────────────────────────────────┐  │
+│ │ Verification Agent                                   │  │
+│ │ • Resolve ALL meta-tags                              │  │
+│ │ • Run tests       → Capture output                   │  │
+│ │ • Run build       → Capture logs                     │  │
+│ │ • Screenshots     → Visual evidence                  │  │
+│ │ • Check memory    → No orphaned claims               │  │
+│ └──────────────────────────────────────────────────────┘  │
 └────────────────────────────────────────────────────────────┘
-      │
-      ▼
+                │
+                ▼
 ┌────────────────────────────────────────────────────────────┐
-│ PHASE 6: QUALITY GATES                                     │
-│ ┌─────────────────────────────────────────────────────┐    │
-│ │  Design Review (if UI changed)                      │    │
-│ │  • Grid compliance (4px system)                     │    │
-│ │  • Token-based styling (no magic numbers)           │    │
-│ │  • Accessibility audit                              │    │
-│ │  • Interaction states (hover, focus, active)        │    │
-│ └─────────────────────────────────────────────────────┘    │
-│ ┌─────────────────────────────────────────────────────┐    │
-│ │  Content Awareness (if copy changed)                │    │
-│ │  • Matches brand voice                              │    │
-│ │  • Audience-appropriate                             │    │
-│ │  • Purpose-aligned                                  │    │
-│ └─────────────────────────────────────────────────────┘    │
+│ PHASE 6: QUALITY GATES                                    │
+│ ┌──────────────────────────────────────────────────────┐  │
+│ │ Design Review (if UI changed)                        │  │
+│ │ • Grid compliance (4px system)                       │  │
+│ │ • Token-based styling (no magic numbers)             │  │
+│ │ • Accessibility audit                                │  │
+│ │ • Interaction states (hover, focus, active)          │  │
+│ └──────────────────────────────────────────────────────┘  │
+│ ┌──────────────────────────────────────────────────────┐  │
+│ │ Content Awareness (if copy changed)                  │  │
+│ │ • Matches brand voice                                │  │
+│ │ • Audience-appropriate                               │  │
+│ │ • Purpose-aligned                                    │  │
+│ └──────────────────────────────────────────────────────┘  │
 └────────────────────────────────────────────────────────────┘
-      │
-      ▼
-┌────────────┐
-│   DONE     │  Evidence attached, memory updated
-│ + EVIDENCE │
-└────────────┘
+                │
+                ▼
+      ┌────────────────────┐
+      │      DONE          │  Evidence attached
+      │   + EVIDENCE       │  Memory updated
+      └────────────────────┘
 ```
 
 ---
 
-## Memory Architecture: Per-Project Knowledge Graph
+## Memory Architecture: Workshop + vibe-memory MCP
 
-```
-┌────────────────────────────────────────────────────────────────┐
-│                    MEMORY LAYER                                │
-├────────────────────────────────────────────────────────────────┤
-│                                                                │
-│   ┌─────────────────────────────────────────────────┐          │
-│   │  Claude Code Session                            │          │
-│   │                                                 │          │
-│   │  ┌────────────────────────────────────────┐     │          │
-│   │  │  Orchestrator/Agent                    │     │          │
-│   │  │                                        │     │          │
-│   │  │  "What CSS approach did we decide?"    │     │          │
-│   │  └───────────────┬────────────────────────┘     │          │
-│   │                  │                              │          │
-│   │                  │ memory.search()              │          │
-│   │                  ▼                              │          │
-│   │  ┌────────────────────────────────────────┐     │          │
-│   │  │  vibe-memory MCP Server                │     │          │
-│   │  │  ~/.claude/mcp/vibe-memory/            │     │          │
-│   │  │                                        │     │          │
-│   │  │  • Vector search (semantic)            │     │          │
-│   │  │  • FTS5 search (keyword)               │     │          │
-│   │  │  • Path resolution                     │     │          │
-│   │  └───────────────┬────────────────────────┘     │          │
-│   │                  │                              │          │
-│   │                  │ SQLite queries               │          │
-│   │                  ▼                              │          │
-│   │  ┌────────────────────────────────────────┐     │          │
-│   │  │  Workshop Database                     │     │          │
-│   │  │  .claude/memory/workshop.db            │     │          │
-│   │  │                                        │     │          │
-│   │  │  Tables:                               │     │          │
-│   │  │  ├─ decisions      (architectural)     │     │          │
-│   │  │  ├─ gotchas        (learned failures)  │     │          │
-│   │  │  ├─ goals          (roadmap)           │     │          │
-│   │  │  ├─ antipatterns   (banned approaches) │     │          │
-│   │  │  ├─ memory_fts     (FTS5 index)        │     │          │
-│   │  │  └─ memory_vectors (embeddings)        │     │          │
-│   │  └────────────────────────────────────────┘     │          │
-│   └─────────────────────────────────────────────────┘          │
-│                                                                │
-│   Result: "Use global CSS with design tokens, not Tailwind"    │
-│           (from decision recorded in workshop.db)              │
-│                                                                │
-└────────────────────────────────────────────────────────────────┘
+**Every project gets its own persistent memory using SQLite + FTS5 full-text search.**
 
-┌─────────────────────────────────────────────────────────────────┐
-│  CLI Interface (Workshop)                                       │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  $ workshop decision "Use Supabase for auth"                    │
-│  $ workshop gotcha "iOS Simulator needs Xcode 15.4+"            │
-│  $ workshop goal "Add dark mode" -p high                        │
-│  $ workshop antipattern "No inline styles" -r "Design system"   │
-│  $ workshop search "CSS patterns"                               │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+### What It Is
+
+The memory system combines two components:
+1. **Workshop CLI** — SQLite database with FTS5 search for project knowledge
+2. **vibe-memory MCP** — Exposes `memory.search` tool to Claude via Model Context Protocol
+
+**Key Design:** Each project maintains its own memory database at `.claude/memory/workshop.db`
+
+### Actual Setup (Step-by-Step)
+
+**1. Install Workshop CLI:**
+```bash
+cargo install workshop-cli
+# or download binary from https://github.com/zachswift615/workshop
 ```
 
-**Memory is not ephemeral chat context — it's a queryable knowledge graph that persists across sessions.**
+**2. Initialize project memory:**
+```bash
+cd your-project
+workshop init                           # Creates .workshop/workshop.db
+mkdir -p .claude/memory
+mv .workshop/workshop.db .claude/memory/workshop.db
+rmdir .workshop
+```
+
+**3. Configure vibe-memory MCP in `~/.claude.json`:**
+
+**CRITICAL:** Per-project MCPs go in `~/.claude.json` under `projects`, NOT in `.claude/mcp.json` files.
+
+```json
+{
+  "mcpServers": {
+    "playwright": { },
+    "chrome-devtools": { }
+  },
+  "projects": {
+    "/absolute/path/to/your-project": {
+      "mcpServers": {
+        "vibe-memory": {
+          "command": "python3",
+          "args": ["/Users/you/.claude/mcp/vibe-memory/memory_server.py"],
+          "env": { "PYTHONUNBUFFERED": "1" }
+        }
+      }
+    }
+  }
+}
+```
+
+**4. MCP server location (global, shared across projects):**
+```
+~/.claude/mcp/vibe-memory/memory_server.py
+```
+
+### How It Works (Request Flow)
+
+```
+User asks: "What CSS approach did we decide on?"
+    ↓
+Claude calls: memory.search("CSS patterns")
+    ↓
+vibe-memory MCP server receives request via stdio (JSON-RPC 2.0)
+    ↓
+Server searches .claude/memory/workshop.db using:
+  - Vector search (semantic, if sentence-transformers installed)
+  - FTS5 full-text search (BM25 ranking, always available)
+    ↓
+Returns results: "Use global CSS with design tokens, not Tailwind"
+    ↓
+Claude uses context in response
+```
+
+### Directory Structure
+
+**Per-project:**
+```
+your-project/
+├── .claude/
+│   ├── memory/
+│   │   ├── workshop.db              ← SQLite database (FTS5)
+│   │   └── playbooks/               ← ACE learning patterns
+│   ├── orchestration/
+│   │   ├── evidence/                ← Screenshots, logs
+│   │   ├── temp/                    ← Working files (delete after session)
+│   │   └── reference/               ← Key docs
+│   └── hooks/
+│       └── session-start.sh         ← Auto-loads memory context
+├── CLAUDE.md                        ← Project-specific instructions
+└── (source code...)
+```
+
+**Global:**
+```
+~/.claude/
+├── mcp/vibe-memory/memory_server.py  ← MCP server (shared)
+├── commands/                          ← Slash commands (/orca, etc.)
+├── agents/                            ← Agent definitions
+└── CLAUDE.md                          ← Global instructions
+```
+
+### Usage (Workshop CLI)
+
+**Record knowledge:**
+```bash
+workshop decision "Use Supabase for auth" -r "Self-hosted requirement"
+workshop gotcha "iOS Simulator needs Xcode 15.4+ on macOS 15"
+workshop goal "Add dark mode support" -p high
+workshop antipattern "Don't use inline styles" -r "Use design system classes"
+```
+
+**Search memory:**
+```bash
+# Via CLI
+workshop search "CSS patterns"
+
+# In Claude (automatic when MCP configured)
+# Claude calls memory.search tool automatically
+```
+
+**View context:**
+```bash
+workshop context          # Recent context (loaded at session start)
+workshop read decisions   # All decisions
+workshop read gotchas     # All gotchas
+```
+
+### Path Resolution Priority
+
+The vibe-memory MCP automatically finds your database by checking (in order):
+1. `$WORKSHOP_DB` environment variable
+2. `$WORKSHOP_ROOT/.claude/memory/workshop.db`
+3. Walk up from CWD: `.claude/memory/workshop.db` ← **Primary location**
+4. Walk up from CWD: `.claude-work/memory/workshop.db` ← Legacy fallback
+5. Walk up from CWD: `.workshop/workshop.db` ← Legacy fallback
+6. Fallback: `CWD/.claude/memory/workshop.db`
+
+**Result:** Automatically finds database in consolidated `.claude/memory/` location.
+
+### Why Per-Project Memory?
+
+- **Isolation** — Each project's memory is independent
+- **Performance** — Uses local machine (no cloud latency)
+- **Privacy** — Memory stays on your machine, never sent to cloud
+- **Portability** — Database travels with project (commit it or not, your choice)
+- **Scale** — No shared global database bottleneck
+
+### Migration from Legacy Structure
+
+Use `/cleanup` command to auto-consolidate old folders:
+
+```bash
+/cleanup
+```
+
+Moves:
+- `.claude-work/memory/workshop.db` → `.claude/memory/workshop.db`
+- `.orchestration/` → `.claude/orchestration/`
+- `.workshop/workshop.db` → `.claude/memory/workshop.db`
 
 ---
 
 ## Agent Hierarchy: Orchestrators vs Specialists
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                      ORCHESTRATORS                                  │
-│  (Own planning, synthesis, and decision-making)                     │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│  /orca                          /response-aware                     │
-│  ┌────────────────────┐         ┌────────────────────┐              │
-│  │ • Stack detection  │         │ • 6-phase protocol │              │
-│  │ • Team proposal    │         │ • Meta-tag system  │              │
-│  │ • User confirm     │         │ • Evidence req'd   │              │
-│  │ • Parallel exec    │         │ • Quality gates    │              │
-│  │ • Chaos prevention │         │ • Final synthesis  │              │
-│  └────────────────────┘         └────────────────────┘              │
-│           │                              │                          │
-│           └──────────────┬───────────────┘                          │
-│                          │                                          │
-│                          ▼                                          │
-└─────────────────────────────────────────────────────────────────────┘
-                           │
-                           │ Dispatches →
-                           │
-┌─────────────────────────────────────────────────────────────────────┐
-│                       SPECIALISTS                                   │
-│  (Narrow scopes, strict inputs, explicit non-responsibilities)      │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│  Planning Layer                                                     │
-│  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐         │
-│  │ system-        │  │ requirement-   │  │ plan-synthesis │         │
-│  │ architect      │  │ analyst        │  │ agent          │         │
-│  └────────────────┘  └────────────────┘  └────────────────┘         │
-│                                                                     │
-│  Design Layer                                                       │
-│  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐         │
-│  │ design-        │  │ creative-      │  │ ux-            │         │
-│  │ director       │  │ strategist     │  │ strategist     │         │
-│  └────────────────┘  └────────────────┘  └────────────────┘         │
-│                                                                     │
-│  Implementation Layer                                               │
-│  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐         │
-│  │ frontend-      │  │ backend-       │  │ ui-            │         │
-│  │ (Next.js, etc) │  │ (Node, Go, Py) │  │ engineer       │         │
-│  └────────────────┘  └────────────────┘  └────────────────┘         │
-│                                                                     │
-│  Quality Layer                                                      │
-│  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐         │
-│  │ test-          │  │ design-        │  │ verification-  │         │
-│  │ engineer       │  │ reviewer       │  │ agent          │         │
-│  └────────────────┘  └────────────────┘  └────────────────┘         │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│                     ORCHESTRATORS                          │
+│ (Own planning, synthesis, and decision-making)             │
+├────────────────────────────────────────────────────────────┤
+│                                                            │
+│  /orca                      /response-aware                │
+│  ┌──────────────┐       ┌──────────────┐                   │
+│  │ • Stack      │       │ • 6-phase    │                   │
+│  │   detect     │       │   flow       │                   │
+│  │ • Team       │       │ • Meta-tags  │                   │
+│  │   proposal   │       │ • Evidence   │                   │
+│  │ • User       │       │   req'd      │                   │
+│  │   confirm    │       │ • Quality    │                   │
+│  │ • Parallel   │       │   gates      │                   │
+│  │   exec       │       │ • Final      │                   │
+│  │ • Chaos      │       │   synthesis  │                   │
+│  │   prevent    │       │              │                   │
+│  └──────────────┘       └──────────────┘                   │
+│         │                       │                          │
+│         └───────────┬───────────┘                          │
+│                     │                                      │
+│                     ▼                                      │
+└────────────────────────────────────────────────────────────┘
+                       │
+                       │ Dispatches →
+                       │
+┌────────────────────────────────────────────────────────────┐
+│                      SPECIALISTS                           │
+│ (Narrow scopes, strict inputs, explicit limits)            │
+├────────────────────────────────────────────────────────────┤
+│                                                            │
+│ Planning Layer                                             │
+│ ┌──────────┐  ┌──────────┐  ┌──────────┐                   │
+│ │ system-  │  │ require- │  │  plan-   │                   │
+│ │architect │  │ analyst  │  │synthesis │                   │
+│ └──────────┘  └──────────┘  └──────────┘                   │
+│                                                            │
+│ Design Layer                                               │
+│ ┌──────────┐  ┌──────────┐  ┌──────────┐                   │
+│ │ design-  │  │creative- │  │   ux-    │                   │
+│ │ director │  │strategist│  │strategist│                   │
+│ └──────────┘  └──────────┘  └──────────┘                   │
+│                                                            │
+│ Implementation Layer                                       │
+│ ┌──────────┐  ┌──────────┐  ┌──────────┐                   │
+│ │frontend- │  │ backend- │  │   ui-    │                   │
+│ │(Next.js) │  │(Node,Go) │  │ engineer │                   │
+│ └──────────┘  └──────────┘  └──────────┘                   │
+│                                                            │
+│ Quality Layer                                              │
+│ ┌──────────┐  ┌──────────┐  ┌──────────┐                   │
+│ │  test-   │  │ design-  │  │ verify-  │                   │
+│ │ engineer │  │ reviewer │  │  agent   │                   │
+│ └──────────┘  └──────────┘  └──────────┘                   │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
 ```
 
 **Pattern that works:**
@@ -323,42 +410,36 @@ The result is endless iteration loops, and a high level of frustration -- and of
    Reality: Code doesn't compile, tests fail, UI is broken
 ```
 
-### The Solution: Response Awareness Meta-Tag System
-
-**Refrences:**
--[Response Awareness and Meta Cognition in Claude] (https://responseawareness.substack.com/p/response-awareness-and-meta-cognition)
--[Language Models Are Capable of Metacognitive Monitoring and Control of Their Internal Activations] (https://arxiv.org/html/2505.13763)
--[Signs of introspection in large language models] (https://www.anthropic.com/research/introspection)
-
+### The Solution: Meta-Tag System
 
 ```
 ✅ NEW APPROACH:
 
-   Implementation Agent:
-   ┌────────────────────────────────────────────────────┐
-   │ Created components/DarkModeToggle.tsx              │
-   │ #FILE_CREATED: components/DarkModeToggle.tsx       │
-   │ #COMPLETION_DRIVE: Assuming CSS vars exist         │
-   │ #SCREENSHOT_CLAIMED: .orchestration/evidence/ui.png│
-   └────────────────────────────────────────────────────┘
+Implementation Agent:
+┌────────────────────────────────────────────────────────────┐
+│ Created components/DarkModeToggle.tsx                      │
+│ #FILE_CREATED: components/DarkModeToggle.tsx               │
+│ #COMPLETION_DRIVE: Assuming CSS vars exist                 │
+│ #SCREENSHOT_CLAIMED: .orchestration/evidence/ui.png        │
+└────────────────────────────────────────────────────────────┘
 
-   Verification Agent:
-   ┌────────────────────────────────────────────────────┐
-   │ Resolving tags...                                  │
-   │                                                    │
-   │ ✓ #FILE_CREATED → ls confirms exists               │
-   │ ✓ #COMPLETION_DRIVE → grep found CSS vars          │
-   │ ✓ #SCREENSHOT_CLAIMED → screenshot captured        │
-   │ ✓ Build → npm run build (success)                  │
-   │ ✓ Tests → npm test (12/12 passed)                  │
-   │                                                    │
-   │ Evidence attached:                                 │
-   │ - Build logs: .orchestration/logs/build.log        │
-   │ - Test output: .orchestration/logs/test.log        │
-   │ - Screenshot: .orchestration/evidence/ui.png       │
-   └────────────────────────────────────────────────────┘
+Verification Agent:
+┌────────────────────────────────────────────────────────────┐
+│ Resolving tags...                                          │
+│                                                            │
+│ ✓ #FILE_CREATED → ls confirms exists                       │
+│ ✓ #COMPLETION_DRIVE → grep found CSS vars                  │
+│ ✓ #SCREENSHOT_CLAIMED → screenshot captured                │
+│ ✓ Build → npm run build (success)                          │
+│ ✓ Tests → npm test (12/12 passed)                          │
+│                                                            │
+│ Evidence attached:                                         │
+│ - Build logs: .orchestration/logs/build.log                │
+│ - Test output: .orchestration/logs/test.log                │
+│ - Screenshot: .orchestration/evidence/ui.png               │
+└────────────────────────────────────────────────────────────┘
 
-   Result: VERIFIED COMPLETE (with proof)
+Result: VERIFIED COMPLETE (with proof)
 ```
 
 **Core Tags:**
@@ -380,41 +461,42 @@ The result is endless iteration loops, and a high level of frustration -- and of
 ### Visual Precision is Non-Negotiable
 
 ```
-┌────────────────────────────────────────────────────────────────┐
-│  DESIGN REVIEW CHECKLIST (Automatic)                           │
-├────────────────────────────────────────────────────────────────┤
-│                                                                │
-│  Grid Compliance                                               │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │ ✓ All spacing uses 4px/8px/16px/24px/32px progression   │   │
-│  │ ✓ No arbitrary margins (e.g., margin: 13px)             │   │
-│  │ ✓ Container widths from design system scale             │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                │
-│  Token-Based Styling                                           │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │ ✓ All colors from design tokens (no #HEX in code)       │   │
-│  │ ✓ Typography uses scale (no arbitrary font-size)        │   │
-│  │ ✓ No inline styles (className only)                     │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                │
-│  Interaction States                                            │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │ ✓ Hover states defined                                  │   │
-│  │ ✓ Focus states (keyboard navigation)                    │   │
-│  │ ✓ Active/pressed states                                 │   │
-│  │ ✓ Disabled states                                       │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                │
-│  Accessibility                                                 │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │ ✓ ARIA labels on interactive elements                   │   │
-│  │ ✓ Semantic HTML (not div soup)                          │   │
-│  │ ✓ Keyboard navigable                                    │   │
-│  │ ✓ Color contrast meets WCAG AA                          │   │
-│  └─────────────────────────────────────────────────────────┘   │
-│                                                                │
-└────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│ DESIGN REVIEW CHECKLIST (Automatic)                        │
+├────────────────────────────────────────────────────────────┤
+│                                                            │
+│ Grid Compliance                                            │
+│ ┌──────────────────────────────────────────────────┐       │
+│ │ ✓ All spacing uses 4px/8px/16px/24px/32px       │        │
+│ │   progression                                    │       │
+│ │ ✓ No arbitrary margins (e.g., margin: 13px ❌)   │        │
+│ │ ✓ Container widths from design system scale      │       │
+│ └──────────────────────────────────────────────────┘       │
+│                                                            │
+│ Token-Based Styling                                        │
+│ ┌──────────────────────────────────────────────────┐       │
+│ │ ✓ All colors from design tokens (no #HEX)        │       │
+│ │ ✓ Typography uses scale (no arbitrary font-size) │       │
+│ │ ✓ No inline styles (className only)              │       │
+│ └──────────────────────────────────────────────────┘       │
+│                                                            │
+│ Interaction States                                         │
+│ ┌──────────────────────────────────────────────────┐       │
+│ │ ✓ Hover states defined                           │       │
+│ │ ✓ Focus states (keyboard navigation)             │       │
+│ │ ✓ Active/pressed states                          │       │
+│ │ ✓ Disabled states                                │       │
+│ └──────────────────────────────────────────────────┘       │
+│                                                            │
+│ Accessibility                                              │
+│ ┌──────────────────────────────────────────────────┐       │
+│ │ ✓ ARIA labels on interactive elements            │       │
+│ │ ✓ Semantic HTML (not div soup)                   │       │
+│ │ ✓ Keyboard navigable                             │       │
+│ │ ✓ Color contrast meets WCAG AA                   │       │
+│ └──────────────────────────────────────────────────┘       │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
 ```
 
 **Philosophy:**
@@ -428,53 +510,53 @@ The result is endless iteration loops, and a high level of frustration -- and of
 ## MCP Integrations: Structured I/O, Not Magic
 
 ```
-┌────────────────────────────────────────────────────────────────┐
-│                    MCP SERVERS                                 │
-├────────────────────────────────────────────────────────────────┤
-│                                                                │
-│  vibe-memory (Local Custom)                                    │
-│  ┌────────────────────────────────────────────────────────┐    │
-│  │ Path: ~/.claude/mcp/vibe-memory/                       │    │
-│  │ Tools:                                                 │    │
-│  │  • memory.search (semantic + FTS)                      │    │
-│  │  • Auto-loads project decisions, gotchas, goals        │    │
-│  │ Used by: All orchestrators and specialists             │    │
-│  └────────────────────────────────────────────────────────┘    │
-│                                                                │
-│  playwright (External)                                         │
-│  ┌────────────────────────────────────────────────────────┐    │
-│  │ Purpose: End-to-end browser automation                 │    │
-│  │ Tools:                                                 │    │
-│  │  • navigate, click, fill, screenshot, video            │    │
-│  │  • Network/console capture for evidence                │    │
-│  │ Used by: design-reviewer, verification-agent           │    │
-│  └────────────────────────────────────────────────────────┘    │
-│                                                                │
-│  chrome-devtools (External)                                    │
-│  ┌────────────────────────────────────────────────────────┐    │
-│  │ Purpose: Live page inspection                          │    │
-│  │ Tools:                                                 │    │
-│  │  • DOM inspection, network analysis, console logs      │    │
-│  │ Used by: design-reviewer, ui-testing-expert            │    │
-│  └────────────────────────────────────────────────────────┘    │
-│                                                                │
-│  XcodeBuildMCP (External)                                      │
-│  ┌────────────────────────────────────────────────────────┐    │
-│  │ Purpose: iOS/macOS development automation              │    │
-│  │ Tools:                                                 │    │
-│  │  • Build, test, run, deploy to simulators/devices      │    │
-│  │ Used by: ios-specialists, swiftui-developer            │    │
-│  └────────────────────────────────────────────────────────┘    │
-│                                                                │
-│  context7 (External)                                           │
-│  ┌────────────────────────────────────────────────────────┐    │
-│  │ Purpose: Library documentation and code search         │    │
-│  │ Tools:                                                 │    │
-│  │  • resolve-library-id, get-library-docs                │    │
-│  │ Used by: All implementation agents                     │    │
-│  └────────────────────────────────────────────────────────┘    │
-│                                                                │
-└────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│                      MCP SERVERS                           │
+├────────────────────────────────────────────────────────────┤
+│                                                            │
+│ vibe-memory (Local Custom)                                 │
+│ ┌──────────────────────────────────────────────────┐       │
+│ │ Path: ~/.claude/mcp/vibe-memory/                 │       │
+│ │ Tools:                                           │       │
+│ │  • memory.search (semantic + FTS)                │       │
+│ │  • Auto-loads project decisions, gotchas, goals  │       │
+│ │ Used by: All orchestrators and specialists       │       │
+│ └──────────────────────────────────────────────────┘       │
+│                                                            │
+│ playwright (External)                                      │
+│ ┌──────────────────────────────────────────────────┐       │
+│ │ Purpose: End-to-end browser automation           │       │
+│ │ Tools:                                           │       │
+│ │  • navigate, click, fill, screenshot, video      │       │
+│ │  • Network/console capture for evidence          │       │
+│ │ Used by: design-reviewer, verification-agent     │       │
+│ └──────────────────────────────────────────────────┘       │
+│                                                            │
+│ chrome-devtools (External)                                 │
+│ ┌──────────────────────────────────────────────────┐       │
+│ │ Purpose: Live page inspection                    │       │
+│ │ Tools:                                           │       │
+│ │  • DOM inspection, network, console logs         │       │
+│ │ Used by: design-reviewer, ui-testing-expert      │       │
+│ └──────────────────────────────────────────────────┘       │
+│                                                            │
+│ XcodeBuildMCP (External)                                   │
+│ ┌──────────────────────────────────────────────────┐       │
+│ │ Purpose: iOS/macOS development automation        │       │
+│ │ Tools:                                           │       │
+│ │  • Build, test, run, deploy to simulators/devices│       │
+│ │ Used by: ios-specialists, swiftui-developer      │       │
+│ └──────────────────────────────────────────────────┘       │
+│                                                            │
+│ context7 (External)                                        │
+│ ┌──────────────────────────────────────────────────┐       │
+│ │ Purpose: Library docs and code search            │       │
+│ │ Tools:                                           │       │
+│ │  • resolve-library-id, get-library-docs          │       │
+│ │ Used by: All implementation agents               │       │
+│ └──────────────────────────────────────────────────┘       │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
 ```
 
 **Key Principle:** All I/O goes through declared tools. Agents can only use MCPs specified in their `allowed-tools` — this acts as a hard permission boundary.

@@ -1,5 +1,4 @@
 # Root-level directories and files to exclude
-/_explore
 /.claude-global-hooks
 /.feedback
 /.claude-work
@@ -13,6 +12,7 @@ Makefile
 .*
 !.gitignore
 !.git
+/mm-agents
 
 # OS
 .DS_Store

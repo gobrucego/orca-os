@@ -441,24 +441,6 @@ Slash commands are custom workflows that execute specific agent patterns. They'r
 
 ---
 
-### /design-dna
-
-**Purpose:** Trigger Design/FE lane via ORCA (initialize or migrate to global class design system)
-
-**Usage:**
-```bash
-/design-dna
-```
-
-**What it does:**
-1. Initializes design system if missing
-2. Migrates inline styles → global CSS
-3. Sets up token-driven styling
-
-**When to use:** Design system initialization or migration
-
----
-
 ### /introspect
 
 **Purpose:** Run introspection pass to predict failure modes and set risk gate
@@ -599,7 +581,7 @@ Analysis & Strategy (2):
 Specialized (5):
 ├── /mm-copy                 ← MM ad copy generator
 ├── /mm-comps                ← MM competitor research
-├── /design-dna              ← Design system init/migration
+├── /mm-designer             ← MM quiet-luxury UI/layout design
 ├── /introspect              ← Risk assessment
 └── /cleanup                 ← Folder consolidation
 

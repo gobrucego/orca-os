@@ -22,71 +22,74 @@ ORCA is the primary multi-agent orchestrator for complex, cross-domain work. It 
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                         ORCA ORCHESTRATOR                       │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Phase 1: Tech Stack Detection                                 │
-│  ┌───────────────────────────────────────────────────────┐     │
-│  │ • Check prompt keywords (iOS, React, BFCM, etc.)      │     │
-│  │ • Scan project files (*.xcodeproj, package.json)      │     │
-│  │ • Determine stack: iOS / Frontend / Backend / Data    │     │
-│  └───────────────────────────────────────────────────────┘     │
-│                          ↓                                      │
-│  Phase 2: Team Selection                                       │
-│  ┌───────────────────────────────────────────────────────┐     │
-│  │ • Load team definitions from playbooks                │     │
-│  │ • Select base team + specialists                      │     │
-│  │ • iOS: 6-15 agents                                    │     │
-│  │ • Frontend: 10-15 agents                              │     │
-│  │ • Backend: 6 agents                                   │     │
-│  │ • Data Analysis: 5-7 agents                           │     │
-│  └───────────────────────────────────────────────────────┘     │
-│                          ↓                                      │
-│  Phase 3: User Confirmation (MANDATORY)                        │
-│  ┌───────────────────────────────────────────────────────┐     │
-│  │ • Interactive confirmation via AskUserQuestion        │     │
-│  │ • Shows proposed team                                 │     │
-│  │ • User can confirm or modify                          │     │
-│  │ • No bypass - always runs                             │     │
-│  └───────────────────────────────────────────────────────┘     │
-│                          ↓                                      │
-│  Phase 4: Agent Dispatch                                       │
-│  ┌───────────────────────────────────────────────────────┐     │
-│  │ • Create /tmp/orca-[timestamp]/ session dir           │     │
-│  │ • Initialize .orchestration/orca-session marker       │     │
-│  │ • Dispatch agents with chaos prevention rules         │     │
-│  │ • Track file creation via #FILE_CREATED tags          │     │
-│  │ • Monitor file count (warn at 10, 25, block at 50)    │     │
-│  └───────────────────────────────────────────────────────┘     │
-│                          ↓                                      │
-│  Phase 5: Verification                                         │
-│  ┌───────────────────────────────────────────────────────┐     │
-│  │ • Run builds, tests                                   │     │
-│  │ • Capture screenshots                                 │     │
-│  │ • Verify all meta-tags resolved                       │     │
-│  │ • Evidence → .orchestration/evidence/                 │     │
-│  └───────────────────────────────────────────────────────┘     │
-│                          ↓                                      │
-│  Phase 6: Quality Gates (0-5)                                  │
-│  ┌───────────────────────────────────────────────────────┐     │
-│  │ GATE 0: content-awareness-validator (if content-heavy)│     │
-│  │ GATE 1: verification-agent                            │     │
-│  │ GATE 2: test-engineer (unit + integration)            │     │
-│  │ GATE 3: ui-testing-expert (if UI work)                │     │
-│  │ GATE 4: design-reviewer (if UI work)                  │     │
-│  │ GATE 5: quality-validator (final review)              │     │
-│  └───────────────────────────────────────────────────────┘     │
-│                          ↓                                      │
-│  Phase 7: Cleanup & Delivery                                   │
-│  ┌───────────────────────────────────────────────────────┐     │
-│  │ • Run /finalize (git hooks via bash scripts)          │     │
-│  │ • Clean up /tmp/orca-[sessionid]/                     │     │
-│  │ • Present results with evidence                       │     │
-│  │ • Show file count summary                             │     │
-│  └───────────────────────────────────────────────────────┘     │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│                    ORCA ORCHESTRATOR                       │
+├────────────────────────────────────────────────────────────┤
+│                                                            │
+│ Phase 1: Tech Stack Detection                             │
+│ ┌──────────────────────────────────────────────────┐       │
+│ │ • Check prompt keywords (iOS, React, BFCM, etc.) │       │
+│ │ • Scan project files (*.xcodeproj, package.json) │       │
+│ │ • Determine stack: iOS / Frontend / Backend /    │       │
+│ │   Data                                           │       │
+│ └──────────────────────────────────────────────────┘       │
+│                         ↓                                  │
+│ Phase 2: Team Selection                                   │
+│ ┌──────────────────────────────────────────────────┐       │
+│ │ • Load team definitions from playbooks           │       │
+│ │ • Select base team + specialists                 │       │
+│ │ • iOS: 6-15 agents                               │       │
+│ │ • Frontend: 10-15 agents                         │       │
+│ │ • Backend: 6 agents                              │       │
+│ │ • Data Analysis: 5-7 agents                      │       │
+│ └──────────────────────────────────────────────────┘       │
+│                         ↓                                  │
+│ Phase 3: User Confirmation (MANDATORY)                    │
+│ ┌──────────────────────────────────────────────────┐       │
+│ │ • Interactive confirmation via AskUserQuestion   │       │
+│ │ • Shows proposed team                            │       │
+│ │ • User can confirm or modify                     │       │
+│ │ • No bypass - always runs                        │       │
+│ └──────────────────────────────────────────────────┘       │
+│                         ↓                                  │
+│ Phase 4: Agent Dispatch                                   │
+│ ┌──────────────────────────────────────────────────┐       │
+│ │ • Create /tmp/orca-[timestamp]/ session dir      │       │
+│ │ • Initialize .orchestration/orca-session marker  │       │
+│ │ • Dispatch agents with chaos prevention rules    │       │
+│ │ • Track file creation via #FILE_CREATED tags     │       │
+│ │ • Monitor file count (warn at 10, 25, block at   │       │
+│ │   50)                                            │       │
+│ └──────────────────────────────────────────────────┘       │
+│                         ↓                                  │
+│ Phase 5: Verification                                     │
+│ ┌──────────────────────────────────────────────────┐       │
+│ │ • Run builds, tests                              │       │
+│ │ • Capture screenshots                            │       │
+│ │ • Verify all meta-tags resolved                  │       │
+│ │ • Evidence → .orchestration/evidence/            │       │
+│ └──────────────────────────────────────────────────┘       │
+│                         ↓                                  │
+│ Phase 6: Quality Gates (0-5)                              │
+│ ┌──────────────────────────────────────────────────┐       │
+│ │ GATE 0: content-awareness-validator (if content- │       │
+│ │         heavy)                                   │       │
+│ │ GATE 1: verification-agent                       │       │
+│ │ GATE 2: test-engineer (unit + integration)       │       │
+│ │ GATE 3: ui-testing-expert (if UI work)           │       │
+│ │ GATE 4: design-reviewer (if UI work)             │       │
+│ │ GATE 5: quality-validator (final review)         │       │
+│ └──────────────────────────────────────────────────┘       │
+│                         ↓                                  │
+│ Phase 7: Cleanup & Delivery                               │
+│ ┌──────────────────────────────────────────────────┐       │
+│ │ • Run /finalize (git hooks via bash scripts)     │       │
+│ │ • Clean up /tmp/orca-[sessionid]/                │       │
+│ │ • Present results with evidence                  │       │
+│ │ • Show file count summary                        │       │
+│ └──────────────────────────────────────────────────┘       │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -370,7 +373,7 @@ Task({
 ✅ **Independent data sources** — Analysts working on different datasets
 ✅ **Different layers** — Backend + Frontend implementation
 ✅ **Different domains** — Unit tests + Integration tests + UI tests
-✅ **Complementary analysis** — requirement-analyst + ux-strategist
+✅ **Complementary analysis** — requirement-analyst + design-director
 
 **Example:**
 ```javascript
@@ -393,7 +396,7 @@ Task({ subagent_type: "general-purpose", prompt: "Follow bf-sales-analyst.md..."
 ```javascript
 // Group 1: Requirements (parallel)
 Task({ subagent_type: "requirement-analyst", prompt: "..." })
-Task({ subagent_type: "ux-strategist", prompt: "..." })
+Task({ subagent_type: "design-director", prompt: "..." })
 
 // Wait for Group 1, then...
 
@@ -404,7 +407,6 @@ Task({ subagent_type: "system-architect", prompt: "..." })
 
 // Group 3: Implementation (parallel)
 Task({ subagent_type: "react-18-specialist", prompt: "..." })
-Task({ subagent_type: "css-specialist", prompt: "..." })
 ```
 
 ---
@@ -414,41 +416,41 @@ Task({ subagent_type: "css-specialist", prompt: "..." })
 **Read:** `.orchestration/reference/quality-gates.md` for full details
 
 ```
-┌─────────────────────────────────────────────────────────────┐
+┌────────────────────────────────────────────────────────────┐
 │ GATE 0: Content Awareness (if content-heavy)               │
 │ ├─ content-awareness-validator                             │
 │ └─ Validates brand voice, audience, purpose alignment      │
-└─────────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────────┐
-│ GATE 1: Verification                                        │
-│ ├─ verification-agent                                       │
+└────────────────────────────────────────────────────────────┘
+                         ↓
+┌────────────────────────────────────────────────────────────┐
+│ GATE 1: Verification                                       │
+│ ├─ verification-agent                                      │
 │ └─ Resolves all meta-tags, captures evidence               │
-└─────────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────────┐
-│ GATE 2: Testing                                             │
-│ ├─ test-engineer                                            │
+└────────────────────────────────────────────────────────────┘
+                         ↓
+┌────────────────────────────────────────────────────────────┐
+│ GATE 2: Testing                                            │
+│ ├─ test-engineer                                           │
 │ └─ Unit + integration tests                                │
-└─────────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────────┐
-│ GATE 3: UI Testing (if UI work)                             │
-│ ├─ ui-testing-expert                                        │
+└────────────────────────────────────────────────────────────┘
+                         ↓
+┌────────────────────────────────────────────────────────────┐
+│ GATE 3: UI Testing (if UI work)                            │
+│ ├─ ui-testing-expert                                       │
 │ └─ XCUITest (iOS) or E2E (web)                             │
-└─────────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────────┐
-│ GATE 4: Design Review (if UI work)                          │
-│ ├─ design-reviewer                                          │
-│ └─ Visual verification via Playwright                       │
-└─────────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────────┐
-│ GATE 5: Quality Validation                                  │
-│ ├─ quality-validator                                        │
-│ └─ Final production readiness check                         │
-└─────────────────────────────────────────────────────────────┘
+└────────────────────────────────────────────────────────────┘
+                         ↓
+┌────────────────────────────────────────────────────────────┐
+│ GATE 4: Design Review (if UI work)                         │
+│ ├─ design-reviewer                                         │
+│ └─ Visual verification via Playwright                      │
+└────────────────────────────────────────────────────────────┘
+                         ↓
+┌────────────────────────────────────────────────────────────┐
+│ GATE 5: Quality Validation                                 │
+│ ├─ quality-validator                                       │
+│ └─ Final production readiness check                        │
+└────────────────────────────────────────────────────────────┘
 ```
 
 **Enforcement:**
@@ -658,12 +660,12 @@ Reports, documentation, analysis files:
 
 **Execution:**
 1. Detect: Frontend (keywords + package.json)
-2. Team: 12 agents (requirement-analyst, ux-strategist, system-architect, design-system-architect, nextjs-14-specialist, css-specialist, state-management-specialist, frontend-performance-specialist, frontend-testing-specialist, design-reviewer, verification-agent, quality-validator)
+2. Team: 7 agents (requirement-analyst, system-architect, nextjs-14-specialist, react-18-specialist, design-reviewer, verification-agent, quality-validator)
 3. User confirms team
 4. Dispatch in groups:
-   - Group 1 (parallel): requirement-analyst, ux-strategist
-   - Group 2 (sequential): system-architect, design-system-architect
-   - Group 3 (parallel): nextjs-14-specialist, css-specialist, state-management-specialist
+   - Group 1 (parallel): requirement-analyst
+   - Group 2 (sequential): system-architect
+   - Group 3 (parallel): nextjs-14-specialist, react-18-specialist
 5. Build + screenshot evidence
 6. Quality gates (1-5)
 7. Cleanup, present results

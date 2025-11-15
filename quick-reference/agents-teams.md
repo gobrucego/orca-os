@@ -22,122 +22,114 @@ The agent system is organized in layers:
 ## Agent Hierarchy
 
 ```
-┌──────────────────────────────────────────────────────────┐
-│                    ORCHESTRATORS                         │
-│  (Own planning, synthesis, decision-making)              │
-├──────────────────────────────────────────────────────────┤
-│  • engineering-director (blueprint creation)             │
-│  • workflow-orchestrator (multi-phase coordination)      │
-│  • meta-orchestrator (strategy selection)                │
-└──────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│                    ORCHESTRATORS                           │
+│  (Own planning, synthesis, decision-making)                │
+├────────────────────────────────────────────────────────────┤
+│  • engineering-director (blueprint creation)               │
+│  • workflow-orchestrator (multi-phase coordination)        │
+│  • meta-orchestrator (strategy selection)                  │
+└────────────────────────────────────────────────────────────┘
                           │
                           │ Dispatches
                           ▼
-┌──────────────────────────────────────────────────────────┐
-│                    PLANNING LAYER                        │
-├──────────────────────────────────────────────────────────┤
-│  • requirement-analyst (elicit requirements)             │
-│  • system-architect (technical design)                   │
-└──────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│                    PLANNING LAYER                          │
+├────────────────────────────────────────────────────────────┤
+│  • requirement-analyst (elicit requirements)               │
+│  • system-architect (technical design)                     │
+└────────────────────────────────────────────────────────────┘
                           │
                           │ Feeds into
                           ▼
-┌──────────────────────────────────────────────────────────┐
-│                IMPLEMENTATION LAYER                      │
-├──────────────────────────────────────────────────────────┤
-│  iOS (10):                                               │
-│  • swiftui-developer                                     │
-│  • swiftdata-specialist                                  │
-│  • state-architect                                       │
-│  • swift-testing-specialist                              │
-│  • ui-testing-expert                                     │
-│  • observation-specialist                                │
-│  • tca-specialist                                        │
-│  • coredata-expert                                       │
-│  • combine-networking                                    │
-│  • urlsession-expert                                     │
-│                                                          │
-│  Frontend (10):                                          │
-│  • react-18-specialist                                   │
-│  • nextjs-14-specialist                                  │
-│  • css-specialist                                        │
-│  • html-architect                                        │
-│  • state-management-specialist                           │
-│  • frontend-performance-specialist                       │
-│  • frontend-testing-specialist                           │
-│  • tailwind-specialist (migration only)                  │
-│  • ui-engineer                                           │
-│  • accessibility-specialist                              │
-│                                                          │
-│  Backend (3):                                            │
-│  • backend-engineer (Node, Go, Python)                   │
-│  • infrastructure-engineer (DevOps, CI/CD)               │
-│  • ios-api-designer (mobile-optimized APIs)              │
-│                                                          │
-│  Mobile (2):                                             │
-│  • android-engineer (Kotlin, Jetpack Compose)            │
-│  • cross-platform-mobile (RN, Flutter)                   │
-└──────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│                IMPLEMENTATION LAYER                        │
+├────────────────────────────────────────────────────────────┤
+│  iOS (10):                                                 │
+│  • swiftui-developer                                       │
+│  • swiftdata-specialist                                    │
+│  • state-architect                                         │
+│  • swift-testing-specialist                                │
+│  • ui-testing-expert                                       │
+│  • observation-specialist                                  │
+│  • tca-specialist                                          │
+│  • coredata-expert                                         │
+│  • combine-networking                                      │
+│  • urlsession-expert                                       │
+│                                                            │
+│  Frontend (2):                                             │
+│  • react-18-specialist                                     │
+│  • nextjs-14-specialist                                    │
+│                                                            │
+│  Backend (3):                                              │
+│  • backend-engineer (Node, Go, Python)                     │
+│  • infrastructure-engineer (DevOps, CI/CD)                 │
+│  • ios-api-designer (mobile-optimized APIs)                │
+│                                                            │
+│  Mobile (2):                                               │
+│  • android-engineer (Kotlin, Jetpack Compose)              │
+│  • cross-platform-mobile (RN, Flutter)                     │
+└────────────────────────────────────────────────────────────┘
                           │
                           │ Verifies
                           ▼
-┌──────────────────────────────────────────────────────────┐
-│                    QUALITY LAYER                         │
-├──────────────────────────────────────────────────────────┤
-│  • verification-agent (meta-tag resolution)              │
-│  • test-engineer (test creation + execution)             │
-│  • design-reviewer (visual verification)                 │
-│  • content-awareness-validator (brand/voice)             │
-│  • quality-validator (final production check)            │
-│  • design-ocd-enforcer (precision validation)            │
-└──────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│                    QUALITY LAYER                           │
+├────────────────────────────────────────────────────────────┤
+│  • verification-agent (meta-tag resolution)                │
+│  • test-engineer (test creation + execution)               │
+│  • design-reviewer (visual verification)                   │
+│  • content-awareness-validator (brand/voice)               │
+│  • quality-validator (final production check)              │
+│  • design-ocd-enforcer (precision validation)              │
+└────────────────────────────────────────────────────────────┘
                           │
                           │ Supports
                           ▼
-┌──────────────────────────────────────────────────────────┐
-│                   SPECIALIST LAYER                       │
-│  (Domain experts for specific needs)                     │
-├──────────────────────────────────────────────────────────┤
-│  Design (10):                                            │
-│  • design-director                                       │
-│  • design-system-architect                               │
-│  • ux-strategist                                         │
-│  • creative-strategist                                   │
-│  • brand-guidelines-creator                              │
-│  • design-compiler                                       │
-│  • design-dna-linter                                     │
-│  • css-system-architect                                  │
-│  • motion-director                                       │
-│  • migration-specialist                                  │
-│                                                          │
-│  iOS Specialists (10):                                   │
-│  • ios-performance-engineer                              │
-│  • ios-security-tester                                   │
-│  • ios-penetration-tester                                │
-│  • ios-accessibility-tester                              │
-│  • ios-debugger                                          │
-│  • fastlane-specialist                                   │
-│  • xcode-cloud-expert                                    │
-│  • swift-code-reviewer                                   │
-│  • xctest-pro                                            │
-│  • ios-api-designer                                      │
-│                                                          │
-│  Data Analysts (7):                                      │
-│  • merch-lifecycle-analyst                               │
-│  • general-performance-analyst                           │
-│  • ads-creative-analyst                                  │
-│  • bf-sales-analyst                                      │
-│  • story-synthesizer                                     │
-│  • creative-strategist (overlap with design)             │
-│  • mm-market-researcher                                  │
-│                                                          │
-│  Business Domain (5):                                    │
-│  • mm-merchandising-specialist                           │
-│  • mm-casting-visual-auditor                             │
-│  • mm-marketplace-routing-strategist                     │
-│  • mm-creative-copy-strategist                           │
-│  • mm-accessories-optimizer                              │
-└──────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│                   SPECIALIST LAYER                         │
+│  (Domain experts for specific needs)                       │
+├────────────────────────────────────────────────────────────┤
+│  Design (10):                                              │
+│  • design-director                                         │
+│  • design-system-architect                                 │
+│  • ux-strategist                                           │
+│  • creative-strategist                                     │
+│  • brand-guidelines-creator                                │
+│  • design-compiler                                         │
+│  • design-dna-linter                                       │
+│  • css-system-architect                                    │
+│  • motion-director                                         │
+│  • migration-specialist                                    │
+│                                                            │
+│  iOS Specialists (10):                                     │
+│  • ios-performance-engineer                                │
+│  • ios-security-tester                                     │
+│  • ios-penetration-tester                                  │
+│  • ios-accessibility-tester                                │
+│  • ios-debugger                                            │
+│  • fastlane-specialist                                     │
+│  • xcode-cloud-expert                                      │
+│  • swift-code-reviewer                                     │
+│  • xctest-pro                                              │
+│  • ios-api-designer                                        │
+│                                                            │
+│  Data Analysts (7):                                        │
+│  • merch-lifecycle-analyst                                 │
+│  • general-performance-analyst                             │
+│  • ads-creative-analyst                                    │
+│  • bf-sales-analyst                                        │
+│  • story-synthesizer                                       │
+│  • creative-strategist (overlap with design)               │
+│  • mm-market-researcher                                    │
+│                                                            │
+│  Business Domain (5):                                      │
+│  • mm-merchandising-specialist                             │
+│  • mm-casting-visual-auditor                               │
+│  • mm-marketplace-routing-strategist                       │
+│  • mm-creative-copy-strategist                             │
+│  • mm-accessories-optimizer                                │
+└────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -297,46 +289,6 @@ The agent system is organized in layers:
 - SSR/SSG/ISR
 - Server Actions, optimization
 
-#### css-specialist
-- Global CSS implementation
-- Token-driven styles
-- No Tailwind (design system enforcement)
-
-#### html-architect
-- Semantic HTML
-- Accessibility-first patterns
-- SEO metadata
-
-#### state-management-specialist
-- UI/server/URL state separation
-- Optimal tool selection
-- Strategic state architecture
-
-#### frontend-performance-specialist
-- Code splitting, memoization
-- Core Web Vitals optimization
-- Performance monitoring
-
-#### frontend-testing-specialist
-- Vitest, React Testing Library
-- User-behavior-focused testing
-- Accessibility testing
-
-#### tailwind-specialist
-- Tailwind → global CSS migration only
-- Maps utility-first to design system
-- Not for new implementations
-
-#### ui-engineer
-- UI component implementation
-- React/Vue/Angular
-- TypeScript, state management
-
-#### accessibility-specialist
-- WCAG 2.1 AA compliance
-- Screen reader support
-- Keyboard navigation
-
 ---
 
 ### Backend Team (3 agents)
@@ -481,50 +433,20 @@ The agent system is organized in layers:
 - FRAME → STRUCTURE → SURFACE scaffold
 - Blueprint-first, code-second
 
-#### design-system-architect
-- Design tokens, component patterns
-- Brand guidelines creation
-- Single source of truth
-
-#### ux-strategist
-- Flow simplification
-- User journey mapping
-- Interaction design
-
 #### creative-strategist
 - Brand strategy and advertising analysis
 - Performance data connection
 - Psychology + market context
-
-#### brand-guidelines-creator
-- Living brand guidelines
-- Voice, color, typography
-- Mapped to design tokens
 
 #### design-compiler
 - Design system → code implementation
 - Component generation
 - Token application
 
-#### design-dna-linter
-- Design system compliance
-- Token usage verification
-- Consistency enforcement
-
-#### css-system-architect
-- Global CSS architecture
-- Class registry ownership
-- Tokens → variables → components
-
 #### motion-director
 - Motion design orchestration
 - Semantic animation classes
 - Reduced-motion fallbacks
-
-#### migration-specialist
-- Inline styles → design system migration
-- Utility classes → global CSS
-- Codemods, batch refactors
 
 ---
 
@@ -685,7 +607,7 @@ Planning:
 Implementation:
 - swiftui-developer + swiftdata-specialist
   OR
-- nextjs-14-specialist + css-specialist + state-management-specialist
+- nextjs-14-specialist
 
 Quality:
 - test-engineer
@@ -702,17 +624,14 @@ Quality:
 ```
 Planning:
 - requirement-analyst
-- ux-strategist (if UI-heavy)
 - system-architect
 
 Implementation (parallel):
-- Frontend: nextjs-14-specialist, css-specialist, state-management-specialist
+- Frontend: nextjs-14-specialist
 - Backend: backend-engineer, infrastructure-engineer
-- Performance: frontend-performance-specialist
 
 Quality:
 - test-engineer
-- frontend-testing-specialist
 - design-reviewer (if UI)
 - verification-agent
 - quality-validator

@@ -30,17 +30,12 @@ swift-testing-specialist → Write tests
 ### Core Team (4-5 agents)
 ```
 system-architect         → API design & data flow
-react-18-specialist     → Components & hooks
-css-specialist          → Global CSS (no Tailwind)
-state-management-specialist → Redux/Zustand/Context
+react-18-specialist      → Components & hooks
 test-engineer           → Jest/Vitest tests
 ```
 
 ### When to Add Specialists
 - **Next.js app router**: `nextjs-14-specialist`
-- **Performance**: `frontend-performance-specialist`
-- **Tailwind conversion**: `tailwind-specialist`
-- **Accessibility**: `accessibility-specialist`
 
 ### Evidence Required
 - Build succeeds: `npm run build`
