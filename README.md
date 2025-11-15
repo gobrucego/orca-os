@@ -1,471 +1,754 @@
+# Vibe Code — A Constrained, Evidence-Driven OS for Claude
+
+> **An opinionated orchestration framework that transforms Claude Code from a helpful chat into a disciplined engineering system.**
+
 ```
-         _______                   _____                    _____                    _____          
-        /::\    \                 /\    \                  /\    \                  /\    \         
-       /::::\    \               /::\    \                /::\    \                /::\    \        
-      /::::::\    \             /::::\    \              /::::\    \              /::::\    \       
-     /::::::::\    \           /::::::\    \            /::::::\    \            /::::::\    \      
-    /:::/~~\:::\    \         /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \     
-   /:::/    \:::\    \       /:::/__\:::\    \        /:::/  \:::\    \        /:::/__\:::\    \    
-  /:::/    / \:::\    \     /::::\   \:::\    \      /:::/    \:::\    \      /::::\   \:::\    \   
- /:::/____/   \:::\____\   /::::::\   \:::\    \    /:::/    / \:::\    \    /::::::\   \:::\    \  
-|:::|    |     |:::|    | /:::/\:::\   \:::\____\  /:::/    /   \:::\    \  /:::/\:::\   \:::\    \ 
-|:::|____|     |:::|    |/:::/  \:::\   \:::|    |/:::/____/     \:::\____\/:::/  \:::\   \:::\____\
- \:::\    \   /:::/    / \::/   |::::\  /:::|____|\:::\    \      \::/    /\::/    \:::\  /:::/    /
-  \:::\    \ /:::/    /   \/____|:::::\/:::/    /  \:::\    \      \/____/  \/____/ \:::\/:::/    / 
-   \:::\    /:::/    /          |:::::::::/    /    \:::\    \                       \::::::/    /  
-    \:::\__/:::/    /           |::|\::::/    /      \:::\    \                       \::::/    /   
-     \::::::::/    /            |::| \::/____/        \:::\    \                      /:::/    /    
-      \::::::/    /             |::|  ~|               \:::\    \                    /:::/    /     
-       \::::/    /              |::|   |                \:::\    \                  /:::/    /      
-        \::/____/               \::|   |                 \:::\____\                /:::/    /       
-         ~~                      \:|   |                  \::/    /                \::/    /        
-                                  \|___|                   \/____/                  \/____/         
-                                                                                                    
-```                                                                
-                                           
-
-
-# Vibe Code / Claude Agentic OS
->
-> This repo is a **version‑controlled mirror** of your global Claude config in `~/.claude`.  
-> **`~/.claude` is the source of truth.**  
-> You edit commands/agents/MCPs in `~/.claude`, then sync back here.
-
----
-
-## 1. Why This Exists (Situation → Complication → Resolution)
-
-### Situation
-
-You’re using Claude Code to build real products:
-- Brand/design systems
-- Web apps, dashboards, iOS apps
-- Data/SEO tooling and design systems
-
-Initially, everything goes through “one big smart chat” with a generic assistant.
-
-### Complication
-
-That model quickly hits hard limits:
-
-- **AI deviance**
-  - Says “done” when code doesn’t run, tests don’t pass, UI is broken.
-  - Quietly ignores constraints or drifts away from the original request.
-
-- **Janky UI/UX**
-  - Generic agents hallucinate design systems, spacing, typography.
-  - Orca + “design” personas produced chaotic, off‑brand layouts.
-
-- **Chaos & token bloat**
-  - Thousands of planning files, no file limits.
-  - Repeatedly re‑explaining brand rules, design systems, and decisions.
-  - No reliable memory; every session starts from scratch.
-
-- **Unreliable orchestration**
-  - Multi‑agent systems run without strong scopes or guardrails.
-  - No hard requirement to prove work with tests/build/screenshots/logs.
-
----
-
-### 2. Resolution — A Personal AI OS for Claude
-
-This system is a **constrained, evidence‑driven OS** around Claude:
-
-- **Global OS in `~/.claude`**
-  - Commands, agents, MCP servers, hooks.
-  - This repo (`claude-vibe-config`) is a mirror of that OS.
-
-- **Project DNA + memory**
-  - Each project has its own design system + brand docs.
-  - A local memory database (via the `workshop` tool + `vibe-memory` MCP) stores decisions, gotchas, goals.
-
-- **Orchestrators + narrow specialists**
-  - Orchestrators (`/response-aware`, `/orca`) own planning + verification.
-  - Narrow agents (`/creative-strategist`, `/design-director`, `/brand-designer`) stay in strict lanes with hard rules.
-
-- **Evidence‑based completion**
-  - Work is not “done” until there is proof: tests, builds, screenshots, logs, all reconciled against meta‑tags.
-
-The rest of this README explains how that OS works.
-
----
-
-## 3. Mental Model: How a Request Flows
-
-At a high level, every request goes through this pipeline:
-
-```text
-You
-  ↓
-Orchestrator Command
-  (/response-aware, /orca)
-  ↓
-Context & Memory
-  - Global docs (CLAUDE.md, design systems)
-  - Project memory DB via vibe-memory MCP
-  ↓
-Specialist Agents
-  (strategists, designers, implementors)
-  ↓
-Implementation & Tools
-  - File edits via tools
-  - MCPs (playwright, chromedevtools, iossimulator, etc.)
-  ↓
-Verification & Evidence
-  - Tests / builds / screenshots / logs
-  ↓
-Final Synthesis
-  - Decisions + proof
+┌────────────────────────────────────────────────────────────────┐
+│                                                                │
+│   Beyond "Ask AI" → Systematic Software Development           │
+│                                                                │
+│   • Memory-First Architecture                                 │
+│   • Evidence-Based Completion                                 │
+│   • Design-OCD Quality Gates                                  │
+│   • Multi-Agent Orchestration with Guardrails                 │
+│                                                                │
+└────────────────────────────────────────────────────────────────┘
 ```
 
-Key ideas:
+---
 
-- You talk mostly to **orchestrators** (`/response-aware`, `/orca`).
-- They pull **memory** (project decisions + design DNA) into context.
-- They dispatch **specialists** with narrow scopes and hard rules.
-- Implementors write code; verifiers must capture **evidence**.
+## The Problem This Solves
+
+**Generic AI assistants drift.** They say "done" when code doesn't compile, tests fail, and UI is broken. They hallucinate design systems, ignore constraints, and produce janky outputs that require endless iteration loops.
+
+**This framework enforces discipline:**
+- Work isn't "done" until there's **evidence** (tests, builds, screenshots, logs)
+- Agents operate in **strict lanes** with hard scopes
+- **Memory persists** across sessions (no re-explaining decisions)
+- **Quality gates** catch issues before humans see them
 
 ---
 
+## System Architecture
 
-## 4. Quickstart: Usage Recipes
-
-For people who just want to use it, not study LLM research:
-
-- **Design a new tool screen**
-  - Plan:  
-    ```text
-    /response-aware -plan "iOS to React migration"
-    ```
-  - Implement + verify from blueprint:  
-    ```text
-    /response-aware -build path/to/blueprint.md
-    ```
-
-- **Design an new layout**
-  ```text
-  /designer-director " product detail page layout"
-  ```
-
-- **Full end‑to‑end implementation with proof**
-  ```text
-  /response-aware "Add dark mode to dashboard"
-  ```
-
-- **Analyze creative performance and strategy**
-  ```text
-  /creative-strategist "<paste performance data + ads>"
-  ```
-
-You can get real work done with just these commands; the rest of the README explains what they’re doing under the hood.
-
----
-
-## 5. Memory & Vibe‑Memory MCP
-
-Memory is a first‑class part of this system; it’s not just token context.
-
-### 5.1 Workshop: Project Memory
-
-Memory is managed via the **Workshop** tool:
-
-- Repo: <https://github.com/zachswift615/workshop>
-- It stores project knowledge in:
-  - `project/.claude/memory/workshop.db`
-
-You record:
-- Decisions (“Use Supabase for auth.”)
-- Gotchas (“iOS Simulator needs Xcode 15.4+ on macOS 15.”)
-- Goals, notes, and anti‑patterns.
-
-### 5.2 Vibe‑Memory MCP
-
-The **vibe‑memory** MCP server exposes that database to Claude:
-
-- Installed locally at:
-  - `~/.claude/mcp/vibe-memory`
-- Provides tools like:
-  - `memory.search` for semantic + FTS search over `workshop.db`
-
-Orchestrators and specialists call this MCP to:
-- Recall prior decisions (“We banned Tailwind here.”)
-- Surface relevant context for the current request.
-
-Details: see `quick-reference/memory.md` in this repo for the full memory stack and CLI workflow.
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         VIBE CODE OS                                │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  ┌──────────────┐      ┌──────────────┐      ┌──────────────┐     │
+│  │   Commands   │      │   Agents     │      │     MCPs     │     │
+│  │  (/orca,     │◄────►│ (Orchestrate │◄────►│  (Browser,   │     │
+│  │  /response-  │      │  + Execute)  │      │   Memory,    │     │
+│  │   aware)     │      │              │      │   DevTools)  │     │
+│  └──────┬───────┘      └──────┬───────┘      └──────┬───────┘     │
+│         │                     │                     │              │
+│         └─────────────┬───────┴─────────────────────┘              │
+│                       │                                            │
+│                       ▼                                            │
+│         ┌─────────────────────────────┐                           │
+│         │   Verification Engine       │                           │
+│         │  • Meta-tag resolution      │                           │
+│         │  • Evidence capture         │                           │
+│         │  • Quality gates            │                           │
+│         └─────────────────────────────┘                           │
+│                       │                                            │
+│                       ▼                                            │
+│         ┌─────────────────────────────┐                           │
+│         │   Memory Layer              │                           │
+│         │  • Project decisions        │                           │
+│         │  • Design DNA               │                           │
+│         │  • Learned patterns         │                           │
+│         └─────────────────────────────┘                           │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## 6. Orchestrators: `/response-aware` and ORCA
+## Request Flow: From Idea to Verified Implementation
 
-### 6.1 `/response-aware` — Response Awareness Workflow
-
-`/response-aware` is the primary orchestrator. It runs a 6‑phase protocol with meta‑tags and evidence:
-
-Modes:
-- Full: `/response-aware <feature>`
-- Plan only: `/response-aware -plan <feature>`
-- Build only: `/response-aware -build <blueprint.md>`
-
-Phases:
-1. **Phase 0 — Survey**  
-   Map domains, integration points, interfaces.
-2. **Phase 1 — Parallel Planning**  
-   Multiple planners propose paths; record `#PATH_DECISION` and risks.
-3. **Phase 2 — Synthesis**  
-   Pick a path; produce a single implementation blueprint; ask user to approve.
-4. **Phase 3 — Implementation**  
-   Implement strictly from the blueprint; tag assumptions and file operations.
-5. **Phase 4 — Verification**  
-   Resolve every tag via tests/build/screenshots/logs; no unresolved claims.
-6. **Phase 5 — Final Synthesis**  
-   Summarize work, decisions, and attach evidence.
-
-The core idea: **no more “done” without proof.**
-
-### 6.2 ORCA — Smart Multi‑Agent Orchestration
-
-ORCA is the higher‑level multi‑agent orchestrator focused on:
-
-- **Tech stack detection**
-  - Inspect project files to infer stack (Next.js, iOS, etc.).
-- **Team proposal + user confirmation**
-  - Proposes a specialist team (planners, implementors, verifiers).
-  - Always uses `AskUserQuestion` for interactive confirmation.
-- **Parallel agent execution**
-  - Domain‑specific agents work in parallel under strict file limits.
-- **Chaos prevention**
-  - Max files per agent/session.
-  - Required meta‑tags.
-  - Standardized directories for evidence, logs, and temp files.
-
-ORCA and `/response-aware` can be combined: ORCA for stack‑aware team building, `/response-aware` for plan/implement/verify discipline.
-
----
-
-## 7. Custom Agents with Scopes & Guardrails
-
-One of the biggest lessons: **generic agents drift; narrow agents behave.**
-
-### 7.1 What went wrong
-
-- Broad “design” agents plugged into ORCA tried to:
-  - Invent entire design systems.
-  - Overstep into implementation without clear specs.
-  - Produce visually and structurally janky UI.
-
-### 7.2 The pattern that works
-
-Specialist agents now follow a consistent pattern:
-
-1. **Narrow role**
-   - `/creative-strategist` → strategy and performance analysis only.
-   - `/design-director` → layout, hierarchy, critique.
-   - `/brand-designer` → brand specific UI architect (no orchestration).
-
-2. **Mandatory context recall**
-   - Read `CLAUDE.md` and project design DNA:
-   - Summarize brand voice, typography, color, layout rules, constraints.
-
-3. **Thinking scaffold**
-   - `/design-director`, `/brand-designer`:  
-     `FRAME → STRUCTURE → SURFACE → CODE`
-
-4. **Hard rules**
-   - Type scales, color usage, spacing tokens.
-   - Card/bento architectures.
-   - “Calculate, don’t guess” for spacing and width.
-   - Blueprint‑first, code‑second; code only if explicitly requested.
-
-5. **Structured output**
-   - Fixed blueprint templates:
-     - CONTEXT RECALL
-     - MODE
-     - FRAME / STRUCTURE / SURFACE / CALCULATIONS / COMPONENTS
-     - RECOMMENDATIONS
-     - RISKS / WARNINGS
-
-Result: agents stay in their lane and produce consistent, brand‑true outputs that implementation agents can consume reliably.
-
----
-
-## 8. Parallel Orchestration & Chaos Prevention
-
-Parallelism is powerful but dangerous; this OS uses it carefully.
-
-### 8.1 Parallel reasoning, serialized decisions
-
-- ORCA and `/response-aware` can dispatch multiple planners or specialists in parallel.
-- The orchestrator:
-  - Gathers outputs.
-  - Synthesizes them into a single blueprint.
-  - Owns the decision; implementors **do not** mutate the plan.
-
-### 8.2 Chaos prevention rules
-
-To avoid runaway file/plan creation:
-
-- **File limits**
-  - Max files per agent per task.
-  - Max files per ORCA session.
-
-- **Meta‑tags required**
-  - `#FILE_CREATED`, `#FILE_MODIFIED`, `#FILE_DELETED`
-  - `#COMPLETION_DRIVE`, `#SCREENSHOT_CLAIMED`, etc.
-
-- **Standard paths**
-  - Evidence: `.orchestration/evidence/`
-  - Logs: `.orchestration/logs/`
-  - Temp: `/tmp/orca-[sessionid]/`
-
-- **Banned planning docs**
-  - No `PLAN.md`, `TODO.md`, `*-plan.md`, etc.
-  - Work directly in code + blueprints; no explosion of meta‑documents.
-
-This keeps multi‑agent work observable and bounded.
+```
+┌────────────┐
+│   Human    │  "Add dark mode to dashboard"
+│   Request  │
+└─────┬──────┘
+      │
+      ▼
+┌─────────────────────────────────────────────────────────────┐
+│ PHASE 1: CONTEXT LOADING                                   │
+│ ┌─────────────┐     ┌─────────────┐     ┌─────────────┐   │
+│ │   Memory    │────►│  Design DNA │────►│   Project   │   │
+│ │   Search    │     │   (Brand)   │     │   CLAUDE.md │   │
+│ └─────────────┘     └─────────────┘     └─────────────┘   │
+└─────────────────────────────────────────────────────────────┘
+      │
+      ▼
+┌─────────────────────────────────────────────────────────────┐
+│ PHASE 2: ORCHESTRATION                                     │
+│ ┌─────────────┐                                            │
+│ │ /orca or    │  • Detect stack (Next.js, iOS, etc.)      │
+│ │ /response-  │  • Propose specialist team                 │
+│ │  aware      │  • Get user confirmation                   │
+│ └─────────────┘                                            │
+└─────────────────────────────────────────────────────────────┘
+      │
+      ▼
+┌─────────────────────────────────────────────────────────────┐
+│ PHASE 3: PLANNING (Parallel)                               │
+│ ┌──────────┐  ┌──────────┐  ┌──────────┐                  │
+│ │ Designer │  │ Architect│  │ Strategy │                  │
+│ │  Plans   │  │  Plans   │  │  Plans   │                  │
+│ └────┬─────┘  └────┬─────┘  └────┬─────┘                  │
+│      └─────────────┬──────────────┘                        │
+│                    ▼                                        │
+│         ┌──────────────────────┐                           │
+│         │  Synthesis Agent     │                           │
+│         │  • Resolve conflicts │                           │
+│         │  • Create blueprint  │                           │
+│         │  • Tag uncertainties │                           │
+│         └──────────────────────┘                           │
+└─────────────────────────────────────────────────────────────┘
+      │
+      ▼
+┌─────────────────────────────────────────────────────────────┐
+│ PHASE 4: IMPLEMENTATION                                    │
+│ ┌──────────┐  ┌──────────┐  ┌──────────┐                  │
+│ │ Frontend │  │ Backend  │  │  Tests   │                  │
+│ │  Agent   │  │  Agent   │  │  Agent   │                  │
+│ └────┬─────┘  └────┬─────┘  └────┬─────┘                  │
+│      │             │             │                         │
+│      │   Tag assumptions & file operations                 │
+│      │   #FILE_CREATED, #COMPLETION_DRIVE                  │
+│      └─────────────┬──────────────┘                        │
+└─────────────────────┴──────────────────────────────────────┘
+      │
+      ▼
+┌─────────────────────────────────────────────────────────────┐
+│ PHASE 5: VERIFICATION                                      │
+│ ┌─────────────────────────────────────────────────────┐    │
+│ │  Verification Agent                                 │    │
+│ │  • Resolve ALL meta-tags                            │    │
+│ │  • Run tests          → Capture output              │    │
+│ │  • Run build          → Capture logs                │    │
+│ │  • Take screenshots   → Visual evidence             │    │
+│ │  • Check memory tags  → No orphaned claims          │    │
+│ └─────────────────────────────────────────────────────┘    │
+└─────────────────────────────────────────────────────────────┘
+      │
+      ▼
+┌─────────────────────────────────────────────────────────────┐
+│ PHASE 6: QUALITY GATES                                     │
+│ ┌─────────────────────────────────────────────────────┐    │
+│ │  Design Review (if UI changed)                      │    │
+│ │  • Grid compliance (4px system)                     │    │
+│ │  • Token-based styling (no magic numbers)           │    │
+│ │  • Accessibility audit                              │    │
+│ │  • Interaction states (hover, focus, active)        │    │
+│ └─────────────────────────────────────────────────────┘    │
+│ ┌─────────────────────────────────────────────────────┐    │
+│ │  Content Awareness (if copy changed)                │    │
+│ │  • Matches brand voice                              │    │
+│ │  • Audience-appropriate                             │    │
+│ │  • Purpose-aligned                                  │    │
+│ └─────────────────────────────────────────────────────┘    │
+└─────────────────────────────────────────────────────────────┘
+      │
+      ▼
+┌────────────┐
+│   DONE     │  Evidence attached, memory updated
+│ + EVIDENCE │
+└────────────┘
+```
 
 ---
 
-## 9. MCP Tools & IO Safety
+## Memory Architecture: Per-Project Knowledge Graph
 
-Agents only interact with your system via declared tools.  
-Commands specify `allowed-tools`, which acts as a hard permission boundary.
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    MEMORY LAYER                                 │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│   ┌─────────────────────────────────────────────────┐          │
+│   │  Claude Code Session                            │          │
+│   │                                                  │          │
+│   │  ┌────────────────────────────────────────┐     │          │
+│   │  │  Orchestrator/Agent                    │     │          │
+│   │  │                                         │     │          │
+│   │  │  "What CSS approach did we decide?"    │     │          │
+│   │  └───────────────┬────────────────────────┘     │          │
+│   │                  │                               │          │
+│   │                  │ memory.search()               │          │
+│   │                  ▼                               │          │
+│   │  ┌────────────────────────────────────────┐     │          │
+│   │  │  vibe-memory MCP Server                │     │          │
+│   │  │  ~/.claude/mcp/vibe-memory/            │     │          │
+│   │  │                                         │     │          │
+│   │  │  • Vector search (semantic)            │     │          │
+│   │  │  • FTS5 search (keyword)               │     │          │
+│   │  │  • Path resolution                     │     │          │
+│   │  └───────────────┬────────────────────────┘     │          │
+│   │                  │                               │          │
+│   │                  │ SQLite queries                │          │
+│   │                  ▼                               │          │
+│   │  ┌────────────────────────────────────────┐     │          │
+│   │  │  Workshop Database                     │     │          │
+│   │  │  .claude/memory/workshop.db            │     │          │
+│   │  │                                         │     │          │
+│   │  │  Tables:                               │     │          │
+│   │  │  ├─ decisions      (architectural)     │     │          │
+│   │  │  ├─ gotchas        (learned failures)  │     │          │
+│   │  │  ├─ goals          (roadmap)           │     │          │
+│   │  │  ├─ antipatterns   (banned approaches) │     │          │
+│   │  │  ├─ memory_fts     (FTS5 index)        │     │          │
+│   │  │  └─ memory_vectors (embeddings)        │     │          │
+│   │  └────────────────────────────────────────┘     │          │
+│   └─────────────────────────────────────────────────┘          │
+│                                                                 │
+│   Result: "Use global CSS with design tokens, not Tailwind"    │
+│           (from decision recorded in workshop.db)              │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
 
-### 9.1 Core MCPs in this setup
+┌─────────────────────────────────────────────────────────────────┐
+│  CLI Interface (Workshop)                                       │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  $ workshop decision "Use Supabase for auth"                    │
+│  $ workshop gotcha "iOS Simulator needs Xcode 15.4+"            │
+│  $ workshop goal "Add dark mode" -p high                        │
+│  $ workshop antipattern "No inline styles" -r "Design system"   │
+│  $ workshop search "CSS patterns"                               │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
 
-- **vibe-memory** (local)
-  - Path: `~/.claude/mcp/vibe-memory`
-  - Exposes project memory (`.claude/memory/workshop.db`) via `memory.search`.
-  - Used by orchestrators and specialists to recall decisions and context.
-
-- **playwright**
-  - Drives real browsers for end‑to‑end flows.
-  - Captures screenshots and videos for evidence.
-
-- **chromedevtools**
-  - Inspects live pages (DOM, network, console).
-  - Useful for UI debugging and layout verification.
-
-- **iossimulator**
-  - Controls iOS Simulator to run native flows.
-  - Used for visual and functional evidence on iOS.
-
-- **context7**
-  - Provides rich repository/codebase context and search.
-  - Lets agents reason about large projects without manual grepping.
-
-Some of these MCPs are configured as external services (via Claude settings), others (like `vibe-memory`) are installed locally. All of them are treated as **structured tools**, not magical abilities.
-
-### 9.2 File + shell tools
-
-Commands use tool‑based IO:
-
-- `Read`, `Write`, `Edit`, `MultiEdit` — code and file operations.
-- `Grep`, `Glob` — search within the repo.
-- `Bash` — controlled shell commands.
-
-Combined with MCPs and meta‑tags, this makes agent behavior observable and auditable.
-
----
-
-## 10. Design Principles: AI Deviance & Token Efficiency
-
-This OS exists to fix two things:
-
-1. **AI deviance**
-   - Models drifting away from the request.
-   - Saying “done” when reality disagrees.
-
-2. **Token bloat**
-   - Massive, unfocused chats.
-   - Repeating the same context and decisions in every session.
-
-Design principles baked into this setup:
-
-- **Blueprint‑first, code‑second**
-  - For UI and complex systems, always design the blueprint (structure, spacing, tokens) before implementing code.
-
-- **Evidence‑based “done”**
-  - Work is complete only when tags are resolved and evidence is captured: tests, builds, screenshots, logs.
-
-- **Narrow agents with hard scopes**
-  - Each agent has a single job, strict inputs, and explicit non‑responsibilities.
-
-- **Memory as ground truth**
-  - Decisions live in Workshop (via `vibe-memory` MCP), not ephemeral chat.
-  - Brand/design DNA lives in design system docs.
-
-- **MCP tools + logs over magic**
-  - All I/O goes through tools and is logged.
-  - Behavior is inspectable and debuggable.
-
-- **Parallel planning, centralized decisions**
-  - Many agents can explore, but one orchestrator decides and enforces.
-
-In practice this is also more **token‑efficient**:
-- Less repetition of context and decisions.
-- Fewer iterations caused by drift and janky proposals.
-- Smaller, reusable specialist prompts instead of one giant general persona.
+**Key Insight:** Memory is not ephemeral chat context — it's a **queryable knowledge graph** that persists across sessions.
 
 ---
 
-## 11. What Lives Where (File/Folder Map)
+## Agent Hierarchy: Orchestrators vs Specialists
 
-### 11.1 Global OS (`~/.claude`)
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                      ORCHESTRATORS                                  │
+│  (Own planning, synthesis, and decision-making)                     │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  /orca                          /response-aware                     │
+│  ┌────────────────────┐         ┌────────────────────┐             │
+│  │ • Stack detection  │         │ • 6-phase protocol │             │
+│  │ • Team proposal    │         │ • Meta-tag system  │             │
+│  │ • User confirm     │         │ • Evidence req'd   │             │
+│  │ • Parallel exec    │         │ • Quality gates    │             │
+│  │ • Chaos prevention │         │ • Final synthesis  │             │
+│  └────────────────────┘         └────────────────────┘             │
+│           │                              │                          │
+│           └──────────────┬───────────────┘                          │
+│                          │                                          │
+│                          ▼                                          │
+└─────────────────────────────────────────────────────────────────────┘
+                           │
+                           │ Dispatches →
+                           │
+┌─────────────────────────────────────────────────────────────────────┐
+│                       SPECIALISTS                                   │
+│  (Narrow scopes, strict inputs, explicit non-responsibilities)     │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  Planning Layer                                                     │
+│  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐       │
+│  │ system-        │  │ requirement-   │  │ plan-synthesis │       │
+│  │ architect      │  │ analyst        │  │ agent          │       │
+│  └────────────────┘  └────────────────┘  └────────────────┘       │
+│                                                                     │
+│  Design Layer                                                       │
+│  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐       │
+│  │ design-        │  │ creative-      │  │ ux-            │       │
+│  │ director       │  │ strategist     │  │ strategist     │       │
+│  └────────────────┘  └────────────────┘  └────────────────┘       │
+│                                                                     │
+│  Implementation Layer                                               │
+│  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐       │
+│  │ frontend-      │  │ backend-       │  │ ui-            │       │
+│  │ (Next.js, etc) │  │ (Node, Go, Py) │  │ engineer       │       │
+│  └────────────────┘  └────────────────┘  └────────────────┘       │
+│                                                                     │
+│  Quality Layer                                                      │
+│  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐       │
+│  │ test-          │  │ design-        │  │ verification-  │       │
+│  │ engineer       │  │ reviewer       │  │ agent          │       │
+│  └────────────────┘  └────────────────┘  └────────────────┘       │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+```
 
-Live config used by Claude Code:
+**Pattern that works:**
+1. **Narrow role** — One job, clearly defined
+2. **Mandatory context recall** — Always load memory + design DNA first
+3. **Thinking scaffold** — Fixed reasoning structure (FRAME → STRUCTURE → SURFACE)
+4. **Hard rules** — Type scales, spacing tokens, banned patterns
+5. **Structured output** — Blueprint templates, not freeform
 
-- `~/.claude/commands/*.md`
-  - Live command definitions:
-    - `creative-strategist.md`
-    - `design-director.md`
-    - `response-aware.md`
-    - `orca.md`
-    - and others.
-
-- `~/.claude/agents/`
-  - Custom agents, if any, used by ORCA and orchestrators.
-
-- `~/.claude/mcp/`
-  - MCP servers:
-    - `vibe-memory/` (local project memory MCP)
-    - Other MCPs are typically configured externally (playwright, chromedevtools, iossimulator, context7).
-
-- `~/.claude/hooks/`
-  - Shell hooks (e.g. session start) that wire in memory, project detection, etc.
-
-- `~/.claude/CLAUDE.md`
-  - Global brain/config document (design OCD, verification rules, etc.).
-
-### 11.2 This repo (`claude-vibe-config`)
-
-This repo mirrors `~/.claude` for version control:
-
-- `commands/`
-  - Snapshots of your live custom commands (`brand-designer.md`, `response-aware.md`, etc.).
-
-- `agents/`
-  - Snapshots of custom agents.
-
-- `docs/`, `quick-reference/`
-  - Methodology and deep dives:
-    - `quick-reference/memory.md` → full memory + vibe‑memory + Workshop workflow.
-    - `quick-reference/agents-teams.md`, `quick-reference/triggers-tools.md`, etc.
-
-- `scripts/`, `hooks/`
-  - Helper scripts used by commands and hooks (capture tests, builds, screenshots, verification, etc.).
-
-Remember: you change the live config in `~/.claude`, then sync back into this repo.
-
-### 11.3 Per‑project configs
-
-Each project has its own DNA and memory:
-
-
-Other projects follow the same pattern:
-- Project design DNA + brand docs under `design-*` or `docs/`.
-- Project memory under `.claude/memory/workshop.db`.
+**Pattern that failed:**
+- Broad "design" agents that tried to do everything → drift and hallucination
 
 ---
 
-This README is the high‑level map.  
-For operational details (exact tags, scripts, or team patterns), see the files under `quick-reference/` and the individual command files in `commands/`.***
+## Evidence-Based Completion: Meta-Tags + Verification
+
+### The Problem: False Completion
+
+```
+❌ OLD APPROACH:
+   Agent: "I've added dark mode support."
+   Reality: Code doesn't compile, tests fail, UI is broken
+```
+
+### The Solution: Meta-Tag System
+
+```
+✅ NEW APPROACH:
+
+   Implementation Agent:
+   ┌────────────────────────────────────────────────────┐
+   │ Created components/DarkModeToggle.tsx              │
+   │ #FILE_CREATED: components/DarkModeToggle.tsx       │
+   │ #COMPLETION_DRIVE: Assuming CSS vars exist         │
+   │ #SCREENSHOT_CLAIMED: .orchestration/evidence/ui.png│
+   └────────────────────────────────────────────────────┘
+
+   Verification Agent:
+   ┌────────────────────────────────────────────────────┐
+   │ Resolving tags...                                  │
+   │                                                    │
+   │ ✓ #FILE_CREATED → ls confirms exists              │
+   │ ✓ #COMPLETION_DRIVE → grep found CSS vars         │
+   │ ✓ #SCREENSHOT_CLAIMED → screenshot captured        │
+   │ ✓ Build → npm run build (success)                 │
+   │ ✓ Tests → npm test (12/12 passed)                 │
+   │                                                    │
+   │ Evidence attached:                                 │
+   │ - Build logs: .orchestration/logs/build.log        │
+   │ - Test output: .orchestration/logs/test.log        │
+   │ - Screenshot: .orchestration/evidence/ui.png       │
+   └────────────────────────────────────────────────────┘
+
+   Result: VERIFIED COMPLETE (with proof)
+```
+
+**Core Tags:**
+- `#FILE_CREATED`, `#FILE_MODIFIED`, `#FILE_DELETED` → File operations
+- `#COMPLETION_DRIVE` → Assumptions that need verification
+- `#SCREENSHOT_CLAIMED` → Visual evidence needed
+- `#PATH_DECISION` → Architectural choices
+- `#PLAN_UNCERTAINTY` → Needs clarification
+
+**Verification Requirements:**
+- All tags must be resolved
+- Evidence must be captured (not claimed)
+- No work is "done" until verification passes
+
+---
+
+## Design-OCD Quality Gates
+
+### Visual Precision is Non-Negotiable
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  DESIGN REVIEW CHECKLIST (Automatic)                           │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Grid Compliance                                                │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │ ✓ All spacing uses 4px/8px/16px/24px/32px progression  │   │
+│  │ ✓ No arbitrary margins (e.g., margin: 13px ❌)          │   │
+│  │ ✓ Container widths from design system scale            │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                 │
+│  Token-Based Styling                                            │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │ ✓ All colors from design tokens (no #HEX in code)      │   │
+│  │ ✓ Typography uses scale (no arbitrary font-size)       │   │
+│  │ ✓ No inline styles (className only)                    │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                 │
+│  Interaction States                                             │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │ ✓ Hover states defined                                 │   │
+│  │ ✓ Focus states (keyboard navigation)                   │   │
+│  │ ✓ Active/pressed states                                │   │
+│  │ ✓ Disabled states                                      │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                 │
+│  Accessibility                                                  │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │ ✓ ARIA labels on interactive elements                  │   │
+│  │ ✓ Semantic HTML (not div soup)                         │   │
+│  │ ✓ Keyboard navigable                                   │   │
+│  │ ✓ Color contrast meets WCAG AA                         │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Philosophy:**
+- Visual bugs are as critical as functional bugs
+- Design review is MANDATORY, not optional
+- Optical alignment > geometric alignment
+- Calculate, don't guess
+
+---
+
+## MCP Integrations: Structured I/O, Not Magic
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    MCP SERVERS                                  │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  vibe-memory (Local Custom)                                     │
+│  ┌────────────────────────────────────────────────────────┐    │
+│  │ Path: ~/.claude/mcp/vibe-memory/                       │    │
+│  │ Tools:                                                  │    │
+│  │  • memory.search (semantic + FTS)                      │    │
+│  │  • Auto-loads project decisions, gotchas, goals        │    │
+│  │ Used by: All orchestrators and specialists             │    │
+│  └────────────────────────────────────────────────────────┘    │
+│                                                                 │
+│  playwright (External)                                          │
+│  ┌────────────────────────────────────────────────────────┐    │
+│  │ Purpose: End-to-end browser automation                 │    │
+│  │ Tools:                                                  │    │
+│  │  • navigate, click, fill, screenshot, video            │    │
+│  │  • Network/console capture for evidence                │    │
+│  │ Used by: design-reviewer, verification-agent           │    │
+│  └────────────────────────────────────────────────────────┘    │
+│                                                                 │
+│  chrome-devtools (External)                                     │
+│  ┌────────────────────────────────────────────────────────┐    │
+│  │ Purpose: Live page inspection                          │    │
+│  │ Tools:                                                  │    │
+│  │  • DOM inspection, network analysis, console logs      │    │
+│  │ Used by: design-reviewer, ui-testing-expert            │    │
+│  └────────────────────────────────────────────────────────┘    │
+│                                                                 │
+│  XcodeBuildMCP (External)                                       │
+│  ┌────────────────────────────────────────────────────────┐    │
+│  │ Purpose: iOS/macOS development automation              │    │
+│  │ Tools:                                                  │    │
+│  │  • Build, test, run, deploy to simulators/devices      │    │
+│  │ Used by: ios-specialists, swiftui-developer            │    │
+│  └────────────────────────────────────────────────────────┘    │
+│                                                                 │
+│  context7 (External)                                            │
+│  ┌────────────────────────────────────────────────────────┐    │
+│  │ Purpose: Library documentation and code search          │    │
+│  │ Tools:                                                  │    │
+│  │  • resolve-library-id, get-library-docs                │    │
+│  │ Used by: All implementation agents                     │    │
+│  └────────────────────────────────────────────────────────┘    │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Key Principle:** All I/O goes through declared tools. Agents can only use MCPs specified in their `allowed-tools` — this acts as a hard permission boundary.
+
+---
+
+## File Organization: Chaos Prevention
+
+```
+project-root/
+├── .claude/
+│   ├── memory/
+│   │   └── workshop.db              ← Per-project knowledge graph
+│   ├── orchestration/
+│   │   ├── evidence/                ← FINAL artifacts (screenshots, reports)
+│   │   ├── temp/                    ← Working files (DELETE after session)
+│   │   ├── playbooks/               ← Reference patterns
+│   │   └── reference/               ← Key docs
+│   └── hooks/
+│       └── session-start.sh         ← Auto-loads context at session start
+│
+├── CLAUDE.md                        ← Project-specific instructions
+└── (source code...)
+
+~/.claude/ (Global OS)
+├── commands/                        ← Live slash commands
+│   ├── orca.md
+│   ├── response-aware.md
+│   ├── creative-strategist.md
+│   └── ...
+├── agents/                          ← Custom agent definitions
+│   ├── orchestration/
+│   ├── specialists/
+│   └── ...
+├── mcp/
+│   └── vibe-memory/                 ← Custom MCP server
+├── hooks/
+│   └── session-start.sh             ← Global session hook
+└── CLAUDE.md                        ← Global instructions
+```
+
+**Chaos Prevention Rules:**
+1. **File limits** — Max files per agent, per session
+2. **Standard paths** — Evidence, logs, temp all in `.claude/orchestration/`
+3. **Meta-tags required** — `#FILE_CREATED`, `#FILE_MODIFIED`, `#FILE_DELETED`
+4. **No planning doc explosion** — No `PLAN.md`, `TODO.md`, etc.
+5. **Cleanup enforcement** — `/cleanup` command consolidates legacy folders
+
+---
+
+## Usage Recipes
+
+### Full End-to-End Implementation with Verification
+
+```bash
+/response-aware "Add dark mode to dashboard"
+```
+
+**What happens:**
+1. Loads memory (prior decisions about theming)
+2. Loads design DNA (color tokens, spacing)
+3. Plans implementation (parallel planners)
+4. Synthesizes single blueprint
+5. Implements (with meta-tags)
+6. Verifies (resolves all tags, captures evidence)
+7. Runs quality gates (design review, tests)
+8. Returns with evidence attached
+
+---
+
+### Plan-Only Mode (Review Before Implementation)
+
+```bash
+/response-aware -plan "iOS to React migration"
+```
+
+**What happens:**
+1. Survey phase (map domains, interfaces)
+2. Parallel planning (multiple approaches)
+3. Synthesis (single blueprint with risks)
+4. User approval required
+5. Stops (no implementation yet)
+
+**Then implement from blueprint:**
+
+```bash
+/response-aware -build path/to/blueprint.md
+```
+
+---
+
+### Design a New Layout
+
+```bash
+/design-director "product detail page layout"
+```
+
+**What happens:**
+1. Loads design DNA (typography, spacing, grid)
+2. Applies thinking scaffold (FRAME → STRUCTURE → SURFACE)
+3. Produces blueprint with:
+   - Mathematical spacing calculations
+   - Component hierarchy
+   - Token-based styling specs
+   - No code (blueprint-first)
+
+---
+
+### Strategic Analysis with Performance Data
+
+```bash
+/creative-strategist "<paste performance data + ads>"
+```
+
+**What happens:**
+1. Analyzes creative signals (copy, visuals, CTAs)
+2. Maps to performance metrics
+3. Identifies patterns (what worked, what didn't)
+4. Provides recommendations grounded in data
+5. No implementation (strategy only)
+
+---
+
+### Multi-Agent Orchestration with Stack Detection
+
+```bash
+/orca "Implement user authentication"
+```
+
+**What happens:**
+1. Detects stack (inspects package.json, files)
+2. Proposes specialist team (architect, backend, frontend, test)
+3. Shows team to user via interactive confirmation
+4. Dispatches agents in parallel (with file limits)
+5. Synthesis agent resolves conflicts
+6. Verification agent proves completion
+
+---
+
+## Design Principles
+
+### 1. Blueprint-First, Code-Second
+
+For UI and complex systems, always design the blueprint (structure, spacing, tokens) before writing code. Prevents hallucinated design systems and janky layouts.
+
+### 2. Evidence-Based "Done"
+
+Work is complete only when tags are resolved and evidence is captured: tests, builds, screenshots, logs. No more "it works" without proof.
+
+### 3. Narrow Agents with Hard Scopes
+
+Each agent has a single job, strict inputs, and explicit non-responsibilities. Generic agents drift; narrow agents behave.
+
+### 4. Memory as Ground Truth
+
+Decisions live in Workshop (via `vibe-memory` MCP), not ephemeral chat. Design DNA lives in versioned design system docs.
+
+### 5. Parallel Planning, Centralized Decisions
+
+Many agents can explore paths, but one orchestrator decides and enforces. Prevents chaos.
+
+### 6. Calculate, Don't Guess
+
+Spacing, typography, layout all follow mathematical systems. No arbitrary values, no eyeballed alignment.
+
+---
+
+## Token Efficiency Through Discipline
+
+**Why this is more efficient than generic chat:**
+
+1. **Less context repetition**
+   - Decisions stored in memory (query once, not re-explain)
+   - Design DNA loaded automatically (not pasted into chat)
+
+2. **Fewer iteration loops**
+   - Verification catches issues before human review
+   - Quality gates prevent janky outputs
+   - Blueprint-first prevents "rebuild it properly" cycles
+
+3. **Smaller, reusable prompts**
+   - Specialist agents < 3KB each (not one giant persona)
+   - Orchestrators dispatch narrow agents (not doing everything)
+
+4. **Bounded parallelism**
+   - File limits prevent runaway planning docs
+   - Meta-tags track actual work (not phantom claims)
+
+---
+
+## Getting Started
+
+### 1. Install Workshop CLI
+
+```bash
+cargo install workshop-cli
+# or download binary from https://github.com/zachswift615/workshop
+```
+
+### 2. Initialize Project Memory
+
+```bash
+cd your-project
+workshop init
+mkdir -p .claude/memory
+mv .workshop/workshop.db .claude/memory/workshop.db
+```
+
+### 3. Configure vibe-memory MCP
+
+Add to `~/.claude.json`:
+
+```json
+{
+  "projects": {
+    "/absolute/path/to/your-project": {
+      "mcpServers": {
+        "vibe-memory": {
+          "command": "python3",
+          "args": ["/path/to/.claude/mcp/vibe-memory/memory_server.py"],
+          "env": { "PYTHONUNBUFFERED": "1" }
+        }
+      }
+    }
+  }
+}
+```
+
+### 4. Add Project Instructions
+
+Create `CLAUDE.md` in project root with project-specific constraints, design system, and preferences.
+
+### 5. Start Using Commands
+
+```bash
+# Full implementation with verification
+/response-aware "Your feature request"
+
+# Multi-agent orchestration
+/orca "Your complex task"
+
+# Design-only
+/design-director "Your layout request"
+
+# Strategy analysis
+/creative-strategist "Your data + context"
+```
+
+---
+
+## Documentation Structure
+
+```
+/
+├── README.md                        ← You are here
+├── quick-reference/
+│   ├── memory-explainer.md          ← Memory system deep dive
+│   ├── agents-teams.md              ← Agent hierarchy and scopes
+│   ├── verification.md              ← Meta-tag system and quality gates
+│   ├── commands.md                  ← Slash command reference
+│   └── visual-design.md             ← Design-OCD principles
+├── commands/                        ← Slash command definitions
+├── agents/                          ← Agent definitions
+├── mcp/                             ← Custom MCP servers
+└── scripts/                         ← Helper scripts
+```
+
+---
+
+## Philosophy: Why This Exists
+
+**Generic AI assistants are helpful but undisciplined.** They drift from requirements, hallucinate constraints, and say "done" when reality disagrees.
+
+**This framework treats Claude Code as an operating system:**
+- Commands are **system calls** (orchestrators)
+- Agents are **processes** (constrained, observable)
+- MCPs are **I/O interfaces** (structured, permission-bounded)
+- Memory is **persistent state** (queryable knowledge graph)
+- Verification is **syscall validation** (evidence required)
+
+**The result:** A disciplined, evidence-driven development system that produces reliable outputs and learns from failures.
+
+---
+
+## License
+
+MIT
+
+---
+
+## Contributing
+
+This is a personal framework, but the patterns are generalizable. If you build on this:
+- Share agent definitions and orchestration patterns
+- Document what works (and what failed)
+- Contribute to Workshop CLI and vibe-memory MCP
+
+---
+
+**Build right first. Verify with evidence. Learn from memory.**
