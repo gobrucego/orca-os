@@ -38,7 +38,7 @@
 ### Situation
 
 You’re using Claude Code to build real products:
-- Brand systems (OBDN, PeptideFox, etc.)
+- Brand/design systems
 - Web apps, dashboards, iOS apps
 - Data/SEO tooling and design systems
 
@@ -76,12 +76,12 @@ This system is a **constrained, evidence‑driven OS** around Claude:
   - This repo (`claude-vibe-config`) is a mirror of that OS.
 
 - **Project DNA + memory**
-  - Each project (OBDN, PeptideFox, etc.) has its own design system + brand docs.
+  - Each project has its own design system + brand docs.
   - A local memory database (via the `workshop` tool + `vibe-memory` MCP) stores decisions, gotchas, goals.
 
 - **Orchestrators + narrow specialists**
   - Orchestrators (`/response-aware`, `/orca`) own planning + verification.
-  - Narrow agents (`/creative-strategist`, `/design-director`, `/obdn-designer`, `/fox-designer`) stay in strict lanes with hard rules.
+  - Narrow agents (`/creative-strategist`, `/design-director`, `/brand-designer`) stay in strict lanes with hard rules.
 
 - **Evidence‑based completion**
   - Work is not “done” until there is proof: tests, builds, screenshots, logs, all reconciled against meta‑tags.
@@ -260,20 +260,15 @@ Specialist agents now follow a consistent pattern:
 1. **Narrow role**
    - `/creative-strategist` → strategy and performance analysis only.
    - `/design-director` → layout, hierarchy, critique.
-   - `/obdn-designer` → OBDN luxury UI architect (no orchestration).
-   - `/fox-designer` → PeptideFox scientific UI architect.
+   - `/brand-designer` → brand specific UI architect (no orchestration).
 
 2. **Mandatory context recall**
    - Read `CLAUDE.md` and project design DNA:
-     - OBDN: `design-dna-v2.0.md`, `system_rules-v2.0.md`, `design-system-v2.0.md`.
-     - PeptideFox: `design-system-v7.0.0.md`, `DESIGN_RULES.md`.
    - Summarize brand voice, typography, color, layout rules, constraints.
 
 3. **Thinking scaffold**
-   - `/design-director`, `/obdn-designer`:  
+   - `/design-director`, `/brand-designer`:  
      `FRAME → STRUCTURE → SURFACE → CODE`
-   - `/fox-designer`:  
-     `FRAME → STRUCTURE → SURFACE → CALCULATE → CODE GUIDANCE`
 
 4. **Hard rules**
    - Type scales, color usage, spacing tokens.
@@ -423,8 +418,7 @@ Live config used by Claude Code:
   - Live command definitions:
     - `creative-strategist.md`
     - `design-director.md`
-    - `fox-designer.md`
-    - `obdn-designer.md`
+    - `brand-designer.md`
     - `response-aware.md`
     - `orca.md`
     - and others.
@@ -448,7 +442,7 @@ Live config used by Claude Code:
 This repo mirrors `~/.claude` for version control:
 
 - `commands/`
-  - Snapshots of your live custom commands (`fox-designer.md`, `obdn-designer.md`, `response-aware.md`, etc.).
+  - Snapshots of your live custom commands (`brand-designer.md`, `response-aware.md`, etc.).
 
 - `agents/`
   - Snapshots of custom agents.
@@ -467,22 +461,6 @@ Remember: you change the live config in `~/.claude`, then sync back into this re
 
 Each project has its own DNA and memory:
 
-- **PeptideFox**
-  - Design DNA:
-    - `Desktop/peptidefox/design-dna/design-system-v7.0.0.md`
-    - `Desktop/peptidefox/design-dna/DESIGN_RULES.md`
-  - Project prompt:
-    - `Desktop/peptidefox/design-dna/peptidefox_designer_prompt.md`
-  - Memory:
-    - `project/.claude/memory/workshop.db` (once initialized via Workshop).
-
-- **OBDN**
-  - Design DNA:
-    - `Desktop/OBDN/obdn_site/design-system/design-dna-v2.0.md`
-    - `Desktop/OBDN/obdn_site/design-system/system_rules-v2.0.md`
-    - `Desktop/OBDN/obdn_site/design-system/design-system-v2.0.md`
-  - Project prompt:
-    - `Desktop/OBDN/obdn_site/design-system/obdn_designer_prompt.md`
 
 Other projects follow the same pattern:
 - Project design DNA + brand docs under `design-*` or `docs/`.
