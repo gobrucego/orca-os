@@ -10,7 +10,9 @@ Makefile
 /commands/_archive/
 /.deprecated
 /.
-*.
+.*
+!.gitignore
+!.git
 
 # OS
 .DS_Store
@@ -22,6 +24,8 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+
 
 # Design Memory (personal preferences, keep local)
 .design-memory/
