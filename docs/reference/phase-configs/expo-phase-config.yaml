@@ -116,7 +116,33 @@ phases:
         type: hard
         message: Critical WCAG violations must be resolved
 
-  # Phase 5c: Performance Enforcement
+  # Phase 5c: Aesthetics Quality
+  - name: aesthetics
+    agent: expo-aesthetics-specialist
+    description: Visual quality review - typography, color, spacing, hierarchy, "AI slop" prevention
+    dependencies:
+      - implementation
+    context_required: true
+    inputs:
+      - implemented_code
+      - modified_files
+      - design_dna
+      - theme_tokens
+    outputs:
+      - aesthetics_score
+      - aesthetic_findings
+      - gate_decision
+    quality_gates:
+      aesthetics_score:
+        threshold: 75
+        type: soft
+        message: Aesthetics score below 75 suggests visual refinement needed
+      block_threshold:
+        threshold: 60
+        type: advisory
+        message: Score below 60 indicates generic "AI slop" UI requiring UX rethink
+
+  # Phase 5d: Performance Enforcement
   - name: performance_budget
     agent: performance-enforcer
     description: Check bundle size, critical path, runtime budgets
@@ -176,10 +202,11 @@ phases:
   # Phase 4b: Implementation - Pass 2 (Corrective, if gates fail)
   - name: correction
     agent: expo-builder-agent
-    description: Address issues from design/a11y/perf/security gates (Implementation Pass 2 - ONE pass only)
+    description: Address issues from design/a11y/aesthetics/perf/security gates (Implementation Pass 2 - ONE pass only)
     dependencies:
       - design_tokens
       - accessibility
+      - aesthetics
       - performance_budget
     trigger: gate_failure
     max_iterations: 1
@@ -187,6 +214,7 @@ phases:
     inputs:
       - token_violations
       - a11y_violations
+      - aesthetic_findings
       - perf_metrics
       - security_issues
     outputs:
@@ -195,6 +223,7 @@ phases:
     constraints:
       scope: Fix reported issues only, no new features
       quality: Must pass gates on second attempt or escalate
+      priority: Critical gates (a11y, security) before aesthetics refinements
 
   # Phase 7: Verification (Build/Test)
   - name: verification
@@ -249,6 +278,12 @@ gates:
     threshold: 0_critical_violations
     type: hard
     retry: allow_one_pass
+
+  aesthetics:
+    threshold: 75
+    type: soft
+    retry: allow_one_pass
+    note: "Soft gate - CAUTION/FAIL don't block. BLOCK (<60) requires UX rethink."
 
   performance:
     threshold: within_budgets

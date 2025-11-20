@@ -70,10 +70,18 @@ User Request
 
 1. **Call ProjectContextServer:**
    ```typescript
+   // IMPORTANT: Sanitize task to avoid FTS5 syntax errors
+   // FTS5 special chars: / + - ( ) " *
+   const sanitizedTask = $ARGUMENTS
+     .replace(/\//g, ' ')      // iOS/web → iOS web
+     .replace(/\+/g, ',')      // A + B + C → A, B, C
+     .replace(/[\-\(\)\"\*]/g, ' ')  // Remove other operators
+     .trim();
+
    // Use MCP tool: project-context/query_context
    {
      domain: "webdev" | "ios" | "data" | "expo" | "seo" | "brand" | "design",
-     task: $ARGUMENTS,
+     task: sanitizedTask,  // Use sanitized version
      projectPath: "<current working directory>",
      maxFiles: 10,
      includeHistory: true
@@ -307,6 +315,34 @@ domain work.
 - Uses the Q&A step to confirm the **exact agent team**.
 - Spawns those confirmed agents via `Task` with their concrete `subagent_type`.
 - Restricts itself to coordination, state tracking, and summarization.
+
+**Parallel Agent Deployment:**
+
+When work involves **multiple independent components** (different files, no dependencies), spawn agents in parallel:
+
+```xml
+<!-- Parallel: All Task calls in ONE message -->
+<function_calls>
+<invoke name="Task">
+<parameter name="subagent_type">frontend-builder-agent</parameter>
+<parameter name="description">Component 1</parameter>
+<parameter name="prompt">Implement Component 1 only...</parameter>
+</invoke>
+<invoke name="Task">
+<parameter name="subagent_type">frontend-builder-agent</parameter>
+<parameter name="description">Component 2</parameter>
+<parameter name="prompt">Implement Component 2 only...</parameter>
+</invoke>
+<!-- Additional parallel agents... -->
+</function_calls>
+```
+
+Use parallel deployment when:
+- ✅ Multiple independent components (different files, no shared state)
+- ✅ No inter-dependencies (A doesn't need B's output)
+- ✅ Same phase/scope (all implementation, or all verification, etc.)
+
+See `.claude/orchestration/playbooks/parallel-agent-deployment.md` for full pattern details.
 
 ### 5.2 iOS Pipeline
 

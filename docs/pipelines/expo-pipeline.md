@@ -76,6 +76,7 @@ Each phase SHOULD write a structured entry under `phases.<phase_name>`:
   - `status`.
   - `design_tokens_score`: number 0–100 (from `design-token-guardian`).
   - `a11y_score`: number 0–100 (from `a11y-enforcer`).
+  - `aesthetics_score`: number 0–100 (from `expo-aesthetics-specialist`).
   - `performance_score`: number 0–100 (from `performance-enforcer`).
 - `power_checks`
   - `status`.
@@ -220,6 +221,17 @@ Decision Point:
 
 **Agents:** `expo-builder-agent` (Expo/React Native implementation)
 
+**Deployment Strategy:**
+- **Sequential (default):** Single `expo-builder-agent` handles all implementation
+- **Parallel:** Multiple `expo-builder-agent` instances work concurrently on independent components
+
+Use parallel deployment when:
+- ✅ Multiple independent screens/components (different files, no shared state)
+- ✅ No inter-dependencies (component A doesn't need B's output)
+- ✅ Same implementation scope (all UI wiring, or all data layer work, etc.)
+
+See `commands/orca-expo.md` Section 7.3 and `.claude/orchestration/playbooks/parallel-agent-deployment.md` for implementation details.
+
 **Constraints (HARD):**
 - Respect Expo/React Native best practices:
   - React Native 0.74+, Expo SDK 50+.
@@ -248,11 +260,12 @@ Decision Point:
 **Agents (Tier 1):**
 - `design-token-guardian`
 - `a11y-enforcer`
+- `expo-aesthetics-specialist`
 - `performance-enforcer`
 
 **Inputs:**
 - Modified files from Phase 4.
-- ContextBundle (design system, standards, past decisions).
+- ContextBundle (design system, standards, past decisions, design-dna).
 
 **Tasks:**
 1. **Design Token Guardian**
@@ -262,13 +275,21 @@ Decision Point:
 2. **A11y Enforcer**
    - Validate accessibility (WCAG 2.2):
      - Proper labels, roles, focus handling, contrast, touch targets.
-3. **Performance Enforcer**
+3. **Expo Aesthetics Specialist**
+   - Evaluate visual quality and cohesiveness:
+     - Typography hierarchy and intentional token usage.
+     - Cohesive color story (avoid generic "AI slop" palettes).
+     - Purposeful spacing, layout, and visual hierarchy.
+     - Appropriate motion and depth (backgrounds/elevation).
+     - Flag anti-patterns: generic UI, visual noise, weak mobile patterns.
+4. **Performance Enforcer**
    - Check performance budgets:
      - Bundle size, critical path, runtime warnings.
 
 **Outputs:**
-- Per-agent scores or pass/fail judgments.
-- Combined **Standards/A11y/Perf status** in `phase_state.json`.
+- Per-agent scores (0–100) for design tokens, a11y, aesthetics, and performance.
+- Combined **Standards/A11y/Aesthetics/Perf status** in `phase_state.json`.
+- Findings and recommendations for corrective pass if needed.
 
 ---
 
@@ -293,11 +314,12 @@ Decision Point:
 
 ---
 
-### Gates: Standards, A11y, Performance, Security
+### Gates: Standards, A11y, Aesthetics, Performance, Security
 
 Gate thresholds (suggested):
 - **Design Tokens / Standards:** PASS if ≥90, CAUTION 70–89, FAIL <70.
 - **Accessibility:** PASS if no critical WCAG violations; FAIL if any blocking issues.
+- **Aesthetics:** PASS if ≥90, CAUTION 75–89, FAIL 60–74, BLOCK <60 (generic "AI slop" UI).
 - **Performance:** PASS if within budgets; FAIL on meaningful regressions.
 - **Security:** PASS if no critical OWASP issues; FAIL otherwise.
 
@@ -305,15 +327,21 @@ If any critical gate FAILS:
 - Allow exactly **one corrective Implementation Pass 2**.
 - After Pass 2 re-run Phase 5/6 checks.
 - If still failing:
-  - Mark as “partial / standards not met” and let user decide next steps.
+  - Mark as "partial / standards not met" and let user decide next steps.
+
+**Note on Aesthetics Gate:**
+- Aesthetics is a **soft gate** by default (CAUTION/FAIL don't block progress).
+- BLOCK status (<60) indicates severe visual quality issues requiring UX/design rethink.
+- User may choose to prioritize aesthetics refinement based on project phase and audience.
 
 ---
 
 ### Phase 4b: Implementation – Pass 2 (Corrective)
 
 Same agents and constraints as Phase 4, but:
-- Scope **only** to issues reported by design/a11y/perf/security agents.
+- Scope **only** to issues reported by design/a11y/aesthetics/perf/security agents.
 - No new features or expansions.
+- Prioritize critical gate failures (accessibility, security) over aesthetics refinements.
 
 ---
 

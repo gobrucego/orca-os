@@ -16,7 +16,7 @@ No agent can work without first querying this service. This makes v1's context a
 
 ```
 ProjectContextServer
-├── Semantic Search (via Claude Context MCP)
+├── Semantic Search (local keyword-based)
 ├── Memory Store (vibe.db - SQLite)
 ├── Project State (components, structure)
 └── Context Bundler (combines all sources)
@@ -25,6 +25,7 @@ ProjectContextServer
 ## Features
 
 ### 1. Semantic Code Search
+- **Local keyword-based search** (no external APIs required)
 - Find relevant files across large codebases
 - Symbol extraction and indexing
 - Fast lookups with relevance scoring

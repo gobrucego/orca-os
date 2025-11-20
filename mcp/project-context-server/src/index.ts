@@ -83,6 +83,9 @@ export class ProjectContextServer {
         case 'index_project':
           return await this.handleIndexProject(args as any);
 
+        case 'reanalyze_project':
+          return await this.handleReanalyzeProject(args as any);
+
         default:
           throw new Error(`Unknown tool: ${name}`);
       }
@@ -105,7 +108,7 @@ export class ProjectContextServer {
           properties: {
             domain: {
               type: 'string',
-              enum: ['webdev', 'ios', 'data', 'seo', 'brand'],
+              enum: ['webdev', 'ios', 'expo', 'data', 'seo', 'brand'],
               description: 'The domain/lane for this operation',
             },
             task: {
@@ -187,6 +190,23 @@ export class ProjectContextServer {
           required: ['projectPath'],
         },
       },
+      {
+        name: 'reanalyze_project',
+        description:
+          'Force reanalysis of project structure. ' +
+          'Rebuilds the complete directory tree, component registry, and dependencies. ' +
+          'Run this after major file/directory changes.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            projectPath: {
+              type: 'string',
+              description: 'Absolute path to the project root',
+            },
+          },
+          required: ['projectPath'],
+        },
+      },
     ];
   }
 
@@ -235,6 +255,29 @@ export class ProjectContextServer {
         { type: 'text', text: `Project indexed: ${args.projectPath}` },
       ],
     };
+  }
+
+  private async handleReanalyzeProject(args: { projectPath: string }) {
+    const projectState = await this.bundler.reanalyzeProject(args.projectPath);
+
+    const summary = `Project reanalyzed: ${args.projectPath}
+- Components: ${projectState.components.length}
+- Files: ${this.countFilesInTree(projectState.fileStructure)}
+- Dependencies: ${Object.keys(projectState.dependencies).length}
+
+Cache updated at .claude/project/state.json`;
+
+    return {
+      content: [{ type: 'text', text: summary }],
+    };
+  }
+
+  private countFilesInTree(node: any): number {
+    if (node.type === 'file') return 1;
+    return (node.children || []).reduce(
+      (sum: number, child: any) => sum + this.countFilesInTree(child),
+      0
+    );
   }
 
   /**

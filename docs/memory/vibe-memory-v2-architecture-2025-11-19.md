@@ -4,6 +4,12 @@ Project-scoped memory system for Claude Code and Codex, built to be reliable, in
 
 This design intentionally avoids Workshop/third-party coupling as a hard dependency. It uses a single per-project SQLite database plus small scripts/hooks you already have patterns for.
 
+**📚 Related Documentation:**
+- `vibe-memory-v2-conventions.md` — Operational conventions, event taxonomy, retention strategy, OS 2.0 integration
+- `README.md` — CLI command reference with examples and troubleshooting
+- `mcp-memory.md` — MCP server configuration
+- `codex-cli-mcp-memory.md` — Codex CLI integration
+
 ---
 
 ## 1. Goals
@@ -207,6 +213,23 @@ The result is a memory system that doesn't just recall outputs, but remembers *h
    - Use them to influence ranking and surface "suspect" past work explicitly.
 
 This keeps the system small and robust, while still giving you a rich playground for LLM cognitive behaviour experiments.
+
+---
+
+## 7. Implementation Details & Conventions
+
+For operational details including:
+- Event taxonomy and canonical event kinds
+- Retention and compaction strategies
+- Concurrency handling (WAL mode, access patterns)
+- Search ranking formula and safe mode
+- OS 2.0 integration points
+- Standardized event structures
+- Phase state and task history integration
+
+See: **`vibe-memory-v2-conventions.md`**
+
+For CLI usage and examples, see: **`README.md`**
 
 ---
 

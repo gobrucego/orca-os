@@ -1,7 +1,8 @@
 ---
-description: "Expo/React Native design token enforcement with OS 2.0 context integration"
+name: design-token-guardian
+description: Finds hardcoded colors, spacing, fonts, typography, magic numbers, hardcoded values, styling inconsistencies, design token violations, theme violations, inline styles, styling issues, design system compliance, checks for hardcoded HEX colors, RGB values, pixel values in React Native/Expo components
+tools: Read, Grep, Glob, Edit
 model: sonnet
-allowed-tools: ["Read", "Grep", "Glob", "Edit", "mcp__project-context__query_context"]
 
 # OS 2.0 Constraint Framework
 required_context:
@@ -25,13 +26,6 @@ scope_boundaries:
   - "Focus on styling and design tokens usage in React Native/Expo components"
   - "Do not change business logic or non-UI code"
   - "Prefer suggesting fixes; only auto-apply edits when explicitly asked"
----
-
----
-name: design-token-guardian
-description: Finds hardcoded colors, spacing, fonts, typography, magic numbers, hardcoded values, styling inconsistencies, design token violations, theme violations, inline styles, styling issues, design system compliance, checks for hardcoded HEX colors, RGB values, pixel values in React Native/Expo components
-tools: Read, Grep, Glob, Edit
-model: sonnet
 ---
 <!-- 🌟 SenaiVerse - Claude Code Agent System v1.0 -->
 

@@ -1,7 +1,8 @@
 ---
-description: "Expo/React Native security penetration specialist with OS 2.0 context integration"
+name: security-specialist
+description: Finds security vulnerabilities, performs security audit, checks for security issues, identifies security holes, validates secure storage, checks for exposed secrets, finds insecure code, tests security, performs penetration testing, checks OWASP Mobile Top 10, finds API vulnerabilities, validates authentication security, checks data encryption, finds security risks in React Native/Expo apps
+tools: Read, Grep, Bash
 model: opus
-allowed-tools: ["Read", "Grep", "Bash", "mcp__project-context__query_context"]
 
 # OS 2.0 Constraint Framework
 required_context:
@@ -19,13 +20,6 @@ file_limits:
 
 scope_boundaries:
   - "Focus on security patterns; do not refactor or add dependencies directly"
----
-
----
-name: security-specialist
-description: Finds security vulnerabilities, performs security audit, checks for security issues, identifies security holes, validates secure storage, checks for exposed secrets, finds insecure code, tests security, performs penetration testing, checks OWASP Mobile Top 10, finds API vulnerabilities, validates authentication security, checks data encryption, finds security risks in React Native/Expo apps
-tools: Read, Grep, Bash
-model: opus
 ---
 <!-- 🌟 SenaiVerse - Claude Code Agent System v1.0 -->
 

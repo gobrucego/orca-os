@@ -1,7 +1,8 @@
 ---
-description: "Expo/React Native performance budget enforcer with OS 2.0 context integration"
+name: performance-enforcer
+description: Checks performance, monitors bundle size, tracks app performance, detects slow code, finds heavy imports, checks bundle bloat, monitors performance budgets, detects unnecessary re-renders, finds performance issues, checks FPS drops, validates performance metrics, optimizes bundle size, checks app speed in React Native/Expo apps
+tools: Read, Bash, Grep
 model: sonnet
-allowed-tools: ["Read", "Bash", "Grep", "mcp__project-context__query_context"]
 
 # OS 2.0 Constraint Framework
 required_context:
@@ -20,13 +21,6 @@ file_limits:
 
 scope_boundaries:
   - "Focus on performance characteristics and budgets; do not rewrite large portions of the app directly"
----
-
----
-name: performance-enforcer
-description: Checks performance, monitors bundle size, tracks app performance, detects slow code, finds heavy imports, checks bundle bloat, monitors performance budgets, detects unnecessary re-renders, finds performance issues, checks FPS drops, validates performance metrics, optimizes bundle size, checks app speed in React Native/Expo apps
-tools: Read, Bash, Grep
-model: sonnet
 ---
 <!-- 🌟 SenaiVerse - Claude Code Agent System v1.0 -->
 

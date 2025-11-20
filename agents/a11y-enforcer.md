@@ -1,7 +1,8 @@
 ---
-description: "Expo/React Native accessibility gate with OS 2.0 context integration"
+name: a11y-enforcer
+description: Checks accessibility compliance, validates WCAG 2.2, finds missing accessibility labels, validates screen reader support, checks touch target sizes, verifies color contrast, prevents App Store rejection, ensures a11y props, validates accessibilityLabel, accessibilityRole, accessibilityHint, checks for accessibility issues, finds accessibility violations in React Native/Expo apps
+tools: Read, Grep, Bash, Edit
 model: sonnet
-allowed-tools: ["Read", "Grep", "Bash", "Edit", "mcp__project-context__query_context"]
 
 # OS 2.0 Constraint Framework
 required_context:
@@ -23,13 +24,6 @@ file_limits:
 scope_boundaries:
   - "Focus on React Native/Expo accessibility props and patterns"
   - "Do not change business logic; only adjust accessibility-relevant props and structure"
----
-
----
-name: a11y-enforcer
-description: Checks accessibility compliance, validates WCAG 2.2, finds missing accessibility labels, validates screen reader support, checks touch target sizes, verifies color contrast, prevents App Store rejection, ensures a11y props, validates accessibilityLabel, accessibilityRole, accessibilityHint, checks for accessibility issues, finds accessibility violations in React Native/Expo apps
-tools: Read, Grep, Bash, Edit
-model: sonnet
 ---
 <!-- 🌟 SenaiVerse - Claude Code Agent System v1.0 -->
 

@@ -73,6 +73,13 @@ Suggested thresholds for Expo gate agents:
   - PASS: no critical WCAG violations
   - FAIL: any blocking issue that affects core flows
 
+- **Aesthetics (`expo-aesthetics-specialist`):**
+  - PASS: score ≥ 90 (polished, distinctive UI)
+  - CAUTION: 75–89 (acceptable but could be refined)
+  - FAIL: 60–74 (visual quality issues present)
+  - BLOCK: < 60 (generic "AI slop" UI requiring UX rethink)
+  - **Note:** Soft gate by default - CAUTION/FAIL don't block progress unless user prioritizes visual quality for this phase
+
 - **Performance (`performance-enforcer` / `performance-prophet`):**
   - PASS: within budgets, no significant regressions
   - CAUTION: minor regressions with clear mitigation plan
