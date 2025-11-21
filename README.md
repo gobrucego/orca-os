@@ -318,7 +318,7 @@ The result is endless iteration loops, and a high level of frustration -- and of
 ### The Problem: False Completion
 
 ```
-❌ OLD APPROACH:
+❌ DEFAULT APPROACH:
    Agent: "I've added dark mode support."
    Reality: Code doesn't compile, tests fail, UI is broken
 ```
@@ -332,7 +332,7 @@ The result is endless iteration loops, and a high level of frustration -- and of
 
 
 ```
-✅ NEW APPROACH:
+✅ OS 2.0 APPROACH:
 
    Implementation Agent:
    ┌────────────────────────────────────────────────────┐
