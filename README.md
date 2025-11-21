@@ -12,8 +12,6 @@
 
 # A Context-Aware, Memory Persistent OS for Claude
 
-> **An opinionated orchestration framework that transforms Claude Code from a helpful chat into a disciplined engineering system.**
-
 ```
 ┌────────────────────────────────────────────────────────────────┐
 │                                                                │
