@@ -10,12 +10,12 @@
 ```                                                                                                                        
 
 
-# A Context-Aware, IMemory Persistent OS for Claude
+# A Context-Aware, IMemory Persistent OS for Claude Code
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
 │                                                                │
-│   Beyond "Ask AI" → Systematic Software Development            │
+│   Vibe Coding with High Quality Results and Outputs            │
 │                                                                │
 │   • Context & Memory-First Architecture                        │
 │   • Introspective Response Awareness                           │
@@ -32,7 +32,9 @@
 
 **Claude Code is extremely powerful but has the memory of a goldfish. It also lies. A lot.**
 
-**Generic AI assistants drift.** They say "done" when code doesn't compile, tests fail, and UI is broken. They hallucinate design systems, ignore constraints, and produce janky outputs that require endless iteration loops. Without guardrails and scope, an AI assistant will default to what it believes are 'best-practice' behaviors and over-optimize for effeciency at the expense of proper execution. When working with complex projects (or even smaller ones), they can be incredibly slow as they need to repeatedly gather context in order to execute a task.
+**Generic AI assistants drift, forget, and go rogue.** They say "done" when code doesn't compile, tests fail, and UI is broken. They hallucinate design systems, ignore constraints, and produce janky outputs. Without guardrails and scope, an AI assistant will default to what it believes are 'best-practice' behaviors and over-optimize for effeciency at the expense of proper execution. When working with complex projects (or even smaller ones), they can be incredibly slow as they need to repeatedly gather context in order to execute a task.
+
+The result is endless iteration loops, and a high level of frustration -- and often an undesireable result.
 
 **This framework enforces awareness and discipline:**
 - Projects are indexed locally with **persistent context** that utilizes vectors for fast queries
@@ -48,7 +50,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                         VIBE CODE OS                                │
+│                         VIBE CODE OS 2.0                            │
 ├─────────────────────────────────────────────────────────────────────┤
 │                                                                     │
 │  ┌──────────────┐      ┌──────────────┐      ┌──────────────┐       │
@@ -90,40 +92,40 @@
 └─────┬──────┘
       │
       ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PHASE 1: CONTEXT LOADING                                    │
-│ ┌─────────────┐     ┌─────────────┐     ┌─────────────┐     │
-│ │   Memory    │────►│  Design DNA │────►│   Project   │     │
-│ │   Search    │     │   (Brand)   │     │   CLAUDE.md │     │
-│ └─────────────┘     └─────────────┘     └─────────────┘     │
-└─────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│ PHASE 1: CONTEXT LOADING                                   │
+│ ┌─────────────┐     ┌─────────────┐     ┌─────────────┐    │
+│ │   Memory    │────►│  Design DNA │────►│   Project   │    │
+│ │   Search    │     │   (Brand)   │     │   CLAUDE.md │    │
+│ └─────────────┘     └─────────────┘     └─────────────┘    │
+└────────────────────────────────────────────────────────────┘
       │
       ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PHASE 2: ORCHESTRATION                                      │
-│ ┌─────────────┐                                             │
-│ │ /orca or    │  • Detect stack (Next.js, iOS, etc.)        │
-│ │ /response-  │  • Propose specialist team                  │
-│ │  aware      │  • Get user confirmation                    │
-│ └─────────────┘                                             │
-└─────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│ PHASE 2: ORCHESTRATION                                     │
+│ ┌─────────────┐                                            │
+│ │ /orca or    │  • Detect stack (Next.js, iOS, etc.)       │
+│ │ /response-  │  • Propose specialist team                 │
+│ │  aware      │  • Get user confirmation                   │
+│ └─────────────┘                                            │
+└────────────────────────────────────────────────────────────┘
       │
       ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PHASE 3: PLANNING (Parallel)                                │
-│ ┌──────────┐  ┌──────────┐  ┌──────────┐                    │
-│ │ Designer │  │ Architect│  │ Strategy │                    │
-│ │  Plans   │  │  Plans   │  │  Plans   │                    │
-│ └────┬─────┘  └────┬─────┘  └────┬─────┘                    │
-│      └─────────────┬──────────────┘                         │
-│                    ▼                                        │
-│         ┌──────────────────────┐                            │
-│         │  Synthesis Agent     │                            │
-│         │  • Resolve conflicts │                            │
-│         │  • Create blueprint  │                            │
-│         │  • Tag uncertainties │                            │
-│         └──────────────────────┘                            │
-└─────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│ PHASE 3: PLANNING (Parallel)                               │
+│ ┌──────────┐  ┌──────────┐  ┌──────────┐                   │
+│ │ Designer │  │ Architect│  │ Strategy │                   │
+│ │  Plans   │  │  Plans   │  │  Plans   │                   │
+│ └────┬─────┘  └────┬─────┘  └────┬─────┘                   │
+│      └─────────────┬──────────────┘                        │
+│                    ▼                                       │
+│         ┌──────────────────────┐                           │
+│         │  Synthesis Agent     │                           │
+│         │  • Resolve conflicts │                           │
+│         │  • Create blueprint  │                           │
+│         │  • Tag uncertainties │                           │
+│         └──────────────────────┘                           │
+└────────────────────────────────────────────────────────────┘
       │
       ▼
 ┌────────────────────────────────────────────────────────────┐
