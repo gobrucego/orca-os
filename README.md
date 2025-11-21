@@ -207,7 +207,7 @@ When working with complex projects (or even smaller ones), they can be incredibl
 ├────────────────────────────────────────────────────────────────┤
 │                                                                │
 │   ┌─────────────────────────────────────────────────┐          │
-│   │  Claude Code Session (ORCA/Agent)              │          │
+│   │  Claude Code Session (ORCA/Agent)               │          │
 │   │                                                 │          │
 │   │  ┌────────────────────────────────────────┐     │          │
 │   │  │  Agent Starting Task                   │     │          │
@@ -255,7 +255,7 @@ When working with complex projects (or even smaller ones), they can be incredibl
 ├────────────────────────────────────────────────────────────────┤
 │                                                                │
 │   ┌─────────────────────────────────────────────────┐          │
-│   │  Claude Code Session A (Earlier)               │          │
+│   │  Claude Code Session A (Earlier)                │          │
 │   │                                                 │          │
 │   │  ┌────────────────────────────────────────┐     │          │
 │   │  │  Orchestrator builds context           │     │          │
@@ -276,7 +276,7 @@ When working with complex projects (or even smaller ones), they can be incredibl
 │   └─────────────────────────────────────────────────┘          │
 │                                                                │
 │   ┌─────────────────────────────────────────────────┐          │
-│   │  Claude Code Session B (Later)                 │          │
+│   │  Claude Code Session B (Later)                  │          │
 │   │                                                 │          │
 │   │  ┌────────────────────────────────────────┐     │          │
 │   │  │  Orchestrator queries state            │     │          │
