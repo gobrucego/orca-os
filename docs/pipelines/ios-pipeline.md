@@ -1,18 +1,26 @@
 # iOS Domain Pipeline
 
-**Status:** OS 2.0 Core Pipeline (Native iOS Lane)  
-**Last Updated:** 2025-11-19
+**Status:** OS 2.1 Core Pipeline (Native iOS Lane)
+**Last Updated:** 2025-11-24
 
 ## Overview
 
-The iOS pipeline handles **native iOS app development** using Swift 6.x and modern Apple frameworks (SwiftUI, UIKit, Swift Concurrency). It combines:
+The iOS pipeline handles **native iOS app development** using Swift 6.x and modern Apple frameworks (SwiftUI, UIKit, Swift Concurrency) with role boundary enforcement, state preservation, and team confirmation.
 
-- OS 2.0 primitives (ProjectContextServer, phase_state.json, vibe.db, constraint framework)
-- Swift/iOS specialist agents (Swift architect/developer/SwiftUI specialists)
-- Your own OS 2.0 lane agents (`ios-grand-architect`, `ios-architect`, `ios-builder`, `ios-standards-enforcer`, `ios-ui-reviewer`, `ios-verification`)
-- Project design DNA/tokens (for UI-forward work) and chosen persistence strategy (SwiftData vs Core Data/GRDB) when relevant.
+**OS 2.1 Enhancements:**
+- **Role Boundaries:** Orchestrator NEVER writes code, only coordinates via Task tool
+- **State Preservation:** phase_state.json survives interruptions (questions, pauses)
+- **Team Confirmation:** User approves 18-agent team before execution
+- **Unified Planning:** `/plan` command creates blueprint first
+- **Meta-Audit:** `/audit` analyzes patterns and creates standards from failures
 
-Goal: implement and evolve native iOS features with **architecture-aware plans**, **safety and concurrency guarantees**, and **structured gates** for quality and verification.
+**System Integration:**
+- OS 2.1 primitives (ProjectContextServer, phase_state.json, vibe.db, constraint framework)
+- Swift/iOS specialist agents (18 agents: 1 Opus grand-architect, 17 Sonnet specialists)
+- iOS lane agents (`ios-grand-architect`, `ios-architect`, `ios-builder`, `ios-swiftui-specialist`, `ios-uikit-specialist`, `ios-persistence-specialist`, `ios-networking-specialist`, `ios-testing-specialist`, `ios-performance-specialist`, `ios-security-specialist`, `ios-accessibility-specialist`, `ios-standards-enforcer`, `ios-ui-reviewer`, `ios-verification`)
+- Project design DNA/tokens (for UI-forward work) and chosen persistence strategy (SwiftData vs Core Data/GRDB)
+
+**Goal:** Implement and evolve native iOS features with **architecture-aware plans**, **safety and concurrency guarantees**, **structured gates**, and **orchestration continuity**.
 
 ---
 ## Scope & Domain

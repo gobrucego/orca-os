@@ -1,31 +1,44 @@
-# Repository Guidelines – Claude Vibe OS 2.0 Config
+# Repository Guidelines – Claude Vibe OS 2.1 Config
+
+**Version:** OS 2.1
+**Last Updated:** 2025-11-24
 
 This file is for AI coding assistants (Codex, Cursor, Claude Code, etc.) working **inside this repo**. It explains what this repository is, how the agent system is structured, and how tools should behave when editing it.
 
 ---
 ## 1. Project Purpose & Scope
 
-- This repo is the **configuration + docs hub** for the OS 2.0 orchestration system used by Claude Code.
+- This repo is the **configuration + docs hub** for the OS 2.1 orchestration system used by Claude Code.
 - It defines:
   - Global **agent specifications** (under `agents/` and synced to `~/.claude/agents`).
   - **Domain pipelines** and quality gates (under `docs/pipelines/` and `docs/reference/`).
   - **Commands** that orchestrate work (`commands/` and `commands/_archive/`).
-  - OS 2.0 **architecture docs** and design system integrations (`docs/`).
+  - OS 2.1 **architecture docs** and design system integrations (`docs/`).
 - Treat this repo as **meta‑infrastructure**, not a typical product app: most changes here affect how other projects behave.
+
+**OS 2.1 Changes:**
+- **57 agents total** (3 Opus, 54 Sonnet) across 6 domains
+- **Role boundaries enforced** - orchestrators NEVER write code
+- **State preservation** - pipelines survive interruptions
+- **Team confirmation** - user approves agents before execution
+- **Unified planning** - /plan command replaces 8+ fragmented commands
+- **Meta-audit** - /audit command for continuous improvement
 
 When in doubt, prefer **small, surgical edits** to agents/commands/docs rather than large refactors.
 
 ---
-## 2. Agent System Layout
+## 2. Agent System Layout (OS 2.1)
 
 Global agent definitions live in:
 
-- `agents/*.md` – OS 2.0 agents for:
-  - Webdev: `frontend-builder-agent`, `frontend-standards-enforcer`, `frontend-layout-analyzer`, `frontend-design-reviewer-agent`.
-  - Expo/mobile: `expo-architect-agent`, `expo-builder-agent`, `expo-verification-agent`.
-  - iOS: `ios-architect-agent`, `ios-standards-enforcer`, `ios-ui-reviewer-agent`, `ios-verification-agent`.
-  - Cross-cutting: `design-token-guardian`, `a11y-enforcer`, `performance-enforcer`, `performance-prophet`, `security-specialist`.
-  - SEO/content: `seo-*` agents.
+- `agents/*.md` – OS 2.1 agents (57 total):
+  - **Next.js (13 agents):** nextjs-grand-architect (Opus), nextjs-architect, nextjs-builder, nextjs-typescript-specialist, nextjs-tailwind-specialist, nextjs-layout-specialist, nextjs-performance-specialist, nextjs-accessibility-specialist, nextjs-seo-specialist, nextjs-standards-enforcer, nextjs-design-reviewer, nextjs-layout-analyzer, nextjs-verification-agent
+  - **iOS (18 agents):** ios-grand-architect (Opus), ios-architect, ios-builder, ios-swiftui-specialist, ios-uikit-specialist, ios-persistence-specialist, ios-networking-specialist, ios-testing-specialist, ios-performance-specialist, ios-security-specialist, ios-accessibility-specialist, ios-standards-enforcer, ios-ui-reviewer, ios-design-reviewer, ios-verification, + 3 more
+  - **Expo (10 agents):** expo-grand-orchestrator (Opus), expo-architect, expo-builder, design-token-guardian, a11y-enforcer, performance-enforcer, security-specialist, expo-aesthetics-specialist, expo-verification, + 1 more
+  - **Data (4 agents):** data-researcher, research-specialist, python-analytics-expert, competitive-analyst
+  - **SEO (4 agents):** seo-research-specialist, seo-brief-strategist, seo-draft-writer, seo-quality-guardian
+  - **Design (2 agents):** design-dna-guardian, design-system-architect
+  - **Cross-cutting (6 agents):** impact-analyzer, test-generator, bundle-assassin, api-guardian, refactor-surgeon
 - `~/.claude/agents/*.md` – the deployed copies used by Claude Code.
 
 Agent files share a simple schema:

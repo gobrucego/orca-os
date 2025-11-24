@@ -1,16 +1,32 @@
-# Visual Design Spec — Quick Reference
+# Visual Design Spec — Quick Reference (OS 2.1)
 
-Use this template to define clear, testable acceptance criteria for visual work. It pairs with the visual commands and agents (Playwright MCP) so the system can iterate, verify, and gate changes with evidence.
+**Version:** OS 2.1
+**Last Updated:** 2025-11-24
 
-Related commands:
-- `/visual-smoke` — quick screenshots + console capture
-- `/visual-iterate` — spec-driven iteration loop
-- `/design-review` — full design review (screenshots + structured findings)
+Use this template to define clear, testable acceptance criteria for visual work. In OS 2.1, design QA is **automated** within pipelines via design-reviewer agents.
 
-Evidence locations:
-- Screenshots: `.orchestration/evidence/screenshots/`
-- Console logs: `.orchestration/evidence/logs/`
-- Iteration logs: `.orchestration/evidence/iterations/`
+## OS 2.1 Integration
+
+**Automatic Design QA:**
+- Design QA agents run automatically in Phase 5 (after implementation)
+- No manual design review commands needed
+- Evidence captured automatically in `.claude/orchestration/evidence/`
+- Design QA gate enforces ≥90 score
+
+**Related commands (OS 2.1):**
+- `/plan "feature"` → Include visual acceptance criteria in blueprint
+- `/orca-{domain} "implement"` → Design QA runs automatically
+- `/design-dna init/audit` → Initialize or audit design system
+
+**Evidence locations (OS 2.1):**
+- Screenshots: `.claude/orchestration/evidence/screenshots/`
+- Design QA reports: `.claude/orchestration/evidence/design-qa-*.md`
+- Gate scores: `.claude/project/phase_state.json`
+
+**Deprecated (OS 2.0):**
+- ❌ `/visual-smoke` → Use pipeline automatic checks
+- ❌ `/visual-iterate` → Use pipeline iteration (gate <90 triggers fix)
+- ❌ `/design-review` → Use automatic design-reviewer agents
 
 ---
 

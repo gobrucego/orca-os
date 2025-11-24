@@ -1,3 +1,51 @@
 [submodule "_explore/_MCPs/Sequential-thinking-ultra-mcp"]
 	path = _explore/_MCPs/Sequential-thinking-ultra-mcp
 	url = https://github.com/hyokunkwak/Sequential-thinking-ultra-mcp.git
+[submodule "_LLM-research/Response-Awareness"]
+	path = _LLM-research/Response-Awareness
+	url = https://github.com/Typhren42/Response-Awareness
+[submodule "_LLM-research/agentic-context-engine"]
+	path = _LLM-research/agentic-context-engine
+	url = https://github.com/kayba-ai/agentic-context-engine
+[submodule "_LLM-research/pantheon-framework"]
+	path = _LLM-research/pantheon-framework
+	url = https://github.com/saver-zero/pantheon-framework
+[submodule "_LLM-research/workshop"]
+	path = _LLM-research/workshop
+	url = https://github.com/zachswift615/workshop
+[submodule "_LLM-research/_memory/claude-mem"]
+	path = _LLM-research/_memory/claude-mem
+	url = https://github.com/thedotmack/claude-mem
+[submodule "_LLM-research/_memory/claude-self-reflect"]
+	path = _LLM-research/_memory/claude-self-reflect
+	url = https://github.com/ramakay/claude-self-reflect
+[submodule "_LLM-research/_memory/claude-code-vector-memory"]
+	path = _LLM-research/_memory/claude-code-vector-memory
+	url = https://github.com/christian-byrne/claude-code-vector-memory
+[submodule "_LLM-research/_memory/claude-code-hooks-mastery"]
+	path = _LLM-research/_memory/claude-code-hooks-mastery
+	url = https://github.com/disler/claude-code-hooks-mastery
+[submodule "_LLM-research/_memory/claude-context"]
+	path = _LLM-research/_memory/claude-context
+	url = https://github.com/zilliztech/claude-context
+[submodule "_explore/BMAD-METHOD"]
+	path = _explore/BMAD-METHOD
+	url = https://github.com/bmad-code-org/BMAD-METHOD
+[submodule "_explore/claude-sub-agent"]
+	path = _explore/claude-sub-agent
+	url = https://github.com/zhsama/claude-sub-agent
+[submodule "_explore/claude-code-workflows"]
+	path = _explore/claude-code-workflows
+	url = https://github.com/OneRedOak/claude-code-workflows
+[submodule "_explore/Agent-Fusion"]
+	path = _explore/Agent-Fusion
+	url = https://github.com/krokozyab/Agent-Fusion
+[submodule "_explore/agentwise"]
+	path = _explore/agentwise
+	url = https://github.com/VibeCodingWithPhil/agentwise
+[submodule "_LLM-research/claude-code-requirements-builder"]
+	path = _LLM-research/claude-code-requirements-builder
+	url = https://github.com/rizethereum/claude-code-requirements-builder
+[submodule "_explore/claude-flow"]
+	path = _explore/claude-flow
+	url = https://github.com/ruvnet/claude-flow

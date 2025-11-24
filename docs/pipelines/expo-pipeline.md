@@ -1,17 +1,27 @@
 # Expo / React Native Domain Pipeline
 
-**Status:** OS 2.0 Core Pipeline (Expo Lane)  
-**Last Updated:** 2025-11-19
+**Status:** OS 2.1 Core Pipeline (Expo Lane)
+**Last Updated:** 2025-11-24
 
 ## Overview
 
-The Expo pipeline handles React Native mobile development for projects using Expo SDK 50+ / React Native 0.74+ with TypeScript. It combines:
+The Expo pipeline handles React Native mobile development for projects using Expo SDK 50+ / React Native 0.74+ with TypeScript, with role boundary enforcement, state preservation, and team confirmation.
 
-- OS 2.0 primitives (ProjectContextServer, phase_state.json, vibe.db, constraint framework)
-- SenaiVerse’s Expo agent system (Grand Architect + design/a11y/perf/security agents)
-- React Native best practices (from Agent Farm’s REACT_NATIVE_BEST_PRACTICES)
+**OS 2.1 Enhancements:**
+- **Role Boundaries:** Orchestrator NEVER writes code, only coordinates via Task tool
+- **State Preservation:** phase_state.json survives interruptions (questions, pauses)
+- **Team Confirmation:** User approves 10-agent team before execution
+- **Unified Planning:** `/plan` command creates blueprint first
+- **Meta-Audit:** `/audit` analyzes patterns and creates standards from failures
+- **Complexity Bands:** Low/medium/high/critical determine delegation strategy
 
-Goal: build and maintain high-quality Expo apps with structural guarantees around design tokens, accessibility, performance, and security.
+**System Integration:**
+- OS 2.1 primitives (ProjectContextServer, phase_state.json, vibe.db, constraint framework)
+- Expo agent system (10 agents: 1 Opus grand-orchestrator, 9 Sonnet specialists)
+- Expo lane agents (`expo-grand-orchestrator`, `expo-architect`, `expo-builder`, `design-token-guardian`, `a11y-enforcer`, `performance-enforcer`, `security-specialist`, `expo-aesthetics-specialist`, `expo-verification`)
+- React Native best practices and mobile-specific quality gates
+
+**Goal:** Build and maintain high-quality Expo apps with **structural guarantees** around design tokens, accessibility, performance, security, and **orchestration continuity**.
 
 ---
 ## Scope & Domain

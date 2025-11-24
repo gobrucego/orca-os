@@ -1,64 +1,18 @@
-# Root-level directories and files to exclude
-/.claude/
-/.orchestration
-/.workshop
-/.claude-session-context
-/.playwright-mcp
-/ext
-/commands/_archive/
-/.deprecated/*
-!/.deprecated/v1-legacy/
-/.
+# Ignore dot-prefixed files and folders
 .*
+.*/
+
+# Ignore codex folders
+/ext
+/quick-reference/codex
+
+# Ignore anything with 'archive' or 'deprecated' in the name
+*archive*
+*deprecated*
+
+# Ignore anything with 'mm-' in the name
+*mm-*
+
+# Keep essential git files
 !.gitignore
 !.git
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Editor
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-
-
-# Design Memory (personal preferences, keep local)
-/commands/project-specific/
-
-
-# Backups and deprecated files
-*-backup*.md
-deprecated/
-
-# Internal documentation and logs
-CHANGELOG.md
-
-# docs/ - now tracked (contains permanent system documentation)
-
-
-
-# Internal build/session notes (keep local)
-.diagram-*.md
-.rebuilt-*.md
-.worktrees/
-*.backup-*
-_explore/LLM-research/Anthropic/claude-cookbooks-main.zip
-
-# Claude memory databases
-.claude/memory/*.db
-.claude/memory/*.db-journal
-.claude/memory/*.db-wal
-.claude/memory/*.backup*
-.claude/cache/
-.claude/orchestration/temp/
-.claude/orchestration/evidence/
-
-# Keep directory structure
-!.claude/memory/.gitkeep
-!.claude/orchestration/playbooks/
-!.claude/orchestration/reference/
-!.claude/orchestration/orca-commands/

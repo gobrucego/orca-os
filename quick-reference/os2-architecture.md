@@ -1,21 +1,50 @@
-# OS 2.0 Architecture Quick Reference
+# OS 2.1 Architecture Quick Reference
 
-**Last Updated:** 2025-11-19
+**Last Updated:** 2025-11-24
+**Version:** OS 2.1
 
-## Core Architecture
+## What's New in OS 2.1
 
-### Foundation: Context-First Orchestration
+**Architectural Changes:**
+- ✅ Role boundary enforcement layer (orchestrators NEVER write code)
+- ✅ State preservation mechanism (phase_state.json)
+- ✅ Team confirmation layer (AskUserQuestion before execution)
+- ✅ Unified planning command (/plan replaces 8+ commands)
+- ✅ Meta-audit system (/audit for behavior review)
+- ✅ Grand Architect Pattern (Opus for coordination, Sonnet for work)
+
+---
+
+## Core Architecture (OS 2.1)
+
+### Foundation: Context-First Orchestration with Role Boundaries
 ```
-ProjectContextServer (MCP)
+User Request
     ↓
-Domain Orchestrator (/orca)
+/plan Command (unified planner)
     ↓
-Pipeline Phases (1-4)
+    Creates: requirements/<id>/06-requirements-spec.md
     ↓
-Quality Gates
+/orca-{domain} Command (orchestrator)
+    ↓
+ProjectContextServer Query [MANDATORY]
+    ↓
+Team Confirmation (AskUserQuestion) [MANDATORY]
+    ↓
+Role Boundary Enforcement [NEW in 2.1]
+    ↓
+Pipeline Phases (Context → Planning → Implementation → Gates → Verify)
+    ↓
+State Preservation (phase_state.json) [NEW in 2.1]
+    ↓
+Quality Gates (≥90 scores)
     ↓
 Output + Learning
+    ↓
+/audit Command (periodic meta-review) [NEW in 2.1]
 ```
+
+---
 
 ## Key Components
 
@@ -24,139 +53,493 @@ Output + Learning
 - **Location:** `~/.claude/mcp/project-context-server/`
 - **Features:**
   - Semantic search across project
-  - Historical context retrieval
-  - Standards and decisions database
-- **Integration:** Required for ALL operations
+  - Historical context retrieval (via mcp__project-context__query_context)
+  - Standards and decisions database (via save_decision, save_standard)
+  - Task history tracking (via save_task_history)
+- **Integration:** Required for ALL operations (blocks execution if unavailable)
 
-### 2. Orchestrator (/orca)
-- **Purpose:** Central coordination engine
-- **Domains:** webdev, iOS, data, SEO, brand
+### 2. Orchestrator Layer (/orca-*)
+
+#### Domain Orchestrators
+- **Purpose:** Coordination engines that NEVER write code
+- **Domains:** nextjs, ios, expo, data, seo, brand
 - **Flow:**
   1. Detect domain from request
-  2. Query ProjectContextServer
-  3. Execute phase pipeline
-  4. Enforce quality gates
-  5. Update memory systems
+  2. Query ProjectContextServer (mandatory)
+  3. Confirm team with user (AskUserQuestion - mandatory)
+  4. Execute phase pipeline via Task tool
+  5. Enforce quality gates
+  6. Update memory systems
+  7. Preserve state across interruptions
 
-### 3. Agent Constraint Framework
-Five constraint categories:
-1. **Scope Constraints** - Boundaries of operation
-2. **Quality Constraints** - Standards to maintain
-3. **Integration Constraints** - System connections
-4. **Resource Constraints** - Limits (tokens, time, APIs)
-5. **Behavioral Constraints** - Style and approach
+#### Role Boundary Enforcement (NEW in OS 2.1)
+```
+🚨 CRITICAL: Orchestrators NEVER write code
 
-### 4. Memory Systems
+**What Orchestrators DO:**
+- Read phase_state.json
+- Coordinate agents via Task tool
+- Pass context between phases
+- Track progress
+- Resume after interruptions
+
+**What Orchestrators NEVER DO:**
+- Use Edit/Write tools
+- Implement code directly
+- Bypass agent system
+- Abandon pipeline on interruption
+
+**Anti-Pattern Detection:**
+If orchestrator uses Edit/Write → ROLE VIOLATION → Stop immediately
+```
+
+### 3. Agent Layer
+
+#### Grand Architect Pattern (NEW in OS 2.1)
+```yaml
+Coordination Tier (Opus):
+  - Grand Architects (ios-grand-architect, nextjs-grand-architect, expo-grand-orchestrator)
+  - Purpose: High-level architecture, complex planning
+  - When: Large features, critical decisions, complex coordination
+  - Cost: High ($15/MTok input, $75/MTok output)
+
+Implementation Tier (Sonnet):
+  - All other agents (builders, specialists, gates, verification)
+  - Purpose: Implementation, analysis, testing, enforcement
+  - When: All actual work
+  - Cost: Low ($3/MTok input, $15/MTok output)
+
+Benefit: Optimal model allocation (expensive for strategy, efficient for work)
+```
+
+#### Agent Types
+```
+Builders:
+- ios-builder, nextjs-builder, expo-builder
+- Implement features, write code
+- Receive context from orchestrator
+
+Specialists:
+- Domain experts (ios-swiftui-specialist, nextjs-typescript-specialist)
+- Handle specific concerns (performance, accessibility, security)
+- Called by orchestrator when needed
+
+Gate Enforcers:
+- ios-standards-enforcer, nextjs-standards-enforcer
+- Numerical scoring (≥90 to pass)
+- Block pipeline if quality fails
+
+Verification Agents:
+- ios-verification, nextjs-verification-agent, expo-verification-agent
+- Build/test/lint verification
+- Evidence capture
+```
+
+### 4. State Preservation (NEW in OS 2.1)
+
+#### phase_state.json
+**Location:** `.claude/project/phase_state.json`
+
+**Structure:**
+```json
+{
+  "current_phase": "phase_4_implementation",
+  "completed_phases": ["phase_1_context", "phase_2_team_confirmation", "phase_3_planning"],
+  "agent_assignments": {
+    "planning": "ios-grand-architect",
+    "implementation": "ios-builder",
+    "gates": ["ios-standards-enforcer", "ios-ui-reviewer"]
+  },
+  "gate_results": {
+    "standards": 92,
+    "ui_review": 88
+  },
+  "interruption_count": 2,
+  "last_updated": "2025-11-24T14:30:00Z"
+}
+```
+
+**Purpose:**
+- Survives user interruptions (questions, clarifications, pauses)
+- Allows orchestrator to resume at correct phase
+- Prevents pipeline abandonment
+- Tracks progress across conversation turns
+
+**Usage:**
+Orchestrators read this file after ANY user input to determine where they were and what to do next.
+
+### 5. Team Confirmation (NEW in OS 2.1)
+
+#### AskUserQuestion Integration
+Before pipeline execution, orchestrators MUST:
+1. Detect domain
+2. Propose agent team
+3. Present via AskUserQuestion tool
+4. Wait for confirmation
+
+**Example Flow:**
+```typescript
+AskUserQuestion({
+  questions: [{
+    question: "I detect this as an iOS task. Proposed pipeline:\n\nPhases:\n1. Context (ProjectContext query)\n2. Planning (ios-grand-architect)\n3. Implementation (ios-builder)\n4. Standards Gate (ios-standards-enforcer ≥90)\n5. UI Review Gate (ios-ui-reviewer ≥90)\n6. Verification (ios-verification)\n\nProposed agents: ios-grand-architect, ios-builder, ios-swiftui-specialist, ios-standards-enforcer, ios-ui-reviewer, ios-verification\n\nDoes this look right?",
+    header: "Confirm iOS Team",
+    multiSelect: false,
+    options: [
+      {
+        label: "Proceed as planned",
+        description: "Execute with the proposed iOS pipeline and agent team"
+      },
+      {
+        label: "Adjust team",
+        description: "Modify which agents are involved or add specialists"
+      },
+      {
+        label: "Change approach",
+        description: "Different pipeline or domain detection"
+      }
+    ]
+  }]
+})
+```
+
+**Benefits:**
+- No surprise agent teams
+- User controls scope before work starts
+- Clear expectations
+- Cost visibility (Opus vs Sonnet agents)
+
+### 6. Quality Gates
+
+#### Gate Scoring (OS 2.1)
+All gates use numerical scores with ≥90 threshold:
+
+**Standards Gate**
+- **Threshold:** 90/100
+- **Measures:** Code quality, best practices, patterns
+- **Agent:** domain-standards-enforcer
+- **Action:** Iterate if <90, block if critical violation
+
+**Design QA Gate** (UI work only)
+- **Threshold:** 90/100
+- **Measures:** Visual quality, UX, responsiveness
+- **Agent:** domain-design-reviewer
+- **Action:** Iterate if <90
+
+**Accessibility Gate** (UI work only)
+- **Threshold:** 90/100
+- **Measures:** WCAG compliance, screen reader support, keyboard nav
+- **Agent:** domain-accessibility-specialist
+- **Action:** Block if <90 (prevents App Store rejection)
+
+**Performance Gate** (mobile work only)
+- **Type:** Budget compliance
+- **Measures:** Bundle size, render time, memory usage
+- **Agent:** performance-enforcer
+- **Action:** Block if exceeds budget
+
+**Build/Test Gate** (all domains)
+- **Type:** Hard block
+- **Measures:** Compilation success, test pass rate
+- **Agent:** domain-verification
+- **Action:** Fail pipeline if build/tests fail
+
+### 7. Memory Systems
+
+#### ProjectContext (MCP)
+- **Type:** Persistent, project-scoped
+- **Location:** `<project>/.claude/project/vibe.db`
+- **Contents:**
+  - Architectural decisions
+  - Standards and rules
+  - Task history and learnings
+  - File structure and dependencies
+- **Access:** mcp__project-context__* tools
+
+#### SharedContext (MCP)
+- **Type:** Persistent, cross-session
+- **Location:** `~/.claude/shared-context/`
+- **Contents:**
+  - Shared project context (versioned)
+  - Differential updates (20-30% token reduction)
+  - Cross-session continuity
+- **Access:** mcp__shared-context__* tools
+
+#### Workshop
+- **Type:** Persistent, institutional knowledge
+- **Location:** `.claude/memory/workshop.db`
+- **Contents:**
+  - Decisions with reasoning
+  - Gotchas and antipatterns
+  - Preferences and goals
+  - Session summaries
+- **Access:** workshop CLI commands
 
 #### AgentDB (Ephemeral)
-- Pipeline state cache
-- Cross-agent communication
-- Session-scoped data
-- Cleared after pipeline
+- **Type:** Session-scoped cache
+- **Purpose:** Cross-agent communication within pipeline
+- **Lifetime:** Cleared after pipeline completion
+- **Contents:** Phase outputs, intermediate results
 
-#### vibe.db (Persistent)
-- Institutional knowledge
-- Learned patterns
-- User preferences
-- Historical decisions
+---
 
-### 5. Quality Gates
-
-#### Clarity Gate
-- **Threshold:** 70/100
-- **Measures:** Readability, structure, coherence
-- **Action:** Iterate if below threshold
-
-#### Compliance Gate
-- **Type:** Hard block
-- **Checks:** Security, standards, policies
-- **Action:** Fail pipeline if violated
-
-#### Standards Gate
-- **Threshold:** 90/100
-- **Measures:** Best practices, patterns
-- **Action:** Warning if below, block if critical
-
-## Directory Structure
+## Directory Structure (OS 2.1)
 
 ```
 ~/.claude/
-├── agents/              # OS 2.0 agent definitions
-├── commands/            # Orchestrator commands
-├── mcp/                 # MCP servers
-│   └── project-context-server/
+├── agents/                    # OS 2.1 agent definitions (57 total)
+│   ├── ios/                   # iOS team (18 agents)
+│   ├── nextjs/                # Next.js team (13 agents)
+│   ├── expo/                  # Expo team (10 agents)
+│   ├── data/                  # Data team (4 agents)
+│   ├── seo/                   # SEO team (4 agents)
+│   └── design/                # Design team (2 agents)
+├── commands/                  # Orchestrator commands
+│   ├── plan.md                # NEW: Unified planner
+│   ├── audit.md               # NEW: Meta-audit
+│   ├── orca.md                # Main orchestrator
+│   ├── orca-ios.md            # iOS lane (role boundaries enforced)
+│   ├── orca-nextjs.md         # Next.js lane (role boundaries enforced)
+│   ├── orca-expo.md           # Expo lane (role boundaries enforced)
+│   └── orca-data.md           # Data lane (role boundaries enforced)
+├── mcp/                       # MCP servers
+│   ├── project-context-server/
+│   ├── shared-context/
+│   └── sequential-thinking/
 ├── docs/
-│   └── reference/
-│       └── phase-configs/  # Pipeline configurations
-└── memory/              # vibe.db location
+│   ├── reference/
+│   │   └── phase-configs/     # Pipeline configurations
+│   └── pipelines/             # Pipeline specifications
+└── memory/                    # Workshop database
+    └── workshop.db
 
-claude-vibe-config/      # This repo (mirror/record)
-├── agents/              # Agent records
-├── commands/            # Command records
-├── docs/                # Documentation
-├── quick-reference/     # This reference
-└── .deprecated/         # Archived v1 content
+<project>/.claude/
+├── project/
+│   ├── vibe.db                # ProjectContext database
+│   └── phase_state.json       # NEW: State preservation
+├── orchestration/
+│   ├── evidence/              # Final artifacts
+│   └── temp/                  # Working files (clean up after session)
+└── requirements/              # NEW: Unified planning outputs
+    └── YYYY-MM-DD-HHMM-<slug>/
+        └── 06-requirements-spec.md
+
+claude-vibe-config/            # This repo (mirror/record)
+├── agents/                    # Agent records
+├── commands/                  # Command records
+├── docs/                      # Documentation
+├── quick-reference/           # This reference
+└── .deprecated/               # Archived v1/v2.0 content
 ```
 
-## Phase Pipeline Pattern
+---
 
-### Standard 4-Phase Structure
+## Phase Pipeline Pattern (OS 2.1)
+
+### Updated 6-Phase Structure
 ```yaml
-Phase 1: Research/Analysis
-  - Context gathering
-  - Domain exploration
-  - Constraint identification
+Phase 1: Context Query [MANDATORY]
+  agent: ProjectContextServer (MCP)
+  purpose: Load project knowledge
+  blocks_on_failure: true
+  output: context bundle
 
-Phase 2: Strategy/Planning
-  - Architecture decisions
-  - Approach selection
-  - Resource planning
+Phase 2: Team Confirmation [MANDATORY, NEW in 2.1]
+  tool: AskUserQuestion
+  purpose: User approves agent team
+  blocks_on_failure: true
+  output: confirmed team
 
-Phase 3: Implementation
-  - Core execution
-  - Building/Creating
-  - Integration
+Phase 3: Planning
+  agent: grand-architect (Opus) OR architect (Sonnet)
+  purpose: Architecture decisions, approach selection
+  context_required: true
+  output: implementation plan
 
-Phase 4: Quality/Validation
-  - Standards enforcement
-  - Testing/Verification
-  - Documentation
+Phase 4: Implementation
+  agent: builder (Sonnet)
+  purpose: Core execution, building, creating
+  dependencies: [phase_3]
+  output: implemented feature
+
+Phase 5: Quality Gates
+  agents: [standards-enforcer, design-reviewer, accessibility-specialist]
+  purpose: Standards enforcement, quality validation
+  gates:
+    - standards: 90
+    - design_qa: 90
+    - accessibility: 90
+  action: iterate if fail, block if critical
+  output: gate scores
+
+Phase 6: Verification
+  agent: verification-agent (Sonnet)
+  purpose: Build/test/lint verification
+  evidence_required: true
+  output: verification evidence
 ```
 
-## Integration Flow
+---
 
-### Request Lifecycle
+## Integration Flow (OS 2.1)
+
+### Complete Request Lifecycle
 ```
-User Request
+User Request: "Add dark mode support"
     ↓
-/orca Command
+/plan "Add dark mode support"
     ↓
-Domain Detection
+    → 5 discovery questions (AskUserQuestion)
+    → ProjectContextServer query
+    → 5 detail questions (AskUserQuestion)
+    → Response Awareness tagging (#PATH_DECISION, etc.)
+    → Blueprint generation
     ↓
-ProjectContextServer Query ← [MANDATORY]
+    Output: requirements/2025-11-24-1430-dark-mode/06-requirements-spec.md
     ↓
-Phase 1 Agent (with context)
+User: "/orca-nextjs implement requirement 2025-11-24-1430-dark-mode using that spec"
     ↓
-AgentDB Update
+/orca-nextjs Command (orchestrator mode)
     ↓
-Phase 2 Agent (with context + Phase 1 output)
+Phase 1: ProjectContextServer Query [MANDATORY]
     ↓
-Phase 3 Agent (with accumulated context)
+    → Query: "Next.js dark mode implementation, user preferences"
+    → Returns: relevant files, past decisions, standards
     ↓
-Phase 4 Quality Gates
-    ├─ Pass → Output + vibe.db update
-    └─ Fail → Iterate or escalate
+Phase 2: Team Confirmation [MANDATORY, NEW in 2.1]
+    ↓
+    → AskUserQuestion: "Confirm Next.js team?"
+    → Proposed: nextjs-grand-architect, nextjs-builder, nextjs-tailwind-specialist, nextjs-standards-enforcer, nextjs-design-reviewer, nextjs-verification-agent
+    → User confirms
+    ↓
+Phase 3: Planning (via Task tool)
+    ↓
+    → Orchestrator delegates to nextjs-grand-architect (Opus)
+    → Grand architect reads context, creates implementation plan
+    → Updates phase_state.json: {"current_phase": "phase_3_planning", "agent": "nextjs-grand-architect"}
+    ↓
+[USER INTERRUPTION: "Will this work with Tailwind dark: classes?"]
+    ↓
+    → Orchestrator reads phase_state.json
+    → Sees: Still in orchestrator mode, phase 3 planning
+    → Processes question, updates context
+    → Delegates back to nextjs-grand-architect with clarification
+    → Does NOT start coding directly
+    → Does NOT abandon pipeline
+    ↓
+Phase 4: Implementation (via Task tool)
+    ↓
+    → Orchestrator delegates to nextjs-builder (Sonnet)
+    → Builder implements dark mode with Tailwind
+    → Updates phase_state.json: {"current_phase": "phase_4_implementation", "agent": "nextjs-builder"}
+    ↓
+Phase 5: Quality Gates (via Task tool)
+    ↓
+    → Orchestrator delegates to nextjs-standards-enforcer
+    → Result: 92/100 (PASS)
+    → Orchestrator delegates to nextjs-design-reviewer
+    → Result: 88/100 (FAIL - need ≥90)
+    → Orchestrator delegates back to nextjs-builder to fix issues
+    → Re-run gate: 91/100 (PASS)
+    → Updates phase_state.json: {"gate_results": {"standards": 92, "design": 91}}
+    ↓
+Phase 6: Verification (via Task tool)
+    ↓
+    → Orchestrator delegates to nextjs-verification-agent
+    → Runs: npm run build && npm run test && npm run lint
+    → All pass
+    → Evidence captured
+    → Updates phase_state.json: {"current_phase": "phase_6_verification", "status": "complete"}
+    ↓
+Output + Learning
+    ↓
+    → Feature complete
+    → ProjectContext updated (save_task_history)
+    → Workshop updated (workshop decision)
+    → phase_state.json archived
+    ↓
+Later: /audit "last 5 tasks"
+    ↓
+    → Analyzes recent behavior
+    → Creates standards from failures
+    → Records learnings
+    → Output: .claude/orchestration/evidence/audit-<timestamp>.md
 ```
+
+---
+
+## Role Boundary Enforcement (OS 2.1)
+
+### The Problem (OS 2.0)
+```
+User: "Add dark mode"
+    ↓
+/orca-nextjs
+    ↓
+Planning phase (via agent)
+    ↓
+[User asks: "Will this work with existing styles?"]
+    ↓
+❌ Orchestrator abandons agent system
+❌ Orchestrator starts coding directly
+❌ Entire agentic system bypassed
+```
+
+### The Solution (OS 2.1)
+```
+User: "Add dark mode"
+    ↓
+/orca-nextjs
+    ↓
+Planning phase (via agent)
+    ↓
+[User asks: "Will this work with existing styles?"]
+    ↓
+✅ Orchestrator reads phase_state.json
+✅ Orchestrator processes question
+✅ Orchestrator updates context
+✅ Orchestrator delegates to appropriate agent
+✅ Pipeline continues
+```
+
+### Enforcement Mechanism
+Every orca command includes:
+```markdown
+## 🚨 CRITICAL ROLE BOUNDARY 🚨
+
+**YOU ARE AN ORCHESTRATOR. YOU NEVER WRITE CODE.**
+
+If the user interrupts with questions, clarifications, or test results:
+- **REMAIN IN ORCHESTRATOR MODE**
+- **DO NOT start writing code yourself**
+- **DO NOT bypass the agent system**
+- Process the input and **DELEGATE to the appropriate agent via Task tool**
+- Update phase_state.json to reflect the new information
+- Resume orchestration where you left off
+
+**If you find yourself about to use Edit/Write tools: STOP. You've broken role.**
+**Your only job: coordinate agents via Task tool. That's it.**
+```
+
+---
 
 ## Configuration Files
 
 ### Phase Configurations
 Location: `~/.claude/docs/reference/phase-configs/`
-- `seo-phase-config.yaml`
-- `webdev-phase-config.yaml`
-- `ios-phase-config.yaml`
-- `data-phase-config.yaml`
-- `brand-phase-config.yaml`
+- `nextjs-phase-config.yaml` (6 phases, role boundaries enforced)
+- `ios-phase-config.yaml` (6 phases, role boundaries enforced)
+- `expo-phase-config.yaml` (6 phases, role boundaries enforced)
+- `data-phases.yaml` (4 phases, role boundaries enforced)
+- `seo-phase-config.yaml` (4 phases)
+
+### Pipeline Specifications
+Location: `~/.claude/docs/pipelines/`
+- `nextjs-pipeline.md` (13-agent team)
+- `ios-pipeline.md` (18-agent team)
+- `expo-pipeline.md` (10-agent team)
+- `data-pipeline.md` (4-agent team)
+- `design-pipeline.md` (2-agent team)
+- `seo-pipeline.md` (4-agent team)
 
 ### MCP Registration
 File: `~/.claude.json`
@@ -166,19 +549,49 @@ File: `~/.claude.json`
     "project-context": {
       "path": "~/.claude/mcp/project-context-server/",
       "required": true
+    },
+    "shared-context": {
+      "path": "~/.claude/mcp/shared-context/",
+      "required": false
+    },
+    "sequential-thinking": {
+      "path": "~/.claude/mcp/sequential-thinking/",
+      "required": false
     }
   }
 }
 ```
 
-## Key Principles
+---
 
-1. **Context is Mandatory** - No operation without ProjectContextServer
-2. **Phases are Sequential** - Each builds on previous
-3. **Quality is Non-Negotiable** - Gates must pass
-4. **Memory is Dual** - Ephemeral for pipeline, persistent for learning
-5. **Constraints Guide Behavior** - 5-category framework for all agents
+## Key Principles (OS 2.1)
+
+1. **Context is Mandatory** - No operation without ProjectContextServer query
+2. **Team Confirmation is Mandatory** - User approves agents before execution
+3. **Role Boundaries are Enforced** - Orchestrators NEVER write code
+4. **State Preservation is Automatic** - phase_state.json survives interruptions
+5. **Phases are Sequential** - Each builds on previous (except parallel gates)
+6. **Quality is Non-Negotiable** - Gates must pass (≥90 scores)
+7. **Memory is Multi-Layered** - Ephemeral (AgentDB), persistent (ProjectContext, Workshop), shared (SharedContext)
+8. **Grand Architects are Strategic** - Opus for coordination, Sonnet for implementation
+9. **Continuous Improvement** - /audit creates standards from failures
 
 ---
 
-_OS 2.0 represents a complete architectural shift from v1's reactive pattern to proactive, context-first orchestration._
+## OS 2.1 vs OS 2.0
+
+| Feature | OS 2.0 | OS 2.1 |
+|---------|--------|--------|
+| Planning | 8+ fragmented commands | Unified /plan command |
+| Meta-Review | Manual | /audit command |
+| Role Boundaries | Implicit | Explicit enforcement |
+| Team Confirmation | None | Mandatory AskUserQuestion |
+| State Preservation | None | phase_state.json |
+| Interruption Handling | Pipeline abandoned | Pipeline continues |
+| Agent Count | ~30 | 57 (3 Opus, 54 Sonnet) |
+| Quality Gates | Pass/fail | Numerical scores ≥90 |
+| Workflow | Fragmented | /plan → /orca → /audit |
+
+---
+
+_OS 2.1 represents a major evolution from OS 2.0: role boundaries prevent orchestration breakdown, state preservation survives interruptions, team confirmation provides transparency, and unified planning eliminates command sprawl._

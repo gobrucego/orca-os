@@ -1,6 +1,7 @@
-# Scripts Directory - OS 2.0 Structure
+# Scripts Directory - OS 2.1 Structure
 
-**Last Organized:** 2025-11-19
+**Last Organized:** 2025-11-24
+**Version:** OS 2.1
 
 ## 📁 Current Organization
 
@@ -116,10 +117,23 @@ bash scripts/utilities/test-enforcement.sh
 ## Maintenance Notes
 
 - **DO NOT** use scripts in `.archived-v1/` - they're for v1 systems
-- **OS 2.0** uses agents and MCP servers, not Python scripts
+- **OS 2.1** uses agents and MCP servers, not Python scripts
 - **Utilities** folder contains scripts that work with any system
 - **Keep this organized** - new scripts should go in appropriate folders
 
+## OS 2.1 Integration
+
+**What's Changed:**
+- Scripts now work with OS 2.1 architecture (role boundaries, state preservation)
+- Cleanup scripts compatible with `.claude/project/` structure (phase_state.json, requirements/)
+- Evidence scripts work with new audit output locations (`.claude/orchestration/evidence/audit-*.md`)
+- No script changes required - OS 2.1 is backward compatible
+
+**New Workflows:**
+- Use `/plan` command instead of manual requirement scripts
+- Use `/audit` command for meta-review (generates audit-*.md files)
+- Phase state tracked in `.claude/project/phase_state.json` (no script needed)
+
 ---
 
-_Scripts directory cleaned and organized for OS 2.0 architecture_
+_Scripts directory compatible with OS 2.1 architecture_

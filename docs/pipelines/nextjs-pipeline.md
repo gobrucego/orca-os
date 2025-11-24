@@ -1,12 +1,11 @@
-# Nextjs Domain Pipeline
+# Next.js Domain Pipeline
 
-**Status:** OS 2.0 Core Pipeline
-**Last Updated:** 2025-11-19
+**Status:** OS 2.1 Core Pipeline
+**Last Updated:** 2025-11-24
 
 ## Overview
 
-The Nextjs pipeline handles frontend/web development work for Next.js apps with
-strict context awareness, design system enforcement, and quality gates.
+The Next.js pipeline handles frontend/web development work for Next.js apps with strict context awareness, design system enforcement, quality gates, role boundary enforcement, and state preservation.
 
 **Core Principles:**
 1. Context is MANDATORY - No work without ContextBundle
@@ -15,16 +14,29 @@ strict context awareness, design system enforcement, and quality gates.
 4. Gates are strict - Must pass ≥90 scores
 5. Maximum 2 implementation passes
 
-**Orchestration:**
-- Nextjs work SHOULD be run via the `/orca-nextjs` command.
-- Phase state is tracked in `.claude/orchestration/phase_state.json` using the contract in `docs/reference/phase-configs/nextjs-phase-config.yaml`.
-- The high-level phases in this doc map to the more detailed `phase_state` entries:
-  - “Planning & Spec” ↔ `requirements_impact` + `planning`
-  - “Analysis” ↔ `analysis`
-  - “Implementation - Pass 1 / Pass 2” ↔ `implementation_pass1` / `implementation_pass2`
-  - “Gate Checks” ↔ `gates`
-  - “Verification” ↔ `verification`
-  - “Completion” ↔ `completion`
+**Orchestration (OS 2.1):**
+- Next.js work MUST be run via the `/orca-nextjs` command (orchestrator)
+- **NEW: Team Confirmation** - User confirms agent team via AskUserQuestion before execution
+- **NEW: Role Boundaries** - Orchestrator NEVER writes code, only coordinates via Task tool
+- **NEW: State Preservation** - phase_state.json survives interruptions (questions, pauses, clarifications)
+- Phase state tracked in `.claude/project/phase_state.json` using contract in `docs/reference/phase-configs/nextjs-phase-config.yaml`
+- High-level phases in this doc map to detailed `phase_state` entries:
+  - "Context Query" ↔ `phase_1_context`
+  - "Team Confirmation" ↔ `phase_2_team_confirmation` (NEW in OS 2.1)
+  - "Planning & Spec" ↔ `phase_3_planning`
+  - "Implementation" ↔ `phase_4_implementation`
+  - "Gate Checks" ↔ `phase_5_gates`
+  - "Verification" ↔ `phase_6_verification`
+
+## OS 2.1 Integration
+
+**What's New:**
+- **Unified Planning:** Use `/plan` command first to create blueprint at `requirements/<id>/06-requirements-spec.md`
+- **Team Confirmation:** Orchestrator proposes 13-agent team (grand-architect, builder, 5 specialists, 3 gates, verification) and waits for user approval
+- **Role Boundaries:** Orchestrator reads phase_state.json after every user input, delegates to appropriate agent, never codes directly
+- **State Preservation:** Pipeline survives interruptions - orchestrator resumes at correct phase
+- **Meta-Audit:** Run `/audit "last 10 tasks"` periodically to analyze patterns and create standards from failures
+- **Agent Team:** 1 Opus (nextjs-grand-architect), 12 Sonnet (builder, specialists, gates, verification)
 
 ---
 

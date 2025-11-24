@@ -1,26 +1,31 @@
 # Data / Analytics Domain Pipeline
 
-**Status:** OS 2.0 Pipeline (Data Lane)  
-**Last Updated:** 2025-11-20
+**Status:** OS 2.1 Pipeline (Data Lane)
+**Last Updated:** 2025-11-24
 
 ---
 
 ## Overview
 
-The data/analytics pipeline handles work where the primary output is:
-- Data understanding (what exists, how good it is).
-- Analyses and models (what patterns exist and what they mean).
-- Decision-support artifacts (briefs, dashboards, metrics, reports).
+The data/analytics pipeline handles work where the primary output is data understanding, analyses, models, and decision-support artifacts, with role boundary enforcement and state preservation.
 
-It combines:
-- OS 2.0 primitives (ProjectContextServer, `phase_state.json`, vibe.db).
-- Data/analytics agents:
-  - `data-researcher`
-  - `research-specialist`
-  - `python-analytics-expert`
-- Modern data engineering/analytics practices from:
-  - `DATA_ENGINEERING_AND_ANALYTICS_BEST_PRACTICES.md`
-    (`_explore/orchestration_repositories/claude_code_agent_farm-main/...`).
+**Primary Outputs:**
+- Data understanding (what exists, how good it is)
+- Analyses and models (what patterns exist and what they mean)
+- Decision-support artifacts (briefs, dashboards, metrics, reports)
+
+**OS 2.1 Enhancements:**
+- **Role Boundaries:** Orchestrator NEVER writes code, only coordinates via Task tool
+- **State Preservation:** phase_state.json survives interruptions (questions, pauses)
+- **Team Confirmation:** User approves 4-agent team before execution
+- **Unified Planning:** `/plan` command creates blueprint first
+- **Meta-Audit:** `/audit` analyzes patterns and creates standards from failures
+
+**System Integration:**
+- OS 2.1 primitives (ProjectContextServer, phase_state.json, vibe.db, constraint framework)
+- Data agent system (4 Sonnet agents: data-researcher, research-specialist, python-analytics-expert, competitive-analyst)
+- Data engineering/analytics best practices
+- Quality gates for data quality, verification, and narrative coherence
 
 ---
 

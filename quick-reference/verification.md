@@ -1,120 +1,291 @@
-#!/usr/bin/env markdown
+# Verification & Evidence Quick Reference (OS 2.1)
 
-# Evidence & Finalization Quick Reference
+**Version:** OS 2.1
+**Last Updated:** 2025-11-24
 
-Prove it, or it didn’t happen. This guide shows exactly how to collect evidence, run gates, and pass `/finalize`.
+Verification in OS 2.1 is **automated** within pipelines. This guide covers manual verification for edge cases.
 
-## Where Evidence Lives
+## OS 2.1 Verification (Automated)
 
-- Orchestration control files → `.orchestration/` (required for gating)
-  - user-request.md, implementation-log.md, orca-session, verification/verification-report.md
-- Screenshots, build logs, test output → `.orchestration/evidence/`
-- Runtime logs (builder/testers) → `.orchestration/logs/`
-- Human-facing docs (optional) → project root or `/tmp/`
+### How Verification Works Now
 
-Commits are blocked for active ORCA sessions unless `.verified` exists (created by `bash scripts/finalize.sh`).
+**Automatic in Pipelines:**
+1. `/orca-nextjs` → Implementation → **Standards Gate (≥90)** → **Design QA Gate (≥90)** → **Build/Test Verification (automatic)** → Done
+2. `/orca-ios` → Implementation → **Standards Gate (≥90)** → **UI Review Gate (≥90)** → **xcodebuild + tests (automatic)** → Done
+3. `/orca-expo` → Implementation → **Design Tokens** → **A11y** → **Performance** → **Security** → **Build/Test (automatic)** → Done
 
-## Required Tags (Zero‑Tag Gate)
+**What Changed from OS 2.0:**
+- ❌ No more manual `/finalize` script
+- ✅ Verification agents run automatically in Phase 6
+- ✅ Evidence captured automatically in `.claude/orchestration/evidence/`
+- ✅ Build/test results stored in phase_state.json
+- ✅ Gate scores enforced (≥90 or fail)
 
-Add at least one of these lines to `.orchestration/implementation-log.md`:
+### Where Evidence Lives (OS 2.1)
+
+```
+<project>/.claude/
+├── project/
+│   ├── phase_state.json          # Gate results, verification status
+│   └── vibe.db                    # Task history
+├── orchestration/
+│   ├── evidence/                  # Final artifacts
+│   │   ├── screenshots/           # UI evidence
+│   │   ├── audit-*.md             # Audit reports (from /audit)
+│   │   └── verification-*.md      # Verification reports
+│   └── temp/                      # Working files (clean up after)
+└── requirements/                  # Planning outputs
+    └── YYYY-MM-DD-HHMM-<slug>/
+        └── 06-requirements-spec.md
+```
+
+## Verification Agents (Automatic)
+
+### Next.js Verification (`nextjs-verification-agent`)
+**Runs:** Phase 6 (after gates pass)
+**Checks:**
+- `npm run build` succeeds
+- `npm run test` passes
+- `npm run lint` passes
+- Reports results to orchestrator
+- Stores evidence in phase_state.json
+
+### iOS Verification (`ios-verification`)
+**Runs:** Phase 7 (after gates pass)
+**Checks:**
+- `xcodebuild build` succeeds (all targets)
+- `xcodebuild test` passes
+- Swift syntax errors caught
+- Reports results to orchestrator
+- Stores evidence in phase_state.json
+
+### Expo Verification (`expo-verification-agent`)
+**Runs:** Phase 6 (after gates pass)
+**Checks:**
+- `expo doctor` health check
+- `npm run build` or `eas build --local` succeeds
+- `npm run test` passes
+- Bundle size within budget
+- Reports results to orchestrator
+- Stores evidence in phase_state.json
+
+## Manual Verification (Edge Cases Only)
+
+Use manual verification ONLY when:
+- Working outside pipeline (rare)
+- Testing edge cases not covered by automated checks
+- Debugging verification failures
+
+### Manual Evidence Capture
+
+```bash
+# Build logs (Next.js/Expo)
+npm run build 2>&1 | tee .claude/orchestration/evidence/build-$(date +%Y%m%d-%H%M%S).log
+
+# Test logs
+npm run test 2>&1 | tee .claude/orchestration/evidence/test-$(date +%Y%m%d-%H%M%S).log
+
+# iOS build
+xcodebuild clean build 2>&1 | tee .claude/orchestration/evidence/build-$(date +%Y%m%d-%H%M%S).log
+
+# iOS tests
+xcodebuild test 2>&1 | tee .claude/orchestration/evidence/test-$(date +%Y%m%d-%H%M%S).log
+
+# Screenshots (if MCP not available)
+# Next.js:
+# Visit http://localhost:3000, take screenshot, save to .claude/orchestration/evidence/screenshots/
+
+# iOS:
+xcrun simctl io booted screenshot .claude/orchestration/evidence/screenshots/after-$(date +%s).png
+```
+
+## Quality Gates (OS 2.1)
+
+### Standards Gate (≥90 required)
+**Agent:** domain-standards-enforcer
+**Measures:**
+- Code quality
+- Best practices compliance
+- No inline styles
+- Design token usage
+- No arbitrary values
+
+**Result:** Numerical score
+- ≥90 → PASS (continue)
+- <90 → FAIL (iterate)
+
+### Design QA Gate (≥90 required, UI only)
+**Agent:** domain-design-reviewer / domain-ui-reviewer
+**Measures:**
+- Visual consistency
+- Design system compliance
+- Responsive behavior
+- Typography hierarchy
+- Spacing correctness
+
+**Result:** Numerical score
+- ≥90 → PASS (continue)
+- <90 → FAIL (iterate)
+
+### Build/Test Gate (PASS required)
+**Agent:** domain-verification
+**Measures:**
+- Build succeeds
+- All tests pass
+- Linting passes
+- No compilation errors
+
+**Result:** PASS/FAIL
+- PASS → Continue to completion
+- FAIL → Block pipeline, fix issues
+
+## Response Awareness Tags (OS 2.1)
+
+Tags now recorded automatically in `/plan` output:
 
 ```markdown
-#FILE_CREATED: path/to/file
-#FILE_MODIFIED: path/to/file
-#COMPLETION_DRIVE: Assumption text
-#PATH_DECISION: Chose A over B (reason)
-#SCREENSHOT_CLAIMED: .orchestration/evidence/screenshots/after.png
+## Assumptions
+
+#COMPLETION_DRIVE: Assumed dark mode applies to all routes. User mentioned "main app" but didn't specify if auth pages are included. VALIDATE during implementation.
+
+## Implementation Path
+
+#PATH_DECISION: Chose Tailwind dark: classes over CSS variables because Tailwind integrates better with existing design system. Alternative: CSS custom properties (rejected - requires refactoring existing components).
 ```
 
-UI work must include `#SCREENSHOT_CLAIMED:` and the file must actually exist under `.orchestration/evidence/`.
+**Meta-Audit:**
+`/audit "last 10 tasks"` analyzes these tags for patterns:
+- Scope creep (#CARGO_CULT)
+- Premature completion (#RESOLUTION_PRESSURE)
+- Unvalidated assumptions (#COMPLETION_DRIVE)
 
-## Helper Scripts (Recommended)
+## Typical Flows (OS 2.1)
 
-Use these helpers to capture evidence into the correct folders automatically.
-
+### Frontend Feature (Next.js)
 ```bash
-# Build logs (auto-detects or pass command after --)
-bash scripts/capture-build.sh
-# or
-bash scripts/capture-build.sh -- npm run build
+# 1. Plan
+/plan "Add dark mode toggle"
 
-# Test logs (auto-detects or pass command after --)
-bash scripts/capture-tests.sh
-# or
-bash scripts/capture-tests.sh -- pytest -q
+# 2. Implement (automatic verification)
+/orca-nextjs "Implement requirement 2025-11-24-1430-dark-mode using that spec"
 
-# Screenshots via MCP (requests a screenshot and optionally waits until saved)
-bash scripts/capture-screenshot.sh http://localhost:3000/path --wait-for 20
-# custom name
-bash scripts/capture-screenshot.sh http://localhost:3000/path --out after.png --wait-for 20
+# Pipeline automatically:
+# - Confirms team (AskUserQuestion)
+# - Implements feature
+# - Runs standards gate (≥90)
+# - Runs design QA gate (≥90)
+# - Runs build/test verification
+# - Reports results
+
+# 3. Later: Meta-audit
+/audit "last 5 tasks"
 ```
 
-The screenshot script writes a request JSON to `.orchestration/evidence/requests/…` that your MCP watcher can fulfill by saving the image at the specified `output` path.
-
-## Finalize
-
-Run the finalization gate to score evidence and write `.verified` (required by git hook during ORCA sessions).
-
+### iOS Feature
 ```bash
-bash scripts/finalize.sh
+# 1. Plan
+/plan "Add biometric authentication"
+
+# 2. Implement (automatic verification)
+/orca-ios "Implement requirement 2025-11-24-1500-biometric-auth using that spec"
+
+# Pipeline automatically:
+# - Confirms team
+# - Implements feature
+# - Runs standards gate (≥90)
+# - Runs UI review gate (≥90)
+# - Runs xcodebuild + tests
+# - Reports results
 ```
 
-What finalize checks:
-- Build/test status (auto-detected)
-- Screenshot presence (UI work requires ≥1)
-- Zero‑Tag Gate: required tags in `.orchestration/implementation-log.md`
-- Evidence score (PASS if score ≥ 5; prototype profile lowers threshold)
-- Writes report to `.orchestration/verification/verification-report.md`
-
-## Typical Flows
-
-### Frontend UI change
-
+### Quick Fix (No Planning)
 ```bash
-npm run dev &
-bash scripts/capture-build.sh
-bash scripts/capture-tests.sh
-bash scripts/capture-screenshot.sh http://localhost:3000/page --wait-for 20
-bash scripts/finalize.sh
+# Direct implementation for trivial tasks
+/orca-nextjs "Fix typo in homepage title"
+
+# Pipeline still runs:
+# - Team confirmation
+# - Implementation
+# - Standards gate
+# - Build verification
 ```
 
-### Using respawr (plan → build → verify)
+## Verification Failures (Troubleshooting)
 
+### Build Fails
+**What happens:**
+- Verification agent reports FAIL
+- Orchestrator asks: "Build failed with error X. How should I proceed?"
+- User clarifies issue
+- Orchestrator delegates back to builder agent to fix
+- Re-runs verification
+
+**State preservation:** Pipeline continues from where it failed.
+
+### Gate Score <90
+**What happens:**
+- Gate agent reports score (e.g., 85/100)
+- Orchestrator delegates to builder to fix issues
+- Re-runs gate
+- Must reach ≥90 to pass
+
+**Example:**
+```
+Standards Gate: 85/100
+Issues:
+- 3 inline styles found
+- 2 arbitrary values used
+- 1 magic number
+
+Action: Delegating to nextjs-builder to fix...
+[Builder fixes issues]
+Standards Gate Re-run: 92/100 → PASS
+```
+
+### Screenshot Missing (UI Work)
+**What happens:**
+- Design QA gate flags missing visual evidence
+- Orchestrator delegates to capture screenshot
+- Evidence stored in `.claude/orchestration/evidence/screenshots/`
+- Gate re-runs
+
+## Deprecated Workflows (OS 2.0)
+
+### Old Way (Manual)
 ```bash
-# Plan only; no code changes
-/respawr-plan Add a search bar to header
-
-# Implement and capture evidence along the way
-/respawr-build Add a search bar to header
-
-# Finalize verification gates
-bash scripts/finalize.sh
+❌ bash scripts/finalize.sh
+❌ bash scripts/capture-build.sh
+❌ bash scripts/capture-tests.sh
+❌ Manual evidence collection
+❌ Manual gate checking
 ```
 
-### iOS app
-
+### New Way (Automatic)
 ```bash
-xcodebuild clean && xcodebuild build | tee .orchestration/evidence/build/build-$(date +%Y%m%d-%H%M%S).log
-xcrun simctl io booted screenshot .orchestration/evidence/screenshots/after-$(date +%s).png
-bash scripts/finalize.sh
+✅ /plan "feature"
+✅ /orca-{domain} "implement requirement <id>"
+✅ Verification happens automatically
+✅ Evidence captured automatically
+✅ Gates enforced automatically
 ```
 
-### Backend
+## When Manual Verification Still Needed
 
-```bash
-bash scripts/capture-tests.sh -- pytest -q
-bash scripts/finalize.sh
-```
+**Almost never.** But if you must:
 
-## Gotchas
+1. **Debugging gate failures:** Run build/test manually to see full output
+2. **Pre-pipeline testing:** Quick sanity check before starting pipeline
+3. **External tool integration:** Tools not integrated with verification agents
 
-- Evidence dumped to `/tmp/` will not be discovered; save to `.orchestration/evidence/`.
-- UI changes without screenshots will fail finalize.
-- Tag lines inside code fences are ignored by Zero‑Tag Gate (write them as plain lines).
-- If finalize says “/finalize is only for orca team sessions”, create `.orchestration/orca-session` or run during an ORCA workflow.
+**For everything else:** Trust the pipeline.
 
 ## Related Docs
 
-- `commands/orca.md` → Workflow, file policy, verification gates
-- `agents/quality/verification-agent.md` → Verification steps and commands
-- `README.md` → Overview and concepts
+- **Commands:** `quick-reference/os2-commands.md`
+- **Agents:** `quick-reference/os2-agents.md`
+- **Architecture:** `quick-reference/os2-architecture.md`
+- **Quality Gates:** `docs/reference/standards-gate.md`, `docs/reference/design-qa-gate.md`
+
+---
+
+_OS 2.1 verification is automatic, enforced, and evidence-based. Manual verification is rarely needed._
