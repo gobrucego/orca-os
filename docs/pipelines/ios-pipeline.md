@@ -114,7 +114,7 @@ Decision Point:
 
 **Agents:**
 - `ios-architect` (primary planner)
-- Swift specialists (e.g. `swift-architect`, `swift-expert`, `swiftui-specialist` indirectly)
+- iOS specialists (e.g. `ios-swiftui-specialist` indirectly)
 
 **Tasks:**
 1. Choose architecture path:
@@ -143,12 +143,12 @@ Decision Point:
 ### Phase 4: Implementation – Pass 1
 
 **Agents:** `ios-builder` (primary), with specialists as needed:
-- SwiftUI work: `swiftui-specialist`.
-- UIKit-heavy work: `uikit-specialist`.
+- SwiftUI work: `ios-swiftui-specialist`.
+- UIKit-heavy work: `ios-uikit-specialist`.
 - Tokens: `design-dna-guardian` to enforce design DNA.
-- Data: `persistence-specialist` when persistence is touched.
-- Networking: `networking-specialist` for API work.
-- Testing: `testing-specialist` / `ui-testing-specialist`.
+- Data: `ios-persistence-specialist` when persistence is touched.
+- Networking: `ios-networking-specialist` for API work.
+- Testing: `ios-testing-specialist` / `ios-ui-testing-specialist`.
 
 **Constraints (HARD):**
 - Use Swift 6.x semantics and modern concurrency by default.

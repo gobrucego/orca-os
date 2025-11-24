@@ -134,7 +134,7 @@ export class ContextBundler {
    * Get current project state (with caching)
    */
   private async getProjectState(projectPath: string): Promise<ProjectState> {
-    const statePath = join(projectPath, '.claude', 'project', 'state.json');
+    const statePath = join(projectPath, '.claude', 'memory', 'state.json');
 
     // Try to read cached state
     try {
@@ -186,7 +186,7 @@ export class ContextBundler {
     projectPath: string,
     state: ProjectState
   ): Promise<void> {
-    const stateDir = join(projectPath, '.claude', 'project');
+    const stateDir = join(projectPath, '.claude', 'memory');
     const statePath = join(stateDir, 'state.json');
 
     try {

@@ -1,0 +1,262 @@
+# iOS Pipeline Phase Configuration - OS 2.0
+# Native iOS Development Workflow
+
+pipeline:
+  name: ios
+  description: Native iOS development pipeline with Swift/SwiftUI/UIKit
+  version: 2.0
+
+# Context Integration (MANDATORY)
+context:
+  provider: ProjectContextServer
+  required: true
+  query_on_start: true
+
+# Pipeline Phases
+phases:
+  # Phase 1: Requirements & Impact Analysis
+  - name: requirements_impact
+    agent: ios-architect
+    description: Analyze requirements and assess impact on iOS codebase
+    context_required: true
+    outputs:
+      - change_type
+      - affected_views
+      - affected_models
+      - risks
+    constraints:
+      scope: Analysis only, no code changes
+      quality: Complete architecture assessment
+      integration: Must identify SwiftUI vs UIKit patterns
+
+  # Phase 2: Architecture & Planning
+  - name: planning
+    agent: ios-architect
+    description: Create architecture plan with Swift/iOS patterns
+    dependencies:
+      - requirements_impact
+    context_required: true
+    outputs:
+      - architecture_path
+      - data_strategy
+      - plan_summary
+      - assigned_agents
+    constraints:
+      scope: Respect existing patterns (SwiftUI/UIKit/MVVM/TCA)
+      quality: Clear module boundaries and dependencies
+      integration: Design token verification for UI work
+
+  # Phase 3: Analysis
+  - name: analysis
+    agent: ios-architect
+    description: Deep structural analysis of affected iOS components
+    dependencies:
+      - planning
+    context_required: true
+    outputs:
+      - view_structure
+      - state_patterns
+      - data_flow
+      - navigation_map
+    constraints:
+      scope: Read-only analysis, map existing patterns
+      quality: Complete dependency graph
+      integration: Identify all token/styling sources
+
+  # Phase 4: Implementation - Pass 1
+  - name: implementation_pass1
+    agent: ios-builder
+    description: Primary implementation with specialist delegation
+    dependencies:
+      - analysis
+    context_required: true
+    inputs:
+      - architecture_path
+      - data_strategy
+      - design_tokens
+    outputs:
+      - files_modified
+      - changes_manifest
+      - tests_added
+    constraints:
+      scope: Edit-not-rewrite, minimal diffs
+      quality: Swift 6 semantics, modern concurrency
+      integration: Design token enforcement
+      resource: Max file edits per pass
+
+  # Phase 5: Standards Gate
+  - name: standards_gate
+    agent: ios-standards-enforcer
+    description: Swift/iOS standards and safety verification
+    dependencies:
+      - implementation_pass1
+    context_required: true
+    inputs:
+      - files_modified
+      - related_standards
+    outputs:
+      - standards_score
+      - violations
+      - gate_decision
+    quality_gates:
+      standards_score:
+        threshold: 90
+        type: hard_block
+        message: Standards score must be e90
+      force_unwraps:
+        threshold: 0
+        type: soft_warning
+        message: Avoid force unwraps without justification
+      concurrency:
+        threshold: 100
+        type: hard_block
+        message: Must use modern Swift concurrency
+
+  # Phase 6: UI Review Gate
+  - name: ui_review_gate
+    agent: ios-ui-reviewer
+    description: UI/UX and design token compliance verification
+    dependencies:
+      - implementation_pass1
+    context_required: true
+    inputs:
+      - affected_views
+      - design_tokens
+    outputs:
+      - ui_score
+      - visual_issues
+      - gate_decision
+    quality_gates:
+      ui_score:
+        threshold: 90
+        type: hard_block
+        message: UI review score must be e90
+      token_compliance:
+        threshold: 100
+        type: hard_block
+        message: No adhoc styling allowed
+      accessibility:
+        threshold: 85
+        type: soft_warning
+        message: Accessibility checks recommended
+
+  # Phase 4b: Implementation - Pass 2 (Corrective)
+  - name: implementation_pass2
+    agent: ios-builder
+    description: Corrective implementation for gate failures only
+    dependencies:
+      - standards_gate
+      - ui_review_gate
+    condition: any_gate_failed
+    context_required: true
+    inputs:
+      - violations
+      - visual_issues
+    outputs:
+      - files_modified
+      - fixes_applied
+    constraints:
+      scope: Fix violations only, no new features
+      quality: Address all critical issues
+      integration: Re-run failed gates only
+      resource: Single corrective pass only
+
+  # Phase 7: Build & Test Verification
+  - name: verification
+    agent: ios-verification
+    description: Xcode build and test execution
+    dependencies:
+      - standards_gate
+      - ui_review_gate
+    context_required: false
+    outputs:
+      - build_status
+      - test_results
+      - coverage_metrics
+      - warnings_count
+    quality_gates:
+      build:
+        threshold: pass
+        type: hard_block
+        message: Build must succeed
+      tests:
+        threshold: pass
+        type: hard_block
+        message: All tests must pass
+      coverage:
+        threshold: 80
+        type: soft_warning
+        message: Test coverage should be >80%
+
+# Optional Phases (activated on risk/need)
+optional_phases:
+  - name: performance_analysis
+    agent: ios-performance-specialist
+    trigger: performance_risk_detected
+    outputs:
+      - performance_profile
+      - optimization_recommendations
+
+  - name: security_audit
+    agent: ios-security-specialist
+    trigger: auth_or_sensitive_data
+    outputs:
+      - security_assessment
+      - keychain_usage
+      - privacy_manifest
+
+  - name: accessibility_audit
+    agent: ios-accessibility-specialist
+    trigger: ui_heavy_feature
+    outputs:
+      - voiceover_compliance
+      - dynamic_type_support
+      - wcag_score
+
+# Configuration
+config:
+  max_implementation_passes: 2
+  gate_failure_behavior: block_and_correct
+  evidence_path: .claude/orchestration/evidence/
+  phase_state_path: .claude/orchestration/phase_state.json
+
+# Architecture Decision Rules
+architecture_rules:
+  swiftui_preferred:
+    condition: ios_version >= 17 AND no_existing_uikit
+    choice: SwiftUI + @Observable
+
+  respect_existing:
+    condition: has_mvvm OR has_tca OR has_uikit
+    choice: Follow existing patterns
+
+  data_strategy:
+    swiftdata:
+      condition: ios_version >= 17 AND no_existing_coredata
+    coredata:
+      condition: existing_coredata OR complex_sync
+    grdb:
+      condition: performance_critical OR sql_preference
+
+# Specialist Activation Matrix
+specialists:
+  ios-swiftui-specialist:
+    trigger: swiftui_views OR swiftui_architecture
+
+  ios-uikit-specialist:
+    trigger: uikit_views OR legacy_ui
+
+  ios-persistence-specialist:
+    trigger: data_layer_changes OR migration
+
+  ios-networking-specialist:
+    trigger: api_changes OR background_tasks
+
+  ios-testing-specialist:
+    trigger: new_logic OR swift_testing
+
+  ios-ui-testing-specialist:
+    trigger: ui_flows OR xcuitest
+
+  design-dna-guardian:
+    trigger: ui_changes AND design_tokens_exist

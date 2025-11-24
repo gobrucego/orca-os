@@ -4,11 +4,11 @@ set -euo pipefail
 # Evidence utilities shared by capture scripts
 
 ensure_evidence_dirs() {
-  mkdir -p .orchestration/evidence/screenshots \
-           .orchestration/evidence/build \
-           .orchestration/evidence/tests \
-           .orchestration/evidence/requests \
-           .orchestration/logs
+  mkdir -p .claude/orchestration/evidence/screenshots \
+           .claude/orchestration/evidence/build \
+           .claude/orchestration/evidence/tests \
+           .claude/orchestration/evidence/requests \
+           .claude/orchestration/logs
 }
 
 timestamp() {
@@ -18,10 +18,10 @@ timestamp() {
 append_impl_log() {
   local line="$1"
   mkdir -p .orchestration
-  if [ -f .orchestration/implementation-log.md ]; then
-    printf '%s\n' "$line" >> .orchestration/implementation-log.md
+  if [ -f .claude/orchestration/implementation-log.md ]; then
+    printf '%s\n' "$line" >> .claude/orchestration/implementation-log.md
   else
-    printf '%s\n' "$line" >> .orchestration/implementation-log.md
+    printf '%s\n' "$line" >> .claude/orchestration/implementation-log.md
   fi
 }
 

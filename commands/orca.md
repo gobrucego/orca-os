@@ -145,7 +145,7 @@ Analyze the request and project structure to determine domain:
 ## 3.5 Q&A: Confirm Domain & Agent Team (MANDATORY)
 
 Before activating any domain pipeline or dispatching agents, you MUST run an
-explicit Q&A confirmation step using `AskUserQuestion`.
+explicit Q&A confirmation step using the `AskUserQuestion` tool.
 
 **Goals of this step:**
 - Confirm the detected **domain** (webdev, ios, data, expo, seo, brand, etc.).
@@ -159,15 +159,40 @@ explicit Q&A confirmation step using `AskUserQuestion`.
    - Proposed agents for each relevant phase, using:
      - `quick-reference/os2-agents.md`
      - Any project-local team docs (e.g. `.claude/orchestration/reference/team-definitions.md`) if present.
-2. Call `AskUserQuestion` with a structured question, for example:
-   - “I detect this as a **webdev** task. Proposed pipeline: webdev pipeline with
-     phases: context → planning → analysis → implementation → standards → design QA → verification.
-     Proposed agents: frontend-layout-analyzer, frontend-builder-agent, frontend-standards-enforcer,
-     frontend-design-reviewer-agent. Does this team and phase plan look right? Anything to add, remove, or change?”
-3. Wait for the user’s response and **update the plan/team** accordingly.
+
+2. **Use the `AskUserQuestion` tool** (NOT text-based questions):
+   ```typescript
+   AskUserQuestion({
+     questions: [{
+       question: "I detect this as a [domain] task. Proposed pipeline: [phases]. Proposed agents: [list]. Does this look right?",
+       header: "Confirm Plan",
+       multiSelect: false,
+       options: [
+         {
+           label: "Proceed as planned",
+           description: "Execute with the proposed domain, pipeline, and agent team"
+         },
+         {
+           label: "Adjust domain",
+           description: "Change the detected domain or use a different pipeline"
+         },
+         {
+           label: "Modify agents",
+           description: "Add, remove, or replace agents in the team"
+         }
+       ]
+     }]
+   })
+   ```
+
+3. **Process the response:**
+   - If "Proceed as planned" → continue with activation
+   - If "Adjust domain" or "Modify agents" → ask follow-up questions to clarify changes
+   - Update the plan/team based on user input before proceeding
 
 **Rules:**
 - This Q&A step is **mandatory** for non-trivial work.
+- **ALWAYS use the `AskUserQuestion` tool** - never use text-based "Answer: [option]" patterns.
 - Do **not** auto-proceed with a pipeline or team without giving the user a
   chance to confirm or correct it.
 - Keep the proposal short, concrete, and easy to edit (bullets, clear agent names).

@@ -46,11 +46,11 @@ else
 fi
 
 # Test forbidden path
-export TOOL_ARG_file_path=".orchestration/test.txt"
+export TOOL_ARG_file_path=".claude/orchestration/test.txt"
 if bash hooks/pre-tool-use.sh 2>/dev/null; then
-  echo "✗ Should have blocked .orchestration/test.txt"
+  echo "✗ Should have blocked .claude/orchestration/test.txt"
 else
-  echo "✓ Blocked forbidden path: .orchestration/test.txt"
+  echo "✓ Blocked forbidden path: .claude/orchestration/test.txt"
 fi
 
 echo ""

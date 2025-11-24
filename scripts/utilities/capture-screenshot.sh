@@ -35,16 +35,16 @@ ensure_evidence_dirs
 
 ts="$(timestamp)"
 if [ -z "$OUT" ]; then
-  OUT=".orchestration/evidence/screenshots/snap-$ts.png"
+  OUT=".claude/orchestration/evidence/screenshots/snap-$ts.png"
 else
   case "$OUT" in
-    .orchestration/evidence/*) ;; # ok
-    *) OUT=".orchestration/evidence/screenshots/$(basename "$OUT")" ;;
+    .claude/orchestration/evidence/*) ;; # ok
+    *) OUT=".claude/orchestration/evidence/screenshots/$(basename "$OUT")" ;;
   esac
 fi
 
 # Write MCP request file for a screenshot capture agent to fulfill
-REQ=".orchestration/evidence/requests/${ts}-screenshot.json"
+REQ=".claude/orchestration/evidence/requests/${ts}-screenshot.json"
 
 # Build payload using python for robust JSON encoding
 URL_ENV="$URL" OUT_ENV="$OUT" SELECTOR_ENV="$SELECTOR" DEVICE_ENV="$DEVICE" FULL_ENV="$FULL_PAGE" LABEL_ENV="$LABEL" \

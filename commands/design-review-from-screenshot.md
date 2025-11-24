@@ -33,12 +33,13 @@ allowed-tools: [
 # /design-review-from-screenshot — Visual Diff vs Design System
 
 Use this command when you have a **reference screenshot** of the desired UI
-state (mockup, past build, or design export) and want to:
+state (mockup, past build, or design export) for a frontend route (typically
+Nextjs/App Router) and want to:
 - Ensure the current live UI still matches that visual reference.
 - Validate the live UI against the project’s design-dna and design rules.
 - Get a scored, OS 2.0–style Design QA report.
 
-This command:
+This command is primarily oriented toward the Nextjs/frontend lane. It:
 1. Captures the current live UI with Playwright at matching breakpoints.
 2. Runs `visual-layout-analyzer` on the reference (and optionally live)
    screenshots to produce structured layout + token mapping.
@@ -149,5 +150,25 @@ Report back to the user:
 
 If appropriate, suggest follow-up commands such as:
 - `/frontend-iterate` focusing on this route.
-- `/orca` with a webdev request that references this design review.
+- `/orca-nextjs "Address design review findings for <route>, using evidence at .claude/orchestration/evidence/design-review-<slug>.md"` to run the Nextjs lane with this Design QA as input.
 
+---
+## 6. OS 2.0 Integration (Nextjs Lane)
+
+To integrate this command cleanly with the OS 2.0 Nextjs pipeline:
+
+1. **Store Evidence**
+   - Ensure screenshots and the Design QA summary are saved under:
+     - `.claude/orchestration/evidence/screenshots/...`
+     - `.claude/orchestration/evidence/design-review-<slug>.md`
+
+2. **Context & Phase State**
+   - When the user is ready to act on the findings:
+     - Run `/orca-nextjs` with a request like:
+       - `"Implement design fixes for <route> based on design review at .claude/orchestration/evidence/design-review-<slug>.md"`
+   - The Nextjs grand architect and downstream agents should treat:
+     - The Design QA score/gate as input to the **gates** phase.
+     - The listed diffs as requirements for the implementation phase.
+
+This keeps visual regression and design QA evidence aligned with the Nextjs
+lane’s standards and design-review gates, rather than acting as a standalone tool.

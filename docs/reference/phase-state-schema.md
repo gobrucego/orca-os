@@ -113,7 +113,7 @@ interface RecoveryInfo {
     },
     "domain": {
       "type": "string",
-      "enum": ["webdev", "ios", "data", "seo", "brand"]
+      "enum": ["nextjs", "webdev", "ios", "data", "seo", "brand"]
     },
     "session_id": {
       "type": "string",

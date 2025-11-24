@@ -237,11 +237,11 @@ MCP servers provide structured tool interfaces for agents. All I/O goes through 
 - `swift_package_clean(packagePath)` — Clean build
 
 **Usage by Agents:**
-- swiftui-developer (iOS development)
-- xcode-cloud-expert (CI/CD)
-- ios-accessibility-tester (accessibility testing)
-- ios-performance-engineer (performance profiling)
-- ui-testing-expert (UI automation)
+- ios-swiftui-specialist (iOS development)
+- ios-fastlane-specialist (CI/CD)
+- ios-accessibility-specialist (accessibility testing)
+- ios-performance-specialist (performance profiling)
+- ios-ui-testing-specialist (UI automation)
 
 ---
 

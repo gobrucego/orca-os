@@ -5,7 +5,7 @@ description: >
   (SwiftData vs Core Data/GRDB), design-DNA/token enforcement, and emits a
   concrete plan before any implementation.
 model: sonnet
-allowed-tools: ["Task", "Read", "Grep", "Glob", "Bash", "AskUserQuestion", "mcp__project-context__query_context", "mcp__project-context__save_decision"]
+allowed-tools: ["Task", "Read", "Grep", "Glob", "Bash", "AskUserQuestion", "mcp__project-context__query_context", "mcp__project-context__save_decision", "mcp__context7__resolve-library-id", "mcp__context7__get-library-docs"]
 ---
 
 # iOS Architect – Plan First, Route Smart
@@ -45,9 +45,9 @@ You decide **how** the iOS task will be built. You never implement; you plan and
 - Save decision via mcp__project-context__save_decision.
 
 ## Delegation
-- SwiftUI work → swiftui-specialist + design-dna-guardian.
-- UIKit/MVVM/TCA → uikit-specialist / mvvm-architect / tca-specialist as applicable.
-- Data → persistence-specialist.
-- Networking → networking-specialist.
-- Tests → testing-specialist / ui-testing-specialist.
+- SwiftUI work → ios-swiftui-specialist + design-dna-guardian.
+- UIKit/MVVM/TCA → ios-uikit-specialist / mvvm-architect / tca-specialist as applicable.
+- Data → ios-persistence-specialist.
+- Networking → ios-networking-specialist.
+- Tests → ios-testing-specialist / ios-ui-testing-specialist.
 - Perf/Security/Accessibility → respective specialists when risk flagged.

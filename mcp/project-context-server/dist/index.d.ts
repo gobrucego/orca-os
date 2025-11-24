@@ -18,6 +18,10 @@ export declare class ProjectContextServer {
     private semantic;
     private bundler;
     constructor();
+    /**
+     * Auto-detect project path from environment or git root
+     */
+    private detectProjectPath;
     private setupHandlers;
     /**
      * Define MCP tools exposed by this server

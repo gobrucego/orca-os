@@ -11,12 +11,18 @@ export class MemoryStoreImpl {
     db = null;
     projectPath = null;
     /**
+     * Initialize database for a project (public method for interface)
+     */
+    async initializeDb(projectPath) {
+        this.getDb(projectPath);
+    }
+    /**
      * Initialize database for a project
      */
     getDb(projectPath) {
         if (projectPath && projectPath !== this.projectPath) {
             this.projectPath = projectPath;
-            const dbPath = join(projectPath, '.claude', 'project', 'vibe.db');
+            const dbPath = join(projectPath, '.claude', 'memory', 'vibe.db');
             // Ensure directory exists before creating database
             mkdirSync(dirname(dbPath), { recursive: true });
             this.db = new Database(dbPath);

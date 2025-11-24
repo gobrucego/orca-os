@@ -1,10 +1,12 @@
 ---
 name: ios-verification
 description: >
-  Build/test gate. Runs xcodebuild (or xcodebuildmcp) for target scheme/device,
-  captures build + test status, and reports succinctly.
+  Build/test gate. Runs xcodebuild (preferably via XcodeBuildMCP) for target
+  scheme/device, captures build + test status, and reports succinctly.
 model: sonnet
-allowed-tools: ["Read", "Bash"]
+allowed-tools:
+  - Read
+  - Bash
 ---
 
 # iOS Verification – Build & Test Gate

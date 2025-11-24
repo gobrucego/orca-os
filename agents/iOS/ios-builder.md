@@ -25,11 +25,11 @@ You implement only after the architect plan exists. Follow it exactly; no scope 
 3) Implement:
    - SwiftUI: composable views, previews for loading/empty/error/success, minimal body work, lazy lists.
    - UIKit: Auto Layout correctness, compositional layouts, proper VC lifecycle.
-   - Data: follow persistence-specialist guidance; migrations/tests when schema changes.
-   - Networking: async/await; retries/backoff per networking-specialist patterns.
+   - Data: follow ios-persistence-specialist guidance; migrations/tests when schema changes.
+   - Networking: async/await; retries/backoff per ios-networking-specialist patterns.
 4) Tests: add/extend unit and UI tests per plan (Swift Testing or XCTest).
 5) Local checks (if available): swift format/lint, build, targeted tests; capture results.
 
 ## Handoffs
 - Summarize changes and checks run for standards/UI/verification gates.
-- Call specialists when needed: swiftui-specialist, uikit-specialist, persistence-specialist, networking-specialist, testing-specialist, accessibility-tester.
+- Call specialists when needed: ios-swiftui-specialist, ios-uikit-specialist, ios-persistence-specialist, ios-networking-specialist, ios-testing-specialist, ios-accessibility-specialist.

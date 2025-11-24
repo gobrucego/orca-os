@@ -132,7 +132,7 @@ chmod +x cleanup.sh
 
 ### ❌ REMOVE/ARCHIVE:
 - `.claude-work/` - Old working directory
-- `.workshop/` - Old context system
+- `.claude/memory/` - Old context system
 - `.claude/orchestration/evidence/` - Project-specific artifacts
 - `.claude/orchestration/temp/*` - Working files
 - `.claude/memory/playbooks/` - Old memory system
@@ -149,7 +149,7 @@ chmod +x cleanup.sh
 ## Why This Cleanup?
 
 OS 2.0 uses:
-- **ProjectContextServer** instead of local `.workshop/`
+- **ProjectContextServer** instead of local `.claude/memory/`
 - **Clean .claude structure** instead of scattered folders
 - **Ephemeral temp/** that should be empty between sessions
 - **No project-specific evidence** in config folders

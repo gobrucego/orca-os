@@ -10,7 +10,7 @@ allowed-tools:
   - WebFetch
 metadata:
   category: "frontend-design"
-  source: "anthropic-frontend-design-plugin + prompting_for_frontend_aesthetics.ipynb + OS 2.0 design-dna"
+  source: "anthropic-frontend-design-plugin + OS 2.0 design-dna"
 ---
 
 # Frontend Aesthetics – Global Design Skill
@@ -19,13 +19,12 @@ You are loading the **Frontend Aesthetics** skill. This skill is meant to:
 
 - Push you away from generic, template-like AI UI.
 - Encourage distinctive, cohesive aesthetics per project.
-- Keep you inside each project’s **design-dna and tokens**.
+- Keep you inside each project's **design-dna and tokens**.
 
 This skill does **not** define a visual language by itself. It layers on top of:
 - Project design docs (`design-system-vX.X.md`, `DESIGN_RULES_vX.X.md`,
   `CSS-ARCHITECTURE.md` or equivalents).
-- Any project-specific design-dna JSON (e.g. `design-dna.json` or MCP tools
-  like `fox-design-dna`).
+- Any project-specific design-dna JSON (e.g. `design-dna.json` or `.claude/design-dna/`).
 
 ---
 
@@ -33,7 +32,7 @@ This skill does **not** define a visual language by itself. It layers on top of:
 
 You can use this skill in **any** frontend context (web/expo/ios) when:
 - The user asks for UI that feels **distinctive, premium, or designed**, not
-  “just another dashboard”.
+  "just another dashboard".
 - The project has at least some design/dna docs or tokens you can honor.
 - You want to avoid generic AI patterns and make more intentional choices.
 
@@ -43,10 +42,9 @@ You must still:
 
 ---
 
-## 2. Core Aesthetic Principles (Distilled)
+## 2. Core Aesthetic Principles
 
-These principles blend Anthropic’s frontend aesthetics research with OS 2.0’s
-design-dna mindset.
+These principles help create intentional, distinctive UI while respecting project constraints.
 
 ### 2.1 Typography
 
@@ -54,8 +52,8 @@ design-dna mindset.
   - Headings, section titles, labels, body, meta.
   - Use project tokens or semantic CSS classes where available.
 - Avoid:
-  - Overused generic fonts (plain system stacks) in projects that ship their own type.
-  - Random size ladders that don’t map to design tokens.
+  - Overused generic fonts in projects that ship their own type.
+  - Random size ladders that don't map to design tokens.
 - Use typography to create a clear hierarchy:
   - H1/H2 vs section subheads.
   - Body vs meta/labels.
@@ -67,7 +65,7 @@ design-dna mindset.
   - A small supporting palette.
   - Reasonable neutrals for surfaces/backgrounds.
 - Avoid:
-  - The classic “AI slop” purple gradient on white, unless explicitly part of
+  - The classic "AI slop" purple gradient on white, unless explicitly part of
     design-dna.
   - Competing accents everywhere; let color mean something.
 - Prefer:
@@ -76,13 +74,13 @@ design-dna mindset.
 
 ### 2.3 Spacing, Layout & Rhythm
 
-- Snap spacing to the project’s **grid and spacing tokens**.
+- Snap spacing to the project's **grid and spacing tokens**.
 - Use consistent vertical rhythm:
   - Section breaks.
   - Component padding.
   - Distance between related elements.
 - Avoid:
-  - Uneven, ad-hoc spacing just to make something “fit”.
+  - Uneven, ad-hoc spacing just to make something "fit".
   - Over-nesting containers when simple layout primitives would suffice.
 
 ### 2.4 Motion & Micro-interactions
@@ -116,7 +114,7 @@ When designing or implementing UI, watch out for:
    - Uniform-grey cards with indistinguishable content blocks.
 
 2. **Copy-paste template feel**
-   - Obvious clone of a popular UI library’s default look without customization.
+   - Obvious clone of a popular UI library's default look without customization.
 
 3. **Color soup**
    - Too many accents, uncoordinated hues, no clear semantic meaning.
@@ -136,8 +134,8 @@ principles above.
 
 ## 4. Interaction with Project Design-DNA
 
-When a project has a machine-readable design-dna (e.g. `design-dna.json` or an
-MCP like `fox-design-dna`):
+When a project has a machine-readable design-dna (e.g. `design-dna.json` or
+`.claude/design-dna/`):
 
 - **Always load design-dna first.**
   - Get tokens, components, and cardinal laws.
@@ -159,16 +157,15 @@ When a frontend/expo/ios agent has loaded this skill and is asked to build or
 refine UI:
 
 - Make aesthetic decisions **explicit**:
-  - “I’m using [X] as the primary accent and [Y/Z] as supporting tones.”
-  - “Title/body/meta are mapped to [these] typography roles.”
-- Call out where you’ve **avoided generic patterns**:
-  - “Instead of a generic 3-card feature row, I used [project-specific pattern].”
+  - "I'm using [X] as the primary accent and [Y/Z] as supporting tones."
+  - "Title/body/meta are mapped to [these] typography roles."
+- Call out where you've **avoided generic patterns**:
+  - "Instead of a generic 3-card feature row, I used [project-specific pattern]."
 - Remain grounded in **project design-dna** when present:
   - Reference specific tokens, components, or rules from design-dna when
     explaining choices.
 
 The goal is for UI to feel:
 - Designed, not templated.
-- Distinctive, but still aligned with the project’s system.
+- Distinctive, but still aligned with the project's system.
 - Maintainable and understandable to other humans and agents.
-

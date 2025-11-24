@@ -1,16 +1,20 @@
 /**
  * SharedContextServer MCP Entry Point
  *
- * Pure MCP implementation without HTTP server
- * Provides in-memory context storage with token optimization
+ * MCP implementation with JSON file persistence
+ * Provides context storage with token optimization and disk persistence
  */
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { CallToolRequestSchema, ListToolsRequestSchema, } from '@modelcontextprotocol/sdk/types.js';
 import { TokenOptimizer } from './optimization/TokenOptimizer.js';
 import crypto from 'crypto';
+import * as fs from 'fs/promises';
+import * as path from 'path';
+import * as os from 'os';
+import { existsSync, mkdirSync } from 'fs';
 /**
- * Pure MCP Server for SharedContext
+ * MCP Server for SharedContext with JSON Persistence
  */
 class SharedContextMCPServer {
     server;
@@ -21,7 +25,14 @@ class SharedContextMCPServer {
         totalRequests: 0,
         tokensSaved: 0,
     };
+    storagePath;
     constructor() {
+        // Set storage path to ~/.claude/cache/shared-context/
+        this.storagePath = path.join(os.homedir(), '.claude', 'cache', 'shared-context');
+        // Ensure storage directory exists
+        if (!existsSync(this.storagePath)) {
+            mkdirSync(this.storagePath, { recursive: true });
+        }
         this.server = new Server({
             name: 'shared-context-server',
             version: '1.0.0',
@@ -32,6 +43,61 @@ class SharedContextMCPServer {
         });
         this.tokenOptimizer = new TokenOptimizer();
         this.setupHandlers();
+        // Load existing contexts on startup
+        this.loadContexts();
+    }
+    /**
+     * Load all contexts from JSON files
+     */
+    async loadContexts() {
+        try {
+            const files = await fs.readdir(this.storagePath);
+            for (const file of files) {
+                if (file.endsWith('.json')) {
+                    try {
+                        const filePath = path.join(this.storagePath, file);
+                        const data = await fs.readFile(filePath, 'utf-8');
+                        const context = JSON.parse(data, (key, value) => {
+                            // Revive Date objects
+                            if (key === 'timestamp' || key === 'lastAccessed') {
+                                return new Date(value);
+                            }
+                            return value;
+                        });
+                        this.contexts.set(context.projectId, context);
+                        console.error(`📂 Loaded context: ${context.projectId}`);
+                    }
+                    catch (error) {
+                        console.error(`⚠️ Failed to load ${file}:`, error);
+                    }
+                }
+            }
+            console.error(`💾 Loaded ${this.contexts.size} contexts from ${this.storagePath}`);
+        }
+        catch (error) {
+            console.error('⚠️ Failed to load contexts:', error);
+        }
+    }
+    /**
+     * Save a context to JSON file
+     */
+    async saveContext(projectId) {
+        try {
+            const context = this.contexts.get(projectId);
+            if (!context)
+                return;
+            // Create safe filename from projectId
+            const safeFilename = projectId.replace(/[^a-zA-Z0-9-_]/g, '_').replace(/^\/+/, '');
+            const filePath = path.join(this.storagePath, `${safeFilename}.json`);
+            // Write to temp file first then rename (atomic write)
+            const tempPath = `${filePath}.tmp`;
+            await fs.writeFile(tempPath, JSON.stringify(context, null, 2), 'utf-8');
+            await fs.rename(tempPath, filePath);
+            console.error(`✅ Saved context: ${filePath}`);
+        }
+        catch (error) {
+            console.error(`❌ Failed to save context for ${projectId}:`, error);
+        }
     }
     getTools() {
         return [
@@ -169,6 +235,8 @@ class SharedContextMCPServer {
         }
         sharedContext.lastAccessed = new Date();
         sharedContext.accessCount++;
+        // Save context after updating access info
+        await this.saveContext(args.projectId);
         return {
             content: [
                 {
@@ -224,6 +292,8 @@ class SharedContextMCPServer {
         if (sharedContext.versions.length > this.maxVersions) {
             sharedContext.versions.shift();
         }
+        // Save context after update
+        await this.saveContext(args.projectId);
         return {
             content: [
                 {

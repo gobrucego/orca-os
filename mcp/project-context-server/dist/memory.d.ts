@@ -9,6 +9,10 @@ export declare class MemoryStoreImpl implements MemoryStore {
     private db;
     private projectPath;
     /**
+     * Initialize database for a project (public method for interface)
+     */
+    initializeDb(projectPath: string): Promise<void>;
+    /**
      * Initialize database for a project
      */
     private getDb;

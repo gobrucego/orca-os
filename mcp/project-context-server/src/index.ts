@@ -26,6 +26,7 @@ import type {
 import { MemoryStoreImpl } from './memory.js';
 import { SemanticSearchImpl } from './semantic.js';
 import { ContextBundler } from './bundle.js';
+import { execSync } from 'child_process';
 
 /**
  * ProjectContextServer - The mandatory context service for OS 2.0
@@ -55,6 +56,36 @@ export class ProjectContextServer {
     this.bundler = new ContextBundler(this.memory, this.semantic);
 
     this.setupHandlers();
+  }
+
+  /**
+   * Auto-detect project path from environment or git root
+   */
+  private detectProjectPath(providedPath?: string): string {
+    if (providedPath) {
+      return providedPath;
+    }
+
+    // Try CLAUDE_PROJECT_DIR environment variable first (set by hooks)
+    if (process.env.CLAUDE_PROJECT_DIR) {
+      return process.env.CLAUDE_PROJECT_DIR;
+    }
+
+    // Try to find git root
+    try {
+      const gitRoot = execSync('git rev-parse --show-toplevel', {
+        encoding: 'utf8',
+        stdio: ['pipe', 'pipe', 'ignore'],
+      }).trim();
+      if (gitRoot) {
+        return gitRoot;
+      }
+    } catch {
+      // Not a git repo, fall through
+    }
+
+    // Fall back to current working directory
+    return process.cwd();
   }
 
   private setupHandlers(): void {
@@ -108,7 +139,7 @@ export class ProjectContextServer {
           properties: {
             domain: {
               type: 'string',
-              enum: ['webdev', 'ios', 'expo', 'data', 'seo', 'brand'],
+              enum: ['webdev', 'nextjs', 'ios', 'expo', 'data', 'seo', 'brand'],
               description: 'The domain/lane for this operation',
             },
             task: {
@@ -117,7 +148,7 @@ export class ProjectContextServer {
             },
             projectPath: {
               type: 'string',
-              description: 'Absolute path to the project root',
+              description: 'Absolute path to the project root (optional - auto-detects from git root or cwd)',
             },
             maxFiles: {
               type: 'number',
@@ -130,7 +161,7 @@ export class ProjectContextServer {
               default: true,
             },
           },
-          required: ['domain', 'task', 'projectPath'],
+          required: ['domain', 'task'],
         },
       },
       {
@@ -139,14 +170,14 @@ export class ProjectContextServer {
         inputSchema: {
           type: 'object',
           properties: {
-            projectPath: { type: 'string', description: 'Absolute path to project root' },
+            projectPath: { type: 'string', description: 'Absolute path to project root (optional - auto-detects from git root or cwd)' },
             domain: { type: 'string' },
             decision: { type: 'string' },
             reasoning: { type: 'string' },
             context: { type: 'string' },
             tags: { type: 'array', items: { type: 'string' } },
           },
-          required: ['projectPath', 'domain', 'decision', 'reasoning'],
+          required: ['domain', 'decision', 'reasoning'],
         },
       },
       {
@@ -157,13 +188,13 @@ export class ProjectContextServer {
         inputSchema: {
           type: 'object',
           properties: {
-            projectPath: { type: 'string', description: 'Absolute path to project root' },
+            projectPath: { type: 'string', description: 'Absolute path to project root (optional - auto-detects from git root or cwd)' },
             what_happened: { type: 'string' },
             cost: { type: 'string' },
             rule: { type: 'string' },
             domain: { type: 'string' },
           },
-          required: ['projectPath', 'what_happened', 'cost', 'rule', 'domain'],
+          required: ['what_happened', 'cost', 'rule', 'domain'],
         },
       },
       {
@@ -172,14 +203,14 @@ export class ProjectContextServer {
         inputSchema: {
           type: 'object',
           properties: {
-            projectPath: { type: 'string', description: 'Absolute path to project root' },
+            projectPath: { type: 'string', description: 'Absolute path to project root (optional - auto-detects from git root or cwd)' },
             domain: { type: 'string' },
             task: { type: 'string' },
             outcome: { type: 'string', enum: ['success', 'failure', 'partial'] },
             learnings: { type: 'string' },
             files_modified: { type: 'array', items: { type: 'string' } },
           },
-          required: ['projectPath', 'domain', 'task', 'outcome'],
+          required: ['domain', 'task', 'outcome'],
         },
       },
       {
@@ -188,9 +219,12 @@ export class ProjectContextServer {
         inputSchema: {
           type: 'object',
           properties: {
-            projectPath: { type: 'string' },
+            projectPath: {
+              type: 'string',
+              description: 'Absolute path to project root (optional - auto-detects from git root or cwd)',
+            },
           },
-          required: ['projectPath'],
+          required: [],
         },
       },
       {
@@ -204,10 +238,10 @@ export class ProjectContextServer {
           properties: {
             projectPath: {
               type: 'string',
-              description: 'Absolute path to the project root',
+              description: 'Absolute path to the project root (optional - auto-detects from git root or cwd)',
             },
           },
-          required: ['projectPath'],
+          required: [],
         },
       },
     ];
@@ -218,7 +252,11 @@ export class ProjectContextServer {
    * This is called before EVERY agent operation
    */
   private async handleQueryContext(query: ContextQuery) {
-    const bundle = await this.bundler.createBundle(query);
+    // Auto-detect project path if not provided
+    const projectPath = this.detectProjectPath(query.projectPath);
+    const queryWithPath = { ...query, projectPath };
+
+    const bundle = await this.bundler.createBundle(queryWithPath);
 
     return {
       content: [
@@ -231,47 +269,52 @@ export class ProjectContextServer {
   }
 
   private async handleSaveDecision(args: any) {
-    await this.memory.initializeDb(args.projectPath);
-    await this.memory.saveDecision(args);
+    const projectPath = this.detectProjectPath(args.projectPath);
+    await this.memory.initializeDb(projectPath);
+    await this.memory.saveDecision({ ...args, projectPath });
     return {
       content: [{ type: 'text', text: 'Decision saved to project memory' }],
     };
   }
 
   private async handleSaveStandard(args: any) {
-    await this.memory.initializeDb(args.projectPath);
-    await this.memory.saveStandard(args);
+    const projectPath = this.detectProjectPath(args.projectPath);
+    await this.memory.initializeDb(projectPath);
+    await this.memory.saveStandard({ ...args, projectPath });
     return {
       content: [{ type: 'text', text: 'Standard saved and will be enforced' }],
     };
   }
 
   private async handleSaveTaskHistory(args: any) {
-    await this.memory.initializeDb(args.projectPath);
-    await this.memory.saveTaskHistory(args);
+    const projectPath = this.detectProjectPath(args.projectPath);
+    await this.memory.initializeDb(projectPath);
+    await this.memory.saveTaskHistory({ ...args, projectPath });
     return {
       content: [{ type: 'text', text: 'Task history recorded' }],
     };
   }
 
-  private async handleIndexProject(args: { projectPath: string }) {
-    await this.semantic.indexProject(args.projectPath);
+  private async handleIndexProject(args: { projectPath?: string }) {
+    const projectPath = this.detectProjectPath(args.projectPath);
+    await this.semantic.indexProject(projectPath);
     return {
       content: [
-        { type: 'text', text: `Project indexed: ${args.projectPath}` },
+        { type: 'text', text: `Project indexed: ${projectPath}` },
       ],
     };
   }
 
-  private async handleReanalyzeProject(args: { projectPath: string }) {
-    const projectState = await this.bundler.reanalyzeProject(args.projectPath);
+  private async handleReanalyzeProject(args: { projectPath?: string }) {
+    const projectPath = this.detectProjectPath(args.projectPath);
+    const projectState = await this.bundler.reanalyzeProject(projectPath);
 
-    const summary = `Project reanalyzed: ${args.projectPath}
+    const summary = `Project reanalyzed: ${projectPath}
 - Components: ${projectState.components.length}
 - Files: ${this.countFilesInTree(projectState.fileStructure)}
 - Dependencies: ${Object.keys(projectState.dependencies).length}
 
-Cache updated at .claude/project/state.json`;
+Cache updated at .claude/memory/state.json`;
 
     return {
       content: [{ type: 'text', text: summary }],

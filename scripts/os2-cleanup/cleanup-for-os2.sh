@@ -179,7 +179,7 @@ else
     if [ -d ".deprecated/pre-os2" ]; then
         echo "📦 Archived in .deprecated/pre-os2/:"
         [ -d ".deprecated/pre-os2/claude-work" ] && echo "  • .claude-work/"
-        [ -d ".deprecated/pre-os2/workshop" ] && echo "  • .workshop/"
+        [ -d ".deprecated/pre-os2/workshop" ] && echo "  • .claude/memory/"
         [ -d ".deprecated/pre-os2/orchestration-evidence" ] && echo "  • .claude/orchestration/evidence/"
         [ -d ".deprecated/pre-os2/memory-playbooks" ] && echo "  • .claude/memory/playbooks/"
         [ -d ".deprecated/pre-os2/memory-files" ] && echo "  • Memory database files"

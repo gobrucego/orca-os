@@ -20,12 +20,19 @@ export class MemoryStoreImpl implements MemoryStore {
   private projectPath: string | null = null;
 
   /**
+   * Initialize database for a project (public method for interface)
+   */
+  async initializeDb(projectPath: string): Promise<void> {
+    this.getDb(projectPath);
+  }
+
+  /**
    * Initialize database for a project
    */
   private getDb(projectPath?: string): Database.Database {
     if (projectPath && projectPath !== this.projectPath) {
       this.projectPath = projectPath;
-      const dbPath = join(projectPath, '.claude', 'project', 'vibe.db');
+      const dbPath = join(projectPath, '.claude', 'memory', 'vibe.db');
 
       // Ensure directory exists before creating database
       mkdirSync(dirname(dbPath), { recursive: true });

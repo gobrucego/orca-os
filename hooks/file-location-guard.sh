@@ -23,6 +23,7 @@ if [[ "${TOOL_NAME:-}" == "Write" || "${TOOL_NAME:-}" == "NotebookEdit" || "${TO
 
         # Check if file is in a protected directory that should always prompt
         PROTECTED_DIRS=(
+            ".claude/orchestration"
             ".orchestration"
             "reports"
             "analytics"

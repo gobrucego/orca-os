@@ -90,7 +90,7 @@ export class ContextBundler {
      * Get current project state (with caching)
      */
     async getProjectState(projectPath) {
-        const statePath = join(projectPath, '.claude', 'project', 'state.json');
+        const statePath = join(projectPath, '.claude', 'memory', 'state.json');
         // Try to read cached state
         try {
             const stateData = await readFile(statePath, 'utf-8');
@@ -125,7 +125,7 @@ export class ContextBundler {
      * Cache project state to disk
      */
     async cacheProjectState(projectPath, state) {
-        const stateDir = join(projectPath, '.claude', 'project');
+        const stateDir = join(projectPath, '.claude', 'memory');
         const statePath = join(stateDir, 'state.json');
         try {
             // Ensure directory exists

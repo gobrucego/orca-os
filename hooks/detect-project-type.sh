@@ -4,7 +4,7 @@
 
 set -e
 
-OUTPUT_FILE=".claude-orchestration-context.md"
+OUTPUT_FILE=".claude/orchestration/temp/orchestration-context.md"
 
 # Fast detection (file existence checks only)
 detect_project_type() {
