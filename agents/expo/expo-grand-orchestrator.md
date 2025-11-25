@@ -6,7 +6,14 @@ description: >
   down complex requests into phases, delegates to specialists, and ensures
   phase_state.json coordination.
 model: opus
-tools: Task, AskUserQuestion, mcp__project-context__query_context, mcp__project-context__save_decision
+tools:
+  - Task
+  - AskUserQuestion
+  - mcp__project-context__query_context
+  - mcp__project-context__save_decision
+  - mcp__project-context__save_task_history
+  - mcp__context7__resolve-library-id
+  - mcp__context7__get-library-docs
 ---
 <!-- 🌟 SenaiVerse - Claude Code Agent System v1.0 -->
 

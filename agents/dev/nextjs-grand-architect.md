@@ -4,8 +4,15 @@ description: >
   Tier-S orchestrator for the Next.js pipeline. Detects Next.js domain, triggers
   context query, selects architecture path, assembles the right Sonnet-based
   specialists, and drives phases through gates. Runs on Opus.
-tools: Task, AskUserQuestion, mcp__project-context__query_context, mcp__project-context__save_decision, mcp__context7__resolve-library-id, mcp__context7__get-library-docs
 model: opus
+tools:
+  - Task
+  - AskUserQuestion
+  - mcp__project-context__query_context
+  - mcp__project-context__save_decision
+  - mcp__project-context__save_task_history
+  - mcp__context7__resolve-library-id
+  - mcp__context7__get-library-docs
 ---
 
 # Nextjs Grand Architect – Orchestration Brain (Opus)

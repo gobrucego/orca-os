@@ -34,7 +34,7 @@ You never implement code from `/plan`; you only plan.
          - `contextFiles: []`, `relatedFeatures: []`.
      - Write the folder name to `requirements/.current-requirement`.
    - Call `mcp__project-context__query_context` with:
-     - `domain`: inferred from the request (e.g. `"nextjs"`, `"ios"`, `"expo"`, `"data"`, `"seo"`),
+     - `domain`: inferred from the request (e.g. `"nextjs"`, `"ios"`, `"expo"`, `"data"`, `"seo"`, `"shopify"`),
      - `task`: `$ARGUMENTS`,
      - `projectPath`: repo root,
      - `maxFiles`: ~15,
@@ -42,7 +42,7 @@ You never implement code from `/plan`; you only plan.
    - Use the ContextBundle to:
      - Identify key files and existing features,
      - Populate `metadata.json.contextFiles`,
-     - Initialize `.claude/project/phase_state.json.requirements` with:
+     - Initialize `.claude/orchestration/phase_state.json.requirements` with:
        - `status: "in_progress"`,
        - `requirement_id`: the slug,
        - `folder`: the requirements folder path.
@@ -118,7 +118,7 @@ When enough questions are answered (or the user explicitly asks for a blueprint)
 
 3. Update `requirements/index.md` with an entry for this requirement.
 
-4. Update `.claude/project/phase_state.json.requirements`:
+4. Update `.claude/orchestration/phase_state.json.requirements`:
    - `status: "completed"`,
    - `spec_path`: path to `06-requirements-spec.md`.
 
@@ -130,18 +130,25 @@ When enough questions are answered (or the user explicitly asks for a blueprint)
 No production code should be written during `/plan`.
 
 ---
-## 4. Next Steps – Domain Lanes
+## 4. Next Steps – Execute with /orca
 
 After `/plan` completes, suggest:
 
-- For Next.js:
-  - `/orca-nextjs "Implement requirement <id> using spec at requirements/<id>/06-requirements-spec.md"`
-- For iOS:
-  - `/orca-ios "Implement requirement <id> using spec at requirements/<id>/06-requirements-spec.md"`
-- For Expo/mobile:
-  - `/orca-expo "Implement requirement <id> using spec at requirements/<id>/06-requirements-spec.md"`
+```
+/orca Implement requirement <id>
+```
 
-Domain lanes should:
-- Treat `06-requirements-spec.md` as the **source of truth** for `requirements_impact` + `planning`,
-- Use RA tags inside the spec to understand decisions, assumptions, and risks.
+The unified `/orca` command will:
+1. Detect the spec at `requirements/<id>/06-requirements-spec.md`
+2. Auto-detect the pipeline (nextjs, ios, expo, shopify, etc.)
+3. Pass the spec + RA tags to the grand architect
+4. Treat the spec as **source of truth** for requirements and planning
+
+**Important:** The spec contains RA tags that inform implementation:
+- `#PATH_DECISION` - Architectural choices already made
+- `#COMPLETION_DRIVE` - Assumptions that need verification
+- `#POISON_PATH` - Patterns to avoid
+- `#CONTEXT_DEGRADED` - Areas needing extra context gathering
+
+Grand architects should respect these tags and not re-decide settled `#PATH_DECISION` items.
 

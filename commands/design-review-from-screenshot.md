@@ -104,7 +104,7 @@ reference expresses and how the live UI aligns (or doesn’t).
 ---
 ## 4. Invoke Frontend Design Reviewer Agent
 
-Call `frontend-design-reviewer-agent` via `Task` with a prompt that:
+Call `nextjs-design-reviewer` via `Task` with a prompt that:
 - Provides:
   - The reference screenshot path.
   - Live screenshot paths.
@@ -122,7 +122,7 @@ Example:
 
 ```ts
 Task({
-  subagent_type: "frontend-design-reviewer-agent",
+  subagent_type: "nextjs-design-reviewer",
   prompt: `
 Compare the reference screenshot and its visual-layout-analyzer output with
 the current live UI screenshots and their analysis.
@@ -148,9 +148,11 @@ Report back to the user:
   - The reference screenshot.
   - `design-dna.json` and the design-system/bento/CSS-ARCHITECTURE rules.
 
-If appropriate, suggest follow-up commands such as:
-- `/frontend-iterate` focusing on this route.
-- `/orca-nextjs "Address design review findings for <route>, using evidence at .claude/orchestration/evidence/design-review-<slug>.md"` to run the Nextjs lane with this Design QA as input.
+If appropriate, suggest follow-up:
+```
+/orca Address design review findings for <route>, using evidence at .claude/orchestration/evidence/design-review-<slug>.md
+```
+This runs the unified pipeline with Design QA findings as input.
 
 ---
 ## 6. OS 2.2 Integration (Nextjs Lane)
@@ -164,11 +166,11 @@ To integrate this command cleanly with the OS 2.2 Nextjs pipeline:
 
 2. **Context & Phase State**
    - When the user is ready to act on the findings:
-     - Run `/orca-nextjs` with a request like:
+     - Run `/orca` with a request like:
        - `"Implement design fixes for <route> based on design review at .claude/orchestration/evidence/design-review-<slug>.md"`
-   - The Nextjs grand architect and downstream agents should treat:
+   - The grand architect and downstream agents should treat:
      - The Design QA score/gate as input to the **gates** phase.
      - The listed diffs as requirements for the implementation phase.
 
-This keeps visual regression and design QA evidence aligned with the Nextjs
-lane’s standards and design-review gates, rather than acting as a standalone tool.
+This keeps visual regression and design QA evidence aligned with the unified
+pipeline's standards and design-review gates.

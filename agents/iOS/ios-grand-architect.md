@@ -5,7 +5,14 @@ description: >
   selects architecture/data path, assembles the right specialists, and drives
   phases through gates. Runs on Opus for deep multi-agent coordination.
 model: opus
-tools: Task, AskUserQuestion, mcp__project-context__query_context, mcp__project-context__save_decision, mcp__context7__resolve-library-id, mcp__context7__get-library-docs
+tools:
+  - Task
+  - AskUserQuestion
+  - mcp__project-context__query_context
+  - mcp__project-context__save_decision
+  - mcp__project-context__save_task_history
+  - mcp__context7__resolve-library-id
+  - mcp__context7__get-library-docs
 ---
 
 # iOS Grand Architect – Orchestration Brain (Opus)

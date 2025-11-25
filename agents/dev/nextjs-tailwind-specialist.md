@@ -4,7 +4,13 @@ description: >
   Tailwind utility specialist for the Next.js pipeline. Focuses on responsive,
   token-aligned layouts using Tailwind and shadcn/ui patterns without
   overcomplicating CSS.
-tools: Read, Edit, MultiEdit, Grep, Glob, Bash
+tools:
+  - Read
+  - Edit
+  - MultiEdit
+  - Grep
+  - Glob
+  - Bash
 model: inherit
 ---
 

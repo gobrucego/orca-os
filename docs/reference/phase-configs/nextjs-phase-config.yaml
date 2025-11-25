@@ -1,16 +1,73 @@
-# Nextjs Pipeline Phase Configuration - OS 2.2
+# Nextjs Pipeline Phase Configuration - OS 2.3
 # Nextjs / Frontend Workflow
 
 pipeline:
   name: nextjs
   description: Nextjs frontend development pipeline with design-first approach
-  version: 2.0
+  version: 2.3
 
-# Context Integration (MANDATORY)
+# Phase State Schema (OS 2.3)
+phase_state:
+  # Top-level fields
+  domain: nextjs
+  complexity_tier: simple | medium | complex
+  requirement_id: string | null           # Links to requirements/<id>
+  requirements_spec_path: string | null   # Path to 06-requirements-spec.md
+  current_phase: string
+  memory_summary: string | null           # Hits from memory-first search
+
+  # Phase entries (each has status, timestamps, data)
+  phases:
+    context_query: object
+    requirements_impact: object
+    planning: object
+    analysis: object
+    implementation_pass1: object
+    gates: object
+    implementation_pass2: object | null   # Only if gate failed
+    verification: object
+    completion: object
+
+# Complexity Tiers (NEW in OS 2.3)
+complexity_tiers:
+  simple:
+    description: Single file, minor tweaks, quick fixes
+    routing: nextjs-light-orchestrator
+    spec_required: false
+    gates_required: false
+    examples:
+      - Fix button spacing
+      - Change text label
+      - Update color to token
+      - Add icon
+
+  medium:
+    description: Single page, modest styling, some logic
+    routing: full_pipeline
+    spec_required: recommended
+    gates_required: true
+    examples:
+      - Add new component
+      - Modify page layout
+      - Add form validation
+
+  complex:
+    description: Multi-page, architecture, high-risk
+    routing: full_pipeline
+    spec_required: true    # BLOCKS without spec
+    gates_required: true
+    examples:
+      - Multi-page flow
+      - Authentication UI
+      - Data fetching architecture
+      - SEO-critical changes
+
+# Context Integration (MANDATORY for medium/complex)
 context:
   provider: ProjectContextServer
   required: true
   query_on_start: true
+  memory_first: true      # Check Workshop/vibe.db before ProjectContext
 
 # Pipeline Phases
 phases:
@@ -41,6 +98,7 @@ phases:
     outputs:
       - implemented_code
       - changes_manifest
+      - ra_events          # OS 2.3: RA tags added during implementation
     constraints:
       scope: Edit-not-rewrite, scoped diffs only
       quality: design-dna.json enforcement
@@ -81,6 +139,7 @@ phases:
       - standards_score
       - violations
       - gate_decision
+      - ra_audit           # OS 2.3: RA tag scan results
     quality_gates:
       standards_score:
         threshold: 90

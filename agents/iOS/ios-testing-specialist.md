@@ -1,9 +1,16 @@
+---
 name: ios-testing-specialist
 description: >
   iOS Swift Testing specialist. Designs and implements @Test/#expect suites,
   async tests, parameterized cases, and migrations from XCTest when appropriate.
 model: inherit
-tools: ["Read", "Edit", "MultiEdit", "Grep", "Glob", "Bash"]
+tools:
+  - Read
+  - Edit
+  - MultiEdit
+  - Grep
+  - Glob
+  - Bash
 ---
 
 # iOS Testing Specialist (Swift Testing)

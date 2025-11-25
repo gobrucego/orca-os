@@ -68,27 +68,23 @@ Understand the request by identifying:
 - "Make it elegant", "improve UX", "redesign"
 - Requests about how something should "feel" or "look"
 
-**If YES → STOP and redirect to /concept:**
+**If YES → Note design context:**
 
 ```
-⚠️ DESIGN/UX WORK DETECTED
+🎨 DESIGN/UX WORK DETECTED
 
-This request requires creative conceptualization before planning.
+This request involves visual/UX decisions. The enhanced prompt will include:
+1. Design system context (design-dna.json if available)
+2. Aesthetic specialists in orchestration plan
+3. Design review gates
 
-You MUST run /concept first to:
-1. Study reference patterns in codebase
-2. Extract what makes them elegant
-3. Brainstorm creative approach
-4. Get concept approval
-
-Then return here with /enhance using the approved concept.
-
-Please run: /concept [your request]
+Proceeding with design-aware enhancement...
 ```
 
-**DO NOT proceed with /enhance for design work without /concept first.**
-
-**Exception:** If user explicitly says "I already have a concept" or provides detailed creative direction, proceed but note it in the enhanced prompt.
+**For design work, ensure orchestration includes:**
+- `nextjs-design-reviewer` or `expo-aesthetics-specialist`
+- Design system context loading
+- Visual review gates
 
 ### Read Project Rules
 Check for and read CLAUDE.md files:
@@ -233,40 +229,44 @@ ORCHESTRATION PLAN:
 [Intelligently select agents and skills based on task context]
 
 **Required Skills:**
-- If UI/design work → design-with-precision skill
+- If UI/design work → design-dna-skill
 - If creating components → uxscii-component-creator skill
-- If TDD approach → test-driven-development skill
-- If needs clarification mid-workflow → Use /clarify command (NOT brainstorming)
+- If needs clarification mid-workflow → Use AskUserQuestion (NOT brainstorming)
 
 **Agent Waves (execute in parallel where possible):**
 
 Wave 1 - Planning & Analysis:
-  🔄 [If needs architecture] → system-architect agent
-  🔄 [If needs design/UX] → Design specialists (ux-strategist, css-specialist, ui-engineer)
+  🔄 [If needs architecture] → Domain grand-architect (nextjs-grand-architect, ios-grand-architect, expo-grand-orchestrator)
+  🔄 [If needs design/UX] → Design specialists (nextjs-design-reviewer, expo-aesthetics-specialist, design-token-guardian)
 
 Wave 2 - Implementation:
-  → [domain-specific specialists] (iOS: swiftui-developer; Web: react-18-specialist/nextjs-14-specialist; Backend: backend-engineer; Mobile: cross-platform-mobile; Android: android-engineer)
-  [Implementation specialists run after planning + design completes]
+  → [domain-specific specialists]:
+    - iOS: ios-swiftui-specialist, ios-uikit-specialist, ios-persistence-specialist
+    - Next.js: nextjs-typescript-specialist, nextjs-tailwind-specialist, nextjs-layout-specialist
+    - Expo: expo-builder-agent, refactor-surgeon
+    - Shopify: shopify-liquid-specialist, shopify-section-builder, shopify-js-specialist
+  [Implementation specialists run after planning completes]
 
 Wave 3 - Quality Gates (MANDATORY):
-  → quality-validator agent - MUST review before presenting
-  → [If security-sensitive] security-auditor agent
+  → Domain verification agent (nextjs-verification-agent, ios-verification, expo-verification-agent)
+  → [If security-sensitive] security-specialist
 
 **Task List with Agent Assignments:**
 1. [Task description] → Use [specific skill/agent]
 2. [Task description] → Use [specific skill/agent]
-3. Review implementation → Use quality-validator agent (MANDATORY)
+3. Review implementation → Use domain verification agent (MANDATORY)
 
 **Agent Selection Guide:**
-- UI/CSS/styling/UX → Design specialists (css-specialist, ui-engineer, ux-strategist, design-reviewer)
-- React/Next.js/Web → Frontend specialists (react-18-specialist or nextjs-14-specialist) + Design specialists
-- iOS/Swift/SwiftUI → iOS specialists (swiftui-developer, swiftdata-specialist, swift-testing-specialist)
-- Android/Kotlin → android-engineer
-- Mobile cross-platform → cross-platform-mobile + Design specialists (ux-strategist, ui-engineer)
-- Backend/API → backend-engineer
-- Code review → quality-validator agent (ALWAYS)
-- Security → security-auditor agent
-- Complex orchestration → workflow-orchestrator agent
+- UI/CSS/styling/UX → Design specialists (nextjs-design-reviewer, expo-aesthetics-specialist, design-token-guardian)
+- React/Next.js/Web → nextjs-typescript-specialist, nextjs-tailwind-specialist, nextjs-builder
+- iOS/Swift/SwiftUI → ios-swiftui-specialist, ios-persistence-specialist, ios-testing-specialist
+- Expo/React Native → expo-builder-agent, refactor-surgeon, test-generator
+- Shopify/Liquid → shopify-liquid-specialist, shopify-section-builder
+- Data/Research → python-analytics-expert, data-researcher, research-specialist
+- SEO → seo-research-specialist, seo-draft-writer, seo-quality-guardian
+- Code review → Domain verification agent (ALWAYS)
+- Security → security-specialist
+- Complex orchestration → Use /orca command
 
 EDGE CASES & ROBUSTNESS:
 - [Boundary conditions: empty, null, maximum values]
@@ -338,16 +338,16 @@ REQUIREMENTS:
 [List 5-7 most important requirements with parallel markers]
 
 ORCHESTRATION PLAN:
-**Skills:** [e.g., brainstorming (if concept), design-with-precision (if UI)]
+**Skills:** [e.g., design-dna-skill (if UI), uxscii-component-creator (if components)]
 **Agents:**
-- Wave 1: [Planning agents, parallel if possible] 🔄
-- Wave 2: [Implementation agents]
-- Wave 3: quality-validator (MANDATORY)
+- Wave 1: [Domain grand-architect, design specialists] 🔄
+- Wave 2: [Domain-specific implementation agents]
+- Wave 3: Domain verification agent (MANDATORY)
 
 **Todos:**
 1. [Task] → [agent/skill to use]
 2. [Task] → [agent/skill to use]
-3. Review → quality-validator
+3. Review → Domain verification agent
 
 KEY CONSIDERATIONS:
 - [Most important edge case or risk]

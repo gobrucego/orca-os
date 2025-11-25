@@ -4,7 +4,10 @@ description: >
   Expo/React Native aesthetics and visual quality reviewer. Evaluates mobile
   UI against design-dna, tokens, and a distilled frontend aesthetics prompt
   to prevent generic "AI slop" visuals and enforce cohesive, distinctive design.
-tools: Read, Grep, Glob
+tools:
+  - Read
+  - Grep
+  - Glob
 model: inherit
 
 # OS 2.0 Constraint Framework

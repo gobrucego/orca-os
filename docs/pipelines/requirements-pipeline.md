@@ -1,17 +1,44 @@
 # Requirements Domain Pipeline
 
-**Status:** OS 2.2 Core Requirements Pipeline  
-**Last Updated:** 2025-11-19
+**Status:** OS 2.3 Core Requirements Pipeline
+**Last Updated:** 2025-11-25
 
 ## Overview
 
 The requirements pipeline turns fuzzy feature requests into **structured, code-aware specs** before any heavy implementation. It combines:
 
-- OS 2.2 primitives (ProjectContextServer, phase_state.json, vibe.db)
+- OS 2.3 primitives (ProjectContextServer, phase_state.json, vibe.db, Workshop)
 - The Claude Requirements Builder workflow (00–06 docs)
-- Optional Response Awareness tags for metacognitive tracking
+- Response Awareness tags for metacognitive tracking
 
 Output: a durable `06-requirements-spec.md` that upstreams into `/orca` domain pipelines.
+
+## Role in OS 2.3
+
+**The requirements pipeline is NOT a separate execution path.** It is:
+
+1. **Implemented by `/plan`** - The `/plan` command creates requirements specs
+2. **Consumed by domain orchestrators** - `/orca-{domain}` commands read specs
+3. **Required for complex tasks** - Spec gating blocks complex work without specs
+
+### When Requirements Are Created
+
+- **User runs `/plan <description>`** → Creates `requirements/<id>/06-requirements-spec.md`
+- **Complex task detected by `/orca-{domain}`** → User prompted to run `/plan` first
+
+### When Requirements Are Consumed
+
+- **Domain orchestrators** check for `requirements_spec_path` in phase_state
+- **Architects** (nextjs-architect, expo-architect-agent, ios-architect) read spec first
+- **Spec is authoritative** - constraints and acceptance criteria override analysis
+
+### Complexity Gating (OS 2.3)
+
+| Complexity | Spec Required | Behavior |
+|------------|---------------|----------|
+| Simple | No | Direct to light orchestrator |
+| Medium | Recommended | Full pipeline, spec helpful |
+| Complex | **Required** | BLOCKED until `/plan` creates spec |
 
 ---
 
@@ -85,7 +112,7 @@ Tasks:
   - `domain`: inferred from request (`webdev`, `expo`, etc.).
   - `task`: user request.
   - `projectPath`: repo root.
-- Seed `.claude/project/phase_state.json`:
+- Seed `.claude/orchestration/phase_state.json`:
   - Add/merge a `requirements` phase with:
     - `status`, `requirement_id`, `folder`, `spec_path` (once available).
 

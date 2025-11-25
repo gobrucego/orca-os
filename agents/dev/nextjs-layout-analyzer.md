@@ -4,7 +4,11 @@ description: >
   Structure-first layout analysis agent for the Next.js pipeline. Reads relevant
   routes/components, maps layout structure, component hierarchy, and style/token
   sources before any implementation changes.
-tools: Read, Grep, Glob, Bash
+tools:
+  - Read
+  - Grep
+  - Glob
+  - Bash
 model: inherit
 ---
 

@@ -1,0 +1,67 @@
+# Global Claude Memory Configuration
+
+This configuration ensures all projects use the clean `.claude/` structure.
+
+## Memory System Architecture
+
+All project memory lives in `.claude/`:
+- `.claude/memory/` - Workshop and vibe databases
+- `.claude/orchestration/` - Working files and artifacts
+- `.claude/cache/` - Context caching
+
+## Automatic Features
+
+With this configuration:
+1. **SessionStart** automatically loads cached context
+2. **SessionEnd** captures session summaries to Workshop
+3. **Memory search** available via vibe.db and Workshop
+4. **Context caching** reduces token usage by 50-70%
+
+## First Run in a Project
+
+When you start a session in a new project:
+1. Run migration: `bash ~/.claude/scripts/migrate-to-claude-dir.sh`
+2. This creates the `.claude/` structure
+3. Initializes Workshop and vibe.db
+4. Future sessions will use cached context
+
+## Available Commands
+
+- `workshop --workspace .claude/memory <command>` - Workshop operations
+- `python3 ~/.claude/scripts/memory-search-unified.py <query>` - Search all memory
+- `bash ~/.claude/scripts/test-memory-integration.sh` - Test setup
+
+## Important Rules
+
+1. **Everything goes in .claude/** - no files in project root
+2. **Memory in .claude/memory/** - all databases here
+3. **Temp files in .claude/orchestration/temp/** - clean up after sessions
+4. **Cache in .claude/cache/** - automatic context caching
+
+---
+
+## /orca Protocol Enforcement (CRITICAL)
+
+**When /orca is invoked, YOU MUST DELEGATE. No exceptions.**
+
+### You are NOT allowed to:
+- Use Edit/Write/MultiEdit tools during /orca execution
+- Read source code files to "understand" the task (agents do that)
+- "Just do it yourself" because a task seems simple
+- Bypass the pipeline and implement directly
+
+### You MUST:
+1. Detect pipeline type
+2. Query ProjectContext ONCE
+3. Confirm with user
+4. Delegate to grand-architect via Task tool
+5. STOP - the grand-architect handles everything else
+
+### If you catch yourself thinking:
+- "This is simple, I'll just..."
+- "Let me read the file to see what needs to change..."
+- "I can handle this without agents..."
+
+**STOP. You are violating /orca. Delegate immediately.**
+
+This is non-negotiable. The user explicitly invoked /orca because they want the agent pipeline, not direct implementation.

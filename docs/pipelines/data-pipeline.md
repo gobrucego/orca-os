@@ -1,7 +1,7 @@
 # Data / Analytics Domain Pipeline
 
-**Status:** OS 2.2 Pipeline (DataPipeline)  
-**Last Updated:** 2025-11-20
+**Status:** OS 2.3 Pipeline (DataPipeline)
+**Last Updated:** 2025-11-25
 
 ---
 
@@ -13,14 +13,16 @@ The data/analytics pipeline handles work where the primary output is:
 - Decision-support artifacts (briefs, dashboards, metrics, reports).
 
 It combines:
-- OS 2.2 primitives (ProjectContextServer, `phase_state.json`, vibe.db).
+- OS 2.3 primitives (ProjectContextServer, `phase_state.json`, vibe.db, Workshop)
+- Memory-first context (Workshop + vibe.db before ProjectContext)
 - Data/analytics agents:
-  - `data-researcher`
+  - `data-researcher` (lead)
   - `research-specialist`
   - `python-analytics-expert`
-- Modern data engineering/analytics practices from:
-  - `DATA_ENGINEERING_AND_ANALYTICS_BEST_PRACTICES.md`
-    (`_explore/orchestration_repositories/claude_code_agent_farm-main/...`).
+  - `competitive-analyst`
+- Modern data engineering/analytics practices
+
+**Note:** The data pipeline is specialist-based (no grand-architect). Tasks route through `/orca` which delegates to `data-researcher` to lead the workflow.
 
 ---
 
@@ -50,7 +52,7 @@ If the work is primarily:
 All data pipeline work shares a common phase state file:
 
 ```text
-.claude/project/phase_state.json
+.claude/orchestration/phase_state.json
 ```
 
 For `domain: "data"`, the contract is:

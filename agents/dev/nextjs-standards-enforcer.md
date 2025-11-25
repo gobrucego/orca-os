@@ -4,7 +4,13 @@ description: >
   Code-level standards gate for the Next.js pipeline. Audits recent changes for
   design-dna/token compliance, Next.js patterns, and frontend standards, then
   produces a standards_score and violations for the gate.
-tools: Read, Grep, Glob, Bash, mcp__context7__resolve-library-id, mcp__context7__get-library-docs
+tools:
+  - Read
+  - Grep
+  - Glob
+  - Bash
+  - mcp__context7__resolve-library-id
+  - mcp__context7__get-library-docs
 model: inherit
 ---
 
@@ -28,7 +34,7 @@ Before you run:
   - Files changed in corrective pass, when applicable,
 - ContextBundle:
   - `designSystem` / design-dna,
-  - `relatedStandards` for frontend,
+  - **`relatedStandards` for frontend** - treat as enforceable rules, not suggestions (OS 2.3),
   - `projectState` for structural hints.
 - Global standards knowledge (via context7):
   - `os2-nextjs-standards` – Nextjs/front-end standards,
@@ -97,4 +103,40 @@ Write your results to `phase_state.gates`:
 - Add `"standards"` to `gates_passed` or `gates_failed` depending on the decision.
 
 Your report should make it easy for `nextjs-builder` to run a targeted corrective pass and for orchestrators to understand the remaining risk if any violations remain after Pass 2.
+
+## Response Awareness Audit (OS 2.3)
+
+Scan modified files for RA tags and report:
+
+**Tags to look for:**
+- `#COMPLETION_DRIVE` - assumptions made without explicit requirements
+- `#CARGO_CULT` - patterns followed without clear justification
+- `#PATH_DECISION` / `#PATH_RATIONALE` - explicit decisions (document, don't penalize)
+- `#POISON_PATH` - flagged anti-patterns
+- `#CONTEXT_DEGRADED` - known missing context
+
+**RA Assessment:**
+- Count tags found: `ra_tags_found: N`
+- Identify resolved vs unresolved: `ra_tags_resolved: N, ra_tags_unresolved: N`
+- Unresolved `#COMPLETION_DRIVE` on critical paths (auth, data fetching, SEO) → CAUTION
+- Any `#POISON_PATH` left unaddressed → contribute to FAIL score
+
+**Include in output:**
+```yaml
+ra_audit:
+  tags_found: 4
+  tags_resolved: 2
+  tags_unresolved: 2
+  critical_unresolved:
+    - "#COMPLETION_DRIVE in PricingTable.tsx:28 - assumption about currency format"
+```
+
+## Final Output
+
+Your gate output should include:
+- `standards_score` (0-100)
+- `violations` (array with severity, file, description)
+- `gate_decision` (PASS/CAUTION/FAIL)
+- **`ra_audit`** - RA tag scan summary (OS 2.3)
+- **Tag violations to the standard they break** (if any) for audit traceability
 

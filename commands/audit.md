@@ -31,7 +31,7 @@ If the scope is unclear:
 ## 2. Load History & Evidence
 
 Using a combination of:
-- `.claude/project/phase_state.json` (phase and gate history),
+- `.claude/orchestration/phase_state.json` (phase and gate history),
 - Project-specific logs under `.claude/orchestration/evidence/`,
 - ProjectContextServer (`mcp__project-context__query_context`) with a meta task such as:
   - `"Summarize recent task_history and standards for audit"`,
@@ -85,14 +85,68 @@ Include:
 Where appropriate:
 
 1. Use `mcp__project-context__save_standard` to codify recurring issues:
-   - `what_happened`, `cost`, `rule`, `domain`.
-2. Use `mcp__project-context__save_task_history` to record the audit itself:
-   - `domain`: `"audit"` or the relevant domain,
-   - `task`: description of the audit scope,
-   - `outcome`: `"success"` (audit completed) or `"partial"`,
-   - `learnings`: summary of key RA findings,
-   - `files_modified`: include the audit report path.
+   - `what_happened`: What went wrong or was repeated
+   - `cost`: Impact (wasted time, bugs, rework, user impact)
+   - `rule`: The enforceable rule to prevent recurrence
+   - `domain`: **Use the specific domain** (`ios`, `nextjs`, `expo`, etc.)
 
-These entries enrich `vibe.db` so future `/plan` and `/orca-*` runs can benefit
-from the audit’s conclusions.
+   **Example for iOS:**
+   ```json
+   {
+     "what_happened": "Force unwraps in async closures causing crashes",
+     "cost": "3 production crashes before caught",
+     "rule": "Never force unwrap in async contexts; use guard let or if let",
+     "domain": "ios"
+   }
+   ```
+
+2. Use `mcp__project-context__save_task_history` to record the audit itself:
+   - `domain`: **Use the audited domain** (`ios`, `nextjs`, etc.) NOT `"audit"`
+   - `task`: description of the audit scope
+   - `outcome`: `"success"` (audit completed) or `"partial"`
+   - `learnings`: summary of key RA findings
+   - `files_modified`: include the audit report path
+
+**Critical for Learning Loop (OS 2.3):**
+- Standards saved with `domain: "ios"` will appear in `relatedStandards` for future iOS tasks
+- Gate agents (`ios-standards-enforcer`) will enforce these standards
+- This closes the loop: violation → audit → standard → future enforcement
+
+---
+
+## 6. RA Event Mining (OS 2.3)
+
+With v2.3, `phase_state` now contains `ra_events` from each phase. When auditing:
+
+1. **Check phase_state for RA events:**
+   ```bash
+   cat .claude/orchestration/phase_state.json | grep -A5 "ra_events"
+   ```
+
+2. **Aggregate RA tags across tasks:**
+   - Count frequency of each tag type (`#COMPLETION_DRIVE`, `#CARGO_CULT`, etc.)
+   - Identify patterns (same assumption repeated? same path decision across tasks?)
+
+3. **Include in audit report:**
+   ```markdown
+   ## RA Event Summary
+   - #COMPLETION_DRIVE: 7 occurrences (3 unresolved)
+   - #CARGO_CULT: 2 occurrences
+   - #PATH_DECISION: 5 occurrences (all documented)
+
+   ### Frequent Assumptions
+   - "Mobile breakpoint 768px" appeared 4 times → candidate for standard
+   ```
+
+---
+
+## v2.4 Roadmap: Automatic Escalation
+
+**Not yet implemented** - future evolution:
+
+- If a certain RA tag appears frequently (e.g., same `#COMPLETION_DRIVE` assumption 3+ times):
+  - Automatically prompt to promote to standard via `save_standard`
+  - Adjust complexity thresholds if assumptions indicate underestimated complexity
+- Requires: RA event aggregation across sessions, frequency analysis, threshold triggers
+- This is where RA runtime research is headed
 

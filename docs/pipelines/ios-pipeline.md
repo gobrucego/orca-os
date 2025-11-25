@@ -1,20 +1,79 @@
 # iOS Domain Pipeline
 
-**Status:** OS 2.2 Core Pipeline (Native iOSPipeline)  
-**Last Updated:** 2025-11-19
+**Status:** OS 2.3 Core Pipeline (Native iOS)
+**Last Updated:** 2025-11-25
 
 ## Overview
 
 The iOS pipeline handles **native iOS app development** using Swift 6.x and modern Apple frameworks (SwiftUI, UIKit, Swift Concurrency). It combines:
 
-- OS 2.2 primitives (ProjectContextServer, phase_state.json, vibe.db, constraint framework)
-- Swift/iOS specialist agents (Swift architect/developer/SwiftUI specialists)
-- Your own OS 2.2 pipeline agents (`ios-grand-architect`, `ios-architect`, `ios-builder`, `ios-standards-enforcer`, `ios-ui-reviewer`, `ios-verification`)
-- Project design DNA/tokens (for UI-forward work) and chosen persistence strategy (SwiftData vs Core Data/GRDB) when relevant.
+- OS 2.3 primitives (ProjectContextServer, phase_state.json, vibe.db, Workshop, constraint framework)
+- Memory-first context (Workshop + vibe.db before ProjectContext)
+- Complexity-based routing (simple → light orchestrator, medium/complex → full pipeline)
+- Spec gating (complex tasks require requirements spec)
+- Response Awareness tagging (RA tags surface assumptions and decisions)
+- Swift/iOS specialist agents including `ios-light-orchestrator` for quick tasks
+- Full pipeline agents (`ios-grand-architect`, `ios-architect`, `ios-builder`, `ios-standards-enforcer`, `ios-ui-reviewer`, `ios-verification`)
+- Design DNA/tokens for UI work; persistence strategy (SwiftData vs Core Data/GRDB) when relevant.
 
-Goal: implement and evolve native iOS features with **architecture-aware plans**, **safety and concurrency guarantees**, and **structured gates** for quality and verification.
+Goal: implement and evolve native iOS features with **architecture-aware plans**, **safety and concurrency guarantees**, **structured gates** for quality, and **learning loops** that harden the system over time.
 
 ---
+
+## Complexity Tiers (OS 2.3)
+
+The iOS pipeline routes tasks based on complexity:
+
+| Tier | Routing | Spec Required | Gates | Example |
+|------|---------|---------------|-------|---------|
+| **Simple** | `ios-light-orchestrator` | No | No | Fix button padding, add haptic |
+| **Medium** | Full pipeline | Recommended | Yes | New component, single screen |
+| **Complex** | Full pipeline | **Required** | Yes | Multi-screen flow, architecture |
+
+Use `-tweak` flag to force light path: `/orca-ios -tweak "fix padding"`
+
+---
+
+## Standards Inputs (OS 2.3 Learning Loop)
+
+Standards flow into and out of the iOS pipeline:
+
+### Input Sources
+
+1. **ContextBundle.relatedStandards** (from ProjectContext/vibe.db)
+   - iOS-specific standards saved from past tasks
+   - Architecture decisions and patterns
+   - Gotchas and anti-patterns
+
+2. **Workshop.gotchas** (from session memory)
+   - Recent gotchas tagged with "ios"
+   - Decisions with reasoning
+
+3. **/audit-derived standards** (from past audits)
+   - Standards created via `mcp__project-context__save_standard`
+   - Pattern: "What happened → Cost → Rule"
+
+### Gate Enforcement
+
+`ios-standards-enforcer` MUST:
+- Read `relatedStandards` from ContextBundle
+- Treat them as **enforceable rules**, not suggestions
+- Tag violations to the specific standard they break
+- This enables `/audit` to track "standard X keeps being violated"
+
+### Output (Learning Loop Closure)
+
+After task completion:
+1. Recurring violations → `mcp__project-context__save_standard` (via /audit)
+2. New standards flow into future `relatedStandards`
+3. Future tasks see and enforce the new standard
+
+```
+violation → /audit → save_standard → vibe.db → future relatedStandards → gate enforcement
+```
+
+---
+
 ## Scope & Domain
 
 Use this pipeline when:

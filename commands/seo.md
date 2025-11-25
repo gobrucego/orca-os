@@ -197,7 +197,7 @@ agentdb.set('session', session);
 
 ```typescript
 await Task({
-  subagent_type: "general-purpose",
+  subagent_type: "seo-research-specialist",
   description: "SEO research with SERP + KG + external citations",
   prompt: `
 You are the seo-research-specialist (OS 2.2).
@@ -256,7 +256,7 @@ Follow: agents/seo-research-specialist.md
 
 ```typescript
 await Task({
-  subagent_type: "general-purpose",
+  subagent_type: "seo-brief-strategist",
   description: "Strategic brief enhancement",
   prompt: `
 You are the seo-brief-strategist (OS 2.2).
@@ -296,7 +296,7 @@ Follow: agents/seo-brief-strategist.md
 
 ```typescript
 await Task({
-  subagent_type: "general-purpose",
+  subagent_type: "seo-draft-writer",
   description: "Sophisticated content writing with v4 clarity",
   prompt: `
 You are the seo-draft-writer (OS 2.2).
@@ -347,7 +347,7 @@ Follow: agents/seo-draft-writer.md
 
 ```typescript
 await Task({
-  subagent_type: "general-purpose",
+  subagent_type: "seo-quality-guardian",
   description: "Comprehensive QA with clarity gates",
   prompt: `
 You are the seo-quality-guardian (OS 2.2).

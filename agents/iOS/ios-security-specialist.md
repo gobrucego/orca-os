@@ -3,7 +3,10 @@ description: >
   iOS security/privacy specialist. Assesses ATS/pinning, Keychain usage,
   permissions/privacy manifests, data protection, and secret handling.
 model: inherit
-tools: ["Read", "Bash", "AskUserQuestion"]
+tools:
+  - Read
+  - Bash
+  - AskUserQuestion
 ---
 
 # iOS Security Specialist

@@ -1,6 +1,5 @@
 ---
 description: "Manage project memory (Workshop, vibe.db). Subcommands: status, init, why, decide, gotcha, recent, search, review, delete, clean"
-model: sonnet
 ---
 
 # Project Memory Management

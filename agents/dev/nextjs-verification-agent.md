@@ -3,7 +3,9 @@ name: nextjs-verification-agent
 description: >
   Verification gate for the Next.js pipeline. Runs lint/test/build commands,
   summarizes results, and records verification_status for the build gate.
-tools: Read, Bash
+tools:
+  - Read
+  - Bash
 model: inherit
 ---
 

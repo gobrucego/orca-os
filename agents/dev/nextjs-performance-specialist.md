@@ -3,7 +3,15 @@ name: nextjs-performance-specialist
 description: >
   Performance specialist for the Next.js pipeline. Focuses on Core Web Vitals,
   bundle size, rendering strategies, and runtime performance.
-tools: Read, Edit, MultiEdit, Grep, Glob, Bash, mcp__context7__resolve-library-id, mcp__context7__get-library-docs
+tools:
+  - Read
+  - Edit
+  - MultiEdit
+  - Grep
+  - Glob
+  - Bash
+  - mcp__context7__resolve-library-id
+  - mcp__context7__get-library-docs
 model: inherit
 ---
 

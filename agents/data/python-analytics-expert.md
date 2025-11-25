@@ -5,7 +5,13 @@ description: >
   optimizes data pipelines, analyses, and models using Python (NumPy, pandas,
   PyTorch, DuckDB/dbt-style patterns) in line with modern data engineering and
   analytics best practices.
-tools: [Read, Edit, MultiEdit, Grep, Glob, Bash]
+tools:
+  - Read
+  - Edit
+  - MultiEdit
+  - Grep
+  - Glob
+  - Bash
 model: inherit
 ---
 

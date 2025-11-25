@@ -1,6 +1,5 @@
 ---
 description: "Manage code context (vibe.db). Subcommands: status, sync, search, symbol, files, docs"
-model: sonnet
 ---
 
 # Code Context Management (vibe.db)

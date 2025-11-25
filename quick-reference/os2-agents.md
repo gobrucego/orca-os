@@ -360,7 +360,7 @@ All pipelines enforce numerical quality gates:
   - Location: `~/.claude/mcp/vibe-memory/`
 
 ### Memory Systems
-- **phase_state.json** - Current pipeline state (`.claude/project/phase_state.json`)
+- **phase_state.json** - Current pipeline state (`.claude/orchestration/phase_state.json`)
 - **vibe.db** - Persistent institutional memory (`.claude/memory/vibe.db`)
 - **Workshop** - Decisions, gotchas, goals, antipatterns
 

@@ -1,20 +1,77 @@
-# Expo Pipeline Phase Configuration - OS 2.2
+# Expo Pipeline Phase Configuration - OS 2.3
 # React Native / Expo Mobile Development Workflow
 
 pipeline:
   name: expo
   description: Expo/React Native mobile development with design tokens, a11y, perf, and security gates
-  version: 2.0
+  version: 2.3
   sdk_versions:
     expo: "50+"
     react_native: "0.74+"
     typescript: required
 
-# Context Integration (MANDATORY)
+# Phase State Schema (OS 2.3)
+phase_state:
+  # Top-level fields
+  domain: expo
+  complexity_tier: simple | medium | complex
+  requirement_id: string | null           # Links to requirements/<id>
+  requirements_spec_path: string | null   # Path to 06-requirements-spec.md
+  current_phase: string
+  memory_summary: string | null           # Hits from memory-first search
+
+  # Phase entries (each has status, timestamps, data)
+  phases:
+    context_query: object
+    requirements_impact: object
+    architecture_plan: object
+    implementation_pass1: object
+    standards_budgets: object
+    power_checks: object | null           # Only if high-risk
+    implementation_pass2: object | null   # Only if gate failed
+    verification: object
+    completion: object
+
+# Complexity Tiers (OS 2.3)
+complexity_tiers:
+  simple:
+    description: Single file, minor tweaks, quick fixes
+    routing: expo-light-orchestrator
+    spec_required: false
+    gates_required: false
+    examples:
+      - Fix button spacing
+      - Change label text
+      - Add haptic feedback
+      - Update color to token
+
+  medium:
+    description: Single screen, modest changes, some logic
+    routing: full_pipeline
+    spec_required: recommended
+    gates_required: true
+    examples:
+      - Add new component
+      - Modify screen layout
+      - Add form validation
+
+  complex:
+    description: Multi-screen, architecture, high-risk
+    routing: full_pipeline
+    spec_required: true    # BLOCKS without spec
+    gates_required: true
+    examples:
+      - Multi-screen flow
+      - Authentication UI
+      - Offline-first features
+      - Payment integration
+
+# Context Integration (MANDATORY for medium/complex)
 context:
   provider: ProjectContextServer
   required: true
   query_on_start: true
+  memory_first: true      # Check Workshop/vibe.db before ProjectContext
   max_files: 15
   include_history: true
 
@@ -70,6 +127,7 @@ phases:
       - implemented_code
       - modified_files
       - test_coverage
+      - ra_events          # OS 2.3: RA tags added during implementation
     constraints:
       scope: Localized edits, no sweeping rewrites
       quality: TypeScript, Expo SDK 50+, Fabric architecture where applicable
@@ -156,6 +214,7 @@ phases:
       - perf_metrics
       - performance_issues
       - gate_decision
+      - ra_audit           # OS 2.3: RA tag scan results
     quality_gates:
       budget_exceeded:
         threshold: false

@@ -97,8 +97,7 @@ If no existing system found, guide through creation:
 4. Generate design-dna.json
 
 ### Option B: From Scratch
-Reference the comprehensive workflow at:
-`/Users/adilkalam/claude-vibe-config/_explore/_AGENTS/_collections/design-with-claude/README.md`
+Guide through design system creation:
 
 Key steps:
 1. **Typography Foundation**

@@ -57,6 +57,22 @@ When user shares logs/feedback from other projects:
 
 ## CRITICAL RULES FOR WORKING IN THIS REPO
 
+### 0. Agent YAML Format (CRITICAL - CAUSES SILENT FAILURES)
+
+**Agent tools MUST be comma-separated strings, NOT YAML arrays.**
+
+```yaml
+# WRONG - causes 0 tool uses, agents silently fail
+tools: ["Read", "Edit", "MultiEdit"]
+
+# RIGHT - tools actually work
+tools: Read, Edit, MultiEdit, Grep, Glob, Bash
+```
+
+**If an agent reports success but files don't change, CHECK THE TOOLS FORMAT FIRST.**
+
+---
+
 ### 1. File Management - KEEP THIS REPO CLEAN
 - **DO NOT scatter docs, audits, logs everywhere**
 - **DO NOT delete agents, tools, skills, markdown files**

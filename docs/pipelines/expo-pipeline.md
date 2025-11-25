@@ -1,15 +1,19 @@
 # Expo / React Native Domain Pipeline
 
-**Status:** OS 2.2 Core Pipeline (ExpoPipeline)  
-**Last Updated:** 2025-11-19
+**Status:** OS 2.3 Core Pipeline (ExpoPipeline)
+**Last Updated:** 2025-11-25
 
 ## Overview
 
-The Expo pipeline handles React Native mobile development for projects using Expo SDK 50+ / React Native 0.74+ with TypeScript. It combines:
+The Expo pipeline handles **React Native mobile development** for projects using Expo SDK 50+ / React Native 0.74+ with TypeScript. It combines:
 
-- OS 2.2 primitives (ProjectContextServer, phase_state.json, vibe.db, constraint framework)
-- SenaiVerse’s Expo agent system (Grand Architect + design/a11y/perf/security agents)
-- React Native best practices (from Agent Farm’s REACT_NATIVE_BEST_PRACTICES)
+- OS 2.3 primitives (ProjectContextServer, phase_state.json, vibe.db, Workshop, constraint framework)
+- Memory-first context (Workshop + vibe.db before ProjectContext)
+- Complexity-based routing (simple → light orchestrator, medium/complex → full pipeline)
+- Spec gating (complex tasks require requirements spec)
+- Response Awareness tagging (RA tags surface assumptions and decisions)
+- SenaiVerse's Expo agent system (Grand Orchestrator + design/a11y/perf/security agents)
+- React Native best practices (from Agent Farm's REACT_NATIVE_BEST_PRACTICES)
 
 Goal: build and maintain high-quality Expo apps with structural guarantees around design tokens, accessibility, performance, and security.
 
@@ -26,6 +30,60 @@ Use this pipeline when:
 If the work is purely web/frontend (Next.js/React without mobile shells), use
 the **webdev** pipeline instead. If it targets pure native iOS without Expo,
 use the **iOS** pipeline.
+
+---
+
+## Complexity Tiers (OS 2.3)
+
+The Expo pipeline routes tasks based on complexity:
+
+| Tier | Routing | Spec Required | Gates | Example |
+|------|---------|---------------|-------|---------|
+| **Simple** | `expo-light-orchestrator` | No | No | Fix button spacing, change label |
+| **Medium** | Full pipeline | Recommended | Yes | New component, add validation |
+| **Complex** | Full pipeline | **Required** | Yes | Multi-screen flow, auth, offline |
+
+Use `-tweak` flag to force light path: `/orca-expo -tweak "fix padding"`
+
+---
+
+## Standards Inputs (OS 2.3 Learning Loop)
+
+Standards flow into and out of the Expo pipeline:
+
+### Input Sources
+
+1. **ContextBundle.relatedStandards** (from ProjectContext/vibe.db)
+   - Expo/React Native-specific standards saved from past tasks
+   - Architecture decisions and patterns
+   - Gotchas and anti-patterns
+
+2. **Workshop.gotchas** (from session memory)
+   - Recent gotchas tagged with "expo" or "react-native"
+   - Decisions with reasoning
+
+3. **/audit-derived standards** (from past audits)
+   - Standards created via `mcp__project-context__save_standard`
+   - Pattern: "What happened → Cost → Rule"
+
+### Gate Enforcement
+
+`design-token-guardian`, `a11y-enforcer`, `performance-enforcer` MUST:
+- Read `relatedStandards` from ContextBundle
+- Treat them as **enforceable rules**, not suggestions
+- Tag violations to the specific standard they break
+- This enables `/audit` to track "standard X keeps being violated"
+
+### Output (Learning Loop Closure)
+
+After task completion:
+1. Recurring violations → `mcp__project-context__save_standard` (via /audit)
+2. New standards flow into future `relatedStandards`
+3. Future tasks see and enforce the new standard
+
+```
+violation → /audit → save_standard → vibe.db → future relatedStandards → gate enforcement
+```
 
 ---
 

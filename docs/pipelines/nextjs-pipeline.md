@@ -1,12 +1,19 @@
 # Nextjs Domain Pipeline
 
-**Status:** OS 2.2 Core Pipeline
-**Last Updated:** 2025-11-19
+**Status:** OS 2.3 Core Pipeline
+**Last Updated:** 2025-11-25
 
 ## Overview
 
-The Nextjs pipeline handles frontend/web development work for Next.js apps with
-strict context awareness, design system enforcement, and quality gates.
+The Nextjs pipeline handles **frontend/web development work** for Next.js apps with App Router, Tailwind, and shadcn/ui. It combines:
+
+- OS 2.3 primitives (ProjectContextServer, phase_state.json, vibe.db, Workshop, constraint framework)
+- Memory-first context (Workshop + vibe.db before ProjectContext)
+- Complexity-based routing (simple → light orchestrator, medium/complex → full pipeline)
+- Spec gating (complex tasks require requirements spec)
+- Response Awareness tagging (RA tags surface assumptions and decisions)
+- Design DNA/token enforcement for all UI work
+- Full pipeline agents (`nextjs-grand-architect`, `nextjs-architect`, `nextjs-layout-analyzer`, `nextjs-builder`, `nextjs-standards-enforcer`, `nextjs-design-reviewer`, `nextjs-verification-agent`)
 
 **Core Principles:**
 1. Context is MANDATORY - No work without ContextBundle
@@ -16,15 +23,69 @@ strict context awareness, design system enforcement, and quality gates.
 5. Maximum 2 implementation passes
 
 **Orchestration:**
-- Nextjs work SHOULD be run via the `/orca` command.
+- Nextjs work SHOULD be run via the `/orca-nextjs` command.
 - Phase state is tracked in `.claude/orchestration/phase_state.json` using the contract in `docs/reference/phase-configs/nextjs-phase-config.yaml`.
 - The high-level phases in this doc map to the more detailed `phase_state` entries:
-  - “Planning & Spec” ↔ `requirements_impact` + `planning`
-  - “Analysis” ↔ `analysis`
-  - “Implementation - Pass 1 / Pass 2” ↔ `implementation_pass1` / `implementation_pass2`
-  - “Gate Checks” ↔ `gates`
-  - “Verification” ↔ `verification`
-  - “Completion” ↔ `completion`
+  - "Planning & Spec" ↔ `requirements_impact` + `planning`
+  - "Analysis" ↔ `analysis`
+  - "Implementation - Pass 1 / Pass 2" ↔ `implementation_pass1` / `implementation_pass2`
+  - "Gate Checks" ↔ `gates`
+  - "Verification" ↔ `verification`
+  - "Completion" ↔ `completion`
+
+---
+
+## Complexity Tiers (OS 2.3)
+
+The Next.js pipeline routes tasks based on complexity:
+
+| Tier | Routing | Spec Required | Gates | Example |
+|------|---------|---------------|-------|---------|
+| **Simple** | `nextjs-light-orchestrator` | No | No | Fix button spacing, change text |
+| **Medium** | Full pipeline | Recommended | Yes | New component, form validation |
+| **Complex** | Full pipeline | **Required** | Yes | Multi-page flow, auth UI, SEO-critical |
+
+Use `-tweak` flag to force light path: `/orca-nextjs -tweak "fix padding"`
+
+---
+
+## Standards Inputs (OS 2.3 Learning Loop)
+
+Standards flow into and out of the Next.js pipeline:
+
+### Input Sources
+
+1. **ContextBundle.relatedStandards** (from ProjectContext/vibe.db)
+   - Next.js-specific standards saved from past tasks
+   - Architecture decisions and patterns
+   - Gotchas and anti-patterns
+
+2. **Workshop.gotchas** (from session memory)
+   - Recent gotchas tagged with "nextjs"
+   - Decisions with reasoning
+
+3. **/audit-derived standards** (from past audits)
+   - Standards created via `mcp__project-context__save_standard`
+   - Pattern: "What happened → Cost → Rule"
+
+### Gate Enforcement
+
+`nextjs-standards-enforcer` MUST:
+- Read `relatedStandards` from ContextBundle
+- Treat them as **enforceable rules**, not suggestions
+- Tag violations to the specific standard they break
+- This enables `/audit` to track "standard X keeps being violated"
+
+### Output (Learning Loop Closure)
+
+After task completion:
+1. Recurring violations → `mcp__project-context__save_standard` (via /audit)
+2. New standards flow into future `relatedStandards`
+3. Future tasks see and enforce the new standard
+
+```
+violation → /audit → save_standard → vibe.db → future relatedStandards → gate enforcement
+```
 
 ---
 
@@ -766,5 +827,5 @@ As the pipeline runs, it learns:
 
 ---
 
-_Last updated: 2025-11-19_
-_Version: 2.2.0_
+_Last updated: 2025-11-25_
+_Version: 2.3.0_

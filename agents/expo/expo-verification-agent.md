@@ -3,7 +3,11 @@ name: expo-verification-agent
 description: >
   Expo/React Native verification agent for OS 2.0. Runs build/tests and
   health checks (expo doctor, etc.) and reports Verification Gate status.
-tools: Bash, Read, Grep, mcp__project-context__query_context
+tools:
+  - Bash
+  - Read
+  - Grep
+  - mcp__project-context__query_context
 model: inherit
 ---
 
@@ -37,7 +41,7 @@ Before verification:
    - Use `relevantFiles` and `projectState` to understand the target app and scripts.
 
 3. **Phase state**
-   - Read `.claude/project/phase_state.json` (if present) to know:
+   - Read `.claude/orchestration/phase_state.json` (if present) to know:
      - Which phases completed.
      - Which files were modified.
      - Which gates have passed or failed so far.

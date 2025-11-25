@@ -145,7 +145,7 @@ Verification Agents:
 ### 4. State Preservation (NEW in OS 2.2)
 
 #### phase_state.json
-**Location:** `.claude/project/phase_state.json`
+**Location:** `.claude/orchestration/phase_state.json`
 
 **Structure:**
 ```json
@@ -370,12 +370,11 @@ The OS 2.2 memory architecture cleanly separates concerns:
 │   ├── workshop.db            # Session memory (decisions, gotchas)
 │   └── vibe.db                # Code intelligence (chunks, symbols)
 ├── orchestration/
+│   ├── phase_state.json       # State preservation
 │   ├── evidence/              # Final artifacts
 │   └── temp/                  # Working files (clean up after session)
 ├── cache/                     # Context caching
 │   └── .project-meta-init     # project-meta marker
-├── project/
-│   └── phase_state.json       # State preservation
 └── requirements/              # Planning outputs
     └── YYYY-MM-DD-HHMM-<slug>/
         └── 06-requirements-spec.md

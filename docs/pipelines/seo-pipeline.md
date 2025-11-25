@@ -1,7 +1,7 @@
 # SEO Domain Pipeline
 
-**Status:** OS 2.2 Pipeline (SEOPipeline)  
-**Last Updated:** 2025-11-19
+**Status:** OS 2.3 Pipeline (SEOPipeline)
+**Last Updated:** 2025-11-25
 
 ## Overview
 
@@ -10,13 +10,22 @@ The SEO pipeline turns a target keyword + project context into:
 - A long-form draft optimized for clarity, search, and compliance.
 - A structured QA report with explicit gates.
 
-It is implemented by the SEO agents:
-- `seo-research-specialist`
-- `seo-brief-strategist`
-- `seo-draft-writer`
-- `seo-quality-guardian`
+It combines:
+- OS 2.3 primitives (ProjectContextServer, `phase_state.json`, vibe.db, Workshop)
+- Memory-first context (Workshop + vibe.db before ProjectContext)
+- SEO agents:
+  - `seo-research-specialist` (lead)
+  - `seo-brief-strategist`
+  - `seo-draft-writer`
+  - `seo-quality-guardian`
+
+**Entry Points:**
+- `/seo` command - preferred entry point
+- `/orca` with SEO-detected task - routes to seo-research-specialist
 
 The detailed configuration lives in `docs/reference/phase-configs/seo-phases.yaml`.
+
+**Note:** The SEO pipeline is specialist-based (no grand-architect). The `/seo` command or `/orca` delegates to `seo-research-specialist` to lead the workflow.
 
 ---
 ## Scope & Domain
@@ -66,7 +75,7 @@ Tasks:
   - Any existing SEO outputs for this project.
 
 Artifacts:
-- Phase state entry in `.claude/project/phase_state.json` for domain `seo`.
+- Phase state entry in `.claude/orchestration/phase_state.json` for domain `seo`.
 - Session metadata (keyword, slug, output directory).
 
 ---

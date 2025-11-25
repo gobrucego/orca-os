@@ -62,7 +62,15 @@ AskUserQuestion({
 ```bash
 git status --short
 git log --oneline -5
+git branch --show-current
+basename $(git rev-parse --show-toplevel)
 ```
+
+**Detect project stack:**
+- Check for package.json (Next.js, React, etc.)
+- Check for Podfile/Package.swift (iOS)
+- Check for app.json/expo (Expo)
+- Check for theme.liquid (Shopify)
 
 **Check for active tasks:**
 - Modified files
@@ -118,10 +126,10 @@ When you return:
 
 ## Project Context
 
-**Project:** PeptideFox v2
-**Stack:** Next.js, TypeScript, TailwindCSS
-**Build Tool:** Bun
-**Deploy:** Cloudflare Pages
+**Project:** [CURRENT_PROJECT_NAME]
+**Stack:** [DETECTED_STACK]
+**Branch:** [CURRENT_GIT_BRANCH]
+**Working Dir:** [PROJECT_ROOT]
 
 ---
 

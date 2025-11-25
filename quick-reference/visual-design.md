@@ -21,7 +21,7 @@ Use this template to define clear, testable acceptance criteria for visual work.
 **Evidence locations (OS 2.2):**
 - Screenshots: `.claude/orchestration/evidence/screenshots/`
 - Design QA reports: `.claude/orchestration/evidence/design-qa-*.md`
-- Gate scores: `.claude/project/phase_state.json`
+- Gate scores: `.claude/orchestration/phase_state.json`
 
 **Deprecated (OS 2.2):**
 - ❌ `/visual-smoke` → Use pipeline automatic checks

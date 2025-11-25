@@ -4,7 +4,17 @@ description: >
   OS 2.0 Expo/React Native lane architect. Uses ProjectContextServer and
   React Native best practices to analyze impact, choose architecture, and
   produce plans before implementation.
-tools: Task, Read, Grep, Glob, Bash, AskUserQuestion, mcp__project-context__query_context, mcp__project-context__save_decision
+tools:
+  - Task
+  - Read
+  - Grep
+  - Glob
+  - Bash
+  - AskUserQuestion
+  - mcp__project-context__query_context
+  - mcp__project-context__save_decision
+  - mcp__context7__resolve-library-id
+  - mcp__context7__get-library-docs
 model: inherit
 ---
 
@@ -87,13 +97,22 @@ For non-trivial work, think explicitly in terms of **OODA**:
 
 Before any planning or routing:
 
-1. **Read lane configuration**:
-   - If present, read `docs/pipelines/expo-lane-config.md` to learn:
-     - Expected stack assumptions (RN/Expo versions, TypeScript).
-     - Common project layouts (Expo Router vs custom).
-     - Default verification commands and gate thresholds.
+### 1.0 Check for Requirements Spec (OS 2.3)
 
-2. **Query ProjectContextServer** via `mcp__project-context__query_context`:
+**If `phase_state.requirements_spec_path` exists:**
+- **READ THE SPEC FIRST** - it is authoritative
+- Path: `requirements/<id>/06-requirements-spec.md`
+- The spec's constraints and acceptance criteria override your analysis
+- Note any ambiguous or out-of-scope items in planning output
+
+### 1.1 Read lane configuration
+
+- If present, read `docs/pipelines/expo-lane-config.md` to learn:
+  - Expected stack assumptions (RN/Expo versions, TypeScript).
+  - Common project layouts (Expo Router vs custom).
+  - Default verification commands and gate thresholds.
+
+### 1.2 Query ProjectContextServer via `mcp__project-context__query_context`:
    - `domain`: `"expo"`.
    - `task`: short description of the user’s request.
    - `projectPath`: current repo root.
@@ -209,7 +228,7 @@ Produce a plan that:
 Summarize this plan succinctly for `/orca` and downstream agents.
 
 When your plan is confirmed via `/orca`:
-- Update `.claude/project/phase_state.json`:
+- Update `.claude/orchestration/phase_state.json`:
   - Set `domain` to `"expo"` and `current_phase` to `"architecture_plan"`.
   - Under `phases.architecture_plan`, write:
     - `status: "completed"`.
@@ -629,3 +648,32 @@ AskUserQuestion({
 **Response:** Assign @performance-prophet to predict issues before implementation. Cheaper to catch early.
 
 **Example:** Scrollable list of 500 products → assign @performance-prophet to predict FPS and suggest optimizations upfront.
+
+---
+
+## 9. Response Awareness Tagging (OS 2.3)
+
+When planning, use RA tags from `docs/reference/response-awareness.md` to surface uncertainty and decisions:
+
+**When choosing architecture/data strategies:**
+- Mark each non-obvious choice with `#PATH_DECISION`
+- Add `#PATH_RATIONALE` explaining why this path over alternatives
+
+**When spec or context is ambiguous:**
+- Use `#COMPLETION_DRIVE` for assumptions you're making
+- Use `#CONTEXT_DEGRADED` if ContextBundle is clearly missing pieces
+
+**When you detect risky patterns:**
+- Use `#POISON_PATH` if you notice framing leading toward known-bad patterns
+- Use `#CARGO_CULT` if existing code follows patterns without clear reason
+
+**Example in planning output:**
+```markdown
+### Architecture Decisions
+- Navigation: Expo Router for auth flow #PATH_DECISION #PATH_RATIONALE: Consistent with existing app/(tabs) structure
+- State: React Query for server state #COMPLETION_DRIVE: Spec doesn't specify, inferring from existing patterns
+- Offline: #CONTEXT_DEGRADED Need to confirm offline requirements with user
+- Storage: SecureStore for tokens #PATH_DECISION #PATH_RATIONALE: Security requirement per OWASP M2
+```
+
+These tags flow to phase_state and help gates/audit identify unresolved assumptions.

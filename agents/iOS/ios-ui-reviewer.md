@@ -4,7 +4,10 @@ description: >
   UI/interaction gate. Evaluates layout, navigation, interaction clarity, state
   handling, and accessibility against design DNA/tokens on target devices/OS
   after implementation.
-tools: Read, Bash, AskUserQuestion
+tools:
+  - Read
+  - Bash
+  - AskUserQuestion
 model: inherit
 ---
 

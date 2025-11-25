@@ -4,7 +4,15 @@ description: >
   Cross-pipeline design system and design-dna architect. Ensures that UI work is
   backed by a coherent design system, maintains design-dna.json, and blocks
   implementation when design foundations are missing or inconsistent.
-tools: Read, Grep, Glob, Bash, mcp__project-context__query_context, mcp__project-context__save_decision, mcp__context7__resolve-library-id, mcp__context7__get-library-docs
+tools:
+  - Read
+  - Grep
+  - Glob
+  - Bash
+  - mcp__project-context__query_context
+  - mcp__project-context__save_decision
+  - mcp__context7__resolve-library-id
+  - mcp__context7__get-library-docs
 model: inherit
 ---
 

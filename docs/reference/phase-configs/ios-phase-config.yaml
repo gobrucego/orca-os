@@ -1,16 +1,72 @@
-# iOS Pipeline Phase Configuration - OS 2.2
+# iOS Pipeline Phase Configuration - OS 2.3
 # Native iOS Development Workflow
 
 pipeline:
   name: ios
   description: Native iOS development pipeline with Swift/SwiftUI/UIKit
-  version: 2.0
+  version: 2.3
 
-# Context Integration (MANDATORY)
+# Phase State Schema (OS 2.3)
+phase_state:
+  # Top-level fields
+  domain: ios
+  complexity_tier: simple | medium | complex
+  requirement_id: string | null           # Links to requirements/<id>
+  requirements_spec_path: string | null   # Path to 06-requirements-spec.md
+  current_phase: string
+  memory_summary: string | null           # Hits from memory-first search
+
+  # Phase entries (each has status, timestamps, data)
+  phases:
+    context_query: object
+    planning: object
+    analysis: object
+    implementation_pass1: object
+    standards_gate: object
+    ui_review_gate: object
+    implementation_pass2: object | null   # Only if gate failed
+    verification: object
+
+# Complexity Tiers (NEW in OS 2.3)
+complexity_tiers:
+  simple:
+    description: Single file, minor tweaks, quick fixes
+    routing: ios-light-orchestrator
+    spec_required: false
+    gates_required: false
+    examples:
+      - Fix button padding
+      - Change label text
+      - Add haptic feedback
+      - Update color to token
+
+  medium:
+    description: Single screen, modest logic, some tests
+    routing: full_pipeline
+    spec_required: recommended
+    gates_required: true
+    examples:
+      - Add new component
+      - Modify screen layout
+      - Add simple validation
+
+  complex:
+    description: Multi-screen, architecture, high-risk
+    routing: full_pipeline
+    spec_required: true    # BLOCKS without spec
+    gates_required: true
+    examples:
+      - Multi-screen flow
+      - Authentication system
+      - Data layer changes
+      - Offline sync
+
+# Context Integration (MANDATORY for medium/complex)
 context:
   provider: ProjectContextServer
   required: true
   query_on_start: true
+  memory_first: true      # Check Workshop/vibe.db before ProjectContext
 
 # Pipeline Phases
 phases:
@@ -78,6 +134,7 @@ phases:
       - files_modified
       - changes_manifest
       - tests_added
+      - ra_events          # OS 2.3: RA tags added during implementation
     constraints:
       scope: Edit-not-rewrite, minimal diffs
       quality: Swift 6 semantics, modern concurrency
@@ -98,6 +155,7 @@ phases:
       - standards_score
       - violations
       - gate_decision
+      - ra_audit           # OS 2.3: RA tag scan results
     quality_gates:
       standards_score:
         threshold: 90

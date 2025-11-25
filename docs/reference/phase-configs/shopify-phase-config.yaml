@@ -1,0 +1,179 @@
+# Shopify Pipeline Phase Configuration - OS 2.3
+# Shopify Theme Development Workflow
+
+pipeline:
+  name: shopify
+  description: Shopify theme development pipeline with design token enforcement and RA integration
+  version: 2.3
+
+# Context Integration (MANDATORY)
+context:
+  provider: ProjectContextServer
+  required: true
+  query_on_start: true
+  memory_first: true          # Check Workshop/vibe.db before ProjectContext
+  domain: shopify
+
+# Complexity Routing
+complexity:
+  simple:
+    route: shopify-light-orchestrator
+    skip_gates: true
+    skip_verification: true
+  medium:
+    route: shopify-grand-architect
+    spec_recommended: true
+  complex:
+    route: shopify-grand-architect
+    spec_required: true        # Must have requirements/<id>/06-requirements-spec.md
+
+# Pipeline Phases
+phases:
+  # Phase 1: Context Loading
+  - name: context_loading
+    agent: shopify-grand-architect
+    description: Load WARP.md, design DNA, identify affected files
+    context_required: true
+    outputs:
+      - warp_context
+      - design_dna_rules
+      - affected_files
+    constraints:
+      scope: Context gathering only, no code changes
+
+  # Phase 2: Task Analysis
+  - name: task_analysis
+    agent: shopify-grand-architect
+    description: Determine specialists needed, dependencies, confirm approach
+    dependencies:
+      - context_loading
+    context_required: true
+    outputs:
+      - required_specialists
+      - task_breakdown
+      - dependencies
+    constraints:
+      scope: Analysis and planning only
+
+  # Phase 3: Implementation
+  - name: implementation
+    agent: shopify-grand-architect
+    description: Delegate to specialists and coordinate work
+    dependencies:
+      - task_analysis
+    context_required: true
+    specialists:
+      css_work:
+        agent: shopify-css-specialist
+        trigger: css_changes OR token_work OR important_cleanup
+      liquid_work:
+        agent: shopify-liquid-specialist
+        trigger: liquid_templates OR global_theme_styles
+      section_work:
+        agent: shopify-section-builder
+        trigger: section_changes OR new_section
+      js_work:
+        agent: shopify-js-specialist
+        trigger: javascript_changes OR web_components
+    outputs:
+      - files_modified
+      - changes_manifest
+    constraints:
+      scope: Implementation via delegation only
+      quality: Design token compliance (warn)
+
+  # Phase 4: Verification
+  - name: verification
+    agent: shopify-theme-checker
+    description: Run Theme Check, verify design compliance
+    dependencies:
+      - implementation
+    context_required: false
+    outputs:
+      - theme_check_results
+      - design_token_warnings
+      - verification_status
+    quality_gates:
+      theme_check:
+        threshold: no_errors
+        type: hard_block
+        message: Theme Check must pass with no errors
+      design_tokens:
+        threshold: warn_only
+        type: soft_warning
+        message: Design token violations should be addressed
+
+  # Phase 5: Completion
+  - name: completion
+    agent: shopify-grand-architect
+    description: Summarize changes, record decisions
+    dependencies:
+      - verification
+    context_required: false
+    outputs:
+      - summary
+      - decisions_recorded
+      - learnings
+
+# Specialist Activation Matrix
+specialists:
+  shopify-css-specialist:
+    trigger: css_files OR token_system OR important_cleanup OR design_tokens
+    tools: Read, Edit, MultiEdit, Grep, Glob, Bash
+
+  shopify-liquid-specialist:
+    trigger: liquid_templates OR objects_filters OR control_flow
+    tools: Read, Edit, MultiEdit, Grep, Glob, Bash
+
+  shopify-section-builder:
+    trigger: section_creation OR schema_changes OR blocks_presets
+    tools: Read, Edit, MultiEdit, Grep, Glob, Bash
+
+  shopify-js-specialist:
+    trigger: web_components OR pubsub OR javascript_changes
+    tools: Read, Edit, MultiEdit, Grep, Glob, Bash
+
+  shopify-theme-checker:
+    trigger: verification_requested OR quality_check
+    tools: Read, Bash
+
+# Configuration
+config:
+  max_implementation_passes: 2
+  gate_failure_behavior: block_and_correct
+  evidence_path: .claude/orchestration/evidence/
+  phase_state_path: .claude/orchestration/phase_state.json
+
+# Design Constraints (from WARP.md pattern)
+design_rules:
+  spacing:
+    grid: 4px
+    allowed_values: [4, 8, 12, 16, 20, 24, 32, 40, 48, 64]
+    enforcement: warn
+
+  tokens:
+    colors: var(--color-*)
+    spacing: CSS custom properties
+    inline_styles: forbidden
+    enforcement: warn
+
+# File Detection
+detection:
+  keywords:
+    - Shopify
+    - Liquid
+    - theme
+    - section
+    - snippet
+    - cart
+    - product
+    - collection
+
+  files:
+    - layout/theme.liquid
+    - sections/*.liquid
+    - snippets/*.liquid
+    - templates/*.json
+    - config/settings_schema.json
+    - assets/*.css
+    - assets/*.js

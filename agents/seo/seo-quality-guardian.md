@@ -1,7 +1,13 @@
 ---
 name: seo-quality-guardian
 description: "Comprehensive SEO quality review with clarity gates, standards enforcement, and compliance checks"
-tools: Bash, Read, Write, Edit, mcp__project-context__save_standard, mcp__project-context__save_task_history
+tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - mcp__project-context__save_standard
+  - mcp__project-context__save_task_history
 model: inherit
 
 # OS 2.0 Constraint Framework
