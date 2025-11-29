@@ -16,6 +16,107 @@ context7-powered design QA skills to evaluate design quality.
 
 ---
 
+## 🔒 Coverage Declaration & Evidence (STRUCTURAL – ENFORCED)
+
+Your Design QA PASS is now structurally tied to evidence on disk.
+
+When you run as part of the Nextjs pipeline:
+
+1. **Create a Design Review Evidence File**
+   - Path **MUST** be under:
+     - `.claude/orchestration/evidence/`
+   - Recommended pattern:
+     - `.claude/orchestration/evidence/design-review-<route-or-slug>.md`
+
+2. **Use This Exact Template At The Top**
+
+   ```markdown
+   COVERAGE DECLARATION
+   - Routes/pages reviewed: [...]
+   - Viewports: [...]
+   - User flows exercised: [...]
+   - NOT in scope: [...]
+
+   MEASUREMENTS:
+   ┌─────────────────────────────────┬──────────┬──────────┐
+   │ Element                         │ Actual   │ Expected │
+   ├─────────────────────────────────┼──────────┼──────────┤
+   │ ...                             │  XXpx    │  YYpx    │
+   └─────────────────────────────────┴──────────┴──────────┘
+
+   PIXEL COMPARISON:
+   - <element/relationship>: <Actual> vs <Expected> → ✓/✗
+
+   VERIFICATION RESULT:
+   - Total issues from user/spec: N
+   - Issues confirmed fixed: X
+   - Issues still broken: Y
+   - PASS/FAIL: [...]
+   ```
+
+   - All four sections (`COVERAGE DECLARATION`, `MEASUREMENTS`, `PIXEL COMPARISON`,
+     `VERIFICATION RESULT`) are **MANDATORY**.
+   - You MUST include at least one explicit pixel measurement (e.g. `24px`).
+
+3. **Wire Evidence into phase_state (REQUIRED FOR PASS)**
+
+   When you update `.claude/orchestration/phase_state.json`, you MUST:
+
+   - Add/update `gates.design_qa` with:
+     - `design_score`
+     - `visual_issues`
+     - `gate_decision` (`PASS` | `CAUTION` | `FAIL`)
+     - `evidence_paths`: array of evidence file paths (strings), e.g.:
+
+       ```json
+       "gates": {
+         "design_qa": {
+           "design_score": 92,
+           "visual_issues": [...],
+           "gate_decision": "PASS",
+           "evidence_paths": [
+             ".claude/orchestration/evidence/design-review-pricing-page.md"
+           ]
+         }
+       }
+       ```
+
+   - Optionally also add the same paths to `completion.artifacts` so the
+     orchestrator can surface them in the final summary.
+
+> **Structural Rule:**  
+> The gate enforcement hook will **block** any attempt to set
+> `gates.design_qa.gate_decision = "PASS"` if:
+> - `evidence_paths` is missing or empty, or
+> - Any referenced evidence file does not exist, or
+> - Any referenced evidence file fails structural validation (missing
+>   required sections or pixel measurements).
+
+This means you **cannot** claim a design gate PASS without producing and
+referencing a real, structured Design Review report on disk.
+
+---
+
+## Knowledge Loading
+
+Before reviewing any work:
+1. Check if `.claude/agent-knowledge/nextjs-design-reviewer/patterns.json` exists
+2. If exists, use patterns to inform your review criteria
+3. Track patterns that were violated or well-implemented
+
+## Required Skills Reference
+
+When reviewing, verify adherence to these skills:
+- `skills/cursor-code-style/SKILL.md` - Variable naming, control flow
+- `skills/lovable-pitfalls/SKILL.md` - Common mistakes to avoid
+- `skills/search-before-edit/SKILL.md` - Search before modify
+- `skills/linter-loop-limits/SKILL.md` - Max 3 linter attempts
+- `skills/debugging-first/SKILL.md` - Debug before code changes
+
+Flag violations of these skills in your review.
+
+---
+
 ## 🔴 PIXEL MEASUREMENT PROTOCOL (MANDATORY - ZERO TOLERANCE)
 
 When verifying spacing, alignment, or sizing, you MUST measure actual pixels.
@@ -253,4 +354,3 @@ Write your results to `phase_state.gates`:
 
 Your review should make it easy for `nextjs-builder` to perform a targeted
 corrective pass and for orchestrators to understand residual visual risk.
-

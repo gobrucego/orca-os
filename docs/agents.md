@@ -1,6 +1,28 @@
 # Agent Roster – OS 2.4
 
-**Total: 82 agents** across 9 domains + cross-cutting specialists.
+**Total: 85 agents** across 9 domains + cross-cutting specialists.
+
+## Agent Enrichment (v2.4.1)
+
+All agents have been enriched with patterns extracted from competitor system prompts:
+
+**Universal Skills (all 85 agents reference these):**
+- `cursor-code-style` - Variable naming, control flow, comments
+- `lovable-pitfalls` - 7 common mistakes to avoid
+- `search-before-edit` - Mandatory grep before modifying files
+- `linter-loop-limits` - 3-strike rule for linter loops
+- `debugging-first` - Debug tools before code changes
+
+**Lane-Specific Patterns:**
+- Next.js: V0/Lovable design rules (color limits, component sizes, contrast ratios)
+- iOS: Swift-agents patterns (iOS version checks, @MainActor usage)
+- Expo: React Native best practices (FlatList, StyleSheet.create, platform conventions)
+- Research: Perplexity citation format (inline citations, 10K word reports)
+
+**Agent-Level Learning:**
+- Agents can discover and record patterns to `.claude/agent-knowledge/{agent}/patterns.json`
+- Patterns promoted when success rate ≥85% with 10+ occurrences
+- Builder agents have Knowledge Persistence footers for self-improvement
 
 ## iOS Lane (19 agents)
 
@@ -26,7 +48,7 @@
 | `ios-ui-reviewer` | UI/UX review |
 | `design-dna-guardian` | Design system compliance |
 
-## Next.js Lane (15 agents)
+## Next.js Lane (14 agents)
 
 | Agent | Role |
 |-------|------|
@@ -62,7 +84,7 @@
 | `refactor-surgeon` | Safe refactoring |
 | `test-generator` | Test generation |
 
-## Shopify Lane (7 agents)
+## Shopify Lane (8 agents)
 
 | Agent | Role |
 |-------|------|
@@ -72,7 +94,10 @@
 | `shopify-liquid-specialist` | Liquid templates |
 | `shopify-section-builder` | Sections and schemas |
 | `shopify-js-specialist` | JavaScript and Web Components |
+| `shopify-ui-reviewer` | Visual validation with Playwright MCP |
 | `shopify-theme-checker` | Theme Check verification |
+
+**Visual Validation:** The Shopify lane now includes Playwright MCP integration via `shopify-ui-reviewer` for responsive screenshot validation at breakpoints (375px, 768px, 1280px).
 
 ## OS-Dev Lane (5 agents) – LOCAL ONLY
 

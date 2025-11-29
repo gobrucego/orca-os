@@ -450,8 +450,22 @@ an additional **CSS Architecture Gate** runs as well.
 - Issues documented
 
 **Artifacts:**
-- Design QA report: `.claude/orchestration/evidence/design-qa-TIMESTAMP.md`
-- Update phase_state.json: design_qa_score, visual_issues
+- Design QA report: `.claude/orchestration/evidence/design-review-<slug>.md`
+  - MUST include coverage declaration, measurements (with explicit `px`
+    values), pixel comparison, and a verification result section.
+- Update phase_state.json:
+  - `design_score`
+  - `visual_issues`
+  - `gate_decision`
+  - `evidence_paths`: array of evidence file paths (e.g.
+    `.claude/orchestration/evidence/design-review-pricing-page.md`)
+
+> NOTE: The gate enforcement hook (`hooks/gate-enforcement.sh`) will block
+> any attempt to set `gate_decision: "PASS"` for the design_qa gate
+> unless:
+> - `evidence_paths` is present and non-empty, and
+> - Each referenced file exists and passes structural validation
+>   (required sections and pixel measurements).
 
 #### 5c. CSS Architecture (Refactor Mode Only)
 
@@ -600,7 +614,17 @@ an additional **CSS Architecture Gate** runs as well.
 **Artifacts:**
 - Build log: `.claude/orchestration/evidence/build-TIMESTAMP.log`
 - Test results: `.claude/orchestration/evidence/test-TIMESTAMP.log`
-- Update phase_state.json: build_status, test_status
+- Update phase_state.json:
+  - `verification_status` (`pass` | `fail` | `partial`)
+  - `commands_run`: array of strings with the exact shell commands
+    executed via the Bash tool (e.g. `"npm run lint"`, `"npm run build"`).
+
+> NOTE: A pre-tool hook records every Bash tool command into a command
+> log. When `verification_status` is set to `"pass"`, the hook checks
+> that each entry in `verification.commands_run` actually appears in
+> that log. If any claimed command was never executed, the write to
+> `phase_state.json` is blocked and the verification gate is considered
+> failed.
 
 ---
 

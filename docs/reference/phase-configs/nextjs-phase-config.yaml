@@ -273,6 +273,7 @@ phase_state:
         - violations
         - visual_issues
         - gate_decision
+        - evidence_paths    # array of evidence file paths (e.g. design review reports)
 
     implementation_pass2:
       description: "Optional corrective implementation pass"

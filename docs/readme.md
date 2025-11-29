@@ -36,6 +36,7 @@ A multi-lane pipeline architecture for Claude Code that routes tasks to domain-s
 | [Complexity Routing](concepts/complexity-routing.md) | Simple/medium/complex tiers, `-tweak`, `--audit`, spec gating |
 | [Memory Systems](concepts/memory-systems.md) | Workshop, vibe.db, ProjectContext, memory-first pattern |
 | [Response Awareness](concepts/response-awareness.md) | RA tags, assumption tracking, audit loop |
+| **Evidence-Based Gates** | Programmatic checks and artifacts required for PASS decisions |
 | [Self-Improvement](concepts/self-improvement.md) | Outcome recording, pattern analysis, agent learning loop |
 | [Skills](concepts/skills.md) | Reusable knowledge packages |
 
@@ -113,6 +114,17 @@ commands/                  # Command definitions (runtime)
 skills/                    # Skill definitions (runtime)
 ```
 
+## Agent Enrichment (v2.4.1)
+
+All 85 agents have been enriched with:
+
+- **Knowledge Loading** - Agents check `.claude/agent-knowledge/{agent}/patterns.json`
+- **Required Skills** - 5 universal skills (cursor-code-style, lovable-pitfalls, search-before-edit, linter-loop-limits, debugging-first)
+- **Lane-Specific Patterns** - V0/Lovable for Next.js, Swift-agents for iOS, RN best practices for Expo
+- **Visual Validation** - Shopify lane has Playwright MCP via `shopify-ui-reviewer`
+
+See [Self-Improvement](concepts/self-improvement.md) for the agent-level learning system.
+
 ## Version
 
-**OS 2.4.0** | 2025-11-27 | [Changelog](changelog.md)
+**OS 2.4.1** | 2025-11-28 | [Changelog](changelog.md)

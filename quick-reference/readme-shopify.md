@@ -74,13 +74,14 @@ Pipeline doc:
 
 ## 3. Agents and Skills
 
-### Heavy Lane Agents (Complex Mode)
+### Heavy Lane Agents (Complex Mode) – 8 Total
 
 - `agents/shopify/shopify-grand-architect.md` - Coordinates full pipeline
 - `agents/shopify/shopify-css-specialist.md`
 - `agents/shopify/shopify-liquid-specialist.md`
 - `agents/shopify/shopify-section-builder.md`
 - `agents/shopify/shopify-js-specialist.md`
+- `agents/shopify/shopify-ui-reviewer.md` - **NEW v2.4.1**: Visual validation with Playwright
 - `agents/shopify/shopify-theme-checker.md`
 
 ### Light Lane Agent
@@ -91,10 +92,29 @@ Pipeline doc:
   - **Default mode**: Runs gate (`shopify-theme-checker`)
   - **Tweak mode** (`-tweak`): Skips gates (user verifies)
 
+### Visual Validation (NEW in v2.4.1)
+
+The Shopify lane now includes Playwright MCP integration for visual validation:
+
+- **Agent:** `shopify-ui-reviewer`
+- **Breakpoints:** 375px (mobile), 768px (tablet), 1280px (desktop)
+- **Workflow:**
+  1. Builder completes changes
+  2. Grand architect invokes `shopify-ui-reviewer`
+  3. Reviewer takes screenshots and compares to spec
+  4. If FAIL: return to builder (max 2 corrective passes)
+  5. If PASS: continue to `shopify-theme-checker`
+
 Skills:
 
 - `skills/liquid-quick/SKILL.md`
 - `skills/shopify-theme/SKILL.md`
+
+### Agent Enrichment (v2.4.1)
+
+All Shopify agents now include:
+- **Knowledge Loading** - Check `.claude/agent-knowledge/{agent}/patterns.json`
+- **Required Skills** - 5 universal skills (cursor-code-style, lovable-pitfalls, search-before-edit, linter-loop-limits, debugging-first)
 
 ---
 

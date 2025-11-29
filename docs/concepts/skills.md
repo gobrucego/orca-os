@@ -65,6 +65,29 @@ When loaded, skill content appears in agent context alongside:
 
 ## Available Skills
 
+### Universal Skills (NEW in v2.4.1)
+
+These skills are referenced by ALL 85 agents via "Required Skills" sections:
+
+| Skill | Purpose | Key Rules |
+|-------|---------|-----------|
+| `cursor-code-style` | Code style enforcement | Variable naming, control flow, comments |
+| `lovable-pitfalls` | Common mistake prevention | 7 DON'T patterns from V0/Lovable |
+| `search-before-edit` | Mandatory search | Always grep before modifying files |
+| `linter-loop-limits` | Linter loop prevention | Max 3 attempts on linter errors |
+| `debugging-first` | Debug-first workflow | Use debug tools before code changes |
+
+**Format:** Universal skills use explicit DO/DON'T structure with examples:
+```markdown
+## DO
+- Use descriptive variable names
+- Follow existing patterns
+
+## DON'T
+- Use single-letter variables (except i, j in loops)
+- Mix naming conventions
+```
+
 ### Domain Knowledge Skills
 - `ios-knowledge-skill` - iOS/Swift patterns and conventions
 - `nextjs-knowledge-skill` - Next.js patterns and conventions
@@ -125,7 +148,25 @@ Why it's bad and what to do instead...
 
 Skills inform agents; agents do work.
 
+## Skill Wiring to Agents (v2.4.1)
+
+All 85 agents now have explicit skill references in their definitions:
+
+```markdown
+## Required Skills
+
+You MUST apply these skills to all work:
+- `skills/cursor-code-style/SKILL.md` — Variable naming, control flow, comments
+- `skills/lovable-pitfalls/SKILL.md` — Common mistakes to avoid
+- `skills/search-before-edit/SKILL.md` — Always grep before modifying files
+- `skills/linter-loop-limits/SKILL.md` — Max 3 attempts on linter errors
+- `skills/debugging-first/SKILL.md` — Debug tools before code changes
+```
+
+This ensures skills are consistently applied rather than only loaded on demand.
+
 ## See Also
 
 - [Pipeline Model](pipeline-model.md) - How skills fit into pipelines
 - [Memory Systems](memory-systems.md) - Other sources of agent context
+- [Self-Improvement](self-improvement.md) - Agent learning system

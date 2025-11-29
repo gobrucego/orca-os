@@ -182,17 +182,39 @@ Specialists:
 
 ## 5. Skills and Knowledge
 
-Relevant skills:
+### Domain Skills
 
 - `skills/ios-knowledge-skill/SKILL.md`
   - iOS architecture/data patterns, concurrency, testing.
+- `skills/ios-testing-skill/SKILL.md`
+  - Swift Testing framework patterns.
 - `skills/design-dna-skill/SKILL.md`
   - Design tokens and design DNA rules, including iOS surfaces.
 - `skills/design-qa-skill/SKILL.md`
   - General design QA standards.
 
-Architects and grand‑architects load and summarize these as needed rather
-than stuffing them into every prompt.
+### Universal Skills (NEW v2.4.1)
+
+All 19 iOS agents now reference these 5 universal skills:
+
+- `skills/cursor-code-style/SKILL.md` - Variable naming, control flow, comments
+- `skills/lovable-pitfalls/SKILL.md` - Common mistakes to avoid
+- `skills/search-before-edit/SKILL.md` - Always grep before modifying files
+- `skills/linter-loop-limits/SKILL.md` - Max 3 attempts on linter errors
+- `skills/debugging-first/SKILL.md` - Debug tools before code changes
+
+### Lane-Specific Patterns (NEW v2.4.1)
+
+iOS builder agents have inline swift-agents patterns:
+
+- **iOS Version:** Check deployment target before using new APIs
+- **Concurrency:** Use @MainActor for UI updates, prefer async/await
+- **Data:** SwiftData for new projects, Core Data/GRDB for legacy
+- **Accessibility:** VoiceOver, accessibilityLabel, accessibilityHint
+
+### Agent-Level Learning
+
+Agents can discover and persist patterns to `.claude/agent-knowledge/ios-builder/patterns.json`.
 
 ---
 

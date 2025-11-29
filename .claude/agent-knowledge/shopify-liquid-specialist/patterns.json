@@ -1,0 +1,54 @@
+{
+  "patterns": [
+    {
+      "id": "pattern-001",
+      "description": "Always use section.settings for configurable values, never hardcode",
+      "category": "liquid",
+      "successCount": 0,
+      "failureCount": 0,
+      "successRate": 0,
+      "status": "candidate",
+      "examples": [
+        "{{ section.settings.heading }}",
+        "{% if section.settings.show_button %}"
+      ]
+    },
+    {
+      "id": "pattern-002",
+      "description": "Use assign to preload data and avoid N+1 Liquid loops",
+      "category": "performance",
+      "successCount": 0,
+      "failureCount": 0,
+      "successRate": 0,
+      "status": "candidate",
+      "examples": [
+        "{% assign products = collections.featured.products %}",
+        "{% for product in products limit: 4 %}"
+      ]
+    },
+    {
+      "id": "pattern-003",
+      "description": "Use image_url filter with size parameters for responsive images",
+      "category": "performance",
+      "successCount": 0,
+      "failureCount": 0,
+      "successRate": 0,
+      "status": "candidate",
+      "examples": [
+        "{{ product.featured_image | image_url: width: 400 }}",
+        "srcset=\"{{ image | image_url: width: 400 }} 400w, {{ image | image_url: width: 800 }} 800w\""
+      ]
+    }
+  ],
+  "metadata": {
+    "agentName": "shopify-liquid-specialist",
+    "created": "2025-11-28",
+    "lastUpdated": "2025-11-28",
+    "totalPatterns": 3,
+    "promotedPatterns": 0,
+    "promotionThreshold": {
+      "successRate": 0.85,
+      "minOccurrences": 10
+    }
+  }
+}

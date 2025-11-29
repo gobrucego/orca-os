@@ -81,7 +81,7 @@ Specialists:
 #### Gates (Validate Quality)
 Verification agents that check work:
 - `ios-standards-enforcer`, `ios-verification`
-- `nextjs-standards-enforcer`, `nextjs-verification-agent`
+- `nextjs-standards-enforcer`, `nextjs-design-reviewer`, `nextjs-verification-agent`
 - `shopify-theme-checker`
 - etc.
 
@@ -90,6 +90,23 @@ Gates:
 - Score against standards
 - Report PASS/CAUTION/FAIL
 - Never fix issues (report only)
+
+In some lanes (starting with Next.js), gates are backed by **programmatic enforcement**:
+
+- Design QA gates require:
+  - A structured design review report saved under `.claude/orchestration/evidence/`
+  - Explicit coverage declaration and pixel measurements
+  - Evidence paths recorded in `phase_state.gates.design_qa.evidence_paths`
+  - A pre-tool hook (`hooks/gate-enforcement.sh`) that blocks any attempt
+    to set `gate_decision: "PASS"` without valid evidence.
+
+- Verification gates require:
+  - `verification.commands_run` in `phase_state` to list the exact commands
+    the agent claims to have executed (e.g. `npm run lint`, `npm run build`)
+  - A hook that checks each claimed command against a Bash command log and
+    blocks `verification_status: "pass"` if those commands were never actually run.
+
+This keeps "PASS" decisions grounded in **real artifacts and commands on disk**, not just model self-reporting.
 
 ## The Orchestrator-Specialist-Gate Pattern
 

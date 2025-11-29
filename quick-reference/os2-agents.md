@@ -1,17 +1,24 @@
 # OS 2.4 Agents Quick Reference
 
-**Last Updated:** 2025-11-27
-**Version:** OS 2.4 (v2.4)
+**Last Updated:** 2025-11-28
+**Version:** OS 2.4.1 (Agent Enrichment)
 
 ---
 
-## What's New in OS 2.4
+## What's New in OS 2.4.1
 
-**Agent Architecture Changes:**
+**Agent Enrichment (NEW):**
+- ✅ **85 Agents Enriched** - All agents have Knowledge Loading + Required Skills sections
+- ✅ **5 Universal Skills** - cursor-code-style, lovable-pitfalls, search-before-edit, linter-loop-limits, debugging-first
+- ✅ **Lane-Specific Patterns** - V0/Lovable for Next.js, Swift-agents for iOS, RN best practices for Expo
+- ✅ **Agent-Level Learning** - `.claude/agent-knowledge/{agent}/patterns.json` for pattern persistence
+- ✅ **Shopify Visual Validation** - New `shopify-ui-reviewer` with Playwright MCP
+
+**Agent Architecture (OS 2.4):**
 - ✅ **All Agents Use Opus 4.5** - Unified model across all agents
 - ✅ **Role Boundaries Enforced** - Clear separation between orchestrators and workers
 - ✅ **State Preservation** - Agents survive interruptions across sessions
-- ✅ **82 Specialized Agents** - Comprehensive coverage across 9 domains
+- ✅ **85 Specialized Agents** - Comprehensive coverage across 9 domains
 
 **Key Improvements:**
 - Orchestrators NEVER write code (only coordinate via Task tool)
@@ -286,14 +293,14 @@ These agents work across multiple pipelines:
 
 ---
 
-## Agent Total Count (v2.4)
+## Agent Total Count (v2.4.1)
 
 | Domain | Total |
 |--------|-------|
 | iOS | 19 |
-| Next.js | 15 |
+| Next.js | 14 |
 | Expo | 11 |
-| Shopify | 7 |
+| Shopify | 8 |
 | OS-Dev | 5 |
 | Data | 4 |
 | Design | 2 |
@@ -301,9 +308,19 @@ These agents work across multiple pipelines:
 | Research | 8 |
 | OBDN | 4 |
 | Cross-Cutting | 6 |
-| **TOTAL** | **82** |
+| **TOTAL** | **85** |
 
 **Note:** All agents use Opus 4.5. Cross-cutting agents counted separately but used within pipelines.
+
+### Enrichment Summary (v2.4.1)
+
+| Category | Count |
+|----------|-------|
+| Agents with Knowledge Loading | 85/85 |
+| Agents with Required Skills | 85/85 |
+| Builder agents with Knowledge Persistence | 15 |
+| Agent-knowledge patterns.json files | 5 |
+| Universal skills | 5 |
 
 ---
 
@@ -487,4 +504,4 @@ Phase 6: Evidence Capture & Memory Update
 
 ---
 
-_This reference covers OS 2.4 agents. All 82 agents use Opus 4.5. Legacy v1/v2 agents archived._
+_This reference covers OS 2.4.1 agents. All 85 agents use Opus 4.5 with enriched Knowledge Loading and Required Skills sections. Legacy v1/v2 agents archived._

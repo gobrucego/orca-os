@@ -194,7 +194,7 @@ Specialists:
 
 ## 5. Skills and Knowledge
 
-Relevant skills:
+### Domain Skills
 
 - `skills/nextjs-knowledge-skill/SKILL.md`
   - Next.js concepts, App Router patterns, RSC/client boundaries, data fetching.
@@ -203,9 +203,30 @@ Relevant skills:
 - `skills/design-qa-skill/SKILL.md`
   - Design QA heuristics and checks.
 
-These are not automatically loaded into every agent prompt, but
-architects and grand‑architects may use them via Context7 to pull in
-lane‑specific knowledge on demand.
+### Universal Skills (NEW v2.4.1)
+
+All 14 Next.js agents now reference these 5 universal skills:
+
+- `skills/cursor-code-style/SKILL.md` - Variable naming, control flow, comments
+- `skills/lovable-pitfalls/SKILL.md` - Common mistakes to avoid
+- `skills/search-before-edit/SKILL.md` - Always grep before modifying files
+- `skills/linter-loop-limits/SKILL.md` - Max 3 attempts on linter errors
+- `skills/debugging-first/SKILL.md` - Debug tools before code changes
+
+### Lane-Specific Patterns (NEW v2.4.1)
+
+Next.js builder agents have inline V0/Lovable design rules:
+
+- **Color:** Maximum 3-5 colors total (COUNT EXPLICITLY)
+- **Typography:** Maximum 2 font families
+- **Contrast:** WCAG 4.5:1 for normal text, 3:1 for large text
+- **Component Size:** <50 lines per component
+- **Spacing:** Use proper scale (4, 8, 12, 16, 24, 32, 48, 64)
+- **Touch targets:** Minimum 44x44px on mobile
+
+### Agent-Level Learning
+
+Agents can discover and persist patterns to `.claude/agent-knowledge/nextjs-builder/patterns.json`.
 
 ---
 

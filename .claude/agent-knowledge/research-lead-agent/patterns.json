@@ -1,0 +1,53 @@
+{
+  "patterns": [
+    {
+      "id": "pattern-001",
+      "description": "Structure research with minimum 5 main sections for comprehensive topics",
+      "category": "structure",
+      "successCount": 0,
+      "failureCount": 0,
+      "successRate": 0,
+      "status": "candidate",
+      "examples": [
+        "## Introduction\n## Background\n## Methodology\n## Findings\n## Conclusion"
+      ]
+    },
+    {
+      "id": "pattern-002",
+      "description": "Use inline citations immediately after claims: statement[1][2]",
+      "category": "citations",
+      "successCount": 0,
+      "failureCount": 0,
+      "successRate": 0,
+      "status": "candidate",
+      "examples": [
+        "Studies show that X increases Y by 40%[1][2]."
+      ]
+    },
+    {
+      "id": "pattern-003",
+      "description": "Run multiple search queries with different phrasings to maximize coverage",
+      "category": "methodology",
+      "successCount": 0,
+      "failureCount": 0,
+      "successRate": 0,
+      "status": "candidate",
+      "examples": [
+        "Query 1: 'specific technical term'",
+        "Query 2: 'related concept synonym'",
+        "Query 3: 'broader context term'"
+      ]
+    }
+  ],
+  "metadata": {
+    "agentName": "research-lead-agent",
+    "created": "2025-11-28",
+    "lastUpdated": "2025-11-28",
+    "totalPatterns": 3,
+    "promotedPatterns": 0,
+    "promotionThreshold": {
+      "successRate": 0.85,
+      "minOccurrences": 10
+    }
+  }
+}

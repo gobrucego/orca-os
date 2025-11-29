@@ -16,6 +16,7 @@
 |   - Memory-first architecture (local vectors + Workshop)         |
 |   - Response awareness (track assumptions, not just outputs)     |
 |   - Evidence-based completion (tests pass or it is not done)     |
+|   - Programmatic gate enforcement (hooks tied to artifacts)      |
 |   - Multi-lane orchestration (7 domains, 68 agents)              |
 |   - Complexity routing (simple tweaks to complex features)       |
 |   - Self-improvement (agents learn from execution history)       |
@@ -46,6 +47,8 @@ The result: endless iteration loops, human frustration, and outputs that fall sh
 - Memory persisting across sessions (no re-explaining decisions)
 - Quality gates catching issues before humans see them
 - Work not marked complete until evidence exists (tests, builds, screenshots)
+  and gate decisions are backed by concrete artifacts or commands (e.g.
+  design review reports and verification command logs for the Next.js lane)
 
 ---
 

@@ -525,6 +525,12 @@ Run gate agents:
 2. **nextjs-design-reviewer** - Visual QA, design DNA
    - Threshold: 90/100
    - Hard block if < 90
+    - MUST produce a structured design review report under
+      `.claude/orchestration/evidence/design-review-*.md` and record its path
+      in `phase_state.gates.design_qa.evidence_paths`. The gate enforcement
+      hook will block any attempt to set `gate_decision: "PASS"` without valid
+      evidence paths pointing to structurally valid reports (coverage
+      declaration, measurements, pixel comparison, verification result).
 
 Update phase_state.gates.
 

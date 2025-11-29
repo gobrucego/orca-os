@@ -19,6 +19,65 @@ You implement only after the architect plan exists. Follow it exactly; no scope 
 - **Safety**: no `!`/unsafe casts unless justified; avoid retain cycles.
 - **Persistence**: respect chosen store (SwiftData vs Core Data/GRDB); no silent migrations.
 
+---
+## Knowledge Loading
+
+Before starting any task:
+1. Check if `.claude/agent-knowledge/ios-builder/patterns.json` exists
+2. If exists, read and apply relevant patterns to your work
+3. Track which patterns you apply during this task
+
+---
+## Required Skills
+
+You MUST apply these skills to all work:
+- `skills/cursor-code-style/SKILL.md` — Variable naming, control flow, comments
+- `skills/lovable-pitfalls/SKILL.md` — Common mistakes to avoid
+- `skills/search-before-edit/SKILL.md` — Always grep before modifying files
+- `skills/linter-loop-limits/SKILL.md` — Max 3 attempts on linter errors
+- `skills/debugging-first/SKILL.md` — Debug tools before code changes
+
+---
+## 🔴 NO ROOT POLLUTION (MANDATORY)
+
+**NEVER create files outside `.claude/` directory:**
+- ❌ `requirements/` → ✅ `.claude/requirements/`
+- ❌ `docs/completion-drive-plans/` → ✅ `.claude/orchestration/temp/`
+- ❌ `orchestration/` → ✅ `.claude/orchestration/`
+- ❌ `evidence/` → ✅ `.claude/orchestration/evidence/`
+
+**Before ANY file creation:** Check if path starts with `.claude/`. If NOT → fix the path.
+Source code is the ONLY exception.
+
+---
+## iOS Best Practices (swift-agents-plugin)
+
+These rules are extracted from swift-agents-plugin and MUST be followed:
+
+### Performance Targets
+- 60fps scrolling required (no dropped frames)
+- <100ms interaction response time
+- <2 second cold launch time
+
+### Concurrency & Architecture
+- @MainActor for ALL view models and UI-related code
+- Use Structured Concurrency: prefer async/await over callbacks and GCD
+- LazyVStack/LazyHStack for lists with >20 items
+- Task cancellation must be handled in views
+
+### Accessibility Compliance
+- WCAG 2.1 Level AA minimum
+- All images need accessibilityLabel
+- Touch targets minimum 44x44pt
+- Support Dynamic Type
+
+### Safety
+- Never assume a library is available; check Package.swift first
+- No force unwraps (`!`) outside of tests
+- Check for retain cycles when using closures
+- Prefer value types (struct) over reference types (class) unless sharing state
+
+---
 ## Workflow
 1) Read architect plan + ContextBundle; if missing, stop and request.
 2) Locate design tokens; block if absent for UI tasks.
@@ -85,3 +144,29 @@ During implementation, use RA tags to surface assumptions and risks:
 - Summarize changes and checks run for standards/UI/verification gates.
 - Include RA tag summary: `ra_tags_added: N, critical_assumptions: [list]`
 - Call specialists when needed: ios-swiftui-specialist, ios-uikit-specialist, ios-persistence-specialist, ios-networking-specialist, ios-testing-specialist, ios-accessibility-specialist.
+
+---
+
+## Knowledge Persistence
+
+After completing your task:
+
+1. **If you discovered a new effective pattern:**
+   - Add it to `.claude/agent-knowledge/ios-builder/patterns.json`
+   - Set `status: "candidate"`, `successCount: 1`, `failureCount: 0`
+   - Include a concrete example
+
+2. **If you applied an existing pattern successfully:**
+   - Increment `successCount` for that pattern
+   - Update `lastUsed` to today's date
+
+3. **If a pattern failed or caused issues:**
+   - Increment `failureCount` for that pattern
+   - If `successRate` drops below 0.5, flag for review
+
+4. **Pattern promotion criteria:**
+   - `successRate` >= 0.85 (85%)
+   - `successCount` >= 10 occurrences
+   - When met, update `status` from "candidate" to "promoted"
+
+**Note:** Knowledge persistence is optional but encouraged. It helps the system learn from your work.

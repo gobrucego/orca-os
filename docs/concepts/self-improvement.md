@@ -2,6 +2,98 @@
 
 OS 2.4.0 introduces an agent self-improvement loop that enables agents to learn from execution history and improve their prompts over time.
 
+---
+
+## Agent-Level Learning (NEW in v2.4.1)
+
+In addition to the centralized self-improvement loop, agents can now learn patterns locally via file-based knowledge persistence.
+
+### Architecture
+
+```
+.claude/agent-knowledge/
+├── README.md                    # System documentation
+├── nextjs-builder/
+│   └── patterns.json           # Patterns for Next.js builder
+├── ios-builder/
+│   └── patterns.json           # Patterns for iOS builder
+├── expo-builder-agent/
+│   └── patterns.json           # Patterns for Expo builder
+├── research-lead-agent/
+│   └── patterns.json           # Patterns for research
+└── shopify-liquid-specialist/
+    └── patterns.json           # Patterns for Shopify
+```
+
+### Pattern Schema
+
+```json
+{
+  "patterns": [
+    {
+      "id": "pattern-001",
+      "description": "Human-readable description of the pattern",
+      "category": "css|architecture|performance|security|...",
+      "successCount": 0,
+      "failureCount": 0,
+      "successRate": 0,
+      "status": "candidate|promoted|deprecated",
+      "lastUsed": "2025-11-28",
+      "examples": ["code example 1", "code example 2"]
+    }
+  ],
+  "metadata": {
+    "agentName": "agent-name",
+    "promotionThreshold": {
+      "successRate": 0.85,
+      "minOccurrences": 10
+    }
+  }
+}
+```
+
+### Pattern Lifecycle
+
+1. **Discovery**: Agent finds effective pattern during task
+2. **Candidate**: Pattern added with `status: "candidate"`
+3. **Tracking**: Success/failure counts updated each use
+4. **Promotion**: When `successRate >= 0.85` AND `successCount >= 10`, status becomes `"promoted"`
+5. **Deprecation**: If success rate drops below 0.5, flag for review
+
+### Agent Integration
+
+All 85 agents have Knowledge Loading sections:
+
+```markdown
+## Knowledge Loading
+
+Before starting any task:
+1. Check if `.claude/agent-knowledge/{agent-name}/patterns.json` exists
+2. If exists, read and apply relevant patterns to your work
+3. Track which patterns you apply during this task
+```
+
+Builder agents (15 total) also have Knowledge Persistence footers:
+
+```markdown
+## Knowledge Persistence
+
+After completing your task:
+1. If you discovered a new effective pattern: add it
+2. If you applied an existing pattern successfully: increment successCount
+3. If a pattern failed: increment failureCount
+```
+
+### User Feedback Signal
+
+Pattern success/failure is primarily tracked through:
+- User accepting changes without modification
+- User requesting corrections (indicates pattern failure)
+- Build/test success after applying pattern
+- Gate scores improving after applying pattern
+
+---
+
 ## The Problem
 
 Before self-improvement:

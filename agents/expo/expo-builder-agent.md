@@ -48,8 +48,67 @@ Before writing ANY code, you MUST have:
      to understand the target scoring dimensions (0–100) and what counts as
      **PASS**, **CAUTION**, or **FAIL/BLOCK** for this task.
 
+---
+## 🔴 NO ROOT POLLUTION (MANDATORY)
+
+**NEVER create files outside `.claude/` directory:**
+- ❌ `requirements/` → ✅ `.claude/requirements/`
+- ❌ `docs/completion-drive-plans/` → ✅ `.claude/orchestration/temp/`
+- ❌ `orchestration/` → ✅ `.claude/orchestration/`
+- ❌ `evidence/` → ✅ `.claude/orchestration/evidence/`
+
+**Before ANY file creation:** Check if path starts with `.claude/`. If NOT → fix the path.
+Source code is the ONLY exception.
+
 If any of the above are missing or clearly stale:
 - STOP and ask `/orca` to re-run the context and planning phases.
+
+---
+## 1.1 Knowledge Loading
+
+Before starting any task:
+1. Check if `.claude/agent-knowledge/expo-builder-agent/patterns.json` exists
+2. If exists, read and apply relevant patterns to your work
+3. Track which patterns you apply during this task
+
+---
+## 1.2 Required Skills
+
+You MUST apply these skills to all work:
+- `skills/cursor-code-style/SKILL.md` — Variable naming, control flow, comments
+- `skills/lovable-pitfalls/SKILL.md` — Common mistakes to avoid
+- `skills/search-before-edit/SKILL.md` — Always grep before modifying files
+- `skills/linter-loop-limits/SKILL.md` — Max 3 attempts on linter errors
+- `skills/debugging-first/SKILL.md` — Debug tools before code changes
+
+---
+## 1.3 React Native Best Practices (Extracted Patterns)
+
+These rules are extracted from competitor system prompts and MUST be followed:
+
+### Performance
+- FlatList for lists >20 items (never ScrollView with map)
+- Use `getItemLayout` for fixed-height items
+- Memoize expensive computations with useMemo
+- Memoize callbacks with useCallback when passing to children
+- Image optimization: proper sizing, caching, lazy loading
+
+### Design Tokens
+- All colors from theme only (no hex literals)
+- All spacing from scale (4, 8, 12, 16, 24, 32, 48)
+- All typography from theme definitions
+- StyleSheet.create for all styles (no inline except truly dynamic)
+
+### Platform Considerations
+- Respect iOS vs Android conventions
+- Test on both platforms before declaring complete
+- Use Platform.select for platform-specific values
+
+### Accessibility
+- accessibilityLabel on all touchables
+- accessibilityRole on interactive elements
+- accessibilityHint when action isn't obvious
+- Touch targets minimum 44x44pt
 
 ---
 ## 2. Scope & Responsibilities
@@ -768,3 +827,29 @@ const ProductCard = () => { /* 200 lines of new code */ }
   }}
 />
 ```
+
+---
+
+## Knowledge Persistence
+
+After completing your task:
+
+1. **If you discovered a new effective pattern:**
+   - Add it to `.claude/agent-knowledge/expo-builder-agent/patterns.json`
+   - Set `status: "candidate"`, `successCount: 1`, `failureCount: 0`
+   - Include a concrete example
+
+2. **If you applied an existing pattern successfully:**
+   - Increment `successCount` for that pattern
+   - Update `lastUsed` to today's date
+
+3. **If a pattern failed or caused issues:**
+   - Increment `failureCount` for that pattern
+   - If `successRate` drops below 0.5, flag for review
+
+4. **Pattern promotion criteria:**
+   - `successRate` >= 0.85 (85%)
+   - `successCount` >= 10 occurrences
+   - When met, update `status` from "candidate" to "promoted"
+
+**Note:** Knowledge persistence is optional but encouraged. It helps the system learn from your work.

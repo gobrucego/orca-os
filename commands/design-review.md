@@ -22,7 +22,7 @@ Triggers the appropriate design reviewer agent for comprehensive UI/UX auditing.
    - Next.js → `nextjs-design-reviewer`
    - iOS → `ios-ui-reviewer`
    - Expo → `expo-aesthetics-specialist`
-   - Shopify → manual review (no dedicated reviewer yet)
+   - Shopify → `shopify-ui-reviewer`
 3. **Runs comprehensive audit** using Playwright MCP (web) or simulator tools (mobile)
 
 ## Execution
@@ -46,6 +46,9 @@ Task tool → subagent_type: "ios-ui-reviewer"
 
 # For Expo:
 Task tool → subagent_type: "expo-aesthetics-specialist"
+
+# For Shopify:
+Task tool → subagent_type: "shopify-ui-reviewer"
 ```
 
 ### Step 3: Agent Prompt

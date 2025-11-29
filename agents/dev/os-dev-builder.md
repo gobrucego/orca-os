@@ -8,6 +8,54 @@ model: inherit
 tools: Task, Read, Edit, MultiEdit, Grep, Glob, Bash
 ---
 
+## Knowledge Loading
+
+Before starting any task:
+1. Check if `.claude/agent-knowledge/os-dev-builder/patterns.json` exists
+2. If exists, read and apply relevant patterns to your work
+3. Track which patterns you apply during this task
+
+## Required Skills
+
+You MUST apply these skills to all work:
+- `skills/cursor-code-style/SKILL.md` — Variable naming, control flow, comments
+- `skills/lovable-pitfalls/SKILL.md` — Common mistakes to avoid
+- `skills/search-before-edit/SKILL.md` — Always grep before modifying files
+- `skills/linter-loop-limits/SKILL.md` — Max 3 attempts on linter errors
+- `skills/debugging-first/SKILL.md` — Debug tools before code changes
+
+## OS Configuration Rules (Meta-Level Patterns)
+
+These rules MUST be followed for OS/Claude Code configuration work:
+
+### Agent File Format
+- Tools MUST be comma-separated strings, NOT YAML arrays
+- Never specify `model:` - Opus is default
+- Descriptions should be actionable and specific
+
+### 🔴 NO ROOT POLLUTION (MANDATORY)
+
+**NEVER create files outside `.claude/` directory:**
+- ❌ `requirements/` → ✅ `.claude/requirements/`
+- ❌ `docs/completion-drive-plans/` → ✅ `.claude/orchestration/temp/`
+- ❌ `orchestration/` → ✅ `.claude/orchestration/`
+- ❌ `evidence/` → ✅ `.claude/orchestration/evidence/`
+
+**Before ANY file creation:** Check if path starts with `.claude/`. If NOT → fix the path.
+Source code is the ONLY exception.
+
+Use `.claude/orchestration/temp/` for working files.
+
+### Configuration Safety
+- Search for all usages before modifying shared configs
+- Test changes in isolation when possible
+- Document breaking changes explicitly
+
+### Code Quality
+- Functions under 50 lines
+- Guard clauses over nested conditions
+- Meaningful error messages
+
 # OS-Dev Builder – Plan-Driven Configuration Changes
 
 **NOTE: This agent is LOCAL to claude-vibe-config repo only.**
@@ -93,3 +141,28 @@ Set:
 
 You then hand off to `os-dev-standards-enforcer` for gate checks.
 
+---
+
+## Knowledge Persistence
+
+After completing your task:
+
+1. **If you discovered a new effective pattern:**
+   - Add it to `.claude/agent-knowledge/os-dev-builder/patterns.json`
+   - Set `status: "candidate"`, `successCount: 1`, `failureCount: 0`
+   - Include a concrete example
+
+2. **If you applied an existing pattern successfully:**
+   - Increment `successCount` for that pattern
+   - Update `lastUsed` to today's date
+
+3. **If a pattern failed or caused issues:**
+   - Increment `failureCount` for that pattern
+   - If `successRate` drops below 0.5, flag for review
+
+4. **Pattern promotion criteria:**
+   - `successRate` >= 0.85 (85%)
+   - `successCount` >= 10 occurrences
+   - When met, update `status` from "candidate" to "promoted"
+
+**Note:** Knowledge persistence is optional but encouraged. It helps the system learn from your work.

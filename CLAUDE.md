@@ -159,9 +159,16 @@ Research artifacts that persist across sessions:
 **Note:** Unlike `.claude/orchestration/temp/`, research artifacts may be reused
 across sessions for related queries.
 
-## OS 2.4.0 QUICK REFERENCE
+## OS 2.4.1 QUICK REFERENCE
 
-**82 agents** (all Opus 4.5) across 9 domains: Next.js (14), iOS (19), Expo (11), Shopify (7), Data (4), SEO (4), Research (8), OBDN (4), Design (2), OS-Dev (5), Cross-cutting (6).
+**85 agents** (all Opus 4.5) across 9 domains: Next.js (14), iOS (19), Expo (11), Shopify (8), Data (4), SEO (4), Research (8), OBDN (4), Design (2), OS-Dev (5), Cross-cutting (6).
+
+**Agent Enrichment (v2.4.1):**
+- All agents have Knowledge Loading + Required Skills sections
+- 5 universal skills: cursor-code-style, lovable-pitfalls, search-before-edit, linter-loop-limits, debugging-first
+- Lane-specific patterns: V0/Lovable for Next.js, Swift-agents for iOS, RN best practices for Expo
+- Agent-level learning via `.claude/agent-knowledge/{agent}/patterns.json`
+- Shopify visual validation via `shopify-ui-reviewer` with Playwright MCP
 
 **Unified workflow:** `/plan` → `/orca-{domain}` → `/audit`
 
@@ -175,8 +182,8 @@ across sessions for related queries.
 
 ---
 
-_Version: OS 2.4.0_
-_Last updated: 2025-11-27_
+_Version: OS 2.4.1_
+_Last updated: 2025-11-28_
 
 ## Learned Rules (via /reflect)
 <!-- Auto-managed by /reflect - manual edits may be overwritten -->

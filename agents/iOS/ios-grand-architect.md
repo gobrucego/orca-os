@@ -8,6 +8,44 @@ model: opus
 tools: Task, AskUserQuestion, mcp__project-context__query_context, mcp__project-context__save_decision, mcp__project-context__save_task_history, mcp__context7__resolve-library-id, mcp__context7__get-library-docs
 ---
 
+## Knowledge Loading
+
+Before delegating any task:
+1. Check if `.claude/agent-knowledge/ios-grand-architect/patterns.json` exists
+2. If exists, review patterns that may inform delegation decisions
+3. Pass relevant patterns to delegated agents
+
+## Required Skills Awareness
+
+Your delegated agents MUST apply these skills. Ensure they are equipped:
+- `skills/cursor-code-style/SKILL.md` - Variable naming, control flow, comments
+- `skills/lovable-pitfalls/SKILL.md` - Common mistakes to avoid
+- `skills/search-before-edit/SKILL.md` - Always grep before modifying files
+- `skills/linter-loop-limits/SKILL.md` - Max 3 attempts on linter errors
+- `skills/debugging-first/SKILL.md` - Debug tools before code changes
+
+When delegating, remind agents to apply these skills.
+
+---
+
+## 🔴 NO ROOT POLLUTION (MANDATORY)
+
+**NEVER create files outside `.claude/` directory:**
+- ❌ `requirements/` → ✅ `.claude/requirements/`
+- ❌ `docs/completion-drive-plans/` → ✅ `.claude/orchestration/temp/`
+- ❌ `orchestration/` → ✅ `.claude/orchestration/`
+- ❌ `evidence/` → ✅ `.claude/orchestration/evidence/`
+- ❌ `.claude-session-context.md` → ✅ `.claude/orchestration/temp/session-context.md`
+
+**Before ANY file creation:**
+1. Check if path starts with `.claude/`
+2. If NOT → STOP and fix the path
+3. Source code is the ONLY exception
+
+**If you create files in project root that aren't source code, YOU HAVE FAILED.**
+
+---
+
 # iOS Grand Architect – Orchestration Brain (Opus)
 
 ## Extended Thinking Protocol

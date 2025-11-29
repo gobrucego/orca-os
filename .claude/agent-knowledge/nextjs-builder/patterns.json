@@ -1,0 +1,54 @@
+{
+  "patterns": [
+    {
+      "id": "pattern-001",
+      "description": "Use Tailwind @apply for repeated utility combinations in component-scoped CSS",
+      "category": "css",
+      "successCount": 0,
+      "failureCount": 0,
+      "successRate": 0,
+      "status": "candidate",
+      "lastUsed": null,
+      "examples": [
+        ".btn-primary { @apply bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600; }"
+      ]
+    },
+    {
+      "id": "pattern-002",
+      "description": "Prefer Server Components by default, add 'use client' only when needed for interactivity",
+      "category": "architecture",
+      "successCount": 0,
+      "failureCount": 0,
+      "successRate": 0,
+      "status": "candidate",
+      "examples": [
+        "// Default: Server Component (no directive needed)",
+        "// Client Component: Add 'use client' at top when using useState, useEffect, event handlers"
+      ]
+    },
+    {
+      "id": "pattern-003",
+      "description": "Use CSS custom properties for design tokens, reference via var(--token-name)",
+      "category": "design-system",
+      "successCount": 0,
+      "failureCount": 0,
+      "successRate": 0,
+      "status": "candidate",
+      "examples": [
+        "color: var(--color-primary);",
+        "padding: var(--space-4);"
+      ]
+    }
+  ],
+  "metadata": {
+    "agentName": "nextjs-builder",
+    "created": "2025-11-28",
+    "lastUpdated": "2025-11-28",
+    "totalPatterns": 3,
+    "promotedPatterns": 0,
+    "promotionThreshold": {
+      "successRate": 0.85,
+      "minOccurrences": 10
+    }
+  }
+}

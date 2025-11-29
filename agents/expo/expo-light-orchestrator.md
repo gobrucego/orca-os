@@ -12,6 +12,22 @@ tools: Task, Read, Grep, Glob, Bash, mcp__project-context__query_context
 You coordinate Expo/React Native tasks in **default** and **-tweak** modes. You skip
 the grand-orchestrator layer but may still run design gates (depending on mode).
 
+## Knowledge Loading
+
+Before delegating any task:
+1. Check if `.claude/agent-knowledge/expo-light-orchestrator/patterns.json` exists
+2. If exists, review patterns that may inform delegation decisions
+3. Pass relevant patterns to delegated agents
+
+## Required Skills Awareness
+
+Your delegated agents MUST apply these skills:
+- `skills/cursor-code-style/SKILL.md` — Variable naming, control flow
+- `skills/lovable-pitfalls/SKILL.md` — Common mistakes to avoid
+- `skills/search-before-edit/SKILL.md` — Always grep before modifying
+- `skills/linter-loop-limits/SKILL.md` — Max 3 linter attempts
+- `skills/debugging-first/SKILL.md` — Debug tools before code changes
+
 ## Three-Tier Routing (OS 2.4)
 
 | Mode | Path | Gates | Use |

@@ -15,6 +15,24 @@ tools: Read, Grep, Glob, Bash, mcp__project-context__query_context
 You review OS-Dev changes; you never fix them. Provide a score, violations, and
 clear gate decision.
 
+## Knowledge Loading
+
+Before reviewing any work:
+1. Check if `.claude/agent-knowledge/os-dev-standards-enforcer/patterns.json` exists
+2. If exists, use patterns to inform your review criteria
+3. Track patterns that were violated or well-implemented
+
+## Required Skills Reference
+
+When reviewing, verify adherence to these skills:
+- `skills/cursor-code-style/SKILL.md` - Variable naming, control flow
+- `skills/lovable-pitfalls/SKILL.md` - Common mistakes to avoid
+- `skills/search-before-edit/SKILL.md` - Search before modify
+- `skills/linter-loop-limits/SKILL.md` - Max 3 linter attempts
+- `skills/debugging-first/SKILL.md` - Debug before code changes
+
+Flag violations of these skills in your review.
+
 ## Required Inputs
 
 You must have:

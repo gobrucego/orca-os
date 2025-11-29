@@ -1,5 +1,61 @@
 # Changelog
 
+## v2.4.1 (2025-11-28) – Agent Enrichment
+
+### Universal Skills
+
+**5 New Skills Extracted from Competitor System Prompts:**
+- `cursor-code-style` - Variable naming, control flow, comments (from Cursor)
+- `lovable-pitfalls` - 7 common mistakes to avoid (from Lovable)
+- `search-before-edit` - Mandatory grep before file modification
+- `linter-loop-limits` - 3-strike rule for linter loops (from Cursor)
+- `debugging-first` - Debug tools before code changes (from Replit)
+
+All skills use explicit DO/DON'T format with concrete examples.
+
+### Agent Enrichment
+
+**All 85 agents enriched with:**
+- Knowledge Loading section - check `.claude/agent-knowledge/{agent}/patterns.json`
+- Required Skills References - wire to 5 universal skills
+- Lane-specific patterns (inline):
+  - Next.js: V0/Lovable design rules (max 5 colors, max 2 fonts, WCAG contrast, <50 line components)
+  - iOS: Swift-agents patterns (iOS version checks, @MainActor, SwiftData)
+  - Expo: React Native best practices (FlatList, StyleSheet.create, platform conventions)
+  - Research: Perplexity citation format (inline citations, 10K word reports)
+  - Shopify: Liquid/CSS patterns
+
+### Agent-Level Learning System
+
+**New file-based learning infrastructure:**
+- `.claude/agent-knowledge/` directory with README and schema
+- 5 sample `patterns.json` files for priority agents
+- Pattern lifecycle: candidate → promoted (85% success, 10+ occurrences)
+- 15 builder agents have Knowledge Persistence footers
+
+### Shopify Visual Validation
+
+**New `shopify-ui-reviewer` agent:**
+- Playwright MCP integration for screenshot capture
+- Responsive validation at breakpoints: 375px, 768px, 1280px
+- Pixel measurement protocol (mandatory actual measurements)
+- Claim language rules (UNVERIFIED/VERIFIED enforcement)
+- Integration with `shopify-grand-architect` workflow
+
+### Agent Count Update
+
+- **Previous:** 82 agents
+- **New:** 85 agents (+1 shopify-ui-reviewer, +2 count corrections)
+
+### Documentation
+
+- Updated `docs/agents.md` with enrichment info
+- Updated `docs/concepts/skills.md` with universal skills
+- Updated `docs/concepts/self-improvement.md` with agent-level learning
+- Updated `quick-reference/os2-agents.md`
+
+---
+
 ## v2.4.0 (2025-11-27)
 
 ### Response Awareness Simplification

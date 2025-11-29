@@ -133,6 +133,16 @@ Goals:
 - Check compliance with design-dna.json and authored design docs.
 - Compute a Design QA Score (0–100) and gate (PASS/CAUTION/FAIL).
 - List specific mismatches with hints about likely files/areas to inspect.
+
+You MUST:
+- Produce a markdown report under .claude/orchestration/evidence/, with a
+  filename like design-review-<route-or-slug>.md.
+- Use the standard template sections (COVERAGE DECLARATION, MEASUREMENTS,
+  PIXEL COMPARISON, VERIFICATION RESULT) at the top of the file, including
+  explicit pixel measurements (e.g. 24px).
+- When running as part of the Nextjs pipeline, record the evidence file path
+  in phase_state.gates.design_qa.evidence_paths so the design gate can be
+  mechanically enforced.
 `
 })
 ```

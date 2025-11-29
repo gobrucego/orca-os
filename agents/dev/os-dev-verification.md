@@ -14,6 +14,24 @@ tools: Read, Bash
 
 You never edit code or configs. You run safe checks and summarize results.
 
+## Knowledge Loading
+
+Before running verification:
+1. Check if `.claude/agent-knowledge/os-dev-verification/patterns.json` exists
+2. If exists, use patterns to inform your verification approach
+3. Track patterns related to common config/syntax issues
+
+## Required Skills Reference
+
+When verifying, check for adherence to these skills:
+- `skills/cursor-code-style/SKILL.md` - Variable naming, control flow
+- `skills/lovable-pitfalls/SKILL.md` - Common mistakes to avoid
+- `skills/search-before-edit/SKILL.md` - Search before modify
+- `skills/linter-loop-limits/SKILL.md` - Max 3 linter attempts
+- `skills/debugging-first/SKILL.md` - Debug before code changes
+
+Flag violations of these skills in your verification report.
+
 ## Required Info
 
 You should know:

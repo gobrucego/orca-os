@@ -144,13 +144,35 @@ Light lane agent:
 
 ## 5. Skills and Memory
 
-Skills:
+### Domain Skills
 
-- Expo uses general design and RA skills (design DNA, design QA, etc.).
-  - `skills/design-dna-skill/SKILL.md`
-  - `skills/design-qa-skill/SKILL.md`
+- `skills/design-dna-skill/SKILL.md` - Design tokens and design DNA rules
+- `skills/design-qa-skill/SKILL.md` - General design QA standards
 
-Memory:
+### Universal Skills (NEW v2.4.1)
+
+All 11 Expo agents now reference these 5 universal skills:
+
+- `skills/cursor-code-style/SKILL.md` - Variable naming, control flow, comments
+- `skills/lovable-pitfalls/SKILL.md` - Common mistakes to avoid
+- `skills/search-before-edit/SKILL.md` - Always grep before modifying files
+- `skills/linter-loop-limits/SKILL.md` - Max 3 attempts on linter errors
+- `skills/debugging-first/SKILL.md` - Debug tools before code changes
+
+### Lane-Specific Patterns (NEW v2.4.1)
+
+Expo builder agents have inline React Native best practices:
+
+- **Performance:** FlatList for lists >20 items, getItemLayout for fixed heights
+- **Styling:** StyleSheet.create, all colors from theme, all spacing from scale
+- **Platform:** Respect iOS vs Android conventions, use Platform.select
+- **Accessibility:** accessibilityLabel, accessibilityRole, accessibilityHint, 44x44pt touch targets
+
+### Agent-Level Learning
+
+Agents can discover and persist patterns to `.claude/agent-knowledge/expo-builder-agent/patterns.json`.
+
+### Memory
 
 - `/project-memory`:
   - Records Expo incidents, gotchas (e.g. navigation pitfalls, performance issues).

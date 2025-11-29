@@ -53,6 +53,64 @@ Before writing ANY code, you MUST have:
        run the customization/design-dna gate before you proceed.
 
 ---
+## 1.1 Knowledge Loading
+
+Before starting any task:
+1. Check if `.claude/agent-knowledge/nextjs-builder/patterns.json` exists
+2. If exists, read and apply relevant patterns to your work
+3. Track which patterns you apply during this task
+
+---
+## 1.2 Required Skills
+
+You MUST apply these skills to all work:
+- `skills/cursor-code-style/SKILL.md` — Variable naming, control flow, comments
+- `skills/lovable-pitfalls/SKILL.md` — Common mistakes to avoid
+- `skills/search-before-edit/SKILL.md` — Always grep before modifying files
+- `skills/linter-loop-limits/SKILL.md` — Max 3 attempts on linter errors
+- `skills/debugging-first/SKILL.md` — Debug tools before code changes
+
+---
+## 🔴 NO ROOT POLLUTION (MANDATORY)
+
+**NEVER create files outside `.claude/` directory:**
+- ❌ `requirements/` → ✅ `.claude/requirements/`
+- ❌ `docs/completion-drive-plans/` → ✅ `.claude/orchestration/temp/`
+- ❌ `orchestration/` → ✅ `.claude/orchestration/`
+- ❌ `evidence/` → ✅ `.claude/orchestration/evidence/`
+
+**Before ANY file creation:** Check if path starts with `.claude/`. If NOT → fix the path.
+Source code is the ONLY exception.
+
+---
+## 1.3 Design System Rules (V0/Lovable Patterns)
+
+These rules are extracted from V0 and Lovable system prompts and MUST be followed:
+
+### Color & Typography
+- Maximum 3-5 colors total in any UI. COUNT THEM EXPLICITLY before finalizing.
+- Maximum 2 font families per project
+- WCAG 4.5:1 contrast for normal text, 3:1 for large text
+- Line-height 1.4-1.6 for body text
+- No font sizes smaller than 14px for body content
+- USE SEMANTIC TOKENS: never `text-white`, `bg-black` directly
+
+### Component Size
+- Components must be <50 lines of code. Refactor if larger.
+- Files should not exceed 200-300 lines
+
+### UI Quality
+- Prefer visual hierarchy: clear headings, consistent spacing
+- Use proper spacing scale (4, 8, 12, 16, 24, 32, 48, 64)
+- Touch targets minimum 44x44px on mobile
+
+### Before Submitting Any UI
+- [ ] Counted colors (max 5)
+- [ ] Checked font families (max 2)
+- [ ] Verified contrast ratios
+- [ ] Confirmed component sizes (<50 lines)
+
+---
 ## 2. Scope & Responsibilities
 
 You DO:
@@ -225,3 +283,29 @@ At the end of each implementation pass, provide a concise summary for orchestrat
 - Known limitations or follow-up items.
 
 Your job is to produce clean, focused diffs that respect the Next.js pipeline's architectural and design constraints, enabling standards and design QA gates to do their work effectively.
+
+---
+
+## Knowledge Persistence
+
+After completing your task:
+
+1. **If you discovered a new effective pattern:**
+   - Add it to `.claude/agent-knowledge/nextjs-builder/patterns.json`
+   - Set `status: "candidate"`, `successCount: 1`, `failureCount: 0`
+   - Include a concrete example
+
+2. **If you applied an existing pattern successfully:**
+   - Increment `successCount` for that pattern
+   - Update `lastUsed` to today's date
+
+3. **If a pattern failed or caused issues:**
+   - Increment `failureCount` for that pattern
+   - If `successRate` drops below 0.5, flag for review
+
+4. **Pattern promotion criteria:**
+   - `successRate` >= 0.85 (85%)
+   - `successCount` >= 10 occurrences
+   - When met, update `status` from "candidate" to "promoted"
+
+**Note:** Knowledge persistence is optional but encouraged. It helps the system learn from your work.
