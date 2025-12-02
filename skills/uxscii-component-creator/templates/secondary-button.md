@@ -5,33 +5,33 @@ A secondary action button with subtle styling for less prominent actions.
 ## Default State
 
 ```
-░░░░░░░░░░░░░░░░
-░   {{text}}   ░
-░░░░░░░░░░░░░░░░
+
+   {{text}}   
+
 ```
 
 ## Hover State
 
 ```
-▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-▒   {{text}}   ▒
-▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+
+   {{text}}   
+
 ```
 
 ## Active/Pressed State
 
 ```
-████████████████
-█   {{text}}   █
-████████████████
+
+   {{text}}   
+
 ```
 
 ## Disabled State
 
 ```
-┌ ─ ─ ─ ─ ─ ─ ─┐
-│   {{text}}   │
-└ ─ ─ ─ ─ ─ ─ ─┘
+       
+   {{text}}   
+       
 ```
 
 ## Dimensions
@@ -60,23 +60,23 @@ A secondary action button with subtle styling for less prominent actions.
 
 ### Basic Usage
 ```
-░░░░░░░░░░░░░░░░
-░    Cancel    ░
-░░░░░░░░░░░░░░░░
+
+    Cancel    
+
 ```
 
 ### Compact Button
 ```
-░░░░░░░░
-░   No   ░
-░░░░░░░░
+
+   No   
+
 ```
 
 ### Wide Button
 ```
-░░░░░░░░░░░░░░░░░░░░░░░░
-░     Learn More     ░
-░░░░░░░░░░░░░░░░░░░░░░░░
+
+     Learn More     
+
 ```
 
 ## Component Behavior
@@ -104,10 +104,10 @@ The button emits a click event when:
 ## Design Tokens
 
 ### Colors (represented by patterns)
-- `░` = Light gray background color
-- `▒` = Medium gray hover color  
-- `█` = Dark gray pressed effect
-- `─` = Disabled border style
+- `` = Light gray background color
+- `` = Medium gray hover color  
+- `` = Dark gray pressed effect
+- `` = Disabled border style
 
 ### Spacing
 - Internal padding: 1 character top/bottom, 2 characters left/right
@@ -124,7 +124,7 @@ The button emits a click event when:
 
 This ASCII representation demonstrates a subtle visual hierarchy. When implementing in actual UI frameworks:
 
-1. Map the `░` pattern to a light gray background
+1. Map the `` pattern to a light gray background
 2. Ensure sufficient contrast ratios for accessibility
 3. Implement smooth hover transitions
 4. Add appropriate visual feedback for interactions

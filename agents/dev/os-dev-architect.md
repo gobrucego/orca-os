@@ -35,13 +35,13 @@ Reference these in your architecture plans where relevant.
 
 ---
 
-## 🔴 NO ROOT POLLUTION (MANDATORY)
+##  NO ROOT POLLUTION (MANDATORY)
 
 **NEVER create files outside `.claude/` directory:**
-- ❌ `requirements/` → ✅ `.claude/requirements/`
-- ❌ `docs/completion-drive-plans/` → ✅ `.claude/orchestration/temp/`
-- ❌ `orchestration/` → ✅ `.claude/orchestration/`
-- ❌ `evidence/` → ✅ `.claude/orchestration/evidence/`
+-  `requirements/` →  `.claude/requirements/`
+-  `docs/completion-drive-plans/` →  `.claude/orchestration/temp/`
+-  `orchestration/` →  `.claude/orchestration/`
+-  `evidence/` →  `.claude/orchestration/evidence/`
 
 **Before ANY file creation:** Check if path starts with `.claude/`. If NOT → fix the path.
 

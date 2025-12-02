@@ -17,7 +17,7 @@
 - **0–59:** Poor – Major rework required
 
 This rubric is used by Expo lane gate agents (design/a11y/perf/security) and
-`/orca-expo` to turn subjective “looks good” into objective scores.
+`/expo` to turn subjective “looks good” into objective scores.
 
 ---
 

@@ -280,7 +280,7 @@ After the root-cause squad agents respond:
 - Evidence:
   - “Confirmed by failing tests: …”
 - Suggested next command(s):
-  - e.g. `/orca-ios "implement requirement <id>"` or `/orca-nextjs "..."` for fixes.
+  - e.g. `/ios "implement requirement <id>"` or `/nextjs "..."` for fixes.
 
 ---
 
@@ -296,8 +296,8 @@ After the root-cause squad agents respond:
 
 Fixing the issue should be done via the appropriate pipeline:
 
-- iOS: `/plan` → `/orca` → `/orca-ios`
-- Next.js: `/plan` → `/orca` → `/orca-nextjs`
-- Expo: `/plan` → `/orca` → `/orca-expo`
-- Shopify: `/plan` → `/orca` → `/orca-shopify`
+- iOS: `/plan` → `/orca` → `/ios`
+- Next.js: `/plan` → `/orca` → `/nextjs`
+- Expo: `/plan` → `/orca` → `/expo`
+- Shopify: `/plan` → `/orca` → `/shopify`
 - OS-Dev: `/plan` → `/orca-os-dev`

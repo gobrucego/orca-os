@@ -6,7 +6,7 @@
 #!/bin/bash
 # OS 2.2 Project Cleanup Script
 
-echo "🧹 OS 2.2 Project Cleanup Starting..."
+echo " OS 2.2 Project Cleanup Starting..."
 
 # 1. Create archive structure
 mkdir -p .deprecated/pre-os2
@@ -43,7 +43,7 @@ if [ -f ".gitignore" ]; then
     grep -q "^.deprecated" .gitignore || echo -e "\n# OS 2.2 Cleanup\n.deprecated/" >> .gitignore
 fi
 
-echo "✅ Cleanup complete! Check git status to review changes."
+echo " Cleanup complete! Check git status to review changes."
 ```
 
 ## Manual Checklist (If Preferred)
@@ -118,7 +118,7 @@ mkdir -p .deprecated/pre-os2
 [ -d ".claude/orchestration/temp" ] && rm -rf .claude/orchestration/temp/*
 rm -f .claude-session-context.md.backup*
 echo ".deprecated/" >> .gitignore
-echo "✅ Cleaned up for OS 2.2"
+echo " Cleaned up for OS 2.2"
 git status
 EOF
 
@@ -130,7 +130,7 @@ chmod +x cleanup.sh
 
 ## What Gets Cleaned
 
-### ❌ REMOVE/ARCHIVE:
+###  REMOVE/ARCHIVE:
 - `.claude-work/` - Old working directory
 - `.workshop/` - Old context system
 - `.claude/orchestration/evidence/` - Project-specific artifacts
@@ -138,7 +138,7 @@ chmod +x cleanup.sh
 - `.claude/memory/playbooks/` - Old memory system
 - `*.backup*` files - Session backups
 
-### ✅ KEEP:
+###  KEEP:
 - `.claude/CLAUDE.md` - Project instructions
 - `.claude/settings.json` - Project settings
 - Current code and documentation

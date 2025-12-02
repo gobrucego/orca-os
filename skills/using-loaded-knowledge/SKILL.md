@@ -34,7 +34,7 @@ If you skip this checklist, you WILL make the exact same mistakes that have been
 
 Before responding to ANY user message, you MUST complete ALL steps:
 
-### Step 1: Check Auto-Loaded Context Files ☐
+### Step 1: Check Auto-Loaded Context Files 
 
 These files are ALREADY in your context (loaded via SessionStart hooks):
 
@@ -52,7 +52,7 @@ grep -l "keyword" ~/.claude-vibe-code/.claude-*.md 2>/dev/null
 
 **IF** your response relates to recent work, systems built, or user preferences → READ these files FIRST
 
-### Step 2: System/Documentation Questions ☐
+### Step 2: System/Documentation Questions 
 
 **IF** user asks about a system, architecture, or anything we built:
 
@@ -72,7 +72,7 @@ Read /Users/adilkalam/claude-vibe-code/docs/[RELEVANT].md
 
 **YOU MUST READ THE ACTUAL DOCS. NOT generate from memory.**
 
-### Step 3: Claims Require Grep Verification ☐
+### Step 3: Claims Require Grep Verification 
 
 **IF** you're about to claim something exists, is integrated, or works:
 
@@ -94,7 +94,7 @@ grep "integration_point" target_file.md
 
 **NO CLAIMS WITHOUT GREP EVIDENCE.**
 
-### Step 4: Check USER_PROFILE.md Principles ☐
+### Step 4: Check USER_PROFILE.md Principles 
 
 Before responding, check if USER_PROFILE.md has relevant principles:
 
@@ -109,7 +109,7 @@ Before responding, check if USER_PROFILE.md has relevant principles:
 
 **IF** your response relates to any principle → FOLLOW IT
 
-### Step 5: Only Then Respond ☐
+### Step 5: Only Then Respond 
 
 After completing steps 1-4, you may respond.
 
@@ -121,14 +121,14 @@ After completing steps 1-4, you may respond.
 
 ### Failure Mode 1: Explaining Systems Without Reading Docs
 
-**❌ WRONG:**
+** WRONG:**
 ```
 User: "Explain our design system"
 Claude: [Generates generic design system explanation]
 User: "You didn't read DESIGN_DNA_SYSTEM.md"
 ```
 
-**✅ RIGHT:**
+** RIGHT:**
 ```
 User: "Explain our design system"
 Claude: [Checks Step 2 - this is about a system]
@@ -139,14 +139,14 @@ Claude: [Explains ACTUAL system with evidence]
 
 ### Failure Mode 2: Claims Without Verification
 
-**❌ WRONG:**
+** WRONG:**
 ```
 User: "Is Design DNA integrated?"
 Claude: "No, it's not integrated"
 User: [Provides grep evidence showing it IS integrated]
 ```
 
-**✅ RIGHT:**
+** RIGHT:**
 ```
 User: "Is Design DNA integrated?"
 Claude: [Checks Step 3 - this is a claim]
@@ -157,14 +157,14 @@ Claude: "Yes, integrated in /orca Phase -1, -2: [evidence]"
 
 ### Failure Mode 3: Ignoring Auto-Loaded Context
 
-**❌ WRONG:**
+** WRONG:**
 ```
 User: "What did we work on last session?"
 Claude: [Generates vague guess]
 User: "It's IN the session context file"
 ```
 
-**✅ RIGHT:**
+** RIGHT:**
 ```
 User: "What did we work on last session?"
 Claude: [Checks Step 1 - session history]
@@ -175,14 +175,14 @@ Claude: "Last session: [specific work from context file]"
 
 ### Failure Mode 4: Violating USER_PROFILE.md Principles
 
-**❌ WRONG:**
+** WRONG:**
 ```
 User: "The spacing looks off"
 Claude: "Let me adjust it to 15px"
 User: "Use the 4px grid system, not arbitrary values"
 ```
 
-**✅ RIGHT:**
+** RIGHT:**
 ```
 User: "The spacing looks off"
 Claude: [Checks Step 4 - Design-OCD principle]
@@ -250,11 +250,11 @@ Together: Context loaded + Protocol enforced = Knowledge actually used
 You don't invoke it explicitly. It's a checklist you complete internally before every response.
 
 **Checklist reminder:**
-1. ☐ Check auto-loaded context files
-2. ☐ Read /docs if system question
-3. ☐ Grep verify if making claims
-4. ☐ Check USER_PROFILE.md principles
-5. ☐ Only then respond
+1.  Check auto-loaded context files
+2.  Read /docs if system question
+3.  Grep verify if making claims
+4.  Check USER_PROFILE.md principles
+5.  Only then respond
 
 **If you skip ANY step, you WILL repeat the catastrophic failures.**
 

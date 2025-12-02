@@ -5,55 +5,55 @@ A flexible container for grouping related content with optional header, body, an
 ## Default State
 
 ```
-┌──────────────────────────────────────┐
-│ {{title}}                            │
-│ {{subtitle}}                         │
-├──────────────────────────────────────┤
-│                                      │
-│ {{content}}                          │
-│                                      │
-└──────────────────────────────────────┘
+
+ {{title}}                            
+ {{subtitle}}                         
+
+                                      
+ {{content}}                          
+                                      
+
 ```
 
 ## With Footer
 
 ```
-┌──────────────────────────────────────┐
-│ {{title}}                            │
-│ {{subtitle}}                         │
-├──────────────────────────────────────┤
-│                                      │
-│ {{content}}                          │
-│                                      │
-├──────────────────────────────────────┤
-│ {{footer}}                           │
-└──────────────────────────────────────┘
+
+ {{title}}                            
+ {{subtitle}}                         
+
+                                      
+ {{content}}                          
+                                      
+
+ {{footer}}                           
+
 ```
 
 ## Hover State
 
 ```
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ {{title}}                            ┃
-┃ {{subtitle}}                         ┃
-┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
-┃                                      ┃
-┃ {{content}}                          ┃
-┃                                      ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+ {{title}}                            
+ {{subtitle}}                         
+
+                                      
+ {{content}}                          
+                                      
+
 ```
 
 ## Focus State (Interactive Card)
 
 ```
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ {{title}}                        ✨  ┃
-┃ {{subtitle}}                         ┃
-┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
-┃                                      ┃
-┃ {{content}}                          ┃
-┃                                      ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+ {{title}}                          
+ {{subtitle}}                         
+
+                                      
+ {{content}}                          
+                                      
+
 ```
 
 ## Variables
@@ -81,65 +81,65 @@ A flexible container for grouping related content with optional header, body, an
 
 ### Basic Content Card
 ```
-┌──────────────────────────────────────┐
-│ Welcome to UXscii                    │
-│ Getting started guide                │
-├──────────────────────────────────────┤
-│                                      │
-│ UXscii helps you create beautiful    │
-│ ASCII representations of UI          │
-│ components for design documentation. │
-│                                      │
-└──────────────────────────────────────┘
+
+ Welcome to UXscii                    
+ Getting started guide                
+
+                                      
+ UXscii helps you create beautiful    
+ ASCII representations of UI          
+ components for design documentation. 
+                                      
+
 ```
 
 ### Product Card
 ```
-┌──────────────────────────────────────┐
-│ Professional Plan                    │
-│ For growing teams                    │
-├──────────────────────────────────────┤
-│                                      │
-│ • Up to 100 components              │
-│ • Advanced customization             │
-│ • Priority support                   │
-│ • Team collaboration                 │
-│                                      │
-├──────────────────────────────────────┤
-│ $29/month              [Subscribe] │
-└──────────────────────────────────────┘
+
+ Professional Plan                    
+ For growing teams                    
+
+                                      
+ • Up to 100 components              
+ • Advanced customization             
+ • Priority support                   
+ • Team collaboration                 
+                                      
+
+ $29/month              [Subscribe] 
+
 ```
 
 ### Article Card
 ```
-┌──────────────────────────────────────┐
-│ Building Better Interfaces          │
-│ Design Systems Blog                  │
-├──────────────────────────────────────┤
-│                                      │
-│ Learn how to create consistent and   │
-│ scalable design systems that help    │
-│ your team build better products.     │
-│                                      │
-├──────────────────────────────────────┤
-│ Published: Jan 15, 2024    5 min read │
-└──────────────────────────────────────┘
+
+ Building Better Interfaces          
+ Design Systems Blog                  
+
+                                      
+ Learn how to create consistent and   
+ scalable design systems that help    
+ your team build better products.     
+                                      
+
+ Published: Jan 15, 2024    5 min read 
+
 ```
 
 ### Notification Card
 ```
-┌──────────────────────────────────────┐
-│ System Update                        │
-│ Important notice                     │
-├──────────────────────────────────────┤
-│                                      │
-│ A new version of the system is       │
-│ available. Please update at your     │
-│ earliest convenience.                │
-│                                      │
-├──────────────────────────────────────┤
-│ [Update Now]              [Later]  │
-└──────────────────────────────────────┘
+
+ System Update                        
+ Important notice                     
+
+                                      
+ A new version of the system is       
+ available. Please update at your     
+ earliest convenience.                
+                                      
+
+ [Update Now]              [Later]  
+
 ```
 
 ## Component Behavior
@@ -166,9 +166,9 @@ Cards can be:
 ## Design Tokens
 
 ### Border Styles
-- `┌─┐` = Default border (light gray)
-- `┏━┓` = Hover/focus border (primary color)
-- `├─┤` = Section dividers
+- `` = Default border (light gray)
+- `` = Hover/focus border (primary color)
+- `` = Section dividers
 
 ### Layout Patterns
 - Header: Title + optional subtitle

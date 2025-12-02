@@ -6,15 +6,15 @@
 ## What's New in OS 2.4
 
 **Major Changes:**
-- ✅ **Three-tier routing** (default/tweak/complex) replaces simple/medium/complex
-- ✅ **Default now runs gates** - light path includes quality checks
-- ✅ **-tweak flag** for pure speed (skips gates, user verifies)
-- ✅ **--complex flag** for full pipeline (requires spec)
-- ✅ Unified `/plan` command (replaces 8+ requirements commands)
-- ✅ New `/audit` command (meta-review with Response Awareness)
-- ✅ Role boundary enforcement (orchestrators NEVER write code)
-- ✅ Team confirmation via AskUserQuestion (interactive UI)
-- ✅ State preservation across interruptions
+-  **Three-tier routing** (default/tweak/complex) replaces simple/medium/complex
+-  **Default now runs gates** - light path includes quality checks
+-  **-tweak flag** for pure speed (skips gates, user verifies)
+-  **--complex flag** for full pipeline (requires spec)
+-  Unified `/plan` command (replaces 8+ requirements commands)
+-  New `/audit` command (meta-review with Response Awareness)
+-  Role boundary enforcement (orchestrators NEVER write code)
+-  Team confirmation via AskUserQuestion (interactive UI)
+-  State preservation across interruptions
 
 **Deprecated Commands:**
 - `/requirements-*` → Use `/plan`
@@ -36,16 +36,16 @@ All `/orca-*` commands support three execution modes:
 
 ```bash
 # Default: Light path WITH gates (most work)
-/orca-nextjs "fix button spacing"
-/orca-ios "add haptic feedback"
+/nextjs "fix button spacing"
+/ios "add haptic feedback"
 
 # Tweak: Light path WITHOUT gates (pure speed)
-/orca-nextjs -tweak "try different padding"
-/orca-ios -tweak "experiment with animation"
+/nextjs -tweak "try different padding"
+/ios -tweak "experiment with animation"
 
 # Complex: Full pipeline WITH spec (architecture work)
-/orca-nextjs --complex "implement auth flow"
-/orca-ios --complex "implement offline sync"
+/nextjs --complex "implement auth flow"
+/ios --complex "implement offline sync"
 ```
 
 ### Gate Behavior by Mode
@@ -93,7 +93,7 @@ All `/orca-*` commands support three execution modes:
 .claude/requirements/2025-11-24-1430-user-profile-editing/06-requirements-spec.md
 
 # Then implement:
-/orca-nextjs "Implement requirement 2025-11-24-1430-user-profile-editing using that spec"
+/nextjs "Implement requirement 2025-11-24-1430-user-profile-editing using that spec"
 ```
 
 ---
@@ -110,16 +110,16 @@ All `/orca-*` commands support three execution modes:
 - **Role:** NEVER writes code, only routes
 - **Location:** `~/.claude/commands/orca.md`
 
-#### `/orca-nextjs` - Next.js Lane Orchestrator
+#### `/nextjs` - Next.js Lane Orchestrator
 **UPDATED in OS 2.4 - Three-tier routing**
 
 - **Purpose:** Next.js/React frontend implementation
 - **Usage:**
   ```bash
-  /orca-nextjs "fix button spacing"                    # Default: light + gates
-  /orca-nextjs -tweak "try different padding"         # Tweak: light, no gates
-  /orca-nextjs --complex "implement auth flow"        # Complex: full pipeline
-  /orca-nextjs "implement requirement <id>"           # With spec
+  /nextjs "fix button spacing"                    # Default: light + gates
+  /nextjs -tweak "try different padding"         # Tweak: light, no gates
+  /nextjs --complex "implement auth flow"        # Complex: full pipeline
+  /nextjs "implement requirement <id>"           # With spec
   ```
 - **Three-Tier Routing:**
   - **Default** (no flag): Light orchestrator WITH gates (`nextjs-standards-enforcer` + `nextjs-design-reviewer`)
@@ -134,18 +134,18 @@ All `/orca-*` commands support three execution modes:
   - Verification Agent (build/test/lint)
 - **Role Boundaries:** ENFORCED (orchestrator never codes)
 - **State Preservation:** YES (survives interruptions)
-- **Location:** `~/.claude/commands/orca-nextjs.md`
+- **Location:** `~/.claude/commands/nextjs.md`
 
-#### `/orca-ios` - iOS Lane Orchestrator
+#### `/ios` - iOS Lane Orchestrator
 **UPDATED in OS 2.4 - Three-tier routing**
 
 - **Purpose:** Native iOS (Swift/SwiftUI/UIKit) implementation
 - **Usage:**
   ```bash
-  /orca-ios "fix button padding"                       # Default: light + gates
-  /orca-ios -tweak "experiment with animation"        # Tweak: light, no gates
-  /orca-ios --complex "implement auth flow"           # Complex: full pipeline
-  /orca-ios "implement requirement <id>"              # With spec
+  /ios "fix button padding"                       # Default: light + gates
+  /ios -tweak "experiment with animation"        # Tweak: light, no gates
+  /ios --complex "implement auth flow"           # Complex: full pipeline
+  /ios "implement requirement <id>"              # With spec
   ```
 - **Three-Tier Routing:**
   - **Default** (no flag): Light orchestrator WITH gates (`ios-standards-enforcer` + `ios-ui-reviewer`)
@@ -160,18 +160,18 @@ All `/orca-*` commands support three execution modes:
   - Verification Agent (xcodebuild/tests)
 - **Role Boundaries:** ENFORCED (orchestrator never codes)
 - **State Preservation:** YES (survives interruptions)
-- **Location:** `~/.claude/commands/orca-ios.md`
+- **Location:** `~/.claude/commands/ios.md`
 
-#### `/orca-expo` - Expo/React Native Lane Orchestrator
+#### `/expo` - Expo/React Native Lane Orchestrator
 **UPDATED in OS 2.4 - Three-tier routing**
 
 - **Purpose:** Expo/React Native mobile implementation
 - **Usage:**
   ```bash
-  /orca-expo "fix button spacing"                      # Default: light + gates
-  /orca-expo -tweak "try different padding"           # Tweak: light, no gates
-  /orca-expo --complex "implement auth flow"          # Complex: full pipeline
-  /orca-expo "implement requirement <id>"             # With spec
+  /expo "fix button spacing"                      # Default: light + gates
+  /expo -tweak "try different padding"           # Tweak: light, no gates
+  /expo --complex "implement auth flow"          # Complex: full pipeline
+  /expo "implement requirement <id>"             # With spec
   ```
 - **Three-Tier Routing:**
   - **Default** (no flag): Light orchestrator WITH gates (`design-token-guardian` + `expo-aesthetics-specialist`)
@@ -188,7 +188,7 @@ All `/orca-*` commands support three execution modes:
   - Verification Agent (build/test/expo doctor)
 - **Role Boundaries:** ENFORCED (orchestrator never codes)
 - **State Preservation:** YES (survives interruptions)
-- **Location:** `~/.claude/commands/orca-expo.md`
+- **Location:** `~/.claude/commands/expo.md`
 
 #### `/orca-data` - Data/Analytics Lane Orchestrator
 **UPDATED in OS 2.2 - Role boundaries enforced**
@@ -344,18 +344,18 @@ All `/orca-*` commands support three execution modes:
 
 ```bash
 # Default mode: Light path WITH quality gates
-/orca-nextjs "fix button spacing"
-/orca-ios "add haptic feedback"
-/orca-expo "update card styling"
-/orca-shopify "fix cart drawer"
+/nextjs "fix button spacing"
+/ios "add haptic feedback"
+/expo "update card styling"
+/shopify "fix cart drawer"
 ```
 
 ### Rapid Iteration (-tweak)
 
 ```bash
 # Tweak mode: Light path WITHOUT gates (you verify)
-/orca-nextjs -tweak "try different padding"
-/orca-ios -tweak "experiment with animation"
+/nextjs -tweak "try different padding"
+/ios -tweak "experiment with animation"
 ```
 
 ### Full Features (--complex or /plan)
@@ -363,10 +363,10 @@ All `/orca-*` commands support three execution modes:
 ```bash
 # Complex work: Plan first, then full pipeline
 /plan "implement user authentication"
-/orca-nextjs --complex "implement requirement <id>"
+/nextjs --complex "implement requirement <id>"
 
 # Or explicitly request complex mode
-/orca-ios --complex "implement offline sync"
+/ios --complex "implement offline sync"
 ```
 
 ### Meta-Audit (Periodic)
@@ -379,15 +379,15 @@ All `/orca-*` commands support three execution modes:
 ### Workflow Summary
 
 ```
-✅ Quick fix      → /orca-{domain} "task"              → light + gates
-✅ Exploration    → /orca-{domain} -tweak "task"       → light, no gates
-✅ Features       → /plan → /orca-{domain} --complex   → full pipeline
-✅ Review         → /audit "scope"                      → meta-analysis
+ Quick fix      → /orca-{domain} "task"              → light + gates
+ Exploration    → /orca-{domain} -tweak "task"       → light, no gates
+ Features       → /plan → /orca-{domain} --complex   → full pipeline
+ Review         → /audit "scope"                      → meta-analysis
 ```
 
 ### Old Workflow (Deprecated)
 ```
-❌ /requirements-start → /requirements-status → /response-awareness-implement
+ /requirements-start → /requirements-status → /response-awareness-implement
 ```
 
 ---
@@ -411,7 +411,7 @@ All `/orca-*` commands support three execution modes:
 **Enforcement:**
 Every orca command includes:
 ```markdown
-## 🚨 CRITICAL ROLE BOUNDARY 🚨
+##  CRITICAL ROLE BOUNDARY 
 
 YOU ARE AN ORCHESTRATOR. YOU NEVER WRITE CODE.
 
@@ -500,9 +500,9 @@ Commands enforce:
 
 ### Domain Detection
 ```
-/orca "build a React component"  → /orca-nextjs
-/orca "create iOS view"          → /orca-ios
-/orca "add Expo navigation"      → /orca-expo
+/orca "build a React component"  → /nextjs
+/orca "create iOS view"          → /ios
+/orca "add Expo navigation"      → /expo
 /orca "analyze user metrics"     → /orca-data
 /orca "write about AI safety"    → /seo
 ```
@@ -560,7 +560,7 @@ START → Context Query → Team Confirm → Planning → Implementation → Gat
 # Output: .claude/requirements/2025-11-24-1500-dark-mode-support/06-requirements-spec.md
 
 # 2. Implement
-/orca-nextjs "Implement requirement 2025-11-24-1500-dark-mode-support using that spec"
+/nextjs "Implement requirement 2025-11-24-1500-dark-mode-support using that spec"
 
 # Executes:
 - Context query
@@ -581,18 +581,18 @@ START → Context Query → Team Confirm → Planning → Implementation → Gat
 ### Quick Task (No Planning)
 ```bash
 # For trivial tasks, skip /plan
-/orca-nextjs "Fix typo in homepage title"
+/nextjs "Fix typo in homepage title"
 ```
 
 ### Domain-Specific
 ```bash
 # iOS
 /plan "Add biometric authentication"
-/orca-ios "Implement requirement <id>"
+/ios "Implement requirement <id>"
 
 # Expo
 /plan "Add offline mode to mobile app"
-/orca-expo "Implement requirement <id>"
+/expo "Implement requirement <id>"
 
 # Data
 /plan "Analyze Q4 sales trends"

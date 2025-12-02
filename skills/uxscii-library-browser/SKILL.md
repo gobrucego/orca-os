@@ -61,10 +61,10 @@ console.log(buttonInfo.tags); // ["button", "primary", "action", "interactive"]
 ```
 
 **Performance Benefits:**
-- ✅ **1 file read** vs **11+ file reads** (10x faster!)
-- ✅ **Instant type/tag filtering** (no parsing needed)
-- ✅ **Pre-extracted ASCII previews** (show immediately)
-- ✅ **Metadata summary** (no JSON parsing per component)
+-  **1 file read** vs **11+ file reads** (10x faster!)
+-  **Instant type/tag filtering** (no parsing needed)
+-  **Pre-extracted ASCII previews** (show immediately)
+-  **Metadata summary** (no JSON parsing per component)
 
 **Index Structure:**
 ```json
@@ -88,113 +88,113 @@ console.log(buttonInfo.tags); // ["button", "primary", "action", "interactive"]
 Present in a clear, hierarchical structure:
 
 ```
-🎁 BUNDLED TEMPLATES
-📁 Component Creator Templates
-─────────────────────────────────────────────────────
+ BUNDLED TEMPLATES
+ Component Creator Templates
+
 These are starter templates you can copy and customize.
 
 Buttons (2 variants)
-  ├─ primary-button.uxm
-  │  └─ Standard clickable button with hover, focus, and disabled states
-  │     ▓▓▓▓▓▓▓▓▓▓▓▓
-  │     ▓ Click Me ▓
-  │     ▓▓▓▓▓▓▓▓▓▓▓▓
-  │
-  └─ icon-button.uxm
-     └─ Button with icon support for visual emphasis
-        [🔍 Search]
+   primary-button.uxm
+     Standard clickable button with hover, focus, and disabled states
+       
+        Click Me 
+       
+  
+   icon-button.uxm
+      Button with icon support for visual emphasis
+        [ Search]
 
 Inputs (2 variants)
-  ├─ text-input.uxm
-  │  └─ Basic text input with validation states
-  │     [________________]
-  │
-  └─ email-input.uxm
-     └─ Email-specific input with format validation
+   text-input.uxm
+     Basic text input with validation states
+       [________________]
+  
+   email-input.uxm
+      Email-specific input with format validation
         [user@example.com  ]
 
 Cards (1 variant)
-  └─ card.uxm
-     └─ Container for grouping related content
-        ╭─────────────╮
-        │ Card Title  │
-        ├─────────────┤
-        │ Content...  │
-        ╰─────────────╯
+   card.uxm
+      Container for grouping related content
+        
+         Card Title  
+        
+         Content...  
+        
 
 Modals (1 variant)
-  └─ modal.uxm
-     └─ Overlay dialog for focused interactions
-        ╔═══════════════╗
-        ║ Modal Title   ║
-        ╠═══════════════╣
-        ║ Content...    ║
-        ╚═══════════════╝
+   modal.uxm
+      Overlay dialog for focused interactions
+        
+         Modal Title   
+        
+         Content...    
+        
 
 Navigation (1 variant)
-  └─ navigation.uxm
-     └─ Primary navigation menu
+   navigation.uxm
+      Primary navigation menu
         • Home  • About  • Contact
 
 Feedback (2 variants)
-  ├─ alert.uxm
-  │  └─ User notification with severity levels
-  │     ⚠️ Warning: Action required
-  │
-  └─ badge.uxm
-     └─ Small status indicator or label
-        ● New
+   alert.uxm
+     User notification with severity levels
+        Warning: Action required
+  
+   badge.uxm
+      Small status indicator or label
+         New
 
 Lists (1 variant)
-  └─ list.uxm
-     └─ Vertical list for displaying data
+   list.uxm
+      Vertical list for displaying data
         • Item 1
         • Item 2
         • Item 3
 
-─────────────────────────────────────────────────────
 
-🎨 YOUR COMPONENTS
-📁 ./fluxwing/components/
-─────────────────────────────────────────────────────
+
+ YOUR COMPONENTS
+ ./fluxwing/components/
+
 Components you've created for your project.
 
-✓ submit-button.uxm
-  └─ Custom submit button for forms
+ submit-button.uxm
+   Custom submit button for forms
      Modified: 2024-10-11 14:23:00
      [    Submit Form    ]
 
-✓ password-input.uxm
-  └─ Password input with show/hide toggle
+ password-input.uxm
+   Password input with show/hide toggle
      Modified: 2024-10-11 14:25:00
-     [••••••••] 👁️
+     [••••••••] 
 
-✓ user-card.uxm
-  └─ Card displaying user profile information
+ user-card.uxm
+   Card displaying user profile information
      Modified: 2024-10-11 15:10:00
-     ╭──────────────────╮
-     │ John Doe         │
-     │ @johndoe         │
-     ╰──────────────────╯
+     
+      John Doe         
+      @johndoe         
+     
 
-─────────────────────────────────────────────────────
 
-🖥️ YOUR SCREENS
-📁 ./fluxwing/screens/
-─────────────────────────────────────────────────────
+
+ YOUR SCREENS
+ ./fluxwing/screens/
+
 Complete screen compositions.
 
-✓ login-screen.uxm
-  └─ User authentication screen
+ login-screen.uxm
+   User authentication screen
      Components used: email-input, password-input, submit-button, error-alert
      Modified: 2024-10-11 15:45:00
 
-✓ dashboard.uxm
-  └─ Main application dashboard
+ dashboard.uxm
+   Main application dashboard
      Components used: navigation, metric-card, data-table, sidebar
      Modified: 2024-10-11 16:20:00
 
-─────────────────────────────────────────────────────
+
 Total: 10 templates, 3 components, 2 screens
 ```
 
@@ -205,11 +205,11 @@ After displaying the library, offer these actions:
 ```
 What would you like to do?
 
-1️⃣ View component details (ask me to "show me [name]")
-2️⃣ Copy a template to your project
-3️⃣ Create a new component (ask me to "create a [type]")
-4️⃣ Scaffold a new screen (ask me to "build a [screen type] screen")
-5️⃣ Search for a specific pattern (e.g., "button", "input", "card")
+1⃣ View component details (ask me to "show me [name]")
+2⃣ Copy a template to your project
+3⃣ Create a new component (ask me to "create a [type]")
+4⃣ Scaffold a new screen (ask me to "build a [screen type] screen")
+5⃣ Search for a specific pattern (e.g., "button", "input", "card")
 ```
 
 ## Detailed View
@@ -219,8 +219,8 @@ If user wants to see details of a specific component:
 ```
 User: Show me primary-button
 
-You: 📄 PRIMARY-BUTTON.UXM
-─────────────────────────────────────────────────────
+You:  PRIMARY-BUTTON.UXM
+
 ID: primary-button
 Type: button
 Version: 1.0.0
@@ -245,14 +245,14 @@ Accessibility:
 ASCII Preview:
 
 Default State:
-▓▓▓▓▓▓▓▓▓▓▓▓
-▓ Click Me ▓
-▓▓▓▓▓▓▓▓▓▓▓▓
+
+ Click Me 
+
 
 Hover State:
-█████████████
-█ Click Me █
-█████████████
+
+ Click Me 
+
 
 Location: {SKILL_ROOT}/../uxscii-component-creator/templates/primary-button.uxm
 
@@ -270,7 +270,7 @@ You: I'll copy primary-button to your library for customization.
 
 [Copies .uxm and .md files]
 
-✓ Copied to ./fluxwing/library/
+ Copied to ./fluxwing/library/
   - primary-button.uxm
   - primary-button.md
 
@@ -291,11 +291,11 @@ User: Find all button components
 
 You: Found 3 button components:
 
-🎁 Bundled Templates:
+ Bundled Templates:
   - primary-button.uxm (standard clickable button)
   - icon-button.uxm (button with icon support)
 
-🎨 Your Components:
+ Your Components:
   - submit-button.uxm (custom submit button for forms)
 
 Would you like details on any of these?
@@ -306,26 +306,26 @@ Would you like details on any of these?
 If user has no components yet:
 
 ```
-🎁 BUNDLED TEMPLATES
-📁 Component Creator Templates
-─────────────────────────────────────────────────────
+ BUNDLED TEMPLATES
+ Component Creator Templates
+
 11 starter templates available
 
-🎨 YOUR COMPONENTS
-📁 ./fluxwing/components/
-─────────────────────────────────────────────────────
+ YOUR COMPONENTS
+ ./fluxwing/components/
+
 No components yet. Create your first component!
 
 Try: "Create a submit button" or "Create an email input"
 
-🖥️ YOUR SCREENS
-📁 ./fluxwing/screens/
-─────────────────────────────────────────────────────
+ YOUR SCREENS
+ ./fluxwing/screens/
+
 No screens yet. Scaffold your first screen!
 
 Try: "Build a login screen" or "Create a dashboard"
 
-─────────────────────────────────────────────────────
+
 Total: 11 templates, 0 components, 0 screens
 ```
 

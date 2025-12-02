@@ -2,9 +2,9 @@
 
 **Last Organized:** 2025-11-19
 
-## 📁 Current Organization
+##  Current Organization
 
-### `/os2-cleanup/` - OS 2.2 Cleanup Scripts ✅
+### `/os2-cleanup/` - OS 2.2 Cleanup Scripts 
 Essential cleanup scripts for migrating to OS 2.2:
 - `cleanup-for-os2.sh` - Clean individual projects
 - `cleanup-global-claude.sh` - Clean global ~/.claude
@@ -35,7 +35,7 @@ README files moved from scripts root:
 ### `/lint/` - Linting Tools
 (Preserved - may still be useful)
 
-### `/.archived-v1/` - Legacy v1 Scripts 📦
+### `/.archived-v1/` - Legacy v1 Scripts 
 Archived scripts from pre-OS 2.2 systems:
 
 **Migration/Deployment:**

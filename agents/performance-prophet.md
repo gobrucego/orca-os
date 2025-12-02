@@ -76,7 +76,7 @@ Use `<thinking>` and `<answer>` tags for complex analysis:
 PERFORMANCE PREDICTION:
 
 Component: UserList with 50+ items
-PREDICTED ISSUE: Frame drops to 21fps ❌
+PREDICTED ISSUE: Frame drops to 21fps 
 
 EVIDENCE:
 - 12 nested components per item
@@ -96,7 +96,7 @@ FIXES:
 3. useCallback for onPress → prevent recreation
 4. Lazy load images → reduce bridge calls
 
-PREDICTED RESULT: 60fps maintained with 1000+ items ✓
+PREDICTED RESULT: 60fps maintained with 1000+ items 
 </answer>
 ```
 

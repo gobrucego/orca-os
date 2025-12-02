@@ -61,7 +61,7 @@ Based on research catalog at `.claude/research/reports/local-research-catalog-20
 | **iOS** | swift-agents-plugin | 60fps targets, @MainActor, WCAG AA, navigation patterns |
 | **Shopify** | Bolt, Cursor | Holistic thinking, Liquid best practices |
 | **Research** | Perplexity | 10K words, never-use-lists, 5+ sections, citations |
-| **Data** | Codex, Replit | Line citations【F:file†L1-L10】, data integrity |
+| **Data** | Codex, Replit | Line citationsF:file†L1-L10, data integrity |
 
 ---
 
@@ -69,22 +69,22 @@ Based on research catalog at `.claude/research/reports/local-research-catalog-20
 
 ```
 .claude/
-├── agent-knowledge/           # NEW - Agent learning persistence
-│   ├── nextjs-builder/
-│   │   ├── patterns.json      # Successful patterns (>85% success)
-│   │   ├── failures.json      # Failed approaches to avoid
-│   │   └── metrics.json       # Performance tracking
-│   ├── ios-builder/
-│   └── ... (per-agent subdirectories)
-│
-├── skills/                    # Existing, add new universal skills
-│   ├── cursor-code-style/     # NEW
-│   │   └── SKILL.md
-│   ├── lovable-pitfalls/      # NEW
-│   │   └── SKILL.md
-│   ├── search-before-edit/    # NEW
-│   │   └── SKILL.md
-│   └── ...
+ agent-knowledge/           # NEW - Agent learning persistence
+    nextjs-builder/
+       patterns.json      # Successful patterns (>85% success)
+       failures.json      # Failed approaches to avoid
+       metrics.json       # Performance tracking
+    ios-builder/
+    ... (per-agent subdirectories)
+
+ skills/                    # Existing, add new universal skills
+    cursor-code-style/     # NEW
+       SKILL.md
+    lovable-pitfalls/      # NEW
+       SKILL.md
+    search-before-edit/    # NEW
+       SKILL.md
+    ...
 ```
 
 ---
@@ -160,9 +160,9 @@ Based on research catalog at `.claude/research/reports/local-research-catalog-20
 
 ```markdown
 ## Citation Format
-- File citations: 【F:src/main.rs†L21-L31】
-- Terminal citations: 【chunk_id†L1-L24】
-- Each test prefixed: ✅, ⚠️, or ❌
+- File citations: F:src/main.rs†L21-L31
+- Terminal citations: chunk_id†L1-L24
+- Each test prefixed: , , or 
 
 ## Environment Rules
 - Use ripgrep (`rg`), never `grep -R` or `ls -R`

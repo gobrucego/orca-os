@@ -6,25 +6,25 @@
 ## What's New in OS 2.4
 
 **Three-Tier Routing (NEW):**
-- ✅ **Default mode** now runs gates (inverted from OS 2.2)
-- ✅ **-tweak flag** for pure speed (skips gates, user verifies)
-- ✅ **--complex flag** for full pipeline (requires spec)
-- ✅ Light orchestrators handle BOTH default (with gates) AND tweak (no gates)
+-  **Default mode** now runs gates (inverted from OS 2.2)
+-  **-tweak flag** for pure speed (skips gates, user verifies)
+-  **--complex flag** for full pipeline (requires spec)
+-  Light orchestrators handle BOTH default (with gates) AND tweak (no gates)
 
 **Memory Architecture:**
-- ✅ **Workshop** → Session memory (decisions, gotchas, learnings)
-- ✅ **vibe.db** → Code intelligence (chunks, symbols, hybrid search)
-- ✅ **project-meta** → Stable project metadata (MCP with versioning)
-- ✅ **ProjectContext v2.3** → Task bundler (queries all sources)
-- ✅ Memory-first search (Workshop + vibe.db before ProjectContext)
+-  **Workshop** → Session memory (decisions, gotchas, learnings)
+-  **vibe.db** → Code intelligence (chunks, symbols, hybrid search)
+-  **project-meta** → Stable project metadata (MCP with versioning)
+-  **ProjectContext v2.3** → Task bundler (queries all sources)
+-  Memory-first search (Workshop + vibe.db before ProjectContext)
 
 **From OS 2.2:**
-- ✅ Role boundary enforcement layer (orchestrators NEVER write code)
-- ✅ State preservation mechanism (phase_state.json)
-- ✅ Team confirmation layer (AskUserQuestion before execution)
-- ✅ Unified planning command (/plan replaces 8+ commands)
-- ✅ Meta-audit system (/audit for behavior review)
-- ✅ All agents use Opus 4.5 (unified model)
+-  Role boundary enforcement layer (orchestrators NEVER write code)
+-  State preservation mechanism (phase_state.json)
+-  Team confirmation layer (AskUserQuestion before execution)
+-  Unified planning command (/plan replaces 8+ commands)
+-  Meta-audit system (/audit for behavior review)
+-  All agents use Opus 4.5 (unified model)
 
 ---
 
@@ -45,15 +45,15 @@ All `/orca-*` commands support three execution modes:
     ↓
 [Complexity Detection + Flag Check]
     ↓
-├─ NO FLAG → Default Mode
-│     ↓
-│     [Light Orchestrator] → [Builder] → [Gates] → Done
-│
-├─ -tweak FLAG → Tweak Mode
-│     ↓
-│     [Light Orchestrator] → [Builder] → Done (no gates)
-│
-└─ --complex FLAG → Complex Mode
+ NO FLAG → Default Mode
+     ↓
+     [Light Orchestrator] → [Builder] → [Gates] → Done
+
+ -tweak FLAG → Tweak Mode
+     ↓
+     [Light Orchestrator] → [Builder] → Done (no gates)
+
+ --complex FLAG → Complex Mode
       ↓
       [Spec Required] → [Grand Architect] → [Full Pipeline] → Done
 ```
@@ -91,9 +91,9 @@ User Request
 /orca-{domain} Command (orchestrator)
     ↓
 [Three-Tier Routing] [NEW in 2.3]
-    ├─ Default → Light + Gates
-    ├─ -tweak → Light only
-    └─ --complex → Full pipeline
+     Default → Light + Gates
+     -tweak → Light only
+     --complex → Full pipeline
     ↓
 Memory-First Search (Workshop + vibe.db) [MANDATORY]
     ↓
@@ -142,7 +142,7 @@ Output + Learning
 
 #### Role Boundary Enforcement (NEW in OS 2.2)
 ```
-🚨 CRITICAL: Orchestrators NEVER write code
+ CRITICAL: Orchestrators NEVER write code
 
 **What Orchestrators DO:**
 - Read phase_state.json
@@ -311,31 +311,31 @@ All gates use numerical scores with ≥90 threshold:
 The OS 2.2 memory architecture cleanly separates concerns:
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    OS 2.2 MEMORY ARCHITECTURE                    │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌──────────────────┐  ┌──────────────────┐  ┌────────────────┐ │
-│  │    Workshop      │  │     vibe.db      │  │  project-meta  │ │
-│  │  (Session Mem)   │  │  (Code Intel)    │  │ (Stable Config)│ │
-│  ├──────────────────┤  ├──────────────────┤  ├────────────────┤ │
-│  │ • Decisions      │  │ • Code chunks    │  │ • Project type │ │
-│  │ • Gotchas        │  │ • Symbols        │  │ • Dependencies │ │
-│  │ • Learnings      │  │ • Embeddings     │  │ • Design tokens│ │
-│  │ • Task history   │  │ • Hybrid search  │  │ • Build config │ │
-│  └────────┬─────────┘  └────────┬─────────┘  └───────┬────────┘ │
-│           │                     │                     │          │
-│           └─────────────────────┼─────────────────────┘          │
-│                                 │                                │
-│                                 ▼                                │
-│              ┌──────────────────────────────────┐                │
-│              │    ProjectContext MCP v2.2       │                │
-│              │       (Task Bundler)             │                │
-│              │   Queries ALL sources for        │                │
-│              │   agent context bundles          │                │
-│              └──────────────────────────────────┘                │
-│                                                                  │
-└─────────────────────────────────────────────────────────────────┘
+
+                    OS 2.2 MEMORY ARCHITECTURE                    
+
+                                                                  
+       
+      Workshop             vibe.db          project-meta   
+    (Session Mem)       (Code Intel)       (Stable Config) 
+       
+   • Decisions         • Code chunks       • Project type  
+   • Gotchas           • Symbols           • Dependencies  
+   • Learnings         • Embeddings        • Design tokens 
+   • Task history      • Hybrid search     • Build config  
+       
+                                                               
+                     
+                                                                 
+                                                                 
+                              
+                  ProjectContext MCP v2.2                       
+                     (Task Bundler)                             
+                 Queries ALL sources for                        
+                 agent context bundles                          
+                              
+                                                                  
+
 ```
 
 #### Workshop (Session Memory)
@@ -391,58 +391,58 @@ The OS 2.2 memory architecture cleanly separates concerns:
 
 ```
 ~/.claude/
-├── agents/                    # OS 2.2 agent definitions (57 total)
-│   ├── ios/                   # iOS team (18 agents)
-│   ├── nextjs/                # Next.js team (13 agents)
-│   ├── expo/                  # Expo team (10 agents)
-│   ├── data/                  # Data team (4 agents)
-│   ├── seo/                   # SEO team (4 agents)
-│   └── design/                # Design team (2 agents)
-├── commands/                  # Orchestrator commands
-│   ├── plan.md                # Unified planner
-│   ├── audit.md               # Meta-audit
-│   ├── project-memory.md      # NEW: Workshop interface
-│   ├── project-code.md        # NEW: vibe.db interface
-│   ├── project-meta.md        # NEW: project-meta interface
-│   ├── orca.md                # Main orchestrator
-│   ├── orca-ios.md            # iOS lane
-│   ├── orca-nextjs.md         # Next.js lane
-│   ├── orca-expo.md           # Expo lane
-│   └── orca-data.md           # Data lane
-├── mcp/                       # MCP servers
-│   ├── project-context-server/ # v2.2 - queries Workshop + vibe.db
-│   ├── project-meta-server/   # NEW: Stable project metadata
-│   ├── shared-context/        # Cross-session caching
-│   └── sequential-thinking/   # Deep reasoning
-├── scripts/                   # Helper scripts
-│   ├── init-memory.sh         # Initialize OS 2.2 memory
-│   └── vibe-sync.py           # vibe.db management
-└── hooks/                     # Session hooks
-    ├── session-start.sh       # Load context
-    └── session-end.sh         # Save session summary
+ agents/                    # OS 2.2 agent definitions (57 total)
+    ios/                   # iOS team (18 agents)
+    nextjs/                # Next.js team (13 agents)
+    expo/                  # Expo team (10 agents)
+    data/                  # Data team (4 agents)
+    seo/                   # SEO team (4 agents)
+    design/                # Design team (2 agents)
+ commands/                  # Orchestrator commands
+    plan.md                # Unified planner
+    audit.md               # Meta-audit
+    project-memory.md      # NEW: Workshop interface
+    project-code.md        # NEW: vibe.db interface
+    project-meta.md        # NEW: project-meta interface
+    orca.md                # Main orchestrator
+    orca-ios.md            # iOS lane
+    orca-nextjs.md         # Next.js lane
+    orca-expo.md           # Expo lane
+    orca-data.md           # Data lane
+ mcp/                       # MCP servers
+    project-context-server/ # v2.2 - queries Workshop + vibe.db
+    project-meta-server/   # NEW: Stable project metadata
+    shared-context/        # Cross-session caching
+    sequential-thinking/   # Deep reasoning
+ scripts/                   # Helper scripts
+    init-memory.sh         # Initialize OS 2.2 memory
+    vibe-sync.py           # vibe.db management
+ hooks/                     # Session hooks
+     session-start.sh       # Load context
+     session-end.sh         # Save session summary
 
 <project>/.claude/
-├── memory/                    # OS 2.2 MEMORY SYSTEM
-│   ├── workshop.db            # Session memory (decisions, gotchas)
-│   └── vibe.db                # Code intelligence (chunks, symbols)
-├── orchestration/
-│   ├── phase_state.json       # State preservation
-│   ├── evidence/              # Final artifacts
-│   └── temp/                  # Working files (clean up after session)
-├── cache/                     # Context caching
-│   └── .project-meta-init     # project-meta marker
-└── requirements/              # Planning outputs
-    └── YYYY-MM-DD-HHMM-<slug>/
-        └── 06-requirements-spec.md
+ memory/                    # OS 2.2 MEMORY SYSTEM
+    workshop.db            # Session memory (decisions, gotchas)
+    vibe.db                # Code intelligence (chunks, symbols)
+ orchestration/
+    phase_state.json       # State preservation
+    evidence/              # Final artifacts
+    temp/                  # Working files (clean up after session)
+ cache/                     # Context caching
+    .project-meta-init     # project-meta marker
+ requirements/              # Planning outputs
+     YYYY-MM-DD-HHMM-<slug>/
+         06-requirements-spec.md
 
 claude-vibe-config/            # This repo (mirror/record)
-├── agents/                    # Agent records
-├── commands/                  # Command records
-├── mcp/                       # Custom MCP records
-├── scripts/                   # Script records
-├── docs/                      # Documentation
-├── quick-reference/           # This reference
-└── .deprecated/               # Archived content
+ agents/                    # Agent records
+ commands/                  # Command records
+ mcp/                       # Custom MCP records
+ scripts/                   # Script records
+ docs/                      # Documentation
+ quick-reference/           # This reference
+ .deprecated/               # Archived content
 ```
 
 ---
@@ -512,9 +512,9 @@ User Request: "Add dark mode support"
     ↓
     Output: .claude/requirements/2025-11-24-1430-dark-mode/06-requirements-spec.md
     ↓
-User: "/orca-nextjs implement requirement 2025-11-24-1430-dark-mode using that spec"
+User: "/nextjs implement requirement 2025-11-24-1430-dark-mode using that spec"
     ↓
-/orca-nextjs Command (orchestrator mode)
+/nextjs Command (orchestrator mode)
     ↓
 Phase 1: ProjectContextServer Query [MANDATORY]
     ↓
@@ -589,38 +589,38 @@ Later: /audit "last 5 tasks"
 ```
 User: "Add dark mode"
     ↓
-/orca-nextjs
+/nextjs
     ↓
 Planning phase (via agent)
     ↓
 [User asks: "Will this work with existing styles?"]
     ↓
-❌ Orchestrator abandons agent system
-❌ Orchestrator starts coding directly
-❌ Entire agentic system bypassed
+ Orchestrator abandons agent system
+ Orchestrator starts coding directly
+ Entire agentic system bypassed
 ```
 
 ### The Solution (OS 2.2)
 ```
 User: "Add dark mode"
     ↓
-/orca-nextjs
+/nextjs
     ↓
 Planning phase (via agent)
     ↓
 [User asks: "Will this work with existing styles?"]
     ↓
-✅ Orchestrator reads phase_state.json
-✅ Orchestrator processes question
-✅ Orchestrator updates context
-✅ Orchestrator delegates to appropriate agent
-✅ Pipeline continues
+ Orchestrator reads phase_state.json
+ Orchestrator processes question
+ Orchestrator updates context
+ Orchestrator delegates to appropriate agent
+ Pipeline continues
 ```
 
 ### Enforcement Mechanism
 Every orca command includes:
 ```markdown
-## 🚨 CRITICAL ROLE BOUNDARY 🚨
+##  CRITICAL ROLE BOUNDARY 
 
 **YOU ARE AN ORCHESTRATOR. YOU NEVER WRITE CODE.**
 

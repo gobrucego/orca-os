@@ -13,20 +13,20 @@ allowed-tools:
   - Glob
 ---
 
-# /orca-nextjs – Next.js Lane Orchestrator (OS 2.4)
+# /nextjs - Next.js Lane Orchestrator (OS 2.4)
 
 Use this command for Next.js / frontend UI work.
 
 ## Usage
 
 ```bash
-/orca-nextjs "update the pricing page layout"           # Default: light path + design gates
-/orca-nextjs -tweak "fix button spacing"                # Fast: light path, no gates
-/orca-nextjs --complex "multi-page feature"             # Full: grand-architect + all gates
-/orca-nextjs "implement requirement 2025-11-25-0930-dashboard"  # Full path with spec
+/nextjs "update the pricing page layout"           # Default: light path + design gates
+/nextjs -tweak "fix button spacing"                # Fast: light path, no gates
+/nextjs --complex "multi-page feature"             # Full: grand-architect + all gates
+/nextjs "implement requirement 2025-11-25-0930-dashboard"  # Full path with spec
 ```
 
-## 🚨 CRITICAL ROLE BOUNDARY 🚨
+##  CRITICAL ROLE BOUNDARY 
 
 **YOU ARE AN ORCHESTRATOR. YOU NEVER WRITE CODE.**
 
@@ -144,7 +144,7 @@ When `--audit` is detected:
      - Structural/standards issues
      - Design inconsistencies
      - Perf/a11y/SEO risks
-     - Suggested follow-up tasks (each one can become a `/plan` + `/orca-nextjs` implementation later).
+     - Suggested follow-up tasks (each one can become a `/plan` + `/nextjs` implementation later).
 
 5. **(Optional) Save audit history**
    - Use `mcp__project-context__save_task_history` with:
@@ -220,14 +220,14 @@ Options:
 2. Look for `.claude/requirements/<id>/06-requirements-spec.md`
 3. **If spec NOT found:**
    ```
-   ⛔ BLOCKED: Complex task requires a spec.
+    BLOCKED: Complex task requires a spec.
 
    This task appears to involve multiple pages or architectural decisions.
    Please run:
      /plan "<task description>"
 
    Then return with:
-     /orca-nextjs "implement requirement <id>"
+     /nextjs "implement requirement <id>"
    ```
 4. **If spec found:**
    - Record `requirement_id` and `requirements_spec_path` in phase_state
@@ -356,14 +356,21 @@ Record `complexity_tier` in `phase_state.intake.complexity_tier` before proceedi
 
 ### 3.1 Team Confirmation (MANDATORY - BLOCKING)
 
-**⛔ DO NOT PROCEED TO SECTION 3.2 WITHOUT USER CONFIRMATION**
+**DO NOT PROCEED TO SECTION 3.2 WITHOUT USER CONFIRMATION**
 
-Use AskUserQuestion to confirm. **WAIT FOR RESPONSE.**
+**This is a TWO-STEP process. You MUST do both steps.**
 
-```
-Detected: Next.js task (complexity: medium/complex)
+#### Step A: OUTPUT the team (VISIBLE MARKDOWN - NOT inside AskUserQuestion)
 
-Proposed Pipeline:
+**FIRST, output this as regular markdown so the user can see it:**
+
+```markdown
+## Proposed Next.js Pipeline
+
+**Request:** [the task]
+**Complexity:** [simple/medium/complex]
+
+### Phases
 1. Context Query (ProjectContext)
 2. Grand Architect (nextjs-grand-architect) - architecture decisions
 3. Planning (nextjs-architect) - detailed plan
@@ -372,32 +379,56 @@ Proposed Pipeline:
 6. Gates (nextjs-standards-enforcer, nextjs-design-reviewer)
 7. Verification (nextjs-verification-agent)
 
-Proposed Agents:
-- nextjs-grand-architect
-- nextjs-architect
-- nextjs-layout-analyzer
-- nextjs-builder
-- [specialists based on task - see 3.1.1]
-- nextjs-standards-enforcer
-- nextjs-design-reviewer
-- nextjs-verification-agent
+### Agent Team
+| Role | Agent |
+|------|-------|
+| Coordination | nextjs-grand-architect |
+| Architecture | nextjs-architect |
+| Layout Analysis | nextjs-layout-analyzer |
+| Implementation | nextjs-builder |
+| Specialists | [list relevant ones based on 3.1.1] |
+| Standards Gate | nextjs-standards-enforcer |
+| Design Gate | nextjs-design-reviewer |
+| Verification | nextjs-verification-agent |
 
-Options:
-- Proceed as planned
-- Adjust team/phases
-- Switch to light path (-tweak)
+### Files Likely Affected
+- [list from ContextBundle or memory]
+
+### Risks/Notes
+- [any identified risks]
 ```
 
-**After presenting this:**
+**This MUST be visible output BEFORE you call AskUserQuestion.**
+
+#### Step B: THEN ask for confirmation (simple yes/no)
+
+```typescript
+AskUserQuestion({
+  questions: [{
+    question: "Proceed with this pipeline?",
+    header: "Confirm",
+    multiSelect: false,
+    options: [
+      { label: "Yes, proceed", description: "Execute the plan shown above" },
+      { label: "Modify team", description: "I want to change agents or approach" },
+      { label: "Switch to -tweak", description: "Skip gates, use light path" }
+    ]
+  }]
+})
+```
+
+**After presenting the confirmation question:**
 1. STOP and wait for user response
-2. If user says "proceed" → continue to 3.2
-3. If user modifies team → update and re-confirm
-4. If user rejects → STOP pipeline
+2. If user says "Yes, proceed" → continue to 3.2
+3. If user says "Modify team" → ask what to change, update, re-output team, re-confirm
+4. If user says "Switch to -tweak" → delegate to nextjs-builder directly (Section 2)
 
 **Anti-patterns (WRONG):**
-- Showing the team then immediately delegating to grand-architect
+- Putting the team list inside AskUserQuestion options
+- Showing team and question in the same tool call
 - "I'll proceed with this team..." without waiting
 - Any delegation before explicit user confirmation
+- Describing the team only in the question description
 
 #### 3.1.1 Intent-Aware Specialist Selection
 
@@ -509,7 +540,7 @@ Delegate to `nextjs-builder`:
 - Accessibility: `nextjs-accessibility-specialist`
 - SEO: `nextjs-seo-specialist`
 
-**⚠️ Use ONLY the specialists confirmed in Section 3.1.**
+** Use ONLY the specialists confirmed in Section 3.1.**
 Do not add specialists that weren't in the confirmed team.
 
 Update phase_state.implementation_pass1.

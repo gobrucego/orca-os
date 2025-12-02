@@ -283,14 +283,14 @@ node scripts/kg-query.mjs mechpath <peptideId> <conditionId> [maxDepth]
 
 ```
 .claude/research/
-├── evidence/
-│   ├── kg-topic-<slug>.json     ← KG topic brief
-│   ├── kg-<subquestion>.json    ← KG evidence notes
-│   ├── kg-mech-<id>.json        ← Mechanism evidence notes
-│   └── web-<subquestion>.md     ← Web evidence notes
-├── reports/
-│   └── <topic>-report.md        ← Final reports
-└── cache/                       ← Optional cached results
+ evidence/
+    kg-topic-<slug>.json     ← KG topic brief
+    kg-<subquestion>.json    ← KG evidence notes
+    kg-mech-<id>.json        ← Mechanism evidence notes
+    web-<subquestion>.md     ← Web evidence notes
+ reports/
+    <topic>-report.md        ← Final reports
+ cache/                       ← Optional cached results
 ```
 
 ---

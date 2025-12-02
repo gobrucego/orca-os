@@ -5,43 +5,43 @@ This shows the actual dashboard with realistic metrics and activity data.
 ## Loaded State (Default)
 
 ```
-╭──────────────────────────────────────────────────────────────────────────────╮
-│ Dashboard                                                  Sarah Johnson ▼   │
-├──────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│  Welcome back, Sarah! Here's what's happening today.                         │
-│                                                                              │
-│  ╭───────────────────╮  ╭───────────────────╮  ╭──────────────────────╮    │
-│  │ Revenue           │  │ Active Users      │  │ Growth               │    │
-│  │ ─────────────────  │  │ ─────────────────  │  │ ───────────────────   │    │
-│  │ $24,567           │  │ 1,234             │  │ +12.5%               │    │
-│  │ +8.3% ↗           │  │ +45 today         │  │ MoM                  │    │
-│  ╰───────────────────╯  ╰───────────────────╯  ╰──────────────────────╯    │
-│                                                                              │
-│  Recent Activity                                                             │
-│  ╭────────────────────────────────────────────────────────────────────────╮ │
-│  │ • John Doe signed up                              2 minutes ago       │ │
-│  │ • New order #1234 received                       5 minutes ago       │ │
-│  │ • Sarah Johnson updated profile                  8 minutes ago       │ │
-│  │ • Mike Smith completed onboarding               15 minutes ago       │ │
-│  │ • System backup completed successfully          22 minutes ago       │ │
-│  ╰────────────────────────────────────────────────────────────────────────╯ │
-│                                                                              │
-╰──────────────────────────────────────────────────────────────────────────────╯
+
+ Dashboard                                                  Sarah Johnson    
+
+                                                                              
+  Welcome back, Sarah! Here's what's happening today.                         
+                                                                              
+          
+   Revenue              Active Users         Growth                   
+                    
+   $24,567              1,234                +12.5%                   
+   +8.3% ↗              +45 today            MoM                      
+          
+                                                                              
+  Recent Activity                                                             
+   
+   • John Doe signed up                              2 minutes ago        
+   • New order #1234 received                       5 minutes ago        
+   • Sarah Johnson updated profile                  8 minutes ago        
+   • Mike Smith completed onboarding               15 minutes ago        
+   • System backup completed successfully          22 minutes ago        
+   
+                                                                              
+
 ```
 
 ## Loading State
 
 ```
-╭──────────────────────────────────────────────────────────────────────────────╮
-│ Dashboard                                                  Sarah Johnson ▼   │
-├──────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│                                                                              │
-│                          ⠋ Loading dashboard...                             │
-│                                                                              │
-│                                                                              │
-╰──────────────────────────────────────────────────────────────────────────────╯
+
+ Dashboard                                                  Sarah Johnson    
+
+                                                                              
+                                                                              
+                           Loading dashboard...                             
+                                                                              
+                                                                              
+
 ```
 
 ## Data Context
@@ -110,7 +110,7 @@ This screen composition includes:
 
 1. **Top Bar**
    - Dashboard title (left)
-   - User dropdown menu (right): "Sarah Johnson ▼"
+   - User dropdown menu (right): "Sarah Johnson "
 
 2. **Greeting Section**
    - Personalized message: "Welcome back, Sarah!"

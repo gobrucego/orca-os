@@ -252,7 +252,7 @@ See [Self-Improvement](concepts/self-improvement.md) for details.
 
 **New Commands**
 - `/root-cause` - Multi-lane diagnostic investigation
-- Domain audit: `/orca-ios --audit`, `/orca-nextjs --audit`, etc.
+- Domain audit: `/ios --audit`, `/nextjs --audit`, etc.
 
 ### Lane Updates
 

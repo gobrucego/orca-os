@@ -47,8 +47,8 @@ The Shopify pipeline uses three-tier routing:
 Most tasks take this path. Fast execution with automated quality checks.
 
 ```bash
-/orca-shopify "fix card spacing"        # → light orchestrator → specialist → gates
-/orca-shopify "update button color"     # → light orchestrator → specialist → gates
+/shopify "fix card spacing"        # → light orchestrator → specialist → gates
+/shopify "update button color"     # → light orchestrator → specialist → gates
 ```
 
 **Gate run:** `shopify-theme-checker`
@@ -58,7 +58,7 @@ Most tasks take this path. Fast execution with automated quality checks.
 Pure speed path. User explicitly accepts responsibility for verification.
 
 ```bash
-/orca-shopify -tweak "fix padding"        # → light orchestrator → specialist → done
+/shopify -tweak "fix padding"        # → light orchestrator → specialist → done
 ```
 
 ### Complex Mode (`--complex`)
@@ -66,8 +66,8 @@ Pure speed path. User explicitly accepts responsibility for verification.
 Full pipeline with grand-architect planning. Spec required.
 
 ```bash
-/orca-shopify --complex "implement new section"   # → full pipeline
-/orca-shopify "build cart drawer component"       # Auto-routes to --complex
+/shopify --complex "implement new section"   # → full pipeline
+/shopify "build cart drawer component"       # Auto-routes to --complex
 ```
 
 | Tier | Files | Spec Required | Example |
@@ -87,11 +87,11 @@ Request (Shopify theme feature/bug/refactor)
     ↓
 [Phase 0.5: Complexity Classification]
     ↓
-├─ DEFAULT → [Light Orchestrator] → Specialist → Theme Check Gate → Done
-│
-├─ TWEAK → [Light Orchestrator] → Specialist → Done (skip gates)
-│
-├─ COMPLEX:
+ DEFAULT → [Light Orchestrator] → Specialist → Theme Check Gate → Done
+
+ TWEAK → [Light Orchestrator] → Specialist → Done (skip gates)
+
+ COMPLEX:
     ↓
 [Phase 1: Spec Check] ← Complex requires .claude/requirements/<id>/06-requirements-spec.md
     ↓
@@ -106,8 +106,8 @@ Request (Shopify theme feature/bug/refactor)
 [Phase 6: Verification Gate (Theme Checker)]
     ↓
 Decision Point:
-├─ Theme Check passes → [Phase 7: Completion]
-└─ Theme Check fails → [Phase 5b: Corrective Pass] (ONE corrective pass)
+ Theme Check passes → [Phase 7: Completion]
+ Theme Check fails → [Phase 5b: Corrective Pass] (ONE corrective pass)
     ↓
 [Phase 6b: Re-verification]
     ↓
@@ -120,7 +120,7 @@ Decision Point:
 
 ### Phase 0: Memory-First Context
 
-**Agent:** `/orca-shopify`
+**Agent:** `/shopify`
 **Purpose:** Check local memory before expensive ProjectContext queries
 
 **Actions:**
@@ -138,7 +138,7 @@ python3 ~/.claude/scripts/memory-search-unified.py "$TASK_KEYWORDS" --mode all -
 
 ### Phase 0.5: Complexity Classification
 
-**Agent:** `/orca-shopify`
+**Agent:** `/shopify`
 **Purpose:** Route to appropriate path based on task complexity
 
 **Heuristics:**
@@ -157,7 +157,7 @@ python3 ~/.claude/scripts/memory-search-unified.py "$TASK_KEYWORDS" --mode all -
 
 ### Phase 1: Spec Check (Complex Only)
 
-**Agent:** `/orca-shopify`
+**Agent:** `/shopify`
 **Purpose:** Gate complex work behind requirements specs
 
 **Check:**
@@ -171,7 +171,7 @@ ls .claude/requirements/*/06-requirements-spec.md 2>/dev/null | head -5
 
 ### Phase 2: Team Confirmation
 
-**Agent:** `/orca-shopify`
+**Agent:** `/shopify`
 **Purpose:** Get user approval before proceeding
 
 Present proposed team and allow adjustments before execution.
@@ -181,7 +181,7 @@ Present proposed team and allow adjustments before execution.
 ### Phase 3: ProjectContext Query (MANDATORY)
 
 **Agent:** ProjectContextServer (MCP tool)
-**Invoker:** `/orca-shopify`
+**Invoker:** `/shopify`
 
 **Input:**
 ```json
@@ -434,7 +434,7 @@ Agents communicate via `phase_state.json` at `.claude/orchestration/phase_state.
 
 ### Handoff Protocol
 
-**Phase 1: /orca-shopify → shopify-grand-architect**
+**Phase 1: /shopify → shopify-grand-architect**
 - **Input:** User request + ContextBundle from ProjectContextServer.
 - **Output:** Task analysis with specialists needed.
 - **Signal:** `phase_state.json` updated with `task_analysis`.

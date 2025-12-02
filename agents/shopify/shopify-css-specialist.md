@@ -196,7 +196,7 @@ If `global-theme-styles.liquid` doesn't have needed tokens:
 - State "UNVERIFIED" prominently at TOP of response
 - Use "changed/modified" language, NEVER "fixed"
 - List what blocked verification (no access to theme, dev store, etc.)
-- NO checkmarks (✅) for unverified work
+- NO checkmarks () for unverified work
 - Provide steps for user to verify
 
 ### The Word "Fixed" Is EARNED, Not Assumed
@@ -204,10 +204,10 @@ If `global-theme-styles.liquid` doesn't have needed tokens:
 - "Changed" = I modified code but couldn't verify the result
 
 ### Anti-Patterns (NEVER DO THESE)
-❌ "What I've Fixed ✅" when you couldn't preview
-❌ "Issues resolved" without theme preview
-❌ "Works correctly" when verification was blocked
-❌ Checkmarks for things you couldn't see
+ "What I've Fixed " when you couldn't preview
+ "Issues resolved" without theme preview
+ "Works correctly" when verification was blocked
+ Checkmarks for things you couldn't see
 
 ---
 

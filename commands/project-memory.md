@@ -18,31 +18,31 @@ Based on the arguments, execute ONE of the following:
 Show memory system status:
 
 ```bash
-echo "═══════════════════════════════════════════════════════════"
+echo ""
 echo "  Project Memory Status"
-echo "═══════════════════════════════════════════════════════════"
+echo ""
 echo ""
 
 # Workshop status
 if [ -f ".claude/memory/workshop.db" ]; then
-    echo "Workshop: ✅ .claude/memory/workshop.db"
+    echo "Workshop:  .claude/memory/workshop.db"
     workshop --workspace .claude/memory info 2>/dev/null || echo "  (run 'workshop info' for details)"
 else
-    echo "Workshop: ❌ Not initialized"
+    echo "Workshop:  Not initialized"
 fi
 echo ""
 
 # vibe.db status
 if [ -f ".claude/memory/vibe.db" ]; then
-    echo "vibe.db: ✅ .claude/memory/vibe.db"
+    echo "vibe.db:  .claude/memory/vibe.db"
     python3 ~/.claude/scripts/vibe-sync.py status 2>/dev/null || echo "  (run 'vibe-sync.py status' for details)"
 else
-    echo "vibe.db: ❌ Not initialized"
+    echo "vibe.db:  Not initialized"
 fi
 echo ""
 
 # Recent activity
-echo "─────────────────────────────────────────────────────────────"
+echo ""
 echo "Recent Activity:"
 workshop --workspace .claude/memory recent --limit 5 2>/dev/null || echo "  (no recent activity)"
 ```
@@ -165,7 +165,7 @@ workshop --workspace .claude/memory read -t <type> --full --limit 50
 
 ```
 Review: Gotchas (12 entries)
-═══════════════════════════════════════════════════════════════════════════════
+
 
 | ID  | Date       | Content                                          | Tags          |
 |-----|------------|--------------------------------------------------|---------------|
@@ -226,7 +226,7 @@ Show available subcommands:
 
 ```
 Project Memory Commands (/project-memory)
-═══════════════════════════════════════════════════════════
+
 
 Status & Init:
   /project-memory                 Show memory status

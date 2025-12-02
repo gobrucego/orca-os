@@ -48,8 +48,8 @@ The Expo pipeline uses three-tier routing:
 Most tasks take this path. Fast execution with automated quality checks.
 
 ```bash
-/orca-expo "fix button spacing"        # → light orchestrator → builder → gates
-/orca-expo "change label text"         # → light orchestrator → builder → gates
+/expo "fix button spacing"        # → light orchestrator → builder → gates
+/expo "change label text"         # → light orchestrator → builder → gates
 ```
 
 **Gates run:** `design-token-guardian` + `expo-aesthetics-specialist`
@@ -59,7 +59,7 @@ Most tasks take this path. Fast execution with automated quality checks.
 Pure speed path. User explicitly accepts responsibility for verification.
 
 ```bash
-/orca-expo -tweak "fix padding"        # → light orchestrator → builder → done
+/expo -tweak "fix padding"        # → light orchestrator → builder → done
 ```
 
 ### Complex Mode (`--complex`)
@@ -67,8 +67,8 @@ Pure speed path. User explicitly accepts responsibility for verification.
 Full pipeline with grand-orchestrator planning. Spec required.
 
 ```bash
-/orca-expo --complex "implement auth flow"   # → full pipeline
-/orca-expo "build offline sync"              # Auto-routes to --complex
+/expo --complex "implement auth flow"   # → full pipeline
+/expo "build offline sync"              # Auto-routes to --complex
 ```
 
 | Tier | Files | Spec Required | Example |
@@ -578,19 +578,19 @@ Request (Expo/React Native)
     ↓
 [Phase 5: Standards & Budgets]
     ↓
-  ┌─────────────────────────────────────────────┐
-  │  Design Token Guardian (design tokens)     │
-  │  A11y Enforcer (WCAG 2.2)                  │
-  │  Performance Enforcer (runtime budgets)    │
-  └─────────────────────────────────────────────┘
+  
+    Design Token Guardian (design tokens)     
+    A11y Enforcer (WCAG 2.2)                  
+    Performance Enforcer (runtime budgets)    
+  
     ↓
 [Phase 6: Power Checks (optional)]
-  ├─ Performance Prophet (predictive perf)
-  └─ Security Specialist (OWASP mobile)
+   Performance Prophet (predictive perf)
+   Security Specialist (OWASP mobile)
     ↓
 Decision Point:
-├─ All gates ≥ thresholds → [Phase 7: Verification]
-└─ Any gate fails → [Phase 4b: Implementation - Pass 2] (ONE corrective pass)
+ All gates ≥ thresholds → [Phase 7: Verification]
+ Any gate fails → [Phase 4b: Implementation - Pass 2] (ONE corrective pass)
     ↓
 [Phase 7: Verification] (build/test)
     ↓
@@ -688,9 +688,9 @@ Decision Point:
 - **Parallel:** Multiple `expo-builder-agent` instances work concurrently on independent components
 
 Use parallel deployment when:
-- ✅ Multiple independent screens/components (different files, no shared state)
-- ✅ No inter-dependencies (component A doesn't need B's output)
-- ✅ Same implementation scope (all UI wiring, or all data layer work, etc.)
+-  Multiple independent screens/components (different files, no shared state)
+-  No inter-dependencies (component A doesn't need B's output)
+-  Same implementation scope (all UI wiring, or all data layer work, etc.)
 
 See `commands/orca.md` Section 7.3 and `.claude/orchestration/playbooks/parallel-agent-deployment.md` for implementation details.
 
@@ -880,10 +880,10 @@ This section documents common failure modes and standard recovery protocols for 
 2. Trigger **Phase 4b: Corrective Pass 2** with scope limited to design token violations
 3. For each violation:
    ```typescript
-   // ❌ Before (violation)
+   //  Before (violation)
    <View style={{ backgroundColor: '#007AFF', padding: 16 }} />
 
-   // ✅ After (compliant)
+   //  After (compliant)
    const { colors, spacing } = useTheme();
    <View style={{ backgroundColor: colors.primary, padding: spacing.md }} />
    ```
@@ -930,12 +930,12 @@ This section documents common failure modes and standard recovery protocols for 
    - **MEDIUM:** Hints, state announcements
 4. Example fix:
    ```typescript
-   // ❌ Before (WCAG 4.1.2 violation)
+   //  Before (WCAG 4.1.2 violation)
    <TouchableOpacity onPress={onPress}>
      <Icon name="cart" size={20} />
    </TouchableOpacity>
 
-   // ✅ After (compliant)
+   //  After (compliant)
    <TouchableOpacity
      onPress={onPress}
      accessibilityLabel="Add to cart"
@@ -980,19 +980,19 @@ This section documents common failure modes and standard recovery protocols for 
 
    **Bundle Size:**
    ```typescript
-   // ❌ Heavy import
+   //  Heavy import
    import moment from 'moment'; // 983KB
 
-   // ✅ Lightweight alternative
+   //  Lightweight alternative
    import { format } from 'date-fns'; // 71KB
    ```
 
    **FlatList Performance:**
    ```typescript
-   // ❌ No optimization
+   //  No optimization
    <FlatList data={products} renderItem={({item}) => <ProductCard product={item} />} />
 
-   // ✅ Optimized
+   //  Optimized
    const ProductCardMemo = React.memo(ProductCard);
    const getItemLayout = (data, index) => ({
      length: 120, offset: 120 * index, index
@@ -1043,10 +1043,10 @@ This section documents common failure modes and standard recovery protocols for 
 
    **M2: Insecure Storage**
    ```typescript
-   // ❌ CRITICAL (CVSS 9.1)
+   //  CRITICAL (CVSS 9.1)
    await AsyncStorage.setItem('authToken', token);
 
-   // ✅ SECURE
+   //  SECURE
    import * as SecureStore from 'expo-secure-store';
    await SecureStore.setItemAsync('authToken', token, {
      keychainAccessible: SecureStore.WHEN_UNLOCKED
@@ -1055,10 +1055,10 @@ This section documents common failure modes and standard recovery protocols for 
 
    **M3: Insecure Communication**
    ```typescript
-   // ❌ CRITICAL (CVSS 8.2)
+   //  CRITICAL (CVSS 8.2)
    fetch('http://api.example.com/payment')
 
-   // ✅ SECURE
+   //  SECURE
    fetch('https://api.example.com/payment', {
      headers: {
        'Content-Type': 'application/json',
@@ -1109,7 +1109,7 @@ This section documents common failure modes and standard recovery protocols for 
 
    # Example failure:
    # FAIL src/hooks/useAuth.test.ts
-   # ● useAuth › should logout user
+   #  useAuth › should logout user
    #   Expected: user to be null after logout
    #   Received: user still present
    ```
@@ -1118,11 +1118,11 @@ This section documents common failure modes and standard recovery protocols for 
 
 4. **For build errors:**
    ```typescript
-   // ❌ TypeScript error
+   //  TypeScript error
    // Property 'name' does not exist on type 'Product'
    <Text>{product.name}</Text>
 
-   // ✅ Fix type definition
+   //  Fix type definition
    interface Product {
      id: string;
      name: string;  // ← Add missing field
@@ -1152,18 +1152,18 @@ This section documents common failure modes and standard recovery protocols for 
 Gate Failure Detected
     ↓
 Is it a CRITICAL issue? (Security CVSS 9+, Accessibility WCAG A violation)
-    ├─ YES → BLOCK: Fix immediately, do not proceed
-    └─ NO → Continue
+     YES → BLOCK: Fix immediately, do not proceed
+     NO → Continue
         ↓
 Have we already done Pass 2 (corrective)?
-    ├─ NO → Trigger Phase 4b (Pass 2) with scoped fixes
-    │        ↓
-    │    Re-run failed gates
-    │        ↓
-    │    Gates pass? → Proceed to Phase 7
-    │    Gates fail? → Mark "partial", user decides next steps
-    │
-    └─ YES (already did Pass 2) → Mark "partial", consult user
+     NO → Trigger Phase 4b (Pass 2) with scoped fixes
+            ↓
+        Re-run failed gates
+            ↓
+        Gates pass? → Proceed to Phase 7
+        Gates fail? → Mark "partial", user decides next steps
+    
+     YES (already did Pass 2) → Mark "partial", consult user
              ↓
          Options:
          1. Manual intervention (design review, security audit)

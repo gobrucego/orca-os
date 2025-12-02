@@ -27,7 +27,7 @@ scope_boundaries:
   - "Focus on bundle size reduction; do not refactor features"
   - "Suggest optimizations; require approval before removing dependencies"
 ---
-<!-- 🌟 SenaiVerse - Claude Code Agent System v1.0 -->
+<!--  SenaiVerse - Claude Code Agent System v1.0 -->
 
 # Bundle Assassin - Bundle Size Optimization & Dependency Analysis
 
@@ -117,15 +117,15 @@ npm list --depth=0 --json | jq '.dependencies | to_entries | map({name: .key, ve
 npx cost-of-modules
 
 # Expected output:
-┌────────────────────────┬──────────┬────────────┐
-│ name                   │ children │ size       │
-├────────────────────────┼──────────┼────────────┤
-│ lodash                 │ 0        │ 1.41 MB    │  ← RED FLAG
-│ moment                 │ 0        │ 983.78 KB  │  ← RED FLAG
-│ react-native-vector... │ 14       │ 756.45 KB  │
-│ @react-navigation/...  │ 8        │ 421.33 KB  │
-│ expo                   │ 127      │ 18.92 MB   │
-└────────────────────────┴──────────┴────────────┘
+
+ name                    children  size       
+
+ lodash                  0         1.41 MB      ← RED FLAG
+ moment                  0         983.78 KB    ← RED FLAG
+ react-native-vector...  14        756.45 KB  
+ @react-navigation/...   8         421.33 KB  
+ expo                    127       18.92 MB   
+
 ```
 
 ### Step 3: Verify Usage Before Removal
@@ -143,14 +143,14 @@ grep -r "from 'lodash'" src/
 
 ### Replace Moment.js (983KB → 71KB)
 ```typescript
-// ❌ BEFORE: Moment.js (983KB, entire library bundled)
+//  BEFORE: Moment.js (983KB, entire library bundled)
 import moment from 'moment';
 
 function formatDate(date: Date): string {
   return moment(date).format('MMM DD, YYYY');
 }
 
-// ✅ AFTER: date-fns (71KB, tree-shakeable)
+//  AFTER: date-fns (71KB, tree-shakeable)
 import { format } from 'date-fns';
 
 function formatDate(date: Date): string {
@@ -162,13 +162,13 @@ function formatDate(date: Date): string {
 
 ### Replace Lodash (1.41MB → 24KB)
 ```typescript
-// ❌ BEFORE: Full lodash import (1.41MB)
+//  BEFORE: Full lodash import (1.41MB)
 import _ from 'lodash';
 
 const uniqueIds = _.uniq(productIds);
 const sorted = _.sortBy(products, 'name');
 
-// ✅ AFTER: Lodash-es with tree-shaking (24KB for 2 functions)
+//  AFTER: Lodash-es with tree-shaking (24KB for 2 functions)
 import { uniq, sortBy } from 'lodash-es';
 
 const uniqueIds = uniq(productIds);
@@ -183,12 +183,12 @@ const sorted = [...products].sort((a, b) => a.name.localeCompare(b.name));
 
 ### Replace react-native-vector-icons (756KB → 89KB)
 ```typescript
-// ❌ BEFORE: Full icon set bundled (756KB)
+//  BEFORE: Full icon set bundled (756KB)
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 <Icon name="heart" size={20} color="red" />
 
-// ✅ AFTER: expo/vector-icons with selective import (89KB)
+//  AFTER: expo/vector-icons with selective import (89KB)
 import { FontAwesome } from '@expo/vector-icons';
 
 <FontAwesome name="heart" size={20} color="red" />
@@ -206,12 +206,12 @@ import { HeartIcon } from 'react-native-heroicons/solid';
 
 ### Lazy Load Heavy Screens
 ```typescript
-// ❌ BEFORE: All screens bundled upfront
+//  BEFORE: All screens bundled upfront
 import ProductDetailsScreen from './screens/ProductDetails';
 import CheckoutScreen from './screens/Checkout';
 import AdminDashboard from './screens/Admin/Dashboard';
 
-// ✅ AFTER: Lazy load with React.lazy + Suspense
+//  AFTER: Lazy load with React.lazy + Suspense
 import React, { Suspense, lazy } from 'react';
 import { ActivityIndicator } from 'react-native';
 
@@ -236,12 +236,12 @@ function Navigation() {
 
 ### Dynamic Imports for Features
 ```typescript
-// ❌ BEFORE: Heavy analytics library bundled upfront
+//  BEFORE: Heavy analytics library bundled upfront
 import analytics from './lib/analytics';
 
 analytics.track('page_view', { page: 'Home' });
 
-// ✅ AFTER: Load analytics lazily (only when needed)
+//  AFTER: Load analytics lazily (only when needed)
 async function trackEvent(event: string, props: object) {
   const analytics = await import('./lib/analytics');
   analytics.default.track(event, props);
@@ -254,14 +254,14 @@ trackEvent('page_view', { page: 'Home' });
 
 ### Platform-Specific Code Splitting
 ```typescript
-// ❌ BEFORE: Both iOS and Android code in same bundle
+//  BEFORE: Both iOS and Android code in same bundle
 import { Platform } from 'react-native';
 import IOSSpecificFeature from './ios/Feature';
 import AndroidSpecificFeature from './android/Feature';
 
 const Feature = Platform.OS === 'ios' ? IOSSpecificFeature : AndroidSpecificFeature;
 
-// ✅ AFTER: Platform extensions (Metro auto-splits)
+//  AFTER: Platform extensions (Metro auto-splits)
 // File structure:
 // - Feature.ios.tsx (only bundled for iOS)
 // - Feature.android.tsx (only bundled for Android)
@@ -490,27 +490,27 @@ Build time: 47s (was 1m 23s - 43% faster)
 ---
 ## 8. Red Flags
 
-### 🚩 Full Lodash Import
+###  Full Lodash Import
 **Signal:** `import _ from 'lodash'` or `import * as _ from 'lodash'`
 
 **Response:** Replace with lodash-es and named imports, or use native JavaScript alternatives.
 
-### 🚩 Moment.js in Dependencies
+###  Moment.js in Dependencies
 **Signal:** `"moment": "^2.x"` in package.json
 
 **Response:** Replace with date-fns (71KB vs 983KB). Migration guide: https://date-fns.org/
 
-### 🚩 No Bundle Size Monitoring
+###  No Bundle Size Monitoring
 **Signal:** No `analyze-bundle` script, no CI checks on bundle size
 
 **Response:** Add bundle visualization to CI, set budget thresholds, fail builds if exceeded.
 
-### 🚩 Everything Bundled Upfront
+###  Everything Bundled Upfront
 **Signal:** No lazy imports, no code splitting, 8MB initial bundle
 
 **Response:** Lazy load admin/analytics screens, use React.lazy() and Suspense.
 
-### 🚩 Barrel File Imports
+###  Barrel File Imports
 **Signal:** `import { X, Y, Z } from '@/components'` (imports entire folder)
 
 **Response:** Direct imports: `import X from '@/components/X'` (tree-shakeable).

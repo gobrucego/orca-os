@@ -116,12 +116,12 @@ Reviewers MUST calculate exact pixel values - no vague language:
 
 ```
 MEASUREMENTS:
-┌─────────────────────────────────┬──────────┬──────────┐
-│ Element                         │ Actual   │ Expected │
-├─────────────────────────────────┼──────────┼──────────┤
-│ Section gap                     │ 24px     │ 24px     │
-│ Card padding                    │ 16px     │ 16px     │
-└─────────────────────────────────┴──────────┴──────────┘
+
+ Element                          Actual    Expected 
+
+ Section gap                      24px      24px     
+ Card padding                     16px      16px     
+
 ```
 
 **Zero tolerance** when expected value exists (1px off = FAIL).

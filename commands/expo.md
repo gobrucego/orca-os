@@ -1,5 +1,5 @@
 ---
-description: "OS 2.4 orchestrator entrypoint for native iOS tasks"
+description: "OS 2.4 Expo/React Native Orchestrator – coordinates the Expo lane pipeline, never writes code"
 argument-hint: "[-tweak] <task description or requirement ID>"
 allowed-tools:
   - Task
@@ -13,20 +13,20 @@ allowed-tools:
   - Glob
 ---
 
-# /orca-ios – iOS Lane Orchestrator (OS 2.4)
+# /expo - Expo Lane Orchestrator (OS 2.4)
 
-Use this command for native iOS work (Swift/SwiftUI/UIKit, Xcode, device features).
+Use this command for Expo/React Native mobile work.
 
 ## Usage
 
 ```bash
-/orca-ios "add haptic feedback to save button"       # Default: light path + design gates
-/orca-ios -tweak "fix button padding"                # Fast: light path, no gates
-/orca-ios --complex "multi-screen feature"           # Full: grand-architect + all gates
-/orca-ios "implement requirement 2025-11-25-0930-workspace-sharing"  # Full path with spec
+/expo "add pull-to-refresh to product list"        # Default: light path + design gates
+/expo -tweak "fix button spacing"                  # Fast: light path, no gates
+/expo --complex "multi-screen auth flow"           # Full: grand-architect + all gates
+/expo "implement requirement 2025-11-25-auth"      # Full path with spec
 ```
 
-## 🚨 CRITICAL ROLE BOUNDARY 🚨
+##  CRITICAL ROLE BOUNDARY 
 
 **YOU ARE AN ORCHESTRATOR. YOU NEVER WRITE CODE.**
 
@@ -69,7 +69,7 @@ return a report instead of implementing changes.
 If task involves UI/UX (keywords: "UI", "layout", "styling", "broken", "fucked", "spacing", "visual"):
   → Check if user attached screenshot/image
   → If YES: record has_visual_reference: true
-  → If NO: record has_visual_reference: false (grand-architect will diagnose first)
+  → If NO: record has_visual_reference: false (grand-orchestrator will diagnose first)
 ```
 
 Record in phase_state:
@@ -83,20 +83,20 @@ Record in phase_state:
 }
 ```
 
-This is passed to grand-architect who uses it to decide whether to run
-ios-ui-reviewer in DIAGNOSE mode before implementation.
+This is passed to grand-orchestrator who uses it to decide whether to run
+expo-aesthetics-specialist in DIAGNOSE mode before implementation.
 
 ---
 
 ## 0.5 Deep Audit Mode (Optional)
 
-Use this mode when you want a **deep review/audit** of the existing iOS
-codebase, not implementation:
+Use this mode when you want a **deep review/audit** of the existing
+Expo/React Native codebase, not implementation:
 
-- Architecture consistency
-- Concurrency and safety
-- Design DNA & UI/UX quality
-- Performance/security/accessibility risks
+- Navigation and architecture
+- API usage and state management
+- Design DNA, aesthetics, accessibility
+- Performance and bundle health
 
 **IMPORTANT:** Audit mode MUST NOT modify code. It only analyzes and
 reports.
@@ -105,56 +105,55 @@ When `--audit` is detected:
 
 1. **Clarify focus**
    - Use `AskUserQuestion` to ask what to prioritize:
-     - Architecture & standards
-     - UI/UX & design tokens
-     - Concurrency & safety
-     - Performance
-     - Security & privacy
+     - Architecture & navigation
+     - Design & aesthetics
      - Accessibility
+     - Performance & bundle size
+     - API usage & error handling
 
 2. **Memory & ProjectContext**
    - Run memory-first search (Workshop + unified memory) for:
-     - Past iOS incidents, RA tags, and standards.
+     - Past Expo incidents, RA tags, and standards.
    - Call `mcp__project-context__query_context` with a diagnostic task:
-     - `domain: "ios"`
-     - `task`: "Deep iOS codebase audit"
+     - `domain: "expo"`
+     - `task`: "Deep Expo/React Native codebase audit"
      - `maxFiles`: larger than usual (e.g. 30–50)
      - `includeHistory: true`
 
 3. **Assemble an audit squad (via Task)**
    - Based on focus, delegate to relevant agents:
-     - Standards/architecture:
-       - `ios-standards-enforcer`
-     - UI/UX & tokens:
-       - `ios-ui-reviewer`
+     - Architecture/navigation:
+       - `expo-architect-agent`
+     - Design & tokens:
        - `design-dna-guardian`
-     - Concurrency/safety:
-       - `ios-performance-specialist`
-       - `ios-security-specialist`
+       - `expo-aesthetics-specialist`
      - Accessibility:
-       - `ios-accessibility-specialist`
-     - Testing:
-       - `ios-testing-specialist`
-       - `ios-ui-testing-specialist`
+       - `a11y-enforcer`
+     - Performance:
+       - `performance-enforcer`
+       - `bundle-assassin`
+     - API/state & testing:
+       - `api-guardian`
+       - `test-generator`
 
    - In prompts, make it explicit that:
      - They are in **audit** mode.
      - They should use `Read`/`Grep`/`Glob` (+ ProjectContext) to inspect
-       code and tests, not rely on `files_modified`.
+       code, not rely on `modified_files`.
      - They MUST NOT edit code; only analyze and report.
 
-4. **Synthesize an iOS Audit Report**
-   - Combine findings into a single report:
-     - Architecture & standards issues
-     - Concurrency/safety concerns
-     - UI/UX & design DNA issues
-     - Performance/security/accessibility gaps
-     - Suggested follow-up tasks (each can become `/plan` + `/orca-ios` work).
+4. **Synthesize an Expo Audit Report**
+   - Combine findings into a unified report:
+     - Navigation/architecture issues
+     - Design/aesthetics/a11y gaps
+     - Performance & bundle risks
+     - API/state/testing issues
+     - Suggested follow-up tasks for targeted improvements.
 
 5. **(Optional) Save audit history**
    - Use `mcp__project-context__save_task_history` with:
-     - `domain: "ios"`
-     - `task`: "audit: ios codebase"
+     - `domain: "expo"`
+     - `task`: "audit: expo codebase"
      - `outcome`: `"diagnosed"` or `"reviewed"`
      - `learnings`: key bullets from the audit
 
@@ -170,8 +169,8 @@ implementation pipeline unless explicitly requested.
 Before expensive ProjectContext queries, check local memory:
 
 ```bash
-# Search Workshop for relevant iOS decisions/gotchas
-workshop --workspace .claude/memory why "iOS $TASK_KEYWORDS"
+# Search Workshop for relevant Expo decisions/gotchas
+workshop --workspace .claude/memory why "expo $TASK_KEYWORDS"
 
 # Search vibe.db for relevant code/symbols (if available)
 python3 ~/.claude/scripts/memory-search-unified.py "$TASK_KEYWORDS" --mode all --top-k 5
@@ -190,23 +189,21 @@ Analyze the request using these heuristics:
 - Minor UI tweak (padding, color, text)
 - Small bugfix with obvious location
 - Copy/label changes
-- Adding simple interaction (haptic, animation)
+- Adding simple element (icon, haptic)
 - Keywords: "tweak", "fix", "adjust", "change", "update" + single element
 
 **MEDIUM (complexity_tier: "medium")** - Full Pipeline, Spec Recommended
-- Single screen changes
+- Single screen/component changes
 - New simple component
-- Modest logic changes
-- Some tests needed
+- Modest styling changes
 - 2-5 files affected
 
 **COMPLEX (complexity_tier: "complex")** - Full Pipeline, Spec REQUIRED
-- Multiple screens/flows
-- Architecture/data layer changes
-- New feature with state management
-- Security/auth/payments
-- Offline/sync functionality
-- Migration work
+- Multi-screen flows
+- New feature with navigation/state
+- Architecture decisions (offline, auth, navigation)
+- Security-critical changes (auth, payments, PII)
+- Major refactoring
 - Keywords: "implement", "build", "create", "refactor" + feature/flow/system
 
 **If uncertain:** Use AskUserQuestion:
@@ -226,18 +223,18 @@ Options:
 2. Look for `.claude/requirements/<id>/06-requirements-spec.md`
 3. **If spec NOT found:**
    ```
-   ⛔ BLOCKED: Complex task requires a spec.
+    BLOCKED: Complex task requires a spec.
 
-   This task appears to involve multiple screens/flows or architectural changes.
+   This task appears to involve multiple screens or architectural decisions.
    Please run:
      /plan "<task description>"
 
    Then return with:
-     /orca-ios "implement requirement <id>"
+     /expo "implement requirement <id>"
    ```
 4. **If spec found:**
    - Record `requirement_id` and `requirements_spec_path` in phase_state
-   - Spec becomes authoritative source for ios-architect
+   - Spec becomes authoritative source for expo-architect-agent
 
 ---
 
@@ -245,14 +242,14 @@ Options:
 
 ### Default (no flag) - Light Path WITH Design Gates
 
-Delegate to `ios-light-orchestrator`:
+Delegate to `expo-light-orchestrator`:
 
 ```
 Task({
-  subagent_type: "ios-light-orchestrator",
-  description: "iOS task with design verification",
+  subagent_type: 'expo-light-orchestrator',
+  description: 'Expo task with design verification',
   prompt: `
-Handle this iOS task via the light path WITH design verification gates.
+Handle this Expo/React Native task via the light path WITH design verification gates.
 
 REQUEST: $ARGUMENTS
 
@@ -260,8 +257,8 @@ MEMORY CONTEXT (if any):
 <memory hits from 1.1>
 
 ROUTING MODE: default (light + gates)
-- Run ios-builder + specialists
-- Run design verification gates (standards-enforcer, ui-reviewer)
+- Run expo-builder-agent + specialists
+- Run design verification gates (design-token-guardian, a11y-enforcer, expo-aesthetics-specialist)
 - Ephemeral phase_state only (scores for this run, no ceremony)
 - NO grand-architect, NO spec requirement
   `
@@ -273,16 +270,16 @@ ROUTING MODE: default (light + gates)
 ### -tweak Flag - Light Path WITHOUT Gates (Pure Speed)
 
 1. Memory-first context only (skip ProjectContext)
-2. Delegate directly to `ios-builder`
-3. Basic verification (build/lint)
+2. Delegate directly to `expo-builder-agent`
+3. Basic verification (npm test / expo doctor)
 4. NO design verification gates
 
 **Fallback:** If memory can't locate files, MAY use narrow ProjectContext (maxFiles: 3)
 
 ```
 Task({
-  subagent_type: "ios-builder",
-  description: "Fast iOS tweak (no gates)",
+  subagent_type: 'expo-builder-agent',
+  description: 'Fast Expo tweak (no gates)',
   prompt: `
 Quick fix without design verification.
 
@@ -294,7 +291,7 @@ MEMORY CONTEXT (if any):
 ROUTING MODE: tweak (pure speed)
 - Make the change
 - Basic verification only
-- NO gates, NO UI review
+- NO gates, NO design review
   `
 })
 ```
@@ -342,7 +339,7 @@ Based on `complexity_tier`, adjust the team presented for confirmation:
 
 **simple:**
 - Skip full pipeline
-- Use: `ios-builder` only
+- Use: `expo-builder-agent` only
 - Skip: grand-architect, verification, most gates
 
 **medium:**
@@ -364,44 +361,77 @@ Record `complexity_tier` in `phase_state.intake.complexity_tier` before proceedi
 
 **DO NOT PROCEED TO SECTION 3.2 WITHOUT USER CONFIRMATION**
 
-Use AskUserQuestion to confirm. **WAIT FOR RESPONSE.**
+**This is a TWO-STEP process. You MUST do both steps.**
 
-```
-Detected: iOS task (complexity: medium/complex)
+#### Step A: OUTPUT the team (VISIBLE MARKDOWN - NOT inside AskUserQuestion)
 
-Proposed Pipeline:
+**FIRST, output this as regular markdown so the user can see it:**
+
+```markdown
+## Proposed Expo/React Native Pipeline
+
+**Request:** [the task]
+**Complexity:** [simple/medium/complex]
+
+### Phases
 1. Context Query (ProjectContext)
-2. Grand Architect (ios-grand-architect) - architecture decisions
-3. Planning (ios-architect) - detailed plan
-4. Implementation (ios-builder + specialists)
-5. Gates (ios-standards-enforcer, ios-ui-reviewer)
-6. Verification (ios-verification)
+2. Grand Orchestrator (expo-grand-orchestrator) - architecture decisions
+3. Planning (expo-architect-agent) - detailed plan
+4. Implementation (expo-builder-agent + specialists)
+5. Gates (design-token-guardian, a11y-enforcer, performance-enforcer)
+6. Power Checks (performance-prophet, security-specialist) - if needed
+7. Verification (expo-verification-agent)
 
-Proposed Agents:
-- ios-grand-architect
-- ios-architect
-- ios-builder
-- [specialists based on task - see 3.1.1]
-- ios-standards-enforcer
-- ios-ui-reviewer
-- ios-verification
+### Agent Team
+| Role | Agent |
+|------|-------|
+| Coordination | expo-grand-orchestrator |
+| Architecture | expo-architect-agent |
+| Implementation | expo-builder-agent |
+| Specialists | [list relevant ones based on 3.1.1] |
+| Design Gate | design-token-guardian |
+| A11y Gate | a11y-enforcer |
+| Performance Gate | performance-enforcer |
+| Verification | expo-verification-agent |
 
-Options:
-- Proceed as planned
-- Adjust team/phases
-- Switch to light path (-tweak)
+### Files Likely Affected
+- [list from ContextBundle or memory]
+
+### Risks/Notes
+- [any identified risks]
 ```
 
-**After presenting this:**
+**This MUST be visible output BEFORE you call AskUserQuestion.**
+
+#### Step B: THEN ask for confirmation (simple yes/no)
+
+```typescript
+AskUserQuestion({
+  questions: [{
+    question: "Proceed with this pipeline?",
+    header: "Confirm",
+    multiSelect: false,
+    options: [
+      { label: "Yes, proceed", description: "Execute the plan shown above" },
+      { label: "Modify team", description: "I want to change agents or approach" },
+      { label: "Switch to -tweak", description: "Skip gates, use light path" }
+    ]
+  }]
+})
+```
+
+**After presenting the confirmation question:**
 1. STOP and wait for user response
-2. If user says "proceed" → continue to 3.2
-3. If user modifies team → update and re-confirm
-4. If user rejects → STOP pipeline
+2. If user says "Yes, proceed" → continue to 3.2
+3. If user says "Modify team" → ask what to change, update, re-output team, re-confirm
+4. If user says "Switch to -tweak" → delegate to expo-builder-agent directly (Section 2)
 
 **Anti-patterns (WRONG):**
-- Showing the team then immediately delegating to grand-architect
+- Putting the team list inside AskUserQuestion options
+- Showing team and question in the same tool call
 - "I'll proceed with this team..." without waiting
 - Any delegation before explicit user confirmation
+- Describing the team only in the question description
 
 #### 3.1.1 Intent-Aware Specialist Selection
 
@@ -409,11 +439,12 @@ Options:
 
 | Task Intent | EXCLUDE from team | USE instead |
 |-------------|-------------------|-------------|
-| "remove/migrate from UIKit" | `ios-uikit-specialist` | `ios-swiftui-specialist` |
-| "remove/eliminate Combine" | — | Use async/await patterns |
-| "audit/review" (not implement) | `ios-builder` | Appropriate reviewer/enforcer agents |
-| "security audit" | `ios-builder` | `ios-security-specialist` |
-| "performance audit" | `ios-builder` | `ios-performance-specialist` |
+| "remove/eliminate inline styles" | — | `design-token-guardian` |
+| "remove/migrate from Redux" | — | Use context/zustand patterns |
+| "audit/review" (not implement) | `expo-builder-agent` | Appropriate reviewer/enforcer agents |
+| "accessibility audit" | `expo-builder-agent` | `a11y-enforcer` |
+| "performance audit" | `expo-builder-agent` | `performance-enforcer`, `bundle-assassin` |
+| "security audit" | `expo-builder-agent` | `security-specialist` |
 
 **Detection keywords:**
 - "remove", "eliminate", "get rid of", "migrate away from", "replace" → EXCLUDE that specialist
@@ -425,18 +456,23 @@ Call ProjectContextServer (unless memory-first gave sufficient context):
 
 ```
 mcp__project-context__query_context({
-  domain: "ios",
+  domain: "expo",
   task: <sanitized task description>,
   projectPath: <repo root>,
-  maxFiles: 10-20,
+  maxFiles: 15,
   includeHistory: true
 })
+```
+
+**FTS5 Sanitization:** Remove special characters that cause FTS5 syntax errors:
+```
+sanitizedTask = task.replace(/[\\/+\-()"*]/g, ' ').trim()
 ```
 
 Initialize phase_state.json:
 ```json
 {
-  "domain": "ios",
+  "domain": "expo",
   "complexity_tier": "medium|complex",
   "requirement_id": "<if applicable>",
   "requirements_spec_path": "<if applicable>",
@@ -451,7 +487,7 @@ Initialize phase_state.json:
 
 ### 3.3 Grand Architect (Opus)
 
-Delegate to `ios-grand-architect`:
+Delegate to `expo-grand-orchestrator`:
 
 Inputs:
 - ContextBundle
@@ -461,71 +497,90 @@ Inputs:
   - `has_visual_reference`: Did user provide screenshot?
   - `needs_diagnosis`: Should reviewer diagnose first?
 
-**CRITICAL:** Grand-architect will use visual context to decide flow:
+**CRITICAL:** Grand-orchestrator will use visual context to decide flow:
 - If `has_visual_reference: true` → Builder gets user's visual context directly
-- If `needs_diagnosis: true` → Run `ios-ui-reviewer` in DIAGNOSE mode first
+- If `needs_diagnosis: true` → Run `expo-aesthetics-specialist` in DIAGNOSE mode first
 
 Outputs:
-- Architecture path (SwiftUI vs MVVM/TCA/UIKit)
-- Data strategy (SwiftData vs Core Data/GRDB)
+- Architecture path (navigation, state, data patterns)
 - Design DNA presence check
 - Risk assessment
 - Task force plan
 
 Save decision via `mcp__project-context__save_decision`.
 
-### 3.4 Planning (ios-architect)
+### 3.4 Planning (expo-architect-agent)
 
-Delegate to `ios-architect`:
+Delegate to `expo-architect-agent`:
 
 **If requirements_spec_path exists:**
-- ios-architect MUST read spec first
+- expo-architect-agent MUST read spec first
 - Spec's constraints and acceptance criteria are authoritative
 - Note any out-of-scope or ambiguous items
 
 Outputs:
 - Change type classification
-- Impact analysis (screens, flows, data, navigation)
+- Impact analysis (screens, modules, risks)
 - Detailed plan with steps
-- Constraints and risks
+- Assigned agents
 
 Update phase_state.planning.
 
-### 3.5 Implementation (ios-builder + specialists)
+### 3.5 Implementation (expo-builder-agent + specialists)
 
-Delegate to `ios-builder`:
+Delegate to `expo-builder-agent`:
 
 Specialists as needed:
-- UI: `ios-swiftui-specialist` or `ios-uikit-specialist`
-- Tokens: `design-dna-guardian`
-- Data: `ios-persistence-specialist`
-- Networking: `ios-networking-specialist`
-- Testing: `ios-testing-specialist`, `ios-ui-testing-specialist`
-- Risk: `ios-performance-specialist`, `ios-security-specialist`, `ios-accessibility-specialist`
+- Performance: `performance-prophet`
+- Security: `security-specialist`
+- Tokens: `design-token-guardian`
+
+**Parallel deployment available** for independent components (see playbooks).
 
 Update phase_state.implementation_pass1.
 
-### 3.6 Gates
+### 3.6 Gates (Parallel)
 
-Run gate agents:
+Run gate agents in parallel:
 
-1. **ios-standards-enforcer** - Code standards, Swift 6 concurrency
+1. **design-token-guardian** - Design system compliance
    - Threshold: 90/100
    - Hard block if < 90
 
-2. **ios-ui-reviewer** - UI/UX quality
-   - Threshold: 90/100
-   - Hard block if < 90
+2. **a11y-enforcer** - WCAG 2.2 accessibility
+   - Threshold: 0 critical violations
+   - Hard block on any critical
 
-3. **ios-verification** - Build/test
-   - Must pass build
-   - Must pass tests
+3. **expo-aesthetics-specialist** - Visual quality
+   - Threshold: 75/100 (soft gate)
+   - Block if < 60 (AI slop)
 
-Update phase_state.gates.
+4. **performance-enforcer** - Bundle/runtime budgets
+   - Threshold: within budgets
+   - Hard block on budget violations
+
+Update phase_state.standards_budgets.
 
 **If gates fail:** Allow one corrective pass (implementation_pass2) scoped to violations only.
 
-### 3.7 Completion
+### 3.7 Power Checks (Optional)
+
+For high-risk work (auth, payments, offline, perf-sensitive):
+
+1. **performance-prophet** - Predictive performance analysis
+2. **security-specialist** - OWASP Mobile Top 10 audit
+
+Update phase_state.power_checks.
+
+### 3.8 Verification
+
+Delegate to `expo-verification-agent`:
+- Run npm test / expo doctor
+- Record verification status
+
+Update phase_state.verification.
+
+### 3.9 Completion
 
 - Summarize gate scores, verification results, risks
 - Save task history via `mcp__project-context__save_task_history`
@@ -556,21 +611,45 @@ Update phase_state.gates.
    - Delegate to appropriate agent
 
 5. **Anti-Pattern Detection:**
-   - "Let me write this code" → WRONG. Delegate to ios-builder
+   - "Let me write this code" → WRONG. Delegate to expo-builder-agent
    - "I'll fix this directly" → WRONG. Delegate to specialist
    - Using Edit/Write tools → WRONG. You're an orchestrator
    - Resuming without confirmation → WRONG. Must re-confirm first
    - "Based on feedback, re-confirming plan..." → CORRECT
-   - "Based on feedback, delegating to ios-builder..." → WRONG (skipped confirmation)
+   - "Based on feedback, delegating to expo-builder-agent..." → WRONG (skipped confirmation)
 
 ---
 
-## 5. Notes
+## 5. Standards Inputs (OS 2.4 Learning Loop)
 
-- Block UI work if design DNA/tokens missing
-- Do not change data store without explicit plan
-- Keep edits scoped; no scope creep
+### Gate Enforcement
+
+`design-token-guardian`, `a11y-enforcer`, `performance-enforcer` MUST:
+- Read `relatedStandards` from ContextBundle
+- Treat them as **enforceable rules**, not suggestions
+- Tag violations to the specific standard they break
+
+### Learning Loop Closure
+
+After task completion:
+1. Recurring violations → `mcp__project-context__save_standard` (via /audit)
+2. New standards flow into future `relatedStandards`
+3. Future tasks see and enforce the new standard
+
+```
+violation → /audit → save_standard → vibe.db → future relatedStandards → gate enforcement
+```
+
+---
+
+## 6. Notes
+
+- Use **Customization Gate** to block when design-dna is missing for UI work
+- Keep expo-grand-orchestrator in pure orchestration mode (Opus)
+- All agents use Opus 4.5 (default model)
 - Complex tasks MUST have specs
 - Simple tasks use light path for speed
-- All agents use Opus 4.5 (default model)
+- High-risk domains (auth, payments, PII) → mandatory security-specialist
 - **Visual Context Flow:** If UI task has no screenshot, diagnose before building
+
+Begin orchestration for: **$ARGUMENTS**

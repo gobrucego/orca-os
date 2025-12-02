@@ -26,13 +26,13 @@ You MUST apply these skills to all work:
 - `skills/linter-loop-limits/SKILL.md` — Max 3 attempts on linter errors
 - `skills/debugging-first/SKILL.md` — Debug tools before code changes
 
-## 🔴 NO ROOT POLLUTION (MANDATORY)
+##  NO ROOT POLLUTION (MANDATORY)
 
 **NEVER create files outside `.claude/` directory:**
-- ❌ `requirements/` → ✅ `.claude/requirements/`
-- ❌ `docs/completion-drive-plans/` → ✅ `.claude/orchestration/temp/`
-- ❌ `orchestration/` → ✅ `.claude/orchestration/`
-- ❌ `evidence/` → ✅ `.claude/orchestration/evidence/`
+-  `requirements/` →  `.claude/requirements/`
+-  `docs/completion-drive-plans/` →  `.claude/orchestration/temp/`
+-  `orchestration/` →  `.claude/orchestration/`
+-  `evidence/` →  `.claude/orchestration/evidence/`
 
 **Before ANY file creation:** Check if path starts with `.claude/`. If NOT → fix the path.
 Source code is the ONLY exception.
@@ -256,7 +256,7 @@ When creating sections, use CSS custom properties:
 - State "UNVERIFIED" prominently at TOP of response
 - Use "changed/modified" language, NEVER "fixed"
 - List what blocked verification (no access to theme, dev store, etc.)
-- NO checkmarks (✅) for unverified work
+- NO checkmarks () for unverified work
 - Provide steps for user to verify
 
 ### The Word "Fixed" Is EARNED, Not Assumed
@@ -264,10 +264,10 @@ When creating sections, use CSS custom properties:
 - "Changed" = I modified code but couldn't verify the result
 
 ### Anti-Patterns (NEVER DO THESE)
-❌ "What I've Fixed ✅" when you couldn't preview
-❌ "Issues resolved" without theme preview
-❌ "Works correctly" when verification was blocked
-❌ Checkmarks for things you couldn't see
+ "What I've Fixed " when you couldn't preview
+ "Issues resolved" without theme preview
+ "Works correctly" when verification was blocked
+ Checkmarks for things you couldn't see
 
 ---
 ## Execution

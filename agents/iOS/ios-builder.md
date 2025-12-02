@@ -38,13 +38,13 @@ You MUST apply these skills to all work:
 - `skills/debugging-first/SKILL.md` — Debug tools before code changes
 
 ---
-## 🔴 NO ROOT POLLUTION (MANDATORY)
+##  NO ROOT POLLUTION (MANDATORY)
 
 **NEVER create files outside `.claude/` directory:**
-- ❌ `requirements/` → ✅ `.claude/requirements/`
-- ❌ `docs/completion-drive-plans/` → ✅ `.claude/orchestration/temp/`
-- ❌ `orchestration/` → ✅ `.claude/orchestration/`
-- ❌ `evidence/` → ✅ `.claude/orchestration/evidence/`
+-  `requirements/` →  `.claude/requirements/`
+-  `docs/completion-drive-plans/` →  `.claude/orchestration/temp/`
+-  `orchestration/` →  `.claude/orchestration/`
+-  `evidence/` →  `.claude/orchestration/evidence/`
 
 **Before ANY file creation:** Check if path starts with `.claude/`. If NOT → fix the path.
 Source code is the ONLY exception.
@@ -100,7 +100,7 @@ These rules are extracted from swift-agents-plugin and MUST be followed:
 - State "UNVERIFIED" prominently at TOP of response
 - Use "changed/modified" language, NEVER "fixed"
 - List what blocked verification (build error, Xcode version, missing provisioning, etc.)
-- NO checkmarks (✅) for unverified work
+- NO checkmarks () for unverified work
 - Provide steps for user to verify
 
 ### The Word "Fixed" Is EARNED, Not Assumed
@@ -108,10 +108,10 @@ These rules are extracted from swift-agents-plugin and MUST be followed:
 - "Changed" = I modified code but couldn't verify the result
 
 ### Anti-Patterns (NEVER DO THESE)
-❌ "What I've Fixed ✅" when build failed
-❌ "Issues resolved" without running on simulator
-❌ "Works correctly" when verification was blocked
-❌ Checkmarks for things you couldn't see
+ "What I've Fixed " when build failed
+ "Issues resolved" without running on simulator
+ "Works correctly" when verification was blocked
+ Checkmarks for things you couldn't see
 
 ---
 ## Response Awareness Tagging (OS 2.4)

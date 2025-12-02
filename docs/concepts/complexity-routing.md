@@ -83,9 +83,9 @@ This aligns with Anthropic best practices for complex reasoning tasks.
 Light path WITH quality gates:
 
 ```bash
-/orca-ios "fix button padding"
-/orca-nextjs "update header text"
-/orca-shopify "adjust card spacing"
+/ios "fix button padding"
+/nextjs "update header text"
+/shopify "adjust card spacing"
 ```
 
 Fast execution + automated quality checks. Best for most work.
@@ -95,9 +95,9 @@ Fast execution + automated quality checks. Best for most work.
 Light path WITHOUT gates (pure speed):
 
 ```bash
-/orca-ios -tweak "fix button padding"
-/orca-nextjs -tweak "update header text"
-/orca-shopify -tweak "adjust card spacing"
+/ios -tweak "fix button padding"
+/nextjs -tweak "update header text"
+/shopify -tweak "adjust card spacing"
 ```
 
 Use when iterating quickly and you'll verify yourself.
@@ -107,9 +107,9 @@ Use when iterating quickly and you'll verify yourself.
 Force full pipeline with grand-architect:
 
 ```bash
-/orca-ios --complex "implement new auth flow"
-/orca-nextjs --complex "build checkout module"
-/orca-shopify --complex "create new section type"
+/ios --complex "implement new auth flow"
+/nextjs --complex "build checkout module"
+/shopify --complex "create new section type"
 ```
 
 Auto-triggered for architectural/multi-file work. Requires spec.
@@ -119,9 +119,9 @@ Auto-triggered for architectural/multi-file work. Requires spec.
 Review-only mode (no implementation):
 
 ```bash
-/orca-ios --audit              # Deep iOS codebase audit
-/orca-nextjs --audit           # Deep Next.js audit
-/orca-shopify --audit          # Deep Shopify theme audit
+/ios --audit              # Deep iOS codebase audit
+/nextjs --audit           # Deep Next.js audit
+/shopify --audit          # Deep Shopify theme audit
 ```
 
 Audit mode:
@@ -137,13 +137,13 @@ Audit mode:
 Complex tasks are blocked without a requirements spec:
 
 ```
-⛔ BLOCKED: Complex task requires a spec.
+ BLOCKED: Complex task requires a spec.
 
 Run first:
   /plan "description of the feature"
 
 Then return with:
-  /orca-ios "implement requirement <id>"
+  /ios "implement requirement <id>"
 ```
 
 Specs live at: `.claude/requirements/<id>/06-requirements-spec.md`
@@ -154,24 +154,24 @@ Created by `/plan`, consumed by domain orchestrators.
 
 ```
 Parse Arguments
-    │
-    ├─ Contains "-tweak"? → Light Orchestrator (TWEAK MODE - no gates)
-    │
-    ├─ Contains "--complex"? → Grand-Architect (full pipeline)
-    │
-    ├─ Contains "--audit"? → Audit Mode
-    │
-    └─ Otherwise (default):
-        │
+    
+     Contains "-tweak"? → Light Orchestrator (TWEAK MODE - no gates)
+    
+     Contains "--complex"? → Grand-Architect (full pipeline)
+    
+     Contains "--audit"? → Audit Mode
+    
+     Otherwise (default):
+        
         Assess Complexity
-            │
-            ├─ SIMPLE/MEDIUM → Light Orchestrator (DEFAULT MODE - with gates)
-            │
-            └─ COMPLEX (detected):
-                │
-                ├─ Has spec? → Grand-Architect (full pipeline)
-                │
-                └─ No spec? → BLOCKED (run /plan first)
+            
+             SIMPLE/MEDIUM → Light Orchestrator (DEFAULT MODE - with gates)
+            
+             COMPLEX (detected):
+                
+                 Has spec? → Grand-Architect (full pipeline)
+                
+                 No spec? → BLOCKED (run /plan first)
 ```
 
 ## Light Orchestrators

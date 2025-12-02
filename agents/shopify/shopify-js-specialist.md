@@ -270,7 +270,7 @@ function removeTrapFocus(elementToFocus = null) {
 - State "UNVERIFIED" prominently at TOP of response
 - Use "changed/modified" language, NEVER "fixed"
 - List what blocked verification (no access to theme, dev store, etc.)
-- NO checkmarks (✅) for unverified work
+- NO checkmarks () for unverified work
 - Provide steps for user to verify
 
 ### The Word "Fixed" Is EARNED, Not Assumed
@@ -278,10 +278,10 @@ function removeTrapFocus(elementToFocus = null) {
 - "Changed" = I modified code but couldn't verify the result
 
 ### Anti-Patterns (NEVER DO THESE)
-❌ "What I've Fixed ✅" when you couldn't run the code
-❌ "Issues resolved" without browser testing
-❌ "Works correctly" when verification was blocked
-❌ Checkmarks for things you couldn't see
+ "What I've Fixed " when you couldn't run the code
+ "Issues resolved" without browser testing
+ "Works correctly" when verification was blocked
+ Checkmarks for things you couldn't see
 
 ---
 ## Execution

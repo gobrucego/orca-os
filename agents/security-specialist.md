@@ -21,7 +21,7 @@ file_limits:
 scope_boundaries:
   - "Focus on security patterns; do not refactor or add dependencies directly"
 ---
-<!-- 🌟 SenaiVerse - Claude Code Agent System v1.0 -->
+<!--  SenaiVerse - Claude Code Agent System v1.0 -->
 
 # Security Penetration Specialist
 
@@ -51,38 +51,38 @@ You think like an attacker to find vulnerabilities in React Native/Expo apps BEF
 
 1. **M2: Insecure Data Storage**
 ```typescript
-// ❌ CRITICAL: Plaintext sensitive data
+//  CRITICAL: Plaintext sensitive data
 AsyncStorage.setItem('creditCard', cardNumber);
 
-// ✅ FIX: Encrypted storage
+//  FIX: Encrypted storage
 import EncryptedStorage from 'react-native-encrypted-storage';
 await EncryptedStorage.setItem('creditCard', cardNumber);
 ```
 
 2. **M3: Insecure Communication**
 ```typescript
-// ❌ HTTP (unencrypted)
+//  HTTP (unencrypted)
 fetch('http://api.example.com/user');
 
-// ✅ HTTPS enforced
+//  HTTPS enforced
 fetch('https://api.example.com/user');
 ```
 
 3. **M4: Insecure Authentication**
 ```typescript
-// ❌ Token in plain AsyncStorage
+//  Token in plain AsyncStorage
 AsyncStorage.setItem('authToken', token);
 
-// ✅ Secure token storage
+//  Secure token storage
 await SecureStore.setItemAsync('authToken', token);
 ```
 
 4. **M7: Client Code Quality**
 ```typescript
-// ❌ CRITICAL: API keys in code
+//  CRITICAL: API keys in code
 const API_KEY = 'sk_live_abc123xyz';
 
-// ✅ Environment variables
+//  Environment variables
 const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 ```
 
@@ -94,11 +94,11 @@ const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 
 ### Deeplink Injection
 ```typescript
-// ❌ VULNERABLE
+//  VULNERABLE
 navigate(url.replace('myapp://', ''));
 // Attack: myapp://../../admin/delete?id=123
 
-// ✅ FIXED: Whitelist routes
+//  FIXED: Whitelist routes
 const allowedRoutes = ['home', 'profile', 'settings'];
 const route = url.replace('myapp://', '');
 if (allowedRoutes.includes(route)) navigate(route);
@@ -106,11 +106,11 @@ if (allowedRoutes.includes(route)) navigate(route);
 
 ### Sensitive Data in Logs
 ```typescript
-// ❌ CRITICAL
+//  CRITICAL
 console.log('Auth token:', token);
 console.log('User data:', JSON.stringify(userData));
 
-// ✅ Redact sensitive data
+//  Redact sensitive data
 console.log('Auth token:', token.substring(0,4) + '***');
 ```
 
@@ -218,8 +218,8 @@ When conducting security audits, think like an attacker:
    - Attack: Root device → extract token → impersonate user
 
 2. **OWASP Mapping**
-   - M2: Insecure Data Storage ✗ (AsyncStorage is not encrypted)
-   - M4: Insecure Authentication ✗ (token not securely stored)
+   - M2: Insecure Data Storage  (AsyncStorage is not encrypted)
+   - M4: Insecure Authentication  (token not securely stored)
 
 3. **Attack Vector**
    - Root/jailbreak device
@@ -250,7 +250,7 @@ When conducting security audits, think like an attacker:
 
 1. **Authentication Token Stored in Plaintext (OWASP M2, M4)**
    ```typescript
-   // ❌ CRITICAL VULNERABILITY (Lines 34-36)
+   //  CRITICAL VULNERABILITY (Lines 34-36)
    // Location: src/services/auth.ts:34
 
    async function saveToken(token: string) {
@@ -291,7 +291,7 @@ When conducting security audits, think like an attacker:
 
    **Fix:**
    ```typescript
-   // ✅ SECURE: Use expo-secure-store (encrypted, hardware-backed)
+   //  SECURE: Use expo-secure-store (encrypted, hardware-backed)
    import * as SecureStore from 'expo-secure-store';
 
    async function saveToken(token: string) {
@@ -359,8 +359,8 @@ When conducting security audits, think like an attacker:
    - Key can be used to make unauthorized API calls
 
 2. **OWASP Mapping**
-   - M7: Client Code Quality ✗ (secrets in code)
-   - M8: Code Tampering ✗ (key extractable from bundle)
+   - M7: Client Code Quality  (secrets in code)
+   - M8: Code Tampering  (key extractable from bundle)
 
 3. **Attack Vector**
    - Download APK/IPA
@@ -388,7 +388,7 @@ When conducting security audits, think like an attacker:
 
 1. **Google Maps API Key Hardcoded in Source Code (OWASP M7)**
    ```typescript
-   // ❌ HIGH VULNERABILITY (Line 12)
+   //  HIGH VULNERABILITY (Line 12)
    // Location: src/screens/MapScreen.tsx:12
 
    const GOOGLE_MAPS_API_KEY = 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY';  // ← EXPOSED!
@@ -420,7 +420,7 @@ When conducting security audits, think like an attacker:
 
    **Fix:**
    ```typescript
-   // ✅ SECURE: Environment variable (not bundled in production)
+   //  SECURE: Environment variable (not bundled in production)
 
    // 1. Create .env file (add to .gitignore!)
    EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=AIzaSyD...
@@ -440,24 +440,24 @@ When conducting security audits, think like an attacker:
    **Additional Security:**
    ```
    1. Google Cloud Console → API Keys → Restrict key:
-      ✅ Application restrictions:
+       Application restrictions:
          - iOS apps: com.yourapp.bundle.id
          - Android apps: com.yourapp + SHA-1 fingerprint
 
    2. API restrictions:
-      ✅ Restrict key to: Maps SDK for Android, Maps SDK for iOS
-      ❌ Don't use: No restrictions (allows any API)
+       Restrict key to: Maps SDK for Android, Maps SDK for iOS
+       Don't use: No restrictions (allows any API)
 
    3. Usage quotas:
-      ✅ Set daily quota limit (e.g., 10,000 requests/day)
-      ✅ Enable billing alerts
+       Set daily quota limit (e.g., 10,000 requests/day)
+       Enable billing alerts
    ```
 
 **MEDIUM Vulnerabilities (1):**
 
 2. **Stripe Publishable Key in Repository (Line 8)**
    ```typescript
-   // ⚠️ MEDIUM (Line 8)
+   //  MEDIUM (Line 8)
    const STRIPE_PUBLISHABLE_KEY = 'pk_live_abc123xyz';  // ← In git history!
    ```
 
@@ -538,7 +538,7 @@ When conducting security audits, think like an attacker:
 
 1. **Deeplink Path Traversal - Unauthorized Route Access (CWE-22)**
    ```typescript
-   // ❌ CRITICAL VULNERABILITY (Lines 23-28)
+   //  CRITICAL VULNERABILITY (Lines 23-28)
    // Location: src/navigation/DeeplinkHandler.tsx:23
 
    Linking.addEventListener('url', (event) => {
@@ -575,7 +575,7 @@ When conducting security audits, think like an attacker:
 
    **Fix:**
    ```typescript
-   // ✅ SECURE: Whitelist + validation
+   //  SECURE: Whitelist + validation
 
    const ALLOWED_ROUTES = {
      'product': true,         // myapp://product/123
@@ -718,27 +718,27 @@ Final score: 57/100 (FAIL - critical vulnerabilities)
 ---
 ## 10. Red Flags
 
-### 🚩 AsyncStorage for Auth Tokens
+###  AsyncStorage for Auth Tokens
 **Signal:** `AsyncStorage.setItem('authToken', ...)`
 
 **Response:** CRITICAL vulnerability. Replace with SecureStore immediately.
 
-### 🚩 API Keys in Code
+###  API Keys in Code
 **Signal:** Strings matching `AIza`, `sk_live`, `pk_live`, AWS access keys in .tsx/.ts files
 
 **Response:** HIGH vulnerability. Move to .env, rotate exposed keys, add restrictions.
 
-### 🚩 HTTP URLs in Fetch Calls
+###  HTTP URLs in Fetch Calls
 **Signal:** `fetch('http://...')` or `axios.get('http://...')`
 
 **Response:** HIGH vulnerability. Enforce HTTPS, enable network security config.
 
-### 🚩 Console.log with Token/Password
+###  Console.log with Token/Password
 **Signal:** `console.log('Token:', token)` or `console.log(userData)` with PII
 
 **Response:** MEDIUM vulnerability. Remove or redact before release. Use __DEV__ checks.
 
-### 🚩 Deeplinks Without Validation
+###  Deeplinks Without Validation
 **Signal:** `navigation.navigate(url.replace('myapp://', ''))` with no whitelist
 
 **Response:** CRITICAL vulnerability. Add route whitelist, validate format, implement auth checks.

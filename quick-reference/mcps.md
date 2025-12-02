@@ -34,15 +34,15 @@ MCP servers provide structured tool interfaces for agents. All I/O goes through 
 
 **Architecture:**
 ```
-┌─────────────────────────────────────────────────────────┐
-│ Claude Code                                             │
-│   ↓                                                     │
-│ MCP Client (stdio JSON-RPC 2.0)                         │
-│   ↓                                                     │
-│ MCP Server (exposes tools)                              │
-│   ↓                                                     │
-│ System Resources (browser, DB, filesystem, etc.)        │
-└─────────────────────────────────────────────────────────┘
+
+ Claude Code                                             
+   ↓                                                     
+ MCP Client (stdio JSON-RPC 2.0)                         
+   ↓                                                     
+ MCP Server (exposes tools)                              
+   ↓                                                     
+ System Resources (browser, DB, filesystem, etc.)        
+
 ```
 
 **Key Principle:** Agents can only use MCPs specified in their `allowed-tools` configuration.
@@ -476,7 +476,7 @@ Verification Agent
     ↓
     Evidence saved: .claude/orchestration/evidence/ui.png
     ↓
-    Tag resolved: ✓
+    Tag resolved: 
 ```
 
 ---
@@ -599,33 +599,33 @@ npx playwright install chromium
 ### 1. Use Semantic Search (vibe-memory)
 
 ```
-✓ Load prior decisions before planning
-✓ Query antipatterns before implementing
-✓ Check gotchas before running commands
+ Load prior decisions before planning
+ Query antipatterns before implementing
+ Check gotchas before running commands
 ```
 
 ### 2. Capture Evidence (playwright/chrome-devtools)
 
 ```
-✓ Screenshot after UI changes
-✓ Console logs for debugging
-✓ Network requests for API verification
+ Screenshot after UI changes
+ Console logs for debugging
+ Network requests for API verification
 ```
 
 ### 3. Verify Builds (XcodeBuildMCP)
 
 ```
-✓ Build before claiming "done"
-✓ Run tests automatically
-✓ Capture build logs
+ Build before claiming "done"
+ Run tests automatically
+ Capture build logs
 ```
 
 ### 4. Research Before Implementing (context7, bright-data-web)
 
 ```
-✓ Look up library docs first
-✓ Research competitor patterns
-✓ Don't hallucinate APIs
+ Look up library docs first
+ Research competitor patterns
+ Don't hallucinate APIs
 ```
 
 ---

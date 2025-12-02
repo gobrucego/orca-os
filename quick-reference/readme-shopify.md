@@ -2,7 +2,7 @@
 
 **Lane:** Shopify Themes  
 **Domain:** `shopify`  
-**Entrypoints:** `/plan`, `/orca`, `/orca-shopify`, `/project-memory`, `/project-code`
+**Entrypoints:** `/plan`, `/orca`, `/shopify`, `/project-memory`, `/project-code`
 
 This readme describes the Shopify lane, which handles Shopify theme
 development (Liquid, sections, theme structure).
@@ -35,19 +35,19 @@ Examples:
 
 ### 2.2 Global Orchestrator – `/orca`
 
-- Detects Shopify work and routes to `/orca-shopify` after memory and
+- Detects Shopify work and routes to `/shopify` after memory and
   ProjectContext.
 
-### 2.3 Shopify Orchestrator – `/orca-shopify`
+### 2.3 Shopify Orchestrator – `/shopify`
 
-File: `commands/orca-shopify.md`
+File: `commands/shopify.md`
 
 - Accepts:
 
   ```bash
-  /orca-shopify "fix card spacing"                     # Default: light + gates
-  /orca-shopify -tweak "try different padding"        # Tweak: light, no gates
-  /orca-shopify --complex "implement cart drawer"     # Complex: full pipeline
+  /shopify "fix card spacing"                     # Default: light + gates
+  /shopify -tweak "try different padding"        # Tweak: light, no gates
+  /shopify --complex "implement cart drawer"     # Complex: full pipeline
   ```
 
 - **Three-Tier Routing (OS 2.4):**
@@ -134,9 +134,9 @@ For Shopify work in OS 2.4 (three-tier routing):
 
 | Mode | Command | Path |
 |------|---------|------|
-| **Default** | `/orca-shopify "fix spacing"` | Light + gates |
-| **Tweak** | `/orca-shopify -tweak "try color"` | Light, no gates |
-| **Complex** | `/orca-shopify --complex "new section"` | Full pipeline |
+| **Default** | `/shopify "fix spacing"` | Light + gates |
+| **Tweak** | `/shopify -tweak "try color"` | Light, no gates |
+| **Complex** | `/shopify --complex "new section"` | Full pipeline |
 
 - **Most work**: Default mode (light path WITH gates)
 - **Exploration**: Tweak mode (light path, no gates, you verify)

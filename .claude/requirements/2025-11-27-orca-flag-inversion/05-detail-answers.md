@@ -25,7 +25,7 @@
 
 ## Additional Requirement: Claim Language Enforcement
 
-**Problem identified:** Agent said "What I've Fixed ✅" then later admitted "I don't know if the changes worked."
+**Problem identified:** Agent said "What I've Fixed " then later admitted "I don't know if the changes worked."
 
 **Root cause:** Language allows agents to claim verification status they don't have.
 
@@ -39,7 +39,7 @@
 | BANNED | REQUIRED INSTEAD |
 |--------|------------------|
 | "Fixed" | "Changed" / "Modified" |
-| "Verified ✅" | "UNVERIFIED - [reason]" |
+| "Verified " | "UNVERIFIED - [reason]" |
 | "Issues resolved" | "Code changes applied - awaiting visual confirmation" |
 | "Works correctly" | "Build passes - visual verification required" |
 

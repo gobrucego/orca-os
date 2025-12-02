@@ -6,7 +6,7 @@ Two distinct problems:
 
 1. **Pipeline friction**: Current `/orca-*` commands default to full pipeline (grand-architect, spec gating) for most tasks, creating friction for "fix this component" level work.
 
-2. **Verification dishonesty**: Agents claim "fixed" and "verified ✅" without:
+2. **Verification dishonesty**: Agents claim "fixed" and "verified " without:
    - Actually measuring pixel values for spacing/alignment
    - Comparing screenshots to user's reference
    - Being honest when verification is blocked (dev server won't start, etc.)
@@ -212,7 +212,7 @@ This prevents getting stuck on legacy surfaces while still generating the learni
 ### 2.3 Pixel Measurement Protocol
 
 ```markdown
-## 🔴 PIXEL MEASUREMENT PROTOCOL (MANDATORY - ZERO TOLERANCE)
+##  PIXEL MEASUREMENT PROTOCOL (MANDATORY - ZERO TOLERANCE)
 
 When verifying spacing, alignment, or sizing, you MUST measure actual pixels.
 
@@ -222,24 +222,24 @@ Use platform tools to get EXACT pixel values:
 
 ```
 MEASUREMENTS:
-┌─────────────────────────────────┬──────────┬──────────┐
-│ Element                         │ Actual   │ Expected │
-├─────────────────────────────────┼──────────┼──────────┤
-│ Section 1 to Section 2 gap      │ 24px     │ 24px     │
-│ Card padding-left               │ 16px     │ 16px     │
-│ Header to content spacing       │ 12px     │ 16px     │
-│ Button width                    │ 120px    │ 120px    │
-└─────────────────────────────────┴──────────┴──────────┘
+
+ Element                          Actual    Expected 
+
+ Section 1 to Section 2 gap       24px      24px     
+ Card padding-left                16px      16px     
+ Header to content spacing        12px      16px     
+ Button width                     120px     120px    
+
 ```
 
 ### Step 2: Compare (Zero Tolerance)
 
 ```
 PIXEL COMPARISON:
-- Section 1 to Section 2 gap: 24px == 24px → ✓ MATCH
-- Card padding-left: 16px == 16px → ✓ MATCH
-- Header to content spacing: 12px != 16px → ✗ MISMATCH (off by 4px)
-- Button width: 120px == 120px → ✓ MATCH
+- Section 1 to Section 2 gap: 24px == 24px →  MATCH
+- Card padding-left: 16px == 16px →  MATCH
+- Header to content spacing: 12px != 16px →  MISMATCH (off by 4px)
+- Button width: 120px == 120px →  MATCH
 ```
 
 ### Step 3: Verdict
@@ -257,10 +257,10 @@ FAILED MEASUREMENTS:
 
 ### Anti-Patterns (NEVER DO THESE)
 
-❌ "Spacing looks consistent" - WHERE ARE THE PIXEL VALUES?
-❌ "Alignment appears correct" - SHOW THE MEASUREMENTS
-❌ "Layout matches design" - PROVE IT WITH NUMBERS
-❌ "Within acceptable tolerance" - THERE IS NO TOLERANCE, ZERO MEANS ZERO
+ "Spacing looks consistent" - WHERE ARE THE PIXEL VALUES?
+ "Alignment appears correct" - SHOW THE MEASUREMENTS
+ "Layout matches design" - PROVE IT WITH NUMBERS
+ "Within acceptable tolerance" - THERE IS NO TOLERANCE, ZERO MEANS ZERO
 ```
 
 ### 2.4 Measurement Methods by Platform
@@ -301,7 +301,7 @@ xcrun simctl ui booted describe
 
 ### 3.1 Problem
 
-Agent said "What I've Fixed ✅" then later admitted "I don't know if the changes worked."
+Agent said "What I've Fixed " then later admitted "I don't know if the changes worked."
 
 This is dishonest. The word "fixed" implies verification happened.
 
@@ -312,17 +312,17 @@ This is dishonest. The word "fixed" implies verification happened.
 | BANNED LANGUAGE | REQUIRED INSTEAD |
 |-----------------|------------------|
 | "Fixed" | "Changed" or "Modified" |
-| "Verified ✅" | "UNVERIFIED - [reason]" |
+| "Verified " | "UNVERIFIED - [reason]" |
 | "Issues resolved" | "Code changes applied - visual verification pending" |
 | "Works correctly" | "Build passes - visual verification required" |
-| Any checkmarks (✅) | No checkmarks for unverified work |
+| Any checkmarks () | No checkmarks for unverified work |
 
 ### 3.3 Unverified Work Protocol
 
 When agent cannot run the app and see the result:
 
 ```markdown
-## ⚠️ UNVERIFIED CHANGES
+##  UNVERIFIED CHANGES
 
 Visual verification BLOCKED because: [Node.js version incompatible / build error / etc.]
 
@@ -346,7 +346,7 @@ analysis, but visual verification failed. The word "fixed" would be dishonest.
 Add to ALL builder and reviewer agents:
 
 ```markdown
-## 🔴 CLAIM LANGUAGE RULES (MANDATORY)
+##  CLAIM LANGUAGE RULES (MANDATORY)
 
 ### If You CAN See the Result:
 - Use pixel measurements
@@ -357,7 +357,7 @@ Add to ALL builder and reviewer agents:
 - State "UNVERIFIED" prominently at TOP of response
 - Use "changed/modified" language, NEVER "fixed"
 - List what blocked verification
-- NO checkmarks (✅) for unverified work
+- NO checkmarks () for unverified work
 - Provide steps for user to verify
 
 ### The Word "Fixed" Is EARNED, Not Assumed

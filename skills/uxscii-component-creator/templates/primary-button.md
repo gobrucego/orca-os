@@ -5,33 +5,33 @@ A primary action button with emphasis styling for main user actions.
 ## Default State
 
 ```
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-▓   {{text}}   ▓
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+   {{text}}   
+
 ```
 
 ## Hover State
 
 ```
-████████████████
-█   {{text}}   █
-████████████████
+
+   {{text}}   
+
 ```
 
 ## Active/Pressed State
 
 ```
-░▓▓▓▓▓▓▓▓▓▓▓▓▓▓░
-░▓  {{text}}  ▓░
-░▓▓▓▓▓▓▓▓▓▓▓▓▓▓░
+
+  {{text}}  
+
 ```
 
 ## Disabled State
 
 ```
-┌ ─ ─ ─ ─ ─ ─ ─┐
-│   {{text}}   │
-└ ─ ─ ─ ─ ─ ─ ─┘
+       
+   {{text}}   
+       
 ```
 
 ## Dimensions
@@ -60,23 +60,23 @@ A primary action button with emphasis styling for main user actions.
 
 ### Basic Usage
 ```
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-▓     Save     ▓
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+     Save     
+
 ```
 
 ### Compact Button
 ```
-▓▓▓▓▓▓▓▓
-▓   OK   ▓
-▓▓▓▓▓▓▓▓
+
+   OK   
+
 ```
 
 ### Wide Button
 ```
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-▓    Create Account    ▓
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+    Create Account    
+
 ```
 
 ## Component Behavior
@@ -104,10 +104,10 @@ The button emits a click event when:
 ## Design Tokens
 
 ### Colors (represented by patterns)
-- `▓` = Primary background color
-- `█` = Primary hover color  
-- `░` = Shadow/pressed effect
-- `─` = Disabled border style
+- `` = Primary background color
+- `` = Primary hover color  
+- `` = Shadow/pressed effect
+- `` = Disabled border style
 
 ### Spacing
 - Internal padding: 1 character top/bottom, 2 characters left/right
@@ -124,7 +124,7 @@ The button emits a click event when:
 
 This ASCII representation demonstrates the visual hierarchy and interaction states. When implementing in actual UI frameworks:
 
-1. Map the `▓` pattern to the primary brand color
+1. Map the `` pattern to the primary brand color
 2. Ensure proper contrast ratios for accessibility
 3. Implement smooth hover transitions
 4. Add appropriate ripple/click effects

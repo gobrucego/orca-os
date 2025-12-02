@@ -2,7 +2,7 @@
 
 **This repo:** Records the OS 2.2 configuration that solves orchestration breakdown.
 
-## ⚠️ CRITICAL: WHAT THIS REPOSITORY IS ⚠️
+##  CRITICAL: WHAT THIS REPOSITORY IS 
 
 **THIS IS A CONFIGURATION OF `~/.claude` (GLOBAL CLAUDE CODE)**
 
@@ -98,6 +98,25 @@ model: sonnet
 
 **This applies to /plan, /orca-*, session hooks, and ALL agents.**
 
+### 0.3 NEVER DEPLOY ARCHIVED CONTENT (CRITICAL - POLLUTES GLOBAL CONFIG)
+
+**When copying/syncing files to `~/.claude`, NEVER include:**
+- `_archive/` directories
+- `.archived-v1/` directories
+- `deprecated/` directories
+- Any folder with "archive" or "deprecated" in the name
+
+**Archived directories in this repo:**
+- `commands/_archive/` - OLD commands, DO NOT DEPLOY
+- `scripts/.archived-v1/` - OLD scripts, DO NOT DEPLOY
+
+**Before ANY rsync, cp, or file copy to ~/.claude:**
+1. Exclude `*archive*` and `*deprecated*` patterns
+2. NEVER use `rsync --delete` without exclusions
+3. Verify the target doesn't contain archived content after
+
+**If you see `/_archive:*` commands in the Available Commands list, you fucked up.**
+
 ---
 
 ### 1. File Management - KEEP THIS REPO CLEAN
@@ -117,11 +136,11 @@ model: sonnet
 
 ```
 .claude/orchestration/
-├── evidence/       ← FINAL ARTIFACTS ONLY (screenshots, final reports, design reviews)
-├── temp/           ← WORKING FILES (audits, analysis, logs, session notes) - DELETE AFTER SESSION
-├── playbooks/      ← REFERENCE: Pattern templates (git, frontend, data, etc.)
-├── reference/      ← REFERENCE: Key reference docs
-└── orca-commands/  ← REFERENCE: ORCA command definitions
+ evidence/       ← FINAL ARTIFACTS ONLY (screenshots, final reports, design reviews)
+ temp/           ← WORKING FILES (audits, analysis, logs, session notes) - DELETE AFTER SESSION
+ playbooks/      ← REFERENCE: Pattern templates (git, frontend, data, etc.)
+ reference/      ← REFERENCE: Key reference docs
+ orca-commands/  ← REFERENCE: ORCA command definitions
 ```
 
 **RULES:**
@@ -133,16 +152,16 @@ model: sonnet
 
 **Anti-Pattern:**
 ```
-❌ .claude/orchestration/implementation-log.md
-❌ .claude/orchestration/root-cause-analysis.md
-❌ .claude/orchestration/session-context.md
+ .claude/orchestration/implementation-log.md
+ .claude/orchestration/root-cause-analysis.md
+ .claude/orchestration/session-context.md
 ```
 
 **Correct Pattern:**
 ```
-✅ .claude/orchestration/temp/implementation-log.md
-✅ .claude/orchestration/temp/root-cause-analysis.md
-✅ .claude/orchestration/evidence/design-review-final.md
+ .claude/orchestration/temp/implementation-log.md
+ .claude/orchestration/temp/root-cause-analysis.md
+ .claude/orchestration/evidence/design-review-final.md
 ```
 
 ### 4. `.claude/research/` Structure
@@ -151,9 +170,9 @@ Research artifacts that persist across sessions:
 
 ```
 .claude/research/
-├── evidence/       ← Evidence Notes from subagents
-├── reports/        ← Final and draft research reports
-└── cache/          ← Cached search results (optional)
+ evidence/       ← Evidence Notes from subagents
+ reports/        ← Final and draft research reports
+ cache/          ← Cached search results (optional)
 ```
 
 **Note:** Unlike `.claude/orchestration/temp/`, research artifacts may be reused
@@ -190,6 +209,7 @@ _Last updated: 2025-11-28_
 
 ### Active Rules
 
+- **[rule-20251129-001]** don't use emojis in documentation (learned: 2025-11-29)
 **[rule-001] Version Sync Rule** (2025-11-27)
 When updating OS version (e.g., 2.3 → 2.4), grep ALL phase-configs in `docs/reference/phase-configs/` and update versions together. Never leave configs at mixed versions.
 
@@ -198,6 +218,9 @@ When changing model policy (e.g., "all Opus"), grep all docs (`quick-reference/`
 
 **[rule-003] No Root Pollution** (2025-11-27)
 NEVER create `requirements/`, `.claude-session-context.md`, `orchestration/`, `evidence/`, or `temp/` in project root. ALL orchestration artifacts go in `.claude/`. Check every Write/mkdir path starts with `.claude/` before executing.
+
+**[rule-004] Never Deploy Archived Content** (2025-11-29)
+NEVER copy/rsync `_archive/`, `.archived-v1/`, or `deprecated/` directories to `~/.claude`. These pollute the global config and create ghost commands. Exclude these patterns from ALL deployment operations. If `/_archive:*` appears in Available Commands, deployment is broken.
 
 ### Archived Rules
 <!-- Rules no longer active but kept for history -->

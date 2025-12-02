@@ -24,9 +24,9 @@ Use this template to define clear, testable acceptance criteria for visual work.
 - Gate scores: `.claude/orchestration/phase_state.json`
 
 **Deprecated (OS 2.2):**
-- ❌ `/visual-smoke` → Use pipeline automatic checks
-- ❌ `/visual-iterate` → Use pipeline iteration (gate <90 triggers fix)
-- ❌ `/design-review` → Use automatic design-reviewer agents
+-  `/visual-smoke` → Use pipeline automatic checks
+-  `/visual-iterate` → Use pipeline iteration (gate <90 triggers fix)
+-  `/design-review` → Use automatic design-reviewer agents
 
 ---
 

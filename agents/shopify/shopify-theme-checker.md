@@ -78,9 +78,9 @@ shopify theme check 2>&1
 
 2. **Parse Results**
 Group issues by severity:
-- 🔴 **Error** - Must fix (breaks functionality)
-- 🟡 **Warning** - Should fix (best practice)
-- 🔵 **Info** - Nice to fix (suggestions)
+-  **Error** - Must fix (breaks functionality)
+-  **Warning** - Should fix (best practice)
+-  **Info** - Nice to fix (suggestions)
 
 3. **Report Format**
 ```
@@ -184,7 +184,7 @@ grep -rn 'style="' sections/ snippets/ --include="*.liquid" | head -20
 
 Report as warnings, not errors:
 ```
-⚠️ Design Token Warnings:
+ Design Token Warnings:
 - sections/header.liquid:45 - Hardcoded color #333333
 - snippets/card.liquid:23 - 17px not on 4px grid (use 16px or 20px)
 ```

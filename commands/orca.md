@@ -15,19 +15,19 @@ allowed-tools:
   - mcp__project-context__save_standard
 ---
 
-# ⛔ MANDATORY EXECUTION RULES - READ BEFORE ANYTHING ⛔
+#  MANDATORY EXECUTION RULES - READ BEFORE ANYTHING 
 
 **REQUEST:** $ARGUMENTS
 
 ## HARD STOP: YOU MUST DELEGATE
 
 **YOU ARE NOT ALLOWED TO:**
-- ❌ Use the Edit tool
-- ❌ Use the Write tool
-- ❌ Use the MultiEdit tool
-- ❌ Modify any source code files
-- ❌ "Just do it yourself" for "simple" tasks
-- ❌ Read source code files to "understand" the task (that's the agent's job)
+-  Use the Edit tool
+-  Use the Write tool
+-  Use the MultiEdit tool
+-  Modify any source code files
+-  "Just do it yourself" for "simple" tasks
+-  Read source code files to "understand" the task (that's the agent's job)
 
 **IF YOU CATCH YOURSELF ABOUT TO:**
 - Read a `.tsx`, `.ts`, `.jsx`, `.js`, `.swift`, `.css`, `.py` file to "see what needs to change"
@@ -67,12 +67,12 @@ Your first tool call MUST NOT be:
 3. **Context Query Once** - ProjectContextServer called once, passed to domain orchestrators
 4. **Plan Integration** - Checks for /plan output, offers to plan if needed
 5. **Pipeline Detection** - Auto-detects: nextjs, ios, expo, data, seo, design, shopify
-6. **Domain Routing** - Routes to `/orca-{domain}` commands for specialized handling
+6. **Domain Routing** - Routes to `/{domain}` commands for specialized handling
 7. **Never Codes** - Orchestrates agents, doesn't implement
 
 **OS 2.4 Updates:**
 - Memory-first context (Workshop + vibe.db before ProjectContext)
-- Routes to domain-specific `/orca-{domain}` commands which handle three-tier flag routing
+- Routes to domain-specific `/{domain}` commands which handle three-tier flag routing
 - Three-tier structure:
   - Default (no flag): Light path WITH design verification gates
   - `-tweak`: Light path WITHOUT gates (pure speed)
@@ -173,7 +173,9 @@ AskUserQuestion({
 **Process response:**
 
 - **"Start planning now"** → Execute `/plan` inline:
+   **PATH CHECK**: ALL paths MUST start with `.claude/` - NEVER create `requirements/` in project root
   1. Create requirements folder: `.claude/requirements/YYYY-MM-DD-HHMM-[slug]/`
+     -  `.claude/requirements/...` |  `requirements/...`
   2. Begin 5 discovery questions via AskUserQuestion
   3. After discovery, continue with 5 detail questions
   4. Generate spec file (`06-requirements-spec.md`)
@@ -375,57 +377,57 @@ Create or update phase tracking:
 
 **DO NOT PROCEED TO STEP 7 WITHOUT USER CONFIRMATION**
 
-**CRITICAL: You MUST output the plan BEFORE asking for confirmation. Then WAIT FOR RESPONSE.**
+**This is a TWO-STEP process. You MUST do both steps separately.**
 
-#### 6a: OUTPUT the plan (visible to user)
+#### 6a: OUTPUT the plan (VISIBLE MARKDOWN - NOT inside AskUserQuestion)
 
-First, print the execution plan so the user can see it:
+**FIRST, output this as regular markdown so the user can see it:**
 
-```
-## Execution Plan
+```markdown
+## Proposed Pipeline
 
 **Request:** $ARGUMENTS
+**Domain:** [detected pipeline]
+**Complexity:** [simple/medium/complex]
 
-**Pipeline:** [detected pipeline]
-**Grand Architect:** [agent name]
+### Phases
+1. Context Query (ProjectContext)
+2. Grand Architect ([grand-architect-name]) - architecture decisions
+3. Planning ([architect-name]) - detailed plan
+4. Implementation ([builder-name] + specialists)
+5. Gates (standards, design QA)
+6. Verification (build/test)
 
-### Phases:
-1. **Context Query** - Load project context from ProjectContextServer
-2. **Analysis** - [Architect agent] analyzes scope, risks, affected files
-3. **Implementation** - [Builder agent] + specialists implement changes
-4. **Gates** - Standards enforcement, design QA
-5. **Verification** - Build/test validation
+### Agent Team
+| Role | Agent |
+|------|-------|
+| Coordination | [grand-architect] |
+| Architecture | [architect] |
+| Implementation | [builder] |
+| Specialists | [list relevant ones] |
+| Gates | [gate agents] |
+| Verification | [verification agent] |
 
-### Files likely affected:
-- [list relevant files from ContextBundle]
+### Files Likely Affected
+- [list from ContextBundle]
 
-### Agents that will be involved:
-- [grand-architect] (coordination)
-- [architect] (planning)
-- [builder] (implementation)
-- [specialists as needed]
-
-### Risks/Notes:
-- [any risks or dependencies identified]
+### Risks/Notes
+- [any identified risks or dependencies]
 ```
 
-#### 6b: THEN ask for confirmation
+**This MUST be visible output BEFORE you call AskUserQuestion.**
+
+#### 6b: THEN ask for confirmation (simple yes/no - team already shown)
 
 ```typescript
 AskUserQuestion({
   questions: [{
-    question: "Proceed with this plan?",
+    question: "Proceed with this pipeline?",
     header: "Confirm",
     multiSelect: false,
     options: [
-      {
-        label: "Yes, proceed",
-        description: "Execute the plan as shown above"
-      },
-      {
-        label: "Modify approach",
-        description: "I want to change something before proceeding"
-      }
+      { label: "Yes, proceed", description: "Execute the plan shown above" },
+      { label: "Modify approach", description: "I want to change something" }
     ]
   }]
 })
@@ -434,19 +436,21 @@ AskUserQuestion({
 **After presenting the confirmation question:**
 1. STOP and wait for user response
 2. If user says "Yes, proceed" → continue to Step 7
-3. If user says "Modify approach" → update plan, re-confirm
+3. If user says "Modify approach" → ask what to change, re-output plan, re-confirm
 4. Do NOT proceed without explicit confirmation
 
 **Anti-patterns (WRONG):**
-- Showing the plan then immediately routing to domain orchestrator
+- Putting the team/plan inside AskUserQuestion options or descriptions
+- Showing plan and question in the same tool call
 - "I'll proceed with this plan..." without waiting
 - Any routing before explicit user confirmation
+- Describing the team only in the question description
 
 ---
 
 ### Step 7: Route to Domain Orchestrator (OS 2.4)
 
-**For pipelines with domain-specific `/orca-{domain}` commands, route to them.**
+**For pipelines with domain-specific `/{domain}` commands, route to them.**
 
 This allows domain orchestrators to handle:
 - Complexity classification (simple/medium/complex)
@@ -456,11 +460,11 @@ This allows domain orchestrators to handle:
 
 #### For Next.js / Webdev:
 
-**Route to `/orca-nextjs`** - handles complexity routing internally.
+**Route to `/nextjs`** - handles complexity routing internally.
 
 ```typescript
 // Simple approach: Use SlashCommand
-SlashCommand({ command: `/orca-nextjs ${$ARGUMENTS}` })
+SlashCommand({ command: `/nextjs ${$ARGUMENTS}` })
 
 // OR if staying in Task tool:
 Task({
@@ -526,11 +530,11 @@ EXECUTE NOW.
 
 #### For iOS:
 
-**Route to `/orca-ios`** - handles complexity routing internally.
+**Route to `/ios`** - handles complexity routing internally.
 
 ```typescript
 // Simple approach: Use SlashCommand
-SlashCommand({ command: `/orca-ios ${$ARGUMENTS}` })
+SlashCommand({ command: `/ios ${$ARGUMENTS}` })
 
 // OR if staying in Task tool:
 Task({
@@ -596,11 +600,11 @@ EXECUTE NOW.
 
 #### For Expo / React Native:
 
-**Route to `/orca-expo`** - handles complexity routing internally.
+**Route to `/expo`** - handles complexity routing internally.
 
 ```typescript
 // Simple approach: Use SlashCommand
-SlashCommand({ command: `/orca-expo ${$ARGUMENTS}` })
+SlashCommand({ command: `/expo ${$ARGUMENTS}` })
 
 // OR if staying in Task tool:
 Task({
@@ -665,11 +669,11 @@ EXECUTE NOW.
 
 #### For Shopify:
 
-**Route to `/orca-shopify`** - handles complexity routing internally.
+**Route to `/shopify`** - handles complexity routing internally.
 
 ```typescript
 // Simple approach: Use SlashCommand
-SlashCommand({ command: `/orca-shopify ${$ARGUMENTS}` })
+SlashCommand({ command: `/shopify ${$ARGUMENTS}` })
 
 // OR if staying in Task tool:
 Task({
@@ -941,18 +945,18 @@ When grand-architect signals completion:
 
 4. **Generate summary:**
    ```
-   ✅ TASK COMPLETED
+    TASK COMPLETED
 
    Pipeline: ${pipelineName}
    Grand Architect: ${grandArchitectName}
 
    Phases Completed:
-   - Context Query ✓
-   - Planning ✓
-   - Implementation ✓
-   - Standards Gate ✓ (score: 95)
-   - Design QA ✓ (score: 92)
-   - Verification ✓
+   - Context Query 
+   - Planning 
+   - Implementation 
+   - Standards Gate  (score: 95)
+   - Design QA  (score: 92)
+   - Verification 
 
    Files Modified:
    - app/components/DarkModeToggle.tsx

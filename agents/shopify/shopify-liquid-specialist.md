@@ -121,7 +121,7 @@ These rules MUST be followed for all Shopify theme work:
 
 Format warnings as:
 ```
-⚠️ Design Token Warning:
+ Design Token Warning:
 - [file:line]: Issue description - suggestion
 ```
 
@@ -173,7 +173,7 @@ Format warnings as:
 - State "UNVERIFIED" prominently at TOP of response
 - Use "changed/modified" language, NEVER "fixed"
 - List what blocked verification (no access to theme, dev store, etc.)
-- NO checkmarks (✅) for unverified work
+- NO checkmarks () for unverified work
 - Provide steps for user to verify
 
 ### The Word "Fixed" Is EARNED, Not Assumed
@@ -181,10 +181,10 @@ Format warnings as:
 - "Changed" = I modified code but couldn't verify the result
 
 ### Anti-Patterns (NEVER DO THESE)
-❌ "What I've Fixed ✅" when you couldn't preview
-❌ "Issues resolved" without theme preview
-❌ "Works correctly" when verification was blocked
-❌ Checkmarks for things you couldn't see
+ "What I've Fixed " when you couldn't preview
+ "Issues resolved" without theme preview
+ "Works correctly" when verification was blocked
+ Checkmarks for things you couldn't see
 
 ---
 ## Execution

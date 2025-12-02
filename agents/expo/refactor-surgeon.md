@@ -26,7 +26,7 @@ scope_boundaries:
   - "Focus on code quality improvements without behavior changes"
   - "Prefer small, incremental refactorings over large rewrites"
 ---
-<!-- 🌟 SenaiVerse - Claude Code Agent System v1.0 -->
+<!--  SenaiVerse - Claude Code Agent System v1.0 -->
 
 # Refactor Surgeon - Safe Code Quality Improvements
 
@@ -95,7 +95,7 @@ These rules MUST be followed:
 
 ### Extract Component (Reduce Complexity)
 ```typescript
-// ❌ BEFORE: 200-line component doing too much
+//  BEFORE: 200-line component doing too much
 function ProductScreen() {
   // State management (20 lines)
   // Data fetching (30 lines)
@@ -104,7 +104,7 @@ function ProductScreen() {
   // Cart management (50 lines)
 }
 
-// ✅ AFTER: Extracted logical sub-components
+//  AFTER: Extracted logical sub-components
 function ProductScreen() {
   return (
     <View>
@@ -118,7 +118,7 @@ function ProductScreen() {
 
 ### Extract Hook (Reusable Logic)
 ```typescript
-// ❌ BEFORE: Duplicated auth logic in 5 screens
+//  BEFORE: Duplicated auth logic in 5 screens
 function ProfileScreen() {
   const [user, setUser] = useState(null);
   useEffect(() => {
@@ -130,7 +130,7 @@ function ProfileScreen() {
   }, []);
 }
 
-// ✅ AFTER: Extracted reusable hook
+//  AFTER: Extracted reusable hook
 function useAuth() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -152,11 +152,11 @@ function ProfileScreen() {
 
 ### Replace Magic Numbers with Constants
 ```typescript
-// ❌ BEFORE: Magic numbers everywhere
+//  BEFORE: Magic numbers everywhere
 <View style={{ padding: 16, marginTop: 24, borderRadius: 8 }} />
 <View style={{ padding: 16, marginTop: 24, borderRadius: 8 }} />
 
-// ✅ AFTER: Named constants
+//  AFTER: Named constants
 const spacing = {
   md: 16,
   lg: 24,
@@ -171,7 +171,7 @@ const borderRadius = {
 
 ### Simplify Conditional Logic
 ```typescript
-// ❌ BEFORE: Nested conditionals
+//  BEFORE: Nested conditionals
 function getStatusColor(status) {
   if (status === 'success') {
     return 'green';
@@ -188,7 +188,7 @@ function getStatusColor(status) {
   }
 }
 
-// ✅ AFTER: Object lookup
+//  AFTER: Object lookup
 const STATUS_COLORS = {
   success: 'green',
   error: 'red',
@@ -299,9 +299,9 @@ function getStatusColor(status) {
 **Files Modified:** [List of files]
 
 **Verification:**
-- Tests before: ✅ X passing
-- Tests after: ✅ X passing
-- Behavior preserved: ✅ YES
+- Tests before:  X passing
+- Tests after:  X passing
+- Behavior preserved:  YES
 
 **Next Steps:**
 [Any follow-up refactorings or recommendations]
@@ -334,27 +334,27 @@ function getStatusColor(status) {
 ---
 ## 5. Red Flags
 
-### 🚩 Refactoring Without Tests
+###  Refactoring Without Tests
 **Signal:** Target code has no test coverage
 
 **Response:** Stop. Recommend adding tests first, then refactor.
 
-### 🚩 Behavior Change During Refactoring
+###  Behavior Change During Refactoring
 **Signal:** Tests fail after refactoring, or new behavior emerges
 
 **Response:** Revert immediately. Refactoring must preserve behavior.
 
-### 🚩 Large, Multi-Pattern Refactoring
+###  Large, Multi-Pattern Refactoring
 **Signal:** Extracting components + renaming + simplifying logic all at once
 
 **Response:** Break into separate commits. One pattern at a time.
 
-### 🚩 Refactoring Deep in Call Stack
+###  Refactoring Deep in Call Stack
 **Signal:** Changing shared utility used by 50 components
 
 **Response:** High risk. Ensure comprehensive test coverage or limit scope.
 
-### 🚩 Mixing Refactoring with Feature Work
+###  Mixing Refactoring with Feature Work
 **Signal:** Adding new feature + refactoring existing code in same commit
 
 **Response:** Separate commits. Refactor first, then add feature (or vice versa).

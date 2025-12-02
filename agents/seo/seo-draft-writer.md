@@ -453,41 +453,41 @@ if (selfReview.clarity_score_estimate < 70) {
 ## Output Checklist
 
 ### File Created
-- ✅ `outputs/seo/${SLUG}-draft.md` - Review-ready draft
+-  `outputs/seo/${SLUG}-draft.md` - Review-ready draft
 
 ### Content Quality
-- ✅ Passes gym buddy test (concepts explained without jargon lookup)
-- ✅ All jargon explained inline with functional/biological meaning
-- ✅ Natural analogies used where helpful (not forced)
-- ✅ Unique content per section (no repeated paragraphs)
-- ✅ Evidence-based claims with inline citations
-- ✅ Word count: 1500+ words (ideally 2500-3500)
+-  Passes gym buddy test (concepts explained without jargon lookup)
+-  All jargon explained inline with functional/biological meaning
+-  Natural analogies used where helpful (not forced)
+-  Unique content per section (no repeated paragraphs)
+-  Evidence-based claims with inline citations
+-  Word count: 1500+ words (ideally 2500-3500)
 
 ### SEO Elements
-- ✅ Primary keyword integrated naturally (0.5-1.5% density)
-- ✅ Secondary keywords present throughout
-- ✅ Featured snippet targeting (40-60 word answer after first H2)
-- ✅ PAA questions addressed as H3 subheadings
-- ✅ Internal links (3-5 minimum)
-- ✅ Meta title (50-60 chars) and description (150-160 chars)
+-  Primary keyword integrated naturally (0.5-1.5% density)
+-  Secondary keywords present throughout
+-  Featured snippet targeting (40-60 word answer after first H2)
+-  PAA questions addressed as H3 subheadings
+-  Internal links (3-5 minimum)
+-  Meta title (50-60 chars) and description (150-160 chars)
 
 ### E-E-A-T Signals
-- ✅ External research citations with DOIs (5-10 minimum)
-- ✅ Author expertise signal in opening
-- ✅ Conservative medical claims with disclaimers
-- ✅ Schema markup notes for technical implementation
+-  External research citations with DOIs (5-10 minimum)
+-  Author expertise signal in opening
+-  Conservative medical claims with disclaimers
+-  Schema markup notes for technical implementation
 
 ### Writing Style
-- ✅ Sophisticated but clear tone
-- ✅ Conversational authority voice
-- ✅ Progressive disclosure (basics → advanced)
-- ✅ Scannable formatting (short paragraphs, bullets, bold terms)
+-  Sophisticated but clear tone
+-  Conversational authority voice
+-  Progressive disclosure (basics → advanced)
+-  Scannable formatting (short paragraphs, bullets, bold terms)
 
 ### Citations & Evidence
-- ✅ Inline citations for all medical/scientific claims
-- ✅ TODO markers for missing citations
-- ✅ References section with DOIs
-- ✅ KG evidence integrated (complete prose, not snippets)
+-  Inline citations for all medical/scientific claims
+-  TODO markers for missing citations
+-  References section with DOIs
+-  KG evidence integrated (complete prose, not snippets)
 
 ## Hand-off to Next Phase
 
@@ -505,16 +505,16 @@ if (selfReview.clarity_score_estimate < 70) {
 ---
 
 **Phase complete when:**
-1. Brief and context loaded ✅
-2. Style patterns extracted from contextBundle ✅
-3. Communication heuristics applied ✅
-4. Complete draft written (1500+ words) ✅
-5. All sections unique (no repetition) ✅
-6. Citations present or TODO markers ✅
-7. Jargon explained inline ✅
-8. Natural analogies used where helpful ✅
-9. Self-review passed (estimated clarity 70+) ✅
-10. Draft saved to outputs/seo/ ✅
+1. Brief and context loaded 
+2. Style patterns extracted from contextBundle 
+3. Communication heuristics applied 
+4. Complete draft written (1500+ words) 
+5. All sections unique (no repetition) 
+6. Citations present or TODO markers 
+7. Jargon explained inline 
+8. Natural analogies used where helpful 
+9. Self-review passed (estimated clarity 70+) 
+10. Draft saved to outputs/seo/ 
 
 ---
 

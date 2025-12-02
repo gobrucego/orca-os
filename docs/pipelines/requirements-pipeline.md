@@ -66,17 +66,17 @@ Requirements live under:
 
 ```text
 .claude/requirements/
-├── .current-requirement          # Name of active requirement folder (if any)
-├── index.md                      # Summary of all requirements
-└── YYYY-MM-DD-HHMM-slug/         # Individual requirement folders
-    ├── metadata.json             # Status and progress tracking
-    ├── 00-initial-request.md     # User's original request
-    ├── 01-discovery-questions.md # 5 context questions
-    ├── 02-discovery-answers.md   # User's answers
-    ├── 03-context-findings.md    # AI's code/context analysis
-    ├── 04-detail-questions.md    # 5 expert questions
-    ├── 05-detail-answers.md      # User's detailed answers
-    └── 06-requirements-spec.md   # Final requirements spec
+ .current-requirement          # Name of active requirement folder (if any)
+ index.md                      # Summary of all requirements
+ YYYY-MM-DD-HHMM-slug/         # Individual requirement folders
+     metadata.json             # Status and progress tracking
+     00-initial-request.md     # User's original request
+     01-discovery-questions.md # 5 context questions
+     02-discovery-answers.md   # User's answers
+     03-context-findings.md    # AI's code/context analysis
+     04-detail-questions.md    # 5 expert questions
+     05-detail-answers.md      # User's detailed answers
+     06-requirements-spec.md   # Final requirements spec
 ```
 
 This structure is shared by:

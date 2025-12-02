@@ -111,7 +111,7 @@ Display ALL matching libraries in a table:
 
 ```
 Library Documentation Search: "<library>"
-═══════════════════════════════════════════════════════════════════════════════
+
 
 | # | Library ID              | Snippets | Score | Reputation | Description           |
 |---|-------------------------|----------|-------|------------|-----------------------|
@@ -149,7 +149,7 @@ Show available subcommands:
 
 ```
 Code Context Commands (/project-code)
-═══════════════════════════════════════════════════════════
+
 
 Local Code (vibe.db):
   /project-code                   Show vibe.db status

@@ -125,31 +125,31 @@ Reasons to keep /reflect separate from agent self-improvement:
 
 ```
 /reflect [topic]
-    │
-    ├─ If topic provided:
-    │   └─ Focus on specific learning
-    │
-    ├─ Otherwise:
-    │   ├─ Query Workshop recent entries
-    │   ├─ Query recent git commits for context
-    │   └─ Identify potential learnings
-    │
-    ├─ Present learnings to user:
-    │   ├─ "I noticed you corrected me 3 times about X"
-    │   ├─ "You've mentioned Y preference multiple times"
-    │   └─ "This gotcha keeps coming up: Z"
-    │
-    ├─ User selects which to formalize:
-    │   ├─ Add to CLAUDE.md (rule)
-    │   ├─ Add to Workshop preference (soft)
-    │   └─ Skip / not worth formalizing
-    │
-    ├─ For CLAUDE.md additions:
-    │   ├─ Generate rule text
-    │   ├─ User confirms wording
-    │   └─ Append to "Learned Preferences" section
-    │
-    └─ Summary of what was learned
+    
+     If topic provided:
+        Focus on specific learning
+    
+     Otherwise:
+        Query Workshop recent entries
+        Query recent git commits for context
+        Identify potential learnings
+    
+     Present learnings to user:
+        "I noticed you corrected me 3 times about X"
+        "You've mentioned Y preference multiple times"
+        "This gotcha keeps coming up: Z"
+    
+     User selects which to formalize:
+        Add to CLAUDE.md (rule)
+        Add to Workshop preference (soft)
+        Skip / not worth formalizing
+    
+     For CLAUDE.md additions:
+        Generate rule text
+        User confirms wording
+        Append to "Learned Preferences" section
+    
+     Summary of what was learned
 ```
 
 ---

@@ -12,17 +12,17 @@ In addition to the centralized self-improvement loop, agents can now learn patte
 
 ```
 .claude/agent-knowledge/
-├── README.md                    # System documentation
-├── nextjs-builder/
-│   └── patterns.json           # Patterns for Next.js builder
-├── ios-builder/
-│   └── patterns.json           # Patterns for iOS builder
-├── expo-builder-agent/
-│   └── patterns.json           # Patterns for Expo builder
-├── research-lead-agent/
-│   └── patterns.json           # Patterns for research
-└── shopify-liquid-specialist/
-    └── patterns.json           # Patterns for Shopify
+ README.md                    # System documentation
+ nextjs-builder/
+    patterns.json           # Patterns for Next.js builder
+ ios-builder/
+    patterns.json           # Patterns for iOS builder
+ expo-builder-agent/
+    patterns.json           # Patterns for Expo builder
+ research-lead-agent/
+    patterns.json           # Patterns for research
+ shopify-liquid-specialist/
+     patterns.json           # Patterns for Shopify
 ```
 
 ### Pattern Schema
@@ -114,26 +114,26 @@ A structured loop that:
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                                                                 │
-│  Execute Pipeline (via /orca-{domain})                         │
-│       ↓                                                         │
-│  Grand-Architect Records Outcome                                │
-│       ↓                                                         │
-│  Workshop task_history Entry                                    │
-│       ↓                                                         │
-│  /audit Triggers Pattern Analysis                               │
-│       ↓                                                         │
-│  Identify Patterns (3+ occurrences)                             │
-│       ↓                                                         │
-│  Generate Improvement Proposal                                  │
-│       ↓                                                         │
-│  User Approves/Rejects                                          │
-│       ↓                                                         │
-│  Apply to Agent Definition                                      │
-│       ↓                                                         │
-│  Measure Impact (track if issue recurs)                         │
-│       └────────────────────────────────────────────────────────┘
+
+                                                                 
+  Execute Pipeline (via /orca-{domain})                         
+       ↓                                                         
+  Grand-Architect Records Outcome                                
+       ↓                                                         
+  Workshop task_history Entry                                    
+       ↓                                                         
+  /audit Triggers Pattern Analysis                               
+       ↓                                                         
+  Identify Patterns (3+ occurrences)                             
+       ↓                                                         
+  Generate Improvement Proposal                                  
+       ↓                                                         
+  User Approves/Rejects                                          
+       ↓                                                         
+  Apply to Agent Definition                                      
+       ↓                                                         
+  Measure Impact (track if issue recurs)                         
+       
 ```
 
 ## Outcome Recording
@@ -311,22 +311,22 @@ But these don't persist. Each session starts fresh, leading to:
 `/reflect` extracts learning signals from JSONL conversation transcripts:
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                                                                 │
-│  JSONL Transcripts (~/.claude/projects/<hash>/)                │
-│       ↓                                                         │
-│  /reflect Analyzes Transcripts                                  │
-│       ↓                                                         │
-│  Extract Signals (corrections, instructions, feedback)          │
-│       ↓                                                         │
-│  Learning Journal (.claude/orchestration/temp/reflect-journal.json)
-│       ↓                                                         │
-│  Pattern Meets Threshold?                                       │
-│       ↓                                                         │
-│  User Reviews & Approves                                        │
-│       ↓                                                         │
-│  CLAUDE.md (hard rules) or Workshop (soft preferences)          │
-│       └────────────────────────────────────────────────────────┘
+
+                                                                 
+  JSONL Transcripts (~/.claude/projects/<hash>/)                
+       ↓                                                         
+  /reflect Analyzes Transcripts                                  
+       ↓                                                         
+  Extract Signals (corrections, instructions, feedback)          
+       ↓                                                         
+  Learning Journal (.claude/orchestration/temp/reflect-journal.json)
+       ↓                                                         
+  Pattern Meets Threshold?                                       
+       ↓                                                         
+  User Reviews & Approves                                        
+       ↓                                                         
+  CLAUDE.md (hard rules) or Workshop (soft preferences)          
+       
 ```
 
 ## Signal Types

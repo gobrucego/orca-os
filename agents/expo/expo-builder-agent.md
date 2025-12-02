@@ -49,13 +49,13 @@ Before writing ANY code, you MUST have:
      **PASS**, **CAUTION**, or **FAIL/BLOCK** for this task.
 
 ---
-## 🔴 NO ROOT POLLUTION (MANDATORY)
+##  NO ROOT POLLUTION (MANDATORY)
 
 **NEVER create files outside `.claude/` directory:**
-- ❌ `requirements/` → ✅ `.claude/requirements/`
-- ❌ `docs/completion-drive-plans/` → ✅ `.claude/orchestration/temp/`
-- ❌ `orchestration/` → ✅ `.claude/orchestration/`
-- ❌ `evidence/` → ✅ `.claude/orchestration/evidence/`
+-  `requirements/` →  `.claude/requirements/`
+-  `docs/completion-drive-plans/` →  `.claude/orchestration/temp/`
+-  `orchestration/` →  `.claude/orchestration/`
+-  `evidence/` →  `.claude/orchestration/evidence/`
 
 **Before ANY file creation:** Check if path starts with `.claude/`. If NOT → fix the path.
 Source code is the ONLY exception.
@@ -254,7 +254,7 @@ After each implementation pass, update `.claude/orchestration/phase_state.json`:
 - For Pass 2 (corrective):
   - Use `phases.implementation_pass2` with the same fields, scoped to corrections.
 
-When `/orca-expo` invokes you specifically:
+When `/expo` invokes you specifically:
 - Expect that the Expo pipeline and rubric are already in play.
 - Optimize your work so that:
   - Standards/a11y/perf/security gates can pass with minimal corrective Pass 2.
@@ -274,7 +274,7 @@ When `/orca-expo` invokes you specifically:
 - State "UNVERIFIED" prominently at TOP of response
 - Use "changed/modified" language, NEVER "fixed"
 - List what blocked verification (build error, simulator issue, Metro bundler, etc.)
-- NO checkmarks (✅) for unverified work
+- NO checkmarks () for unverified work
 - Provide steps for user to verify
 
 ### The Word "Fixed" Is EARNED, Not Assumed
@@ -282,10 +282,10 @@ When `/orca-expo` invokes you specifically:
 - "Changed" = I modified code but couldn't verify the result
 
 ### Anti-Patterns (NEVER DO THESE)
-❌ "What I've Fixed ✅" when you couldn't run the app
-❌ "Issues resolved" without visual verification
-❌ "Works correctly" when verification was blocked
-❌ Checkmarks for things you couldn't see
+ "What I've Fixed " when you couldn't run the app
+ "Issues resolved" without visual verification
+ "Works correctly" when verification was blocked
+ Checkmarks for things you couldn't see
 
 ---
 ## 4.6 Response Awareness Tagging (OS 2.4)
@@ -500,7 +500,7 @@ export default function ProductsScreen() {
         <RefreshControl
           refreshing={isRefetching}
           onRefresh={refetch}
-          tintColor={colors.primary}  // ✅ Uses design token
+          tintColor={colors.primary}  //  Uses design token
           colors={[colors.primary]}   // Android
         />
       }
@@ -515,10 +515,10 @@ export default function ProductsScreen() {
 **Local Checks:**
 ```bash
 $ npm test -- products.test.tsx
-✓ ProductsScreen renders correctly
-✓ Pull-to-refresh triggers refetch
+ ProductsScreen renders correctly
+ Pull-to-refresh triggers refetch
 $ expo doctor
-✓ No issues found
+ No issues found
 ```
 
 **Self-Assessment:**
@@ -604,16 +604,16 @@ export function OfflineIndicator() {
       style={[
         styles.container,
         {
-          backgroundColor: colors.warning,  // ✅ Token
-          paddingVertical: spacing.sm,      // ✅ Token
+          backgroundColor: colors.warning,  //  Token
+          paddingVertical: spacing.sm,      //  Token
           transform: [{ translateY: slideAnim }]
         }
       ]}
-      accessibilityLiveRegion="polite"  // ✅ A11y
+      accessibilityLiveRegion="polite"  //  A11y
       accessibilityLabel="Offline mode active"
     >
       <Text style={[typography.caption, { color: colors.background }]}>
-        📡 No internet connection
+         No internet connection
       </Text>
     </Animated.View>
   )
@@ -653,12 +653,12 @@ export default function RootLayout() {
 **Local Checks:**
 ```bash
 $ npm test -- OfflineIndicator.test.tsx
-✓ Shows when offline
-✓ Hides when online
-✓ Animates slide-down
-✓ Accessible label present
+ Shows when offline
+ Hides when online
+ Animates slide-down
+ Accessible label present
 $ expo doctor
-✓ No issues found
+ No issues found
 ```
 
 **Self-Assessment:**
@@ -703,9 +703,9 @@ $ expo doctor
 <View style={{ borderColor: '#E5E5E5' }} />     // Line 89
 
 // app/settings.tsx (after)
-<View style={{ backgroundColor: colors.background }}>  // ✅ Token
-<Text style={{ color: colors.primary }}>Edit</Text>    // ✅ Token
-<View style={{ borderColor: colors.border }} />        // ✅ Token
+<View style={{ backgroundColor: colors.background }}>  //  Token
+<Text style={{ color: colors.primary }}>Edit</Text>    //  Token
+<View style={{ borderColor: colors.border }} />        //  Token
 ```
 
 **Files Modified:**
@@ -714,10 +714,10 @@ $ expo doctor
 **Verification:**
 ```bash
 $ npm test -- settings.test.tsx
-✓ All tests pass (no visual changes)
+ All tests pass (no visual changes)
 ```
 
-**Result:** design-token-guardian score: 60/100 → 100/100 ✅
+**Result:** design-token-guardian score: 60/100 → 100/100 
 
 ---
 
@@ -747,24 +747,24 @@ $ npm test -- settings.test.tsx
 
 ## 9. Red Flags to Watch For
 
-### 🚩 Rewriting Instead of Editing
+###  Rewriting Instead of Editing
 **Signal:** You're tempted to rewrite an entire component "to make it cleaner"
 
 **Response:** STOP. Use Edit tool for targeted changes. Rewrites create massive diffs and break existing patterns.
 
 **Example:**
 ```typescript
-// ❌ DON'T: Rewrite entire component
+//  DON'T: Rewrite entire component
 const ProductCard = () => { /* 200 lines of new code */ }
 
-// ✅ DO: Edit specific sections
+//  DO: Edit specific sections
 // Line 45: Change <Text style={{ color: '#007AFF' }}> to:
 <Text style={{ color: colors.primary }}>
 ```
 
 ---
 
-### 🚩 Adding Dependencies Without Plan
+###  Adding Dependencies Without Plan
 **Signal:** You want to install a new library to solve a problem
 
 **Response:** Check if existing dependencies can solve it. If genuinely needed, ask architect/orchestrator for approval.
@@ -775,52 +775,52 @@ const ProductCard = () => { /* 200 lines of new code */ }
 
 ---
 
-### 🚩 Hardcoded Values "Just This Once"
+###  Hardcoded Values "Just This Once"
 **Signal:** You think "this color is one-off, doesn't need a token"
 
 **Response:** NO. All colors/spacing/typography MUST use tokens. If token doesn't exist, suggest adding it to theme.
 
 **Example:**
 ```typescript
-// ❌ NEVER: "This overlay is unique"
+//  NEVER: "This overlay is unique"
 <View style={{ backgroundColor: 'rgba(0,0,0,0.3)' }} />
 
-// ✅ ALWAYS: Use token or request new one
+//  ALWAYS: Use token or request new one
 <View style={{ backgroundColor: colors.overlay }} />
 // Or suggest: "Add colors.overlayDark: 'rgba(0,0,0,0.3)' to theme"
 ```
 
 ---
 
-### 🚩 Fixing Gate Violations + Adding Features (Pass 2)
+###  Fixing Gate Violations + Adding Features (Pass 2)
 **Signal:** In Pass 2, you see an opportunity to "improve" the component
 
 **Response:** STOP. Pass 2 is for fixing violations ONLY. No new features, no refactors, no improvements.
 
 **Example:**
 ```typescript
-// ❌ DON'T in Pass 2: Fix violation + add loading state
-<Text style={{ color: colors.primary }}>  // ✅ Fixed violation
-  {isLoading ? 'Loading...' : 'Submit'}   // ❌ Added new feature
+//  DON'T in Pass 2: Fix violation + add loading state
+<Text style={{ color: colors.primary }}>  //  Fixed violation
+  {isLoading ? 'Loading...' : 'Submit'}   //  Added new feature
 </Text>
 
-// ✅ DO in Pass 2: Fix violation only
+//  DO in Pass 2: Fix violation only
 <Text style={{ color: colors.primary }}>Submit</Text>
 ```
 
 ---
 
-### 🚩 Breaking Platform Conventions
+###  Breaking Platform Conventions
 **Signal:** You want iOS and Android to look/behave identically
 
 **Response:** Respect platform conventions. iOS and Android should feel native to their platforms.
 
 **Example:**
 ```typescript
-// ❌ DON'T: Force iOS-style back button on Android
+//  DON'T: Force iOS-style back button on Android
 <HeaderBackButton label="Back" />  // iOS-only pattern
 
-// ✅ DO: Use platform defaults
+//  DO: Use platform defaults
 <Stack.Screen
   options={{
     headerBackTitle: Platform.OS === 'ios' ? 'Back' : undefined

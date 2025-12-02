@@ -34,22 +34,22 @@ Use for:
 
 ```
 /orca "Analyze user engagement data"
-    │
-    ▼
-┌─────────────────────┐
-│  Route to data lane  │
-└─────────────────────┘
-    │
-    ▼
-┌─────────────────────┐
-│  python-analytics-expert │  ← For code/scripts
-│  OR                       │
-│  data-researcher          │  ← For research tasks
-│  OR                       │
-│  competitive-analyst      │  ← For market analysis
-└─────────────────────┘
-    │
-    ▼
+    
+    
+
+  Route to data lane  
+
+    
+    
+
+  python-analytics-expert   ← For code/scripts
+  OR                       
+  data-researcher            ← For research tasks
+  OR                       
+  competitive-analyst        ← For market analysis
+
+    
+    
    Analysis Output
 ```
 
@@ -77,8 +77,8 @@ Use for:
 
 ```
 .claude/orchestration/
-├── temp/           ← Working analysis files (clean up after)
-└── evidence/       ← Final reports and visualizations
+ temp/           ← Working analysis files (clean up after)
+ evidence/       ← Final reports and visualizations
 ```
 
 ---

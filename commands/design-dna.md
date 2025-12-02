@@ -327,11 +327,11 @@ If issues occur:
 
 ## Success Criteria
 
-✅ `.claude/design-dna/` directory exists
-✅ `design-dna.json` generated with project-specific tokens
-✅ Token CSS files created (if requested)
-✅ Audit report available (if requested)
-✅ Documentation explains usage
-✅ Project decision saved to context
+ `.claude/design-dna/` directory exists
+ `design-dna.json` generated with project-specific tokens
+ Token CSS files created (if requested)
+ Audit report available (if requested)
+ Documentation explains usage
+ Project decision saved to context
 
 The design system is now ready for enforcement by implementation agents!

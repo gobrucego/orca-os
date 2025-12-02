@@ -43,8 +43,8 @@ If $ARGUMENTS starts with "-clarify":
 
 ## Phase 1: Context Analysis & Intelligence Gathering
 
-If DEBUG_MODE, tell the user: "🔍 Debug mode enabled. Showing detailed analysis..."
-Otherwise, tell the user: "✨ Enhancing your request..."
+If DEBUG_MODE, tell the user: " Debug mode enabled. Showing detailed analysis..."
+Otherwise, tell the user: " Enhancing your request..."
 
 ### Handle Empty Arguments
 If $ARGUMENTS is empty or just whitespace:
@@ -71,7 +71,7 @@ Understand the request by identifying:
 **If YES → Note design context:**
 
 ```
-🎨 DESIGN/UX WORK DETECTED
+ DESIGN/UX WORK DETECTED
 
 This request involves visual/UX decisions. The enhanced prompt will include:
 1. Design system context (design-dna.json if available)
@@ -116,7 +116,7 @@ No rigid rules - use Claude's reasoning to pick what adds value.
 - "Database migration" → [1, 2, 7, 8, 9, 13, 17, 20]
 - "Production deploy" → [1, 2, 5, 7, 8, 9, 13, 14, 23, 24]
 
-Mark operations that can run in parallel with 🔄
+Mark operations that can run in parallel with 
 
 ## Phase 3: Step Dictionary
 
@@ -125,7 +125,7 @@ Mark operations that can run in parallel with 🔄
 2. **PROVIDE_CONTEXT**: Explain why this matters and motivation behind the task
 3. **USE_EXAMPLES**: Include relevant examples that match desired behavior and output
 4. **FORMAT_MATCHING**: Match prompt style to desired output style (e.g., avoid markdown if not wanted)
-5. **PARALLEL_TOOLS**: Identify operations that can run simultaneously for efficiency 🔄
+5. **PARALLEL_TOOLS**: Identify operations that can run simultaneously for efficiency 
 6. **ROLE_PROMPTING**: Define specific expert role (e.g., "Act as a senior security engineer")
 
 ### Core Enhancement Steps (7-10)
@@ -163,7 +163,7 @@ Use the FULL format with all details:
 ```
 Enhanced Prompt: [Clear, action-oriented title]
 
-🔍 DEBUG: ANALYSIS RESULTS
+ DEBUG: ANALYSIS RESULTS
 - Original request: "$ARGUMENTS"
 - Detected context: [What you identified]
 - Risk assessment: [Low/Medium/High/Critical]
@@ -219,9 +219,9 @@ OBJECTIVE:
 
 REQUIREMENTS:
 Based on selected steps, the requirements are:
-- [Clear requirement 1] 🔄
-- [Clear requirement 2] 🔄
-- [Mark parallel operations with 🔄]
+- [Clear requirement 1] 
+- [Clear requirement 2] 
+- [Mark parallel operations with ]
 - [Each should be measurable]
 - [Include validation steps from selected steps]
 
@@ -236,8 +236,8 @@ ORCHESTRATION PLAN:
 **Agent Waves (execute in parallel where possible):**
 
 Wave 1 - Planning & Analysis:
-  🔄 [If needs architecture] → Domain grand-architect (nextjs-grand-architect, ios-grand-architect, expo-grand-orchestrator)
-  🔄 [If needs design/UX] → Design specialists (nextjs-design-reviewer, expo-aesthetics-specialist, design-token-guardian)
+   [If needs architecture] → Domain grand-architect (nextjs-grand-architect, ios-grand-architect, expo-grand-orchestrator)
+   [If needs design/UX] → Design specialists (nextjs-design-reviewer, expo-aesthetics-specialist, design-token-guardian)
 
 Wave 2 - Implementation:
   → [domain-specific specialists]:
@@ -332,15 +332,15 @@ APPROACH:
 Using intelligent analysis, I've selected [number] enhancement steps focusing on [key areas].
 
 REQUIREMENTS:
-- [Core requirement 1] 🔄
-- [Core requirement 2] 🔄
+- [Core requirement 1] 
+- [Core requirement 2] 
 - [Core requirement 3]
 [List 5-7 most important requirements with parallel markers]
 
 ORCHESTRATION PLAN:
 **Skills:** [e.g., design-dna-skill (if UI), uxscii-component-creator (if components)]
 **Agents:**
-- Wave 1: [Domain grand-architect, design specialists] 🔄
+- Wave 1: [Domain grand-architect, design specialists] 
 - Wave 2: [Domain-specific implementation agents]
 - Wave 3: Domain verification agent (MANDATORY)
 
@@ -413,9 +413,9 @@ See: `docs/RESPONSE_AWARENESS_TAGS.md` for complete tag taxonomy.
 - Still ask for approval before execution
 
 **Both modes:**
-- Start with appropriate greeting (✨ or 🔍)
+- Start with appropriate greeting ( or )
 - Trust Claude's intelligence to select relevant steps
-- Mark parallel operations with 🔄 for efficiency
+- Mark parallel operations with  for efficiency
 - Focus on clarity and context (Claude 4 fundamentals)
 - BE REALISTIC in measurable outcomes based on project scope
 - ALWAYS seek user approval before executing

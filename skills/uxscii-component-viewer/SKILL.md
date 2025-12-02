@@ -52,7 +52,7 @@ Search these locations in order and stop at the first match:
    - Must be copied to edit
    - Tag as: "Bundled Template"
 
-**Important**: Stop searching after first match. If found in bundled templates, check if it also exists in user's project and add a note: "💡 You also have a customized version in ./fluxwing/library/"
+**Important**: Stop searching after first match. If found in bundled templates, check if it also exists in user's project and add a note: " You also have a customized version in ./fluxwing/library/"
 
 ### 3. Read Component Files
 For the matched component, read both files:
@@ -66,12 +66,12 @@ For the matched component, read both files:
 Present component information in a clean, scannable format:
 
 ```
-📄 PRIMARY-BUTTON
-─────────────────────────────────────────────────────
-📦 Source: Bundled Template
-📍 Location: Component Creator Templates
-⏱️  Modified: 2024-10-11 10:30:00
-🔖 Version: 1.0.0
+ PRIMARY-BUTTON
+
+ Source: Bundled Template
+ Location: Component Creator Templates
+  Modified: 2024-10-11 10:30:00
+ Version: 1.0.0
 
 Description:
 Standard clickable button with hover, focus, and disabled states
@@ -80,29 +80,29 @@ Component Details:
 • Type: button
 • Props: text (string), variant (string), disabled (boolean)
 • States: default, hover, focus, disabled
-• Accessibility: ✓ Role (button), ✓ Focusable, ✓ Keyboard (Space, Enter)
+• Accessibility:  Role (button),  Focusable,  Keyboard (Space, Enter)
 
 ASCII Template Preview (first 20 lines):
 
 Default State:
-▓▓▓▓▓▓▓▓▓▓▓▓
-▓ {{text}} ▓
-▓▓▓▓▓▓▓▓▓▓▓▓
+
+ {{text}} 
+
 
 Hover State:
-░▓▓▓▓▓▓▓▓▓▓▓░
-░▓ {{text}} ▓░
-░▓▓▓▓▓▓▓▓▓▓░
+
+ {{text}} 
+
 
 Disabled State:
-┌ ─ ─ ─ ─ ─┐
-│ {{text}} │
-└ ─ ─ ─ ─ ─┘
+     
+ {{text}} 
+     
 
 [... 1 more state]
 
 Template has 4 states total. View full template?
-─────────────────────────────────────────────────────
+
 ```
 
 ### Format Guidelines
@@ -110,9 +110,9 @@ Template has 4 states total. View full template?
 **Header Section:**
 - Component name in CAPS
 - Emoji indicators:
-  - 📦 = Bundled Template
-  - ✏️ = Your Library
-  - 🎨 = Your Component
+  -  = Bundled Template
+  -  = Your Library
+  -  = Your Component
 - Full file path for clarity
 - Last modified timestamp (if available)
 - Version from metadata
@@ -154,10 +154,10 @@ After displaying the component, offer context-appropriate actions:
 ```
 What would you like to do?
 
-1️⃣ Copy to project library (makes it editable)
-2️⃣ View full template file (all states)
-3️⃣ View full metadata (complete .uxm)
-4️⃣ Browse all components
+1⃣ Copy to project library (makes it editable)
+2⃣ View full template file (all states)
+3⃣ View full metadata (complete .uxm)
+4⃣ Browse all components
 ```
 
 **Action Details:**
@@ -171,11 +171,11 @@ What would you like to do?
 ```
 What would you like to do?
 
-1️⃣ Edit component (modify .uxm and .md)
-2️⃣ View full template file (all states)
-3️⃣ View full metadata (complete .uxm)
-4️⃣ Delete component (manual: remove files from filesystem)
-5️⃣ Browse all components
+1⃣ Edit component (modify .uxm and .md)
+2⃣ View full template file (all states)
+3⃣ View full metadata (complete .uxm)
+4⃣ Delete component (manual: remove files from filesystem)
+5⃣ Browse all components
 ```
 
 **Action Details:**
@@ -204,7 +204,7 @@ View all available components: Ask me to "show me all components"
 ### Component Not Found
 
 ```
-✗ Component '[name]' not found.
+ Component '[name]' not found.
 
 Searched in:
 - ./fluxwing/components/
@@ -222,7 +222,7 @@ Did you mean one of these?
 
 **Fuzzy search**: If component name is close to an existing component, suggest it:
 ```
-✗ Component 'primry-button' not found.
+ Component 'primry-button' not found.
 
 Did you mean 'primary-button'?
 ```
@@ -230,7 +230,7 @@ Did you mean 'primary-button'?
 ### File Read Errors
 
 ```
-✗ Found component but couldn't read files.
+ Found component but couldn't read files.
 
 Location: ./fluxwing/components/[name].uxm
 Error: [specific error message]
@@ -245,10 +245,10 @@ Please check file permissions and try again.
 ```
 User: Show me the primary-button
 
-Skill: 📄 PRIMARY-BUTTON
-─────────────────────────────────────────────────────
-📦 Source: Bundled Template
-📍 Location: Component Creator Templates
+Skill:  PRIMARY-BUTTON
+
+ Source: Bundled Template
+ Location: Component Creator Templates
 
 Description:
 Standard clickable button with hover, focus, and disabled states
@@ -257,15 +257,15 @@ Component Details:
 • Type: button
 • Props: text (string), variant (string), disabled (boolean)
 • States: default, hover, focus, disabled
-• Accessibility: ✓ Full support
+• Accessibility:  Full support
 
 [ASCII preview shown...]
 
 What would you like to do?
-1️⃣ Copy to project library
-2️⃣ View full template
-3️⃣ View metadata
-4️⃣ Browse all components
+1⃣ Copy to project library
+2⃣ View full template
+3⃣ View metadata
+4⃣ Browse all components
 ```
 
 ### Example 2: View User Component
@@ -273,11 +273,11 @@ What would you like to do?
 ```
 User: What's in my submit-button component?
 
-Skill: 📄 SUBMIT-BUTTON
-─────────────────────────────────────────────────────
-🎨 Source: Your Component
-📍 Location: ./fluxwing/components/submit-button.uxm
-⏱️  Modified: 2024-10-15 14:23:00
+Skill:  SUBMIT-BUTTON
+
+ Source: Your Component
+ Location: ./fluxwing/components/submit-button.uxm
+  Modified: 2024-10-15 14:23:00
 
 Description:
 Custom submit button for forms
@@ -286,11 +286,11 @@ Component Details:
 • Type: button
 • Props: text (string)
 • States: default
-• Accessibility: ✓ Basic support
+• Accessibility:  Basic support
 
 [ASCII preview shown...]
 
-💡 Tip: Add more states with "expand submit-button with hover and disabled"
+ Tip: Add more states with "expand submit-button with hover and disabled"
 ```
 
 ## Resources

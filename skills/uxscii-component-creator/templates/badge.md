@@ -6,185 +6,185 @@ Status indicators, labels, and informational tags with various styles and intera
 
 ### Filled Badges
 ```
-▓▓▓▓▓▓▓▓    ░░░░░░░░░░░░    ▓▓▓▓▓▓▓▓▓▓    ████████████
-▓ {{text}} ▓    ░ Secondary ░    ▓ Primary ▓    █ Success █
-▓▓▓▓▓▓▓▓    ░░░░░░░░░░░░    ▓▓▓▓▓▓▓▓▓▓    ████████████
+            
+ {{text}}      Secondary      Primary      Success 
+            
 ```
 
 ### Outlined Badges
 ```
-┌──────┐    ┌────────────┐    ┌──────────┐    ┌────────────┐
-│ {{text}} │    │ Secondary  │    │ Primary  │    │ Success    │
-└──────┘    └────────────┘    └──────────┘    └────────────┘
+            
+ {{text}}      Secondary       Primary       Success    
+            
 ```
 
 ## Badge Variants
 
 ### Success Badge
 ```
-████████
-█ Done! █
-████████
+
+ Done! 
+
 ```
 
 ### Warning Badge
 ```
-▓▓▓▓▓▓▓▓▓▓
-▓ Warning ▓
-▓▓▓▓▓▓▓▓▓▓
+
+ Warning 
+
 ```
 
 ### Error Badge
 ```
-▓▓▓▓▓▓▓▓▓▓
-▓ Failed ▓
-▓▓▓▓▓▓▓▓▓▓
+
+ Failed 
+
 ```
 
 ### Info Badge
 ```
-▓▓▓▓▓▓▓▓
-▓ Info ▓
-▓▓▓▓▓▓▓▓
+
+ Info 
+
 ```
 
 ## Size Variations
 
 ### Small Badge
 ```
-▓▓▓▓▓
-▓ S ▓
-▓▓▓▓▓
+
+ S 
+
 ```
 
 ### Medium Badge (Default)
 ```
-▓▓▓▓▓▓▓▓
-▓ Med ▓
-▓▓▓▓▓▓▓▓
+
+ Med 
+
 ```
 
 ### Large Badge
 ```
-▓▓▓▓▓▓▓▓▓▓
-▓ Large ▓
-▓▓▓▓▓▓▓▓▓▓
+
+ Large 
+
 ```
 
 ## Interactive Badges
 
 ### Clickable Badge
 ```
-▓▓▓▓▓▓▓▓▓▓▓▓
-▓ Click Me ▓  ← Clickable
-▓▓▓▓▓▓▓▓▓▓▓▓
+
+ Click Me   ← Clickable
+
 ```
 
 ### Removable Badge
 ```
-▓▓▓▓▓▓▓▓▓▓▓▓
-▓ Remove │✕▓  ← Removable
-▓▓▓▓▓▓▓▓▓▓▓▓
+
+ Remove   ← Removable
+
 ```
 
 ### Hover State
 ```
-████████████
-█ Hovered █  ← Darkened on hover
-████████████
+
+ Hovered   ← Darkened on hover
+
 ```
 
 ## Pill-Shaped Badges
 
 ```
- ╭──────────╮
- │ {{text}} │
- ╰──────────╯
+ 
+  {{text}} 
+ 
 ```
 
 ## Notification Count Badges
 
 ### Number Badge
 ```
-▓▓▓▓
-▓ 5 ▓
-▓▓▓▓
+
+ 5 
+
 ```
 
 ### High Count Badge
 ```
-▓▓▓▓▓▓
-▓ 99+ ▓
-▓▓▓▓▓▓
+
+ 99+ 
+
 ```
 
 ### Count with Icon
 ```
-📧 ▓▓▓▓
-   ▓ 3 ▓
-   ▓▓▓▓
+ 
+    3 
+   
 ```
 
 ## Dot Indicators
 
 ### Simple Dot
 ```
-●
+
 ```
 
 ### Colored Dots
 ```
-● ● ● ●
+   
 ```
 
 ### Positioned Dot (with content)
 ```
-📧 ●  ← Notification dot
+   ← Notification dot
 ```
 
 ## Badge Groups/Tags
 
 ### Tag List
 ```
-▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓
-▓ React ▓  ▓ TypeScript ▓  ▓ JavaScript ▓  ▓ Frontend ▓
-▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓
+      
+ React    TypeScript    JavaScript    Frontend 
+      
 ```
 
 ### Removable Tags
 ```
-▓▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓
-▓ Tag1 │✕  ▓ Tag2 │✕   ▓ Tag3 │✕
-▓▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓▓
+    
+ Tag1    Tag2     Tag3 
+    
 ```
 
 ## Status Indicators
 
 ### Online/Offline Status
 ```
-● Online    ○ Offline    ◐ Away    ◑ Busy
+ Online     Offline     Away     Busy
 ```
 
 ### Priority Badges
 ```
-▓▓▓▓▓▓▓▓    ▓▓▓▓▓▓▓▓▓▓    ▓▓▓▓▓▓▓▓
-▓ High ▓    ▓ Medium ▓    ▓ Low ▓
-▓▓▓▓▓▓▓▓    ▓▓▓▓▓▓▓▓▓▓    ▓▓▓▓▓▓▓▓
+        
+ High      Medium      Low 
+        
 ```
 
 ### Progress Status
 ```
-▓▓▓▓▓▓▓▓▓▓▓    ████████████    ░░░░░░░░░░░░
-▓ In Progress ▓   █ Complete █    ░ Pending ░
-▓▓▓▓▓▓▓▓▓▓▓    ████████████    ░░░░░░░░░░░░
+        
+ In Progress     Complete      Pending 
+        
 ```
 
 ## Badge with Icons
 
 ```
-🔥 ▓▓▓▓▓▓▓▓    ⭐ ▓▓▓▓▓▓▓▓▓▓    ⚠ ▓▓▓▓▓▓▓▓▓▓▓
-   ▓ Hot ▓        ▓ Featured ▓      ▓ Warning ▓
-   ▓▓▓▓▓▓▓▓    ▓▓▓▓▓▓▓▓▓▓    ▓▓▓▓▓▓▓▓▓▓▓
+           
+    Hot          Featured        Warning 
+           
 ```
 
 ## Compact Badges (Single Line)
@@ -198,7 +198,7 @@ Status indicators, labels, and informational tags with various styles and intera
 - **Small**: 3-8 characters wide, 1 character high
 - **Medium**: 4-12 characters wide, 1 character high  
 - **Large**: 5-16 characters wide, 1 character high
-- **Dot**: 1 character (●)
+- **Dot**: 1 character ()
 - **Count**: 3-6 characters wide depending on number
 
 ## Variables
@@ -230,44 +230,44 @@ Status indicators, labels, and informational tags with various styles and intera
 
 ### Product Tags
 ```
-▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓
-▓ New ▓   ▓ Sale ▓    ▓ Featured ▓
-▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓  ▓▓▓▓▓▓▓▓▓▓▓▓
+    
+ New     Sale      Featured 
+    
 ```
 
 ### User Roles
 ```
-▓▓▓▓▓▓▓▓▓  ░░░░░░░░░░  ▓▓▓▓▓▓▓▓▓▓▓▓
-▓ Admin ▓  ░ User ░   ▓ Moderator ▓
-▓▓▓▓▓▓▓▓▓  ░░░░░░░░░░  ▓▓▓▓▓▓▓▓▓▓▓▓
+    
+ Admin    User     Moderator 
+    
 ```
 
 ### Notification Counts
 ```
-📧 ▓▓▓▓    🔔 ▓▓▓▓▓    💬 ▓▓▓▓▓▓
-   ▓ 5 ▓       ▓ 12 ▓       ▓ 99+ ▓
-   ▓▓▓▓       ▓▓▓▓▓       ▓▓▓▓▓▓
+           
+    5         12         99+ 
+                 
 ```
 
 ### Status Indicators
 ```
-● Online    ▓▓▓▓▓▓▓▓▓▓    ○ Offline
-           ▓ Active ▓
-           ▓▓▓▓▓▓▓▓▓▓
+ Online         Offline
+            Active 
+           
 ```
 
 ### Skill Tags (Removable)
 ```
-▓▓▓▓▓▓▓▓▓▓▓│✕  ▓▓▓▓▓▓▓▓▓▓▓▓▓│✕  ▓▓▓▓▓▓▓▓▓▓▓▓│✕
-▓ JavaScript     ▓ TypeScript    ▓ React
-▓▓▓▓▓▓▓▓▓▓▓      ▓▓▓▓▓▓▓▓▓▓▓▓▓    ▓▓▓▓▓▓▓▓▓▓▓▓
+    
+ JavaScript      TypeScript     React
+          
 ```
 
 ### Priority Levels
 ```
-▓▓▓▓▓▓▓▓▓▓    ▓▓▓▓▓▓▓▓▓▓▓▓    ░░░░░░░░░░
-▓ Critical ▓   ▓ Important ▓   ░ Normal ░
-▓▓▓▓▓▓▓▓▓▓    ▓▓▓▓▓▓▓▓▓▓▓▓    ░░░░░░░░░░
+        
+ Critical     Important     Normal 
+        
 ```
 
 ## Component Behavior
@@ -296,21 +296,21 @@ Status indicators, labels, and informational tags with various styles and intera
 ## Design Tokens
 
 ### Visual Elements
-- `▓` = Primary filled background
-- `█` = Success/positive state
-- `░` = Secondary/muted state  
-- `┌─┐└┘` = Outlined badge borders
-- `╭─╮╰─╯` = Pill-shaped borders
-- `●○◐◑` = Dot indicators
-- `✕` = Remove button
+- `` = Primary filled background
+- `` = Success/positive state
+- `` = Secondary/muted state  
+- `` = Outlined badge borders
+- `` = Pill-shaped borders
+- `` = Dot indicators
+- `` = Remove button
 
 ### Color Mapping
-- **Primary**: Blue/Brand color (▓)
-- **Success**: Green (█)
-- **Warning**: Yellow/Orange (▓)
-- **Error**: Red (▓)
-- **Info**: Blue (▓)
-- **Secondary**: Gray (░)
+- **Primary**: Blue/Brand color ()
+- **Success**: Green ()
+- **Warning**: Yellow/Orange ()
+- **Error**: Red ()
+- **Info**: Blue ()
+- **Secondary**: Gray ()
 
 ## Related Components
 

@@ -216,9 +216,9 @@ async function generateScreen(mergedData) {
   // Write all files
   const paths = await writeScreenFiles(screenId, screenUxm, screenMd, screenRendered);
 
-  console.log(`✓ Created: ${paths.uxmPath}`);
-  console.log(`✓ Created: ${paths.mdPath}`);
-  console.log(`✓ Created: ${paths.renderedPath}`);
+  console.log(` Created: ${paths.uxmPath}`);
+  console.log(` Created: ${paths.mdPath}`);
+  console.log(` Created: ${paths.renderedPath}`);
 
   return { screenId, ...paths };
 }
@@ -229,9 +229,9 @@ async function generateScreen(mergedData) {
 ```typescript
 try {
   const screenResult = await generateScreen(mergedData);
-  console.log(`✅ Screen generated with ${allComponentIds.length} components`);
+  console.log(` Screen generated with ${allComponentIds.length} components`);
 } catch (error) {
-  console.error(`❌ Failed to generate screen: ${error.message}`);
+  console.error(` Failed to generate screen: ${error.message}`);
   throw error;
 }
 ```

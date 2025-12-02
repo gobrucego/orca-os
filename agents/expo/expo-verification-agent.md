@@ -201,10 +201,10 @@ When running verification, think through systematically:
 ## Verification Results: ShopApp
 
 **Commands Run:**
-1. `npm run lint` ✅
-2. `npm run type-check` ✅
-3. `npm test` ✅
-4. `npm run expo:doctor` ✅
+1. `npm run lint` 
+2. `npm run type-check` 
+3. `npm test` 
+4. `npm run expo:doctor` 
 
 **Gate Status:** PASS
 
@@ -217,7 +217,7 @@ $ npm run lint
 > shopapp@1.0.0 lint
 > eslint . --ext .js,.jsx,.ts,.tsx
 
-✓ No linting errors found
+ No linting errors found
 ```
 
 **Type Check:**
@@ -227,7 +227,7 @@ $ npm run type-check
 > shopapp@1.0.0 type-check
 > tsc --noEmit
 
-✓ No type errors
+ No type errors
 ```
 
 **Tests:**
@@ -251,9 +251,9 @@ Time:        3.245 s
 ```bash
 $ npm run expo:doctor
 
-✓ Expected package versions
-✓ No issues with dependencies
-✓ Metro bundler config valid
+ Expected package versions
+ No issues with dependencies
+ Metro bundler config valid
 ```
 
 **Recommendation:**
@@ -268,7 +268,7 @@ All verification passed. Ready for Phase 8 (Deployment Review).
 - Test coverage maintained at 85%
 
 **Self-Assessment:**
-- Verification Gate: PASS ✅
+- Verification Gate: PASS 
 - No blocking issues
 - No warnings requiring attention
 
@@ -315,22 +315,22 @@ All verification passed. Ready for Phase 8 (Deployment Review).
 ## Verification Results: FitTrack
 
 **Commands Run:**
-1. `pnpm lint` ✅
-2. `pnpm test` ❌ (2 failures)
-3. `pnpm expo:doctor` ✅
+1. `pnpm lint` 
+2. `pnpm test`  (2 failures)
+3. `pnpm expo:doctor` 
 
 **Gate Status:** FAIL (Test regressions detected)
 
 **Details:**
 
-**Lint:** ✅ Passed
+**Lint:**  Passed
 
-**Tests:** ❌ Failed
+**Tests:**  Failed
 ```bash
 $ pnpm test
 
 FAIL  src/features/sync/hooks/useOfflineSync.test.ts
-  ● useOfflineSync › should sync when connection restored
+   useOfflineSync › should sync when connection restored
 
     Expected: queue to be empty after sync
     Received: queue still has 3 items
@@ -338,7 +338,7 @@ FAIL  src/features/sync/hooks/useOfflineSync.test.ts
     at Object.<anonymous> (src/features/sync/hooks/useOfflineSync.test.ts:45:23)
 
 FAIL  src/features/workouts/screens/WorkoutList.test.tsx
-  ● WorkoutList › should show offline indicator when disconnected
+   WorkoutList › should show offline indicator when disconnected
 
     Unable to find element with text: "Offline Mode"
 
@@ -348,7 +348,7 @@ Test Suites: 2 failed, 8 passed, 10 total
 Tests:       2 failed, 38 passed, 40 total
 ```
 
-**Expo Doctor:** ✅ Passed
+**Expo Doctor:**  Passed
 
 **Analysis:**
 Two test failures related to offline sync implementation:
@@ -397,7 +397,7 @@ Assign back to `expo-builder-agent` for corrective fixes.
 5. **Result Interpretation**
    - Lint: passes
    - Test: passes
-   - Expo doctor: ⚠️ warnings about dependency versions
+   - Expo doctor:  warnings about dependency versions
    - Exit code: 0 (but warnings!)
 
 6. **Gate Decision**
@@ -409,31 +409,31 @@ Assign back to `expo-builder-agent` for corrective fixes.
 ## Verification Results: FoodDelivery
 
 **Commands Run:**
-1. `npm run lint` ✅
-2. `npm test` ✅
-3. `npx expo doctor` ⚠️ (warnings)
+1. `npm run lint` 
+2. `npm test` 
+3. `npx expo doctor`  (warnings)
 
 **Gate Status:** CAUTION (Dependency version warnings)
 
 **Details:**
 
-**Lint:** ✅ Passed
-**Tests:** ✅ Passed (45 tests)
+**Lint:**  Passed
+**Tests:**  Passed (45 tests)
 
-**Expo Doctor:** ⚠️ Warnings
+**Expo Doctor:**  Warnings
 ```bash
 $ npx expo doctor
 
 Checking project configuration...
 
-⚠ react-native-maps@1.7.1 may not be compatible with Expo SDK 51
+ react-native-maps@1.7.1 may not be compatible with Expo SDK 51
   Expected: ^1.10.0
   Installed: 1.7.1
 
-⚠ @react-native-community/geolocation@3.0.6 is deprecated
+ @react-native-community/geolocation@3.0.6 is deprecated
   Recommend: expo-location instead
 
-✓ No other issues found
+ No other issues found
 ```
 
 **Analysis:**
@@ -475,32 +475,32 @@ Not blocking deployment, but should address before next major feature.
 
 9. **Platform-specific verification** - If changes touch iOS/Android-specific code, note that verification is local only (can't test both platforms in CI).
 
-10. **Summarize for orchestrator** - Your output should be scannable. Use ✅/❌/⚠️ symbols, clear gate status, and actionable recommendations.
+10. **Summarize for orchestrator** - Your output should be scannable. Use // symbols, clear gate status, and actionable recommendations.
 
 ---
 ## 6. Red Flags
 
-### 🚩 Running Commands Blindly
+###  Running Commands Blindly
 **Signal:** Running `npm test` without checking if test script exists
 
 **Response:** Always read package.json first to see available scripts
 
-### 🚩 Ignoring Warnings as "Not Errors"
+###  Ignoring Warnings as "Not Errors"
 **Signal:** Expo Doctor shows warnings, you report PASS
 
 **Response:** Warnings = CAUTION gate. Document them even if non-blocking.
 
-### 🚩 Not Capturing Failure Context
+###  Not Capturing Failure Context
 **Signal:** Reporting "Tests failed" without showing which tests or why
 
 **Response:** Include relevant error output, file names, line numbers. Make failures actionable.
 
-### 🚩 Running Destructive Commands
+###  Running Destructive Commands
 **Signal:** Running `npm install` to "fix" dependency issues
 
 **Response:** Verification is READ-ONLY. Never modify project state. Report issues to orchestrator.
 
-### 🚩 Assuming All Tests Should Pass
+###  Assuming All Tests Should Pass
 **Signal:** Reporting FAIL when pre-existing tests were already broken
 
 **Response:** Check git history or phase_state.json to see if failures are regressions or pre-existing. Focus on NEW failures.

@@ -2,12 +2,12 @@
 
 **Lane:** Expo / React Native  
 **Domain:** `expo`  
-**Entrypoints:** `/plan`, `/orca`, `/orca-expo`, `/project-memory`, `/project-code`
+**Entrypoints:** `/plan`, `/orca`, `/expo`, `/project-memory`, `/project-code`
 
 This readme explains the Expo lane in Vibe OS 2.4:
 
 - Planning & specs for Expo tasks
-- Orchestration via `/orca` and `/orca-expo`
+- Orchestration via `/orca` and `/expo`
 - Pipeline and phase configs
 - Agents and specialists
 - Skills and memory integration
@@ -50,23 +50,23 @@ For non‑trivial Expo tasks:
 - Runs memory‑first search across Workshop + vibe.db.
 - Detects `expo` domain.
 - Checks for a requirements spec.
-- Routes to `/orca-expo` with relevant context and spec info.
+- Routes to `/expo` with relevant context and spec info.
 
-You can also call `/orca-expo` directly.
+You can also call `/expo` directly.
 
 ---
 
-### 2.3 Expo Orchestrator – `/orca-expo`
+### 2.3 Expo Orchestrator – `/expo`
 
-File: `commands/orca-expo.md`
+File: `commands/expo.md`
 
 - Accepts:
 
   ```bash
-  /orca-expo "fix button spacing"                      # Default: light + gates
-  /orca-expo -tweak "try different padding"           # Tweak: light, no gates
-  /orca-expo --complex "implement auth flow"          # Complex: full pipeline
-  /orca-expo "implement requirement <id>"             # With spec
+  /expo "fix button spacing"                      # Default: light + gates
+  /expo -tweak "try different padding"           # Tweak: light, no gates
+  /expo --complex "implement auth flow"          # Complex: full pipeline
+  /expo "implement requirement <id>"             # With spec
   ```
 
 - **Three-Tier Routing (OS 2.4):**
@@ -179,7 +179,7 @@ Agents can discover and persist patterns to `.claude/agent-knowledge/expo-builde
 - `/project-code`:
   - Indexed Expo/React Native code and integration points.
 
-Unified memory search is used by `/orca` and `/orca-expo` before ProjectContext.
+Unified memory search is used by `/orca` and `/expo` before ProjectContext.
 
 ---
 
@@ -199,9 +199,9 @@ For Expo work in OS 2.4 (three-tier routing):
 
 | Mode | Command | Path |
 |------|---------|------|
-| **Default** | `/orca-expo "fix spacing"` | Light + gates |
-| **Tweak** | `/orca-expo -tweak "try padding"` | Light, no gates |
-| **Complex** | `/orca-expo --complex "auth flow"` | Full pipeline |
+| **Default** | `/expo "fix spacing"` | Light + gates |
+| **Tweak** | `/expo -tweak "try padding"` | Light, no gates |
+| **Complex** | `/expo --complex "auth flow"` | Full pipeline |
 
 - **Most work**: Default mode (light path WITH gates)
 - **Exploration**: Tweak mode (light path, no gates, you verify)

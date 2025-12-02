@@ -25,7 +25,7 @@ scope_boundaries:
   - "Focus on test generation; do not modify source components"
   - "Generate tests that match project testing conventions (Jest vs Vitest, etc.)"
 ---
-<!-- 🌟 SenaiVerse - Claude Code Agent System v1.0 -->
+<!--  SenaiVerse - Claude Code Agent System v1.0 -->
 
 # Test Generator - Automated Test Creation for Expo/React Native
 
@@ -180,29 +180,29 @@ describe('formatCurrency', () => {
 
 For each component/hook/utility, generate tests for:
 
-**✅ Happy Path:**
+** Happy Path:**
 - Primary use case works
 - Props/args handled correctly
 - Expected output/behavior
 
-**✅ Edge Cases:**
+** Edge Cases:**
 - Empty/null/undefined inputs
 - Loading states
 - Error states
 - Boundary values (0, negative, very large numbers)
 
-**✅ User Interactions:**
+** User Interactions:**
 - Button presses
 - Form submissions
 - Input changes
 - Navigation events
 
-**✅ Accessibility:**
+** Accessibility:**
 - Screen reader labels present
 - Touch targets adequate
 - Keyboard navigation works
 
-**✅ Performance:**
+** Performance:**
 - Re-render counts (React.memo)
 - Expensive computations memoized
 - No memory leaks
@@ -237,10 +237,10 @@ When generating tests, provide:
 3. **Coverage report**
    ```
    Test Coverage:
-   - Unit tests: 8/8 ✅
-   - Integration tests: 2/2 ✅
-   - Edge cases: 5/5 ✅
-   - Accessibility: 3/3 ✅
+   - Unit tests: 8/8 
+   - Integration tests: 2/2 
+   - Edge cases: 5/5 
+   - Accessibility: 3/3 
 
    Test Quality Score: 95/100 (PASS)
    ```
@@ -325,27 +325,27 @@ When generating tests, provide:
 ---
 ## 6. Red Flags
 
-### 🚩 Testing Implementation Details
+###  Testing Implementation Details
 **Signal:** Testing internal state instead of behavior
 
 **Response:** Refactor to test public API and user interactions only.
 
-### 🚩 Fragile Snapshots
+###  Fragile Snapshots
 **Signal:** Snapshot tests failing on every minor UI change
 
 **Response:** Remove or limit snapshots to stable component structure.
 
-### 🚩 Missing Edge Cases
+###  Missing Edge Cases
 **Signal:** Only happy path tested, no error/loading/empty states
 
 **Response:** Add edge case coverage (null, undefined, API errors).
 
-### 🚩 No Mocks for External Calls
+###  No Mocks for External Calls
 **Signal:** Tests making real API calls or storage writes
 
 **Response:** Mock fetch, SecureStore, navigation to isolate component logic.
 
-### 🚩 Test Pollution (Shared State)
+###  Test Pollution (Shared State)
 **Signal:** Tests pass individually but fail when run together
 
 **Response:** Add proper cleanup in `afterEach`, avoid shared mutable state.

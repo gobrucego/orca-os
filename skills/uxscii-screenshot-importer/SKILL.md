@@ -130,7 +130,7 @@ const hasNavigation = visionData.components.some(c =>
 );
 
 if (visionData.screen.type === 'dashboard' && !hasNavigation) {
-  console.warn("⚠️ Dashboard detected but no navigation found - verify all nav elements were detected");
+  console.warn(" Dashboard detected but no navigation found - verify all nav elements were detected");
 }
 ```
 
@@ -267,7 +267,7 @@ const screenUxm = {
 Create comprehensive summary:
 
 ```markdown
-# Screenshot Import Complete ✓
+# Screenshot Import Complete 
 
 ## Screenshot Analysis
 - File: ${screenshotPath}
@@ -277,13 +277,13 @@ Create comprehensive summary:
 ## Components Generated
 
 ### Atomic Components (${atomicCount})
-${atomicComponents.map(c => `✓ ${c.id} (${c.type})`).join('\n')}
+${atomicComponents.map(c => ` ${c.id} (${c.type})`).join('\n')}
 
 ### Composite Components (${compositeCount})
-${compositeComponents.map(c => `✓ ${c.id} (${c.type})`).join('\n')}
+${compositeComponents.map(c => ` ${c.id} (${c.type})`).join('\n')}
 
 ### Screen
-✓ ${screenId}
+ ${screenId}
 
 ## Files Created
 
@@ -298,8 +298,8 @@ ${compositeComponents.map(c => `✓ ${c.id} (${c.type})`).join('\n')}
 **Total: ${totalFiles} files created**
 
 ## Performance
-- Vision analysis: Parallel (3 agents) ⚡
-- Component generation: Parallel (${atomicCount + compositeCount} agents) ⚡
+- Vision analysis: Parallel (3 agents) 
+- Component generation: Parallel (${atomicCount + compositeCount} agents) 
 - Total time: ~${estimatedTime}s
 
 ## Next Steps
@@ -332,7 +332,7 @@ Skill: I'll import the UI screenshot and generate uxscii components!
 Step 1: Analyzing screenshot with vision agents...
 [Spawns vision coordinator]
 
-✓ Vision analysis complete:
+ Vision analysis complete:
   - Detected 5 components
   - Screen type: login
   - Layout: vertical-center
@@ -340,23 +340,23 @@ Step 1: Analyzing screenshot with vision agents...
 Step 2: Generating component files in parallel...
 [Spawns 5 component generator agents in parallel]
 
-✓ All components generated!
+ All components generated!
 
-# Screenshot Import Complete ✓
+# Screenshot Import Complete 
 
 ## Components Generated
-✓ email-input (input)
-✓ password-input (input)
-✓ submit-button (button)
-✓ cancel-link (link)
-✓ login-form (form)
+ email-input (input)
+ password-input (input)
+ submit-button (button)
+ cancel-link (link)
+ login-form (form)
 
 ## Files Created
 - 10 component files
 - 3 screen files
 Total: 13 files
 
-Performance: ~45s (5 agents in parallel) ⚡
+Performance: ~45s (5 agents in parallel) 
 
 Next steps:
 - Review: cat ./fluxwing/screens/login-screen.rendered.md
@@ -366,13 +366,13 @@ Next steps:
 ## Quality Standards
 
 Ensure imported components include:
-- ✓ Valid JSON schema compliance
-- ✓ Complete metadata (name, description, tags)
-- ✓ Proper component types
-- ✓ ASCII art matches detected visual properties
-- ✓ All detected components extracted
-- ✓ Screen composition includes all components
-- ✓ Rendered example with realistic data
+-  Valid JSON schema compliance
+-  Complete metadata (name, description, tags)
+-  Proper component types
+-  ASCII art matches detected visual properties
+-  All detected components extracted
+-  Screen composition includes all components
+-  Rendered example with realistic data
 
 ## Important Notes
 
@@ -387,7 +387,7 @@ Ensure imported components include:
 
 **If vision analysis fails:**
 ```
-✗ Vision analysis failed: [error message]
+ Vision analysis failed: [error message]
 
 Please check:
 - Screenshot file exists and is readable
@@ -397,23 +397,23 @@ Please check:
 
 **If component generation fails:**
 ```
-⚠️ Partial success: 3 of 5 components generated
+ Partial success: 3 of 5 components generated
 
 Successful:
-✓ email-input
-✓ password-input
-✓ submit-button
+ email-input
+ password-input
+ submit-button
 
 Failed:
-✗ cancel-link: [error]
-✗ login-form: [error]
+ cancel-link: [error]
+ login-form: [error]
 
 You can retry failed components or create them manually.
 ```
 
 **If no components detected:**
 ```
-✗ No components detected in screenshot.
+ No components detected in screenshot.
 
 This could mean:
 - Screenshot is blank or unclear

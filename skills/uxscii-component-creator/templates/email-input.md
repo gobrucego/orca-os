@@ -6,9 +6,9 @@ A specialized input field for email addresses with built-in validation.
 
 ```
 {{label}} *
-┌─────────────────────────────────┐
-│ {{value || placeholder}}       │ @
-└─────────────────────────────────┘
+
+ {{value || placeholder}}        @
+
 {{helpText}}
 ```
 
@@ -16,9 +16,9 @@ A specialized input field for email addresses with built-in validation.
 
 ```
 {{label}} *
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ {{value || placeholder}}       ┃ @
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+ {{value || placeholder}}        @
+
 {{helpText}}
 ```
 
@@ -26,9 +26,9 @@ A specialized input field for email addresses with built-in validation.
 
 ```
 {{label}} *
-┌─────────────────────────────────┐
-│ {{value}}                       │ ✓
-└─────────────────────────────────┘
+
+ {{value}}                        
+
 {{helpText}}
 ```
 
@@ -36,19 +36,19 @@ A specialized input field for email addresses with built-in validation.
 
 ```
 {{label}} *
-┌─────────────────────────────────┐
-│ {{value || placeholder}}       │ ⚠️
-└─────────────────────────────────┘
-❌ {{errorMessage}}
+
+ {{value || placeholder}}        
+
+ {{errorMessage}}
 ```
 
 ## Disabled State
 
 ```
 {{label}} *
-┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
-│ {{value || placeholder}}       │ @
-└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
+                
+ {{value || placeholder}}        @
+                
 {{helpText}}
 ```
 
@@ -82,36 +82,36 @@ A specialized input field for email addresses with built-in validation.
 ### Basic Email Input
 ```
 Email Address *
-┌─────────────────────────────────┐
-│ name@example.com                │ @
-└─────────────────────────────────┘
+
+ name@example.com                 @
+
 We'll never share your email address
 ```
 
 ### With Valid Email
 ```
 Work Email *
-┌─────────────────────────────────┐
-│ john.doe@company.com            │ ✓
-└─────────────────────────────────┘
+
+ john.doe@company.com             
+
 Used for account notifications
 ```
 
 ### With Validation Error
 ```
 Email Address *
-┌─────────────────────────────────┐
-│ invalid-email                   │ ⚠️
-└─────────────────────────────────┘
-❌ Please enter a valid email address
+
+ invalid-email                    
+
+ Please enter a valid email address
 ```
 
 ### Registration Form
 ```
 Email Address *
-┌─────────────────────────────────┐
-│ user@domain.co                  │ ✓
-└─────────────────────────────────┘
+
+ user@domain.co                   
+
 This will be your login username
 ```
 
@@ -143,14 +143,14 @@ Real-time validation checks:
 
 ### Visual Indicators
 - `@` = Email input indicator
-- `✓` = Valid email confirmation
-- `⚠️` = Format error warning
+- `` = Valid email confirmation
+- `` = Format error warning
 - `*` = Required field indicator
 
 ### Border Styles
-- `┌─┐` = Default border
-- `┏━┓` = Focus border (primary color)
-- `┌ ─ ┐` = Disabled border (dashed)
+- `` = Default border
+- `` = Focus border (primary color)
+- `  ` = Disabled border (dashed)
 
 ### Colors
 - Default: Standard input styling

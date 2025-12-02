@@ -17,16 +17,16 @@ Skills load into agent context when relevant, providing:
 
 ```
 skills/
-├── ios-knowledge-skill/
-│   └── SKILL.md
-├── nextjs-knowledge-skill/
-│   └── SKILL.md
-├── shopify-theme/
-│   └── SKILL.md
-├── liquid-quick/
-│   └── SKILL.md
-└── os-dev-knowledge-skill/
-    └── SKILL.md
+ ios-knowledge-skill/
+    SKILL.md
+ nextjs-knowledge-skill/
+    SKILL.md
+ shopify-theme/
+    SKILL.md
+ liquid-quick/
+    SKILL.md
+ os-dev-knowledge-skill/
+     SKILL.md
 ```
 
 ## SKILL.md Format

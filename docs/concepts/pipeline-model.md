@@ -10,10 +10,10 @@ A **lane** is a complete pipeline for a specific development domain:
 
 | Lane | Domain | Entry Point |
 |------|--------|-------------|
-| iOS | Native iOS (Swift/SwiftUI/UIKit) | `/orca-ios` |
-| Next.js | Next.js frontend | `/orca-nextjs` |
-| Expo | React Native/Expo mobile | `/orca-expo` |
-| Shopify | Shopify theme (Liquid/CSS/JS) | `/orca-shopify` |
+| iOS | Native iOS (Swift/SwiftUI/UIKit) | `/ios` |
+| Next.js | Next.js frontend | `/nextjs` |
+| Expo | React Native/Expo mobile | `/expo` |
+| Shopify | Shopify theme (Liquid/CSS/JS) | `/shopify` |
 | Data | Data analysis and research | via `/orca` |
 | SEO | SEO content pipeline | via `/orca` |
 | Design | Design system work | via `/orca` |
@@ -32,9 +32,9 @@ Request
     ↓
 [Phase 0.5: Complexity Classification]
     ↓
-├─ SIMPLE → [Light Orchestrator] → Done
-│
-├─ MEDIUM/COMPLEX:
+ SIMPLE → [Light Orchestrator] → Done
+
+ MEDIUM/COMPLEX:
     ↓
 [Phase 1: Team Confirmation]        ← User approves agents
     ↓
@@ -54,7 +54,7 @@ Request
 OS 2.4 enforces strict role separation:
 
 #### Orchestrators (Never Write Code)
-- **Commands**: `/orca`, `/orca-ios`, `/orca-nextjs`, etc.
+- **Commands**: `/orca`, `/ios`, `/nextjs`, etc.
 - **Grand Architects**: `ios-grand-architect`, `nextjs-grand-architect`, etc.
 - **Light Orchestrators**: `ios-light-orchestrator`, `nextjs-light-orchestrator`, etc.
 
@@ -111,24 +111,24 @@ This keeps "PASS" decisions grounded in **real artifacts and commands on disk**,
 ## The Orchestrator-Specialist-Gate Pattern
 
 ```
-                    ┌─────────────────┐
-                    │   Orchestrator  │
-                    │  (coordinates)  │
-                    └────────┬────────┘
-                             │
-              ┌──────────────┼──────────────┐
-              ▼              ▼              ▼
-        ┌──────────┐  ┌──────────┐  ┌──────────┐
-        │Specialist│  │Specialist│  │Specialist│
-        │   (CSS)  │  │ (Liquid) │  │   (JS)   │
-        └────┬─────┘  └────┬─────┘  └────┬─────┘
-             │              │              │
-             └──────────────┼──────────────┘
-                            ▼
-                    ┌─────────────────┐
-                    │      Gate       │
-                    │  (validates)    │
-                    └─────────────────┘
+                    
+                       Orchestrator  
+                      (coordinates)  
+                    
+                             
+              
+                                          
+            
+        Specialist  Specialist  Specialist
+           (CSS)     (Liquid)      (JS)   
+            
+                                         
+             
+                            
+                    
+                          Gate       
+                      (validates)    
+                    
 ```
 
 1. **Orchestrator** receives task, classifies complexity, gathers context

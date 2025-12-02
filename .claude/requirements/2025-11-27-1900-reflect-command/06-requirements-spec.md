@@ -129,23 +129,23 @@ A `/reflect` command that:
 **Flow:**
 ```
 /reflect
-    │
-    ├─ Scan JSONL transcripts for new signals
-    │
-    ├─ Update learning journal
-    │
-    ├─ Identify patterns meeting threshold
-    │
-    ├─ For each pattern:
-    │   ├─ Present: "Found pattern: X (N occurrences)"
-    │   ├─ Show examples from transcripts
-    │   └─ AskUserQuestion:
-    │       ├─ "Add to CLAUDE.md" (rule)
-    │       ├─ "Add to Workshop" (preference)
-    │       ├─ "Dismiss" (don't suggest again)
-    │       └─ "Skip for now"
-    │
-    └─ Summary of decisions
+    
+     Scan JSONL transcripts for new signals
+    
+     Update learning journal
+    
+     Identify patterns meeting threshold
+    
+     For each pattern:
+        Present: "Found pattern: X (N occurrences)"
+        Show examples from transcripts
+        AskUserQuestion:
+            "Add to CLAUDE.md" (rule)
+            "Add to Workshop" (preference)
+            "Dismiss" (don't suggest again)
+            "Skip for now"
+    
+     Summary of decisions
 ```
 
 ### FR5: CLAUDE.md Integration
@@ -195,7 +195,7 @@ workshop --workspace .claude/memory preference "Prefer concise responses" --cate
 
 **Flow:**
 ```
-⚠️ CONFLICT DETECTED
+ CONFLICT DETECTED
 
 New rule: "Use bun for package management"
 Conflicts with: "Use npm for package management" [rule-003]
@@ -339,38 +339,38 @@ sed -i '/### Active Rules/a - **[rule-XXX]** <rule text> (learned: <date>)' CLAU
 
 ```
 /reflect [subcommand] [args]
-    │
-    ├─ If "learn <text>":
-    │   ├─ Create rule from text
-    │   ├─ Check for conflicts
-    │   ├─ Add to CLAUDE.md (or Workshop if --soft)
-    │   └─ Update journal
-    │
-    ├─ If "unlearn <text>":
-    │   ├─ Find matching rule
-    │   ├─ Confirm with user
-    │   ├─ Archive/remove from CLAUDE.md
-    │   └─ Update journal
-    │
-    ├─ If "status":
-    │   ├─ Read journal
-    │   └─ Display summary (signals pending, rules active/archived)
-    │
-    ├─ If "history":
-    │   ├─ Read journal + CLAUDE.md
-    │   └─ Display all rules with dates
-    │
-    ├─ Otherwise (default analyze mode):
-    │   ├─ Find JSONL transcripts
-    │   ├─ Parse for signals
-    │   ├─ Update journal with new signals
-    │   ├─ Identify patterns meeting threshold
-    │   ├─ For each pattern:
-    │   │   ├─ Present to user
-    │   │   └─ AskUserQuestion for decision
-    │   ├─ Apply approved rules
-    │   ├─ Update journal
-    │   └─ Display summary
+    
+     If "learn <text>":
+        Create rule from text
+        Check for conflicts
+        Add to CLAUDE.md (or Workshop if --soft)
+        Update journal
+    
+     If "unlearn <text>":
+        Find matching rule
+        Confirm with user
+        Archive/remove from CLAUDE.md
+        Update journal
+    
+     If "status":
+        Read journal
+        Display summary (signals pending, rules active/archived)
+    
+     If "history":
+        Read journal + CLAUDE.md
+        Display all rules with dates
+    
+     Otherwise (default analyze mode):
+        Find JSONL transcripts
+        Parse for signals
+        Update journal with new signals
+        Identify patterns meeting threshold
+        For each pattern:
+           Present to user
+           AskUserQuestion for decision
+        Apply approved rules
+        Update journal
+        Display summary
 ```
 
 ---

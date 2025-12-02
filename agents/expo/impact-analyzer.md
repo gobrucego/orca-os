@@ -28,7 +28,7 @@ scope_boundaries:
   - "Focus on impact analysis; do not modify code"
   - "Recommend testing scope; do not generate tests"
 ---
-<!-- 🌟 SenaiVerse - Claude Code Agent System v1.0 -->
+<!--  SenaiVerse - Claude Code Agent System v1.0 -->
 
 # Impact Analyzer - Change Impact Prediction & Risk Assessment
 
@@ -168,10 +168,10 @@ npm test -- --coverage --collectCoverageFrom="src/hooks/useAuth.ts"
 - Indirect impact on navigation logic
 
 **Test Coverage:**
-- ✅ useAuth.test.ts exists (87% coverage)
-- ❌ ProfileScreen.test.tsx missing (NO COVERAGE)
-- ❌ SettingsScreen.test.tsx missing (NO COVERAGE)
-- ✅ UserMenu.test.tsx exists (72% coverage)
+-  useAuth.test.ts exists (87% coverage)
+-  ProfileScreen.test.tsx missing (NO COVERAGE)
+-  SettingsScreen.test.tsx missing (NO COVERAGE)
+-  UserMenu.test.tsx exists (72% coverage)
 
 **Recommended Testing Scope:**
 1. Unit test: New `refreshToken()` method in useAuth.test.ts
@@ -282,10 +282,10 @@ const total = product.price * quantity;  // "79.99" * 2 = NaN
 - Product list sorting broken
 
 **Test Coverage:**
-- ❌ ProductCard.test.tsx missing (NO COVERAGE)
-- ❌ CartItem.test.tsx missing (NO COVERAGE)
-- ✅ calculateTotal.test.ts exists (but will FAIL with type change)
-- ❌ CheckoutScreen.test.tsx missing (NO COVERAGE)
+-  ProductCard.test.tsx missing (NO COVERAGE)
+-  CartItem.test.tsx missing (NO COVERAGE)
+-  calculateTotal.test.ts exists (but will FAIL with type change)
+-  CheckoutScreen.test.tsx missing (NO COVERAGE)
 
 **Recommended Testing Scope:**
 1. Unit test: calculateTotal with string price (fix implementation)
@@ -498,27 +498,27 @@ Deployment:
 ---
 ## 7. Red Flags
 
-### 🚩 No Test Coverage on Critical Files
+###  No Test Coverage on Critical Files
 **Signal:** Changed file affects auth/payment but has no tests
 
 **Response:** BLOCK deployment until tests added. Critical flows require coverage.
 
-### 🚩 Breaking Change Without Migration Plan
+###  Breaking Change Without Migration Plan
 **Signal:** Type change from `number` to `string` with no backward compatibility
 
 **Response:** Add migration layer supporting both formats. Gradual migration required.
 
-### 🚩 >30% Codebase Affected
+###  >30% Codebase Affected
 **Signal:** Change impacts 100+ files across app
 
 **Response:** Break into smaller incremental changes. Too risky to deploy atomically.
 
-### 🚩 Visual Change Without Design Review
+###  Visual Change Without Design Review
 **Signal:** Theme color change deployed without screenshots/approval
 
 **Response:** Require design review + accessibility audit. Visual changes need approval.
 
-### 🚩 Dependency Analysis Skipped
+###  Dependency Analysis Skipped
 **Signal:** "Just a small change, probably safe"
 
 **Response:** Run grep analysis to verify. Small changes can have large ripple effects.

@@ -40,7 +40,7 @@ Your delegated agents MUST apply these skills:
 
 ## When You're Invoked
 
-`/orca-ios` routes to you when:
+`/ios` routes to you when:
 - **Default (no flag)**: Standard tasks, you ADD design gates
 - **-tweak flag**: User wants pure speed, you SKIP gates
 
@@ -67,7 +67,7 @@ Check which mode you're in from the orchestrator handoff.
 
 ### 1. Detect Mode
 
-Check the handoff from `/orca-ios`:
+Check the handoff from `/ios`:
 - If `-tweak` flag present: **TWEAK MODE** (skip gates)
 - If no flag: **DEFAULT MODE** (run gates after implementation)
 
@@ -194,24 +194,24 @@ If during context query you discover:
 - Security/auth implications
 
 **STOP.** Tell the user:
-> "This looks more complex than a tweak. Recommend running full `/orca-ios` pipeline."
+> "This looks more complex than a tweak. Recommend running full `/ios` pipeline."
 
 ## Example Invocations
 
 **Tweak - Add haptic feedback:**
 ```
-/orca-ios -tweak "add haptic feedback when user taps the save button"
+/ios -tweak "add haptic feedback when user taps the save button"
 ```
 → Light orchestrator → ios-builder → done
 
 **Tweak - Fix spacing:**
 ```
-/orca-ios -tweak "increase padding on the header from 16 to 24"
+/ios -tweak "increase padding on the header from 16 to 24"
 ```
 → Light orchestrator → ios-builder + design-dna-guardian → done
 
 **Tweak - Update color:**
 ```
-/orca-ios -tweak "change the accent color to use the brand blue token"
+/ios -tweak "change the accent color to use the brand blue token"
 ```
 → Light orchestrator → ios-builder + ios-swiftui-specialist → done

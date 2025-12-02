@@ -251,8 +251,8 @@ FILENAME="${FILENAME}.txt"
 mv temp_article.txt "$FILENAME"
 
 # Show result
-echo "✓ Extracted article: $TITLE"
-echo "✓ Saved to: $FILENAME"
+echo " Extracted article: $TITLE"
+echo " Saved to: $FILENAME"
 echo ""
 echo "Preview (first 10 lines):"
 head -n 10 "$FILENAME"
@@ -334,7 +334,7 @@ reader "https://example.com/article" > temp.txt
 TITLE=$(head -n 1 temp.txt | sed 's/^# //')
 FILENAME="$(echo "$TITLE" | tr '/' '-').txt"
 mv temp.txt "$FILENAME"
-echo "✓ Saved to: $FILENAME"
+echo " Saved to: $FILENAME"
 ```
 
 **With error handling:**
@@ -351,18 +351,18 @@ fi
 
 ## Best Practices
 
-- ✅ Always show preview after extraction (first 10 lines)
-- ✅ Verify extraction succeeded before saving
-- ✅ Clean filename for filesystem compatibility
-- ✅ Try fallback method if primary fails
-- ✅ Inform user which tool was used
-- ✅ Keep filename length reasonable (< 100 chars)
+-  Always show preview after extraction (first 10 lines)
+-  Verify extraction succeeded before saving
+-  Clean filename for filesystem compatibility
+-  Try fallback method if primary fails
+-  Inform user which tool was used
+-  Keep filename length reasonable (< 100 chars)
 
 ## After Extraction
 
 Display to user:
-1. "✓ Extracted: [Article Title]"
-2. "✓ Saved to: [filename]"
+1. " Extracted: [Article Title]"
+2. " Saved to: [filename]"
 3. Show preview (first 10-15 lines)
 4. File size and location
 

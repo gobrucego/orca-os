@@ -16,7 +16,7 @@ context7-powered design QA skills to evaluate design quality.
 
 ---
 
-## 🔒 Coverage Declaration & Evidence (STRUCTURAL – ENFORCED)
+##  Coverage Declaration & Evidence (STRUCTURAL – ENFORCED)
 
 Your Design QA PASS is now structurally tied to evidence on disk.
 
@@ -38,14 +38,14 @@ When you run as part of the Nextjs pipeline:
    - NOT in scope: [...]
 
    MEASUREMENTS:
-   ┌─────────────────────────────────┬──────────┬──────────┐
-   │ Element                         │ Actual   │ Expected │
-   ├─────────────────────────────────┼──────────┼──────────┤
-   │ ...                             │  XXpx    │  YYpx    │
-   └─────────────────────────────────┴──────────┴──────────┘
+   
+    Element                          Actual    Expected 
+   
+    ...                               XXpx      YYpx    
+   
 
    PIXEL COMPARISON:
-   - <element/relationship>: <Actual> vs <Expected> → ✓/✗
+   - <element/relationship>: <Actual> vs <Expected> → /
 
    VERIFICATION RESULT:
    - Total issues from user/spec: N
@@ -117,7 +117,7 @@ Flag violations of these skills in your review.
 
 ---
 
-## 🔴 PIXEL MEASUREMENT PROTOCOL (MANDATORY - ZERO TOLERANCE)
+##  PIXEL MEASUREMENT PROTOCOL (MANDATORY - ZERO TOLERANCE)
 
 When verifying spacing, alignment, or sizing, you MUST measure actual pixels.
 
@@ -127,22 +127,22 @@ Use platform tools to get EXACT pixel values:
 
 ```
 MEASUREMENTS:
-┌─────────────────────────────────┬──────────┬──────────┐
-│ Element                         │ Actual   │ Expected │
-├─────────────────────────────────┼──────────┼──────────┤
-│ Section 1 to Section 2 gap      │ 24px     │ 24px     │
-│ Card padding-left               │ 16px     │ 16px     │
-│ Header to content spacing       │ 12px     │ 16px     │
-└─────────────────────────────────┴──────────┴──────────┘
+
+ Element                          Actual    Expected 
+
+ Section 1 to Section 2 gap       24px      24px     
+ Card padding-left                16px      16px     
+ Header to content spacing        12px      16px     
+
 ```
 
 ### Step 2: Compare (Zero Tolerance When Expected Value Exists)
 
 ```
 PIXEL COMPARISON:
-- Section gap: 24px == 24px → ✓ MATCH
-- Card padding: 16px == 16px → ✓ MATCH
-- Header spacing: 12px != 16px → ✗ MISMATCH (off by 4px)
+- Section gap: 24px == 24px →  MATCH
+- Card padding: 16px == 16px →  MATCH
+- Header spacing: 12px != 16px →  MISMATCH (off by 4px)
 ```
 
 ### Step 3: Verdict
@@ -158,10 +158,10 @@ PIXEL COMPARISON:
 
 ### Anti-Patterns (NEVER DO THESE)
 
-❌ "Spacing looks consistent" - WHERE ARE THE PIXEL VALUES?
-❌ "Alignment appears correct" - SHOW THE MEASUREMENTS
-❌ "Layout matches design" - PROVE IT WITH NUMBERS
-❌ "Within acceptable tolerance" - THERE IS NO TOLERANCE WHEN EXPECTED VALUE EXISTS
+ "Spacing looks consistent" - WHERE ARE THE PIXEL VALUES?
+ "Alignment appears correct" - SHOW THE MEASUREMENTS
+ "Layout matches design" - PROVE IT WITH NUMBERS
+ "Within acceptable tolerance" - THERE IS NO TOLERANCE WHEN EXPECTED VALUE EXISTS
 
 ### Measurement Methods (Playwright)
 
@@ -180,7 +180,7 @@ const gap = box2.y - (box1.y + box1.height);
 
 ---
 
-## 🔴 EXPLICIT COMPARISON PROTOCOL (WHEN USER PROVIDES SCREENSHOT)
+##  EXPLICIT COMPARISON PROTOCOL (WHEN USER PROVIDES SCREENSHOT)
 
 **If the user provided a screenshot showing a problem, that screenshot IS THE SOURCE OF TRUTH.**
 
@@ -226,11 +226,11 @@ VERIFICATION RESULT:
 
 ### Anti-Patterns (NEVER DO THESE)
 
-❌ "The layout looks correct" without explicit comparison to user's screenshot
-❌ "Verified ✅" without describing what you see vs what user showed
-❌ Claiming something is "already correctly positioned" when user showed it broken
-❌ Taking a screenshot but not actually analyzing it against user's reference
-❌ Going through verification motions without doing the actual work
+ "The layout looks correct" without explicit comparison to user's screenshot
+ "Verified " without describing what you see vs what user showed
+ Claiming something is "already correctly positioned" when user showed it broken
+ Taking a screenshot but not actually analyzing it against user's reference
+ Going through verification motions without doing the actual work
 
 ### If You Cannot Verify
 
@@ -241,7 +241,7 @@ If your screenshot shows the same problems as the user's reference:
 
 ---
 
-## 🔴 CLAIM LANGUAGE RULES (MANDATORY)
+##  CLAIM LANGUAGE RULES (MANDATORY)
 
 ### If You CAN See the Result:
 - Use pixel measurements
@@ -252,7 +252,7 @@ If your screenshot shows the same problems as the user's reference:
 - State "UNVERIFIED" prominently at TOP of response
 - Use "changed/modified" language, NEVER "fixed"
 - List what blocked verification
-- NO checkmarks (✅) for unverified work
+- NO checkmarks () for unverified work
 
 ### The Word "Fixed" Is EARNED, Not Assumed
 "Fixed" = I saw it broken, I changed code, I saw it working

@@ -33,13 +33,13 @@ These rules MUST be followed for OS/Claude Code configuration work:
 - Never specify `model:` - Opus is default
 - Descriptions should be actionable and specific
 
-### 🔴 NO ROOT POLLUTION (MANDATORY)
+###  NO ROOT POLLUTION (MANDATORY)
 
 **NEVER create files outside `.claude/` directory:**
-- ❌ `requirements/` → ✅ `.claude/requirements/`
-- ❌ `docs/completion-drive-plans/` → ✅ `.claude/orchestration/temp/`
-- ❌ `orchestration/` → ✅ `.claude/orchestration/`
-- ❌ `evidence/` → ✅ `.claude/orchestration/evidence/`
+-  `requirements/` →  `.claude/requirements/`
+-  `docs/completion-drive-plans/` →  `.claude/orchestration/temp/`
+-  `orchestration/` →  `.claude/orchestration/`
+-  `evidence/` →  `.claude/orchestration/evidence/`
 
 **Before ANY file creation:** Check if path starts with `.claude/`. If NOT → fix the path.
 Source code is the ONLY exception.

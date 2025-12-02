@@ -97,7 +97,7 @@ All 4 agents work simultaneously.
 ### Step 1: User Request
 
 ```
-/orca-expo "Wire 4 screens: My Protocols, Protocol Builder, Schedule, Inventory - all need glass chrome"
+/expo "Wire 4 screens: My Protocols, Protocol Builder, Schedule, Inventory - all need glass chrome"
 ```
 
 ### Step 2: ORCA Analysis
@@ -191,7 +191,7 @@ Scope: ONLY Inventory screen</parameter>
 
 ### User Request:
 ```
-/orca-expo "My Protocols, Protocol Builder, Schedule, Inventory need glass chrome + wiring"
+/expo "My Protocols, Protocol Builder, Schedule, Inventory need glass chrome + wiring"
 ```
 
 ### ORCA Response:

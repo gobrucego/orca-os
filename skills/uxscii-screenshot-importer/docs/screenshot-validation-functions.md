@@ -99,7 +99,7 @@ async function validateVariableConsistency(uxmPath, mdPath) {
   // Warn about unused variables (non-blocking)
   const unusedVars = definedVariables.filter(v => !usedVariables.includes(v));
   if (unusedVars.length > 0) {
-    console.warn(`⚠️  Unused variables defined in ${uxmPath}: ${unusedVars.join(', ')}`);
+    console.warn(`  Unused variables defined in ${uxmPath}: ${unusedVars.join(', ')}`);
   }
 
   return { passed: true, message: "Variable consistency verified", warnings: unusedVars.length };
@@ -163,7 +163,7 @@ async function validateBestPractices(uxmPath) {
   }
 
   if (warnings.length > 0) {
-    console.warn(`⚠️  Best practices warnings for ${uxmData.id}:\n  - ${warnings.join('\n  - ')}`);
+    console.warn(`  Best practices warnings for ${uxmData.id}:\n  - ${warnings.join('\n  - ')}`);
   }
 
   return { passed: true, warnings: warnings.length, messages: warnings };

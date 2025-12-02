@@ -106,7 +106,7 @@ const clarityGate = {
 if (clarityGate.result === 'FAIL') {
   // Add high-priority TODOs to draft
   clarityReport.issues.forEach(issue => {
-    addTODOToDraft(draft, issue.line_number, `🚨 CLARITY: ${issue.recommendation}`);
+    addTODOToDraft(draft, issue.line_number, ` CLARITY: ${issue.recommendation}`);
   });
 
   // Save as standard for future content
@@ -232,7 +232,7 @@ const repetitionCheck = {
 
 if (repetitionCheck.repeated_paragraphs.length > 0) {
   repetitionCheck.repeated_paragraphs.forEach(para => {
-    addTODOToDraft(draft, para.line_number, `🚨 REPETITION: Paragraph repeated at lines ${para.locations.join(', ')}`);
+    addTODOToDraft(draft, para.line_number, ` REPETITION: Paragraph repeated at lines ${para.locations.join(', ')}`);
   });
 }
 ```
@@ -313,7 +313,7 @@ const fdaComplianceCheck = {
 };
 
 if (fdaComplianceCheck.result === 'FAIL') {
-  addTODOToDraft(draft, 1, `🚨 COMPLIANCE: Add FDA disclaimer for: ${unapproved_substances.join(', ')}`);
+  addTODOToDraft(draft, 1, ` COMPLIANCE: Add FDA disclaimer for: ${unapproved_substances.join(', ')}`);
 }
 ```
 
@@ -340,7 +340,7 @@ const claimsValidation = {
 
 if (claimsValidation.result === 'FAIL') {
   claimsValidation.absolute_claims.forEach(claim => {
-    addTODOToDraft(draft, claim.line_number, `🚨 COMPLIANCE: Absolute claim detected: "${claim.text}" - soften language`);
+    addTODOToDraft(draft, claim.line_number, ` COMPLIANCE: Absolute claim detected: "${claim.text}" - soften language`);
   });
 }
 ```
@@ -371,7 +371,7 @@ const standardsViolations = standards.map(standard =>
 if (standardsViolations.length > 0) {
   // Log each violation
   standardsViolations.forEach(v => {
-    addTODOToDraft(draft, v.line_number, `⚠️ STANDARD VIOLATION: ${v.rule} - ${v.recommendation}`);
+    addTODOToDraft(draft, v.line_number, ` STANDARD VIOLATION: ${v.rule} - ${v.recommendation}`);
   });
 
   // Save consolidated standards for future
@@ -451,13 +451,13 @@ ${medium_priority.map(i => `- ${i.gate}: ${i.issue}`).join('\n')}
 
 ## Quality Gates Results
 
-### ✅ Passed (${passed_gates.length}/${total_gates})
+###  Passed (${passed_gates.length}/${total_gates})
 ${passed_gates.map(g => `- ${g.name}: ${g.score}`).join('\n')}
 
-### ❌ Failed (${failed_gates.length}/${total_gates})
+###  Failed (${failed_gates.length}/${total_gates})
 ${failed_gates.map(g => `- ${g.name}: ${g.reason}`).join('\n')}
 
-### ⚠️ Caution (${caution_gates.length}/${total_gates})
+###  Caution (${caution_gates.length}/${total_gates})
 ${caution_gates.map(g => `- ${g.name}: ${g.recommendation}`).join('\n')}
 
 ---
@@ -491,15 +491,15 @@ ${analogies.map(a => `  - "${a.text}" (line ${a.line})`).join('\n')}
 - **LSI coverage:** ${lsi_coverage}% (${lsi_present}/${lsi_total})
 
 ### Meta Elements
-- **Title:** ${title_length} chars (${title_valid ? '✅' : '❌'} target: 50-60)
-- **Meta description:** ${meta_length} chars (${meta_valid ? '✅' : '❌'} target: 150-160)
-- **Keyword in title:** ${keyword_in_title ? '✅' : '❌'}
+- **Title:** ${title_length} chars (${title_valid ? '' : ''} target: 50-60)
+- **Meta description:** ${meta_length} chars (${meta_valid ? '' : ''} target: 150-160)
+- **Keyword in title:** ${keyword_in_title ? '' : ''}
 
 ### Heading Structure
 - **H1 count:** ${h1_count} (should be 1)
 - **H2 count:** ${h2_count}
 - **H3 count:** ${h3_count}
-- **Keyword in H1:** ${h1_has_keyword ? '✅' : '❌'}
+- **Keyword in H1:** ${h1_has_keyword ? '' : ''}
 
 ### Internal Links
 - **Count:** ${internal_links_count} (target: 3-5)
@@ -507,7 +507,7 @@ ${internal_links.map(link => `  - ${link.text} → ${link.url}`).join('\n')}
 
 ### Word Count
 - **Total:** ${word_count} words
-- **Minimum:** 1500 words (${word_count >= 1500 ? '✅' : '❌'})
+- **Minimum:** 1500 words (${word_count >= 1500 ? '' : ''})
 - **Target:** 2500-3500 words
 
 ---
@@ -516,7 +516,7 @@ ${internal_links.map(link => `  - ${link.text} → ${link.url}`).join('\n')}
 
 ### Repetition Check
 ${repetition_result}
-${repeated_paragraphs.length > 0 ? `⚠️ Found ${repeated_paragraphs.length} repeated paragraphs` : '✅ No repetition detected'}
+${repeated_paragraphs.length > 0 ? ` Found ${repeated_paragraphs.length} repeated paragraphs` : ' No repetition detected'}
 
 ### Citations
 - **External citations:** ${external_citations_count} (target: 5+)
@@ -524,7 +524,7 @@ ${repeated_paragraphs.length > 0 ? `⚠️ Found ${repeated_paragraphs.length} r
 - **TODO citation markers:** ${citation_todos_count}
 
 ### E-E-A-T Signals
-- **Author bio present:** ${author_bio_present ? '✅' : '❌'}
+- **Author bio present:** ${author_bio_present ? '' : ''}
 - **External citations:** ${external_citations_count}
 - **Trust indicators:** ${trust_indicators_count}
 - **Expert quotes:** ${expert_quotes_count}
@@ -539,21 +539,21 @@ ${repeated_paragraphs.length > 0 ? `⚠️ Found ${repeated_paragraphs.length} r
 
 ### FDA Compliance
 - **Unapproved substances mentioned:** ${unapproved_substances.join(', ')}
-- **FDA disclaimer present:** ${fda_disclaimer_present ? '✅' : '❌'}
+- **FDA disclaimer present:** ${fda_disclaimer_present ? '' : ''}
 
 ### Medical Disclaimers
 - **Medical advice given:** ${medical_advice_given ? 'Yes' : 'No'}
-- **"Consult physician" language:** ${consult_physician_language ? '✅' : '❌'}
+- **"Consult physician" language:** ${consult_physician_language ? '' : ''}
 
 ### Risk Disclosure
-- **Side effects mentioned:** ${side_effects_mentioned ? '✅' : 'Consider adding'}
-- **Risks disclosed:** ${risks_disclosed ? '✅' : 'Consider adding'}
+- **Side effects mentioned:** ${side_effects_mentioned ? '' : 'Consider adding'}
+- **Risks disclosed:** ${risks_disclosed ? '' : 'Consider adding'}
 
 ---
 
 ## Standards Violations
 
-${standards_violations.length === 0 ? '✅ No standard violations' : `⚠️ ${standards_violations.length} violations found:`}
+${standards_violations.length === 0 ? ' No standard violations' : ` ${standards_violations.length} violations found:`}
 ${standards_violations.map(v => `- ${v.rule}: ${v.issue} (line ${v.line})`).join('\n')}
 
 ---
@@ -625,30 +625,30 @@ if (standardsViolations.length > 0) {
 ## Output Checklist
 
 ### Files Created
-- ✅ `outputs/seo/${SLUG}-qa.md` - Comprehensive QA summary
-- ✅ `outputs/seo/${SLUG}-draft-clarity-report.json` - Clarity gates results
+-  `outputs/seo/${SLUG}-qa.md` - Comprehensive QA summary
+-  `outputs/seo/${SLUG}-draft-clarity-report.json` - Clarity gates results
 
 ### Files Modified (TODO markers only)
-- ✅ `outputs/seo/${SLUG}-brief.md` - TODOs for missing data
-- ✅ `outputs/seo/${SLUG}-draft.md` - TODOs for issues found
+-  `outputs/seo/${SLUG}-brief.md` - TODOs for missing data
+-  `outputs/seo/${SLUG}-draft.md` - TODOs for issues found
 
 ### Quality Gates Run
-- ✅ Clarity gates (seo_clarity_gates.py) executed
-- ✅ SEO technical audit completed
-- ✅ Content quality checks performed
-- ✅ Compliance verification done
-- ✅ Standards enforcement applied
+-  Clarity gates (seo_clarity_gates.py) executed
+-  SEO technical audit completed
+-  Content quality checks performed
+-  Compliance verification done
+-  Standards enforcement applied
 
 ### Learning Logged
-- ✅ Task history saved to vibe.db
-- ✅ Standards violations logged (if any)
-- ✅ Pipeline outcome recorded
+-  Task history saved to vibe.db
+-  Standards violations logged (if any)
+-  Pipeline outcome recorded
 
 ### Evidence
-- ✅ All gate scores documented
-- ✅ Specific line numbers for issues
-- ✅ Priority ranking (Critical/High/Medium)
-- ✅ Actionable fix instructions
+-  All gate scores documented
+-  Specific line numbers for issues
+-  Priority ranking (Critical/High/Medium)
+-  Actionable fix instructions
 
 ## Hand-off to Human Reviewer
 
@@ -671,12 +671,12 @@ if (standardsViolations.length > 0) {
 ---
 
 **Phase complete when:**
-1. Clarity gates run ✅ (script executed)
-2. SEO technical audit complete ✅
-3. Content quality verified ✅
-4. Compliance checked ✅
-5. Standards enforced ✅
-6. QA report generated ✅
-7. TODOs added to files ✅
-8. Task history logged ✅
-9. Standards saved (if violations) ✅
+1. Clarity gates run  (script executed)
+2. SEO technical audit complete 
+3. Content quality verified 
+4. Compliance checked 
+5. Standards enforced 
+6. QA report generated 
+7. TODOs added to files 
+8. Task history logged 
+9. Standards saved (if violations) 

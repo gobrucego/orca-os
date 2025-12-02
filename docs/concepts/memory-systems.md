@@ -5,17 +5,17 @@ OS 2.4 uses multiple memory systems to maintain context across sessions and prov
 ## Memory Architecture
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    Memory-First Flow                     │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│  1. Workshop (fast, local)                              │
-│     ↓                                                   │
-│  2. vibe.db (semantic search)                           │
-│     ↓                                                   │
-│  3. ProjectContext MCP (expensive, comprehensive)       │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
+
+                    Memory-First Flow                     
+
+                                                         
+  1. Workshop (fast, local)                              
+     ↓                                                   
+  2. vibe.db (semantic search)                           
+     ↓                                                   
+  3. ProjectContext MCP (expensive, comprehensive)       
+                                                         
+
 ```
 
 ## Workshop
@@ -120,33 +120,33 @@ mcp__project-context__query_context(...)
 
 ```
 User Request
-    │
-    ▼
-┌─────────────────┐
-│  /orca-{domain} │
-│   (orchestrator)│
-└────────┬────────┘
-         │
-         │ 1. Memory search
-         ▼
-┌─────────────────┐
-│    Workshop     │──→ Decisions, gotchas, preferences
-│    vibe.db      │──→ Relevant code, symbols
-└────────┬────────┘
-         │
-         │ 2. ProjectContext query
-         ▼
-┌─────────────────┐
-│ ProjectContext  │──→ ContextBundle
-│      MCP        │
-└────────┬────────┘
-         │
-         │ 3. Delegate with context
-         ▼
-┌─────────────────┐
-│   Specialist    │──→ Has: memory hints + ContextBundle
-│     Agent       │
-└─────────────────┘
+    
+    
+
+  /orca-{domain} 
+   (orchestrator)
+
+         
+          1. Memory search
+         
+
+    Workshop     → Decisions, gotchas, preferences
+    vibe.db      → Relevant code, symbols
+
+         
+          2. ProjectContext query
+         
+
+ ProjectContext  → ContextBundle
+      MCP        
+
+         
+          3. Delegate with context
+         
+
+   Specialist    → Has: memory hints + ContextBundle
+     Agent       
+
 ```
 
 ## Persisting Learnings

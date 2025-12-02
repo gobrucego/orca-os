@@ -10,8 +10,8 @@ Say what you want; map to the right command.
 ### Planning & Implementation
 - "Plan this feature" → `/plan "feature description"`
 - "Build X end-to-end" → `/plan "X"` then `/orca "implement requirement <id>"`
-- "Implement approved blueprint" → `/orca-nextjs "implement requirement <id> using spec"`
-- "Add dark mode to iOS app" → `/plan "dark mode"` then `/orca-ios "implement requirement <id>"`
+- "Implement approved blueprint" → `/nextjs "implement requirement <id> using spec"`
+- "Add dark mode to iOS app" → `/plan "dark mode"` then `/ios "implement requirement <id>"`
 - "Fix this bug" → `/orca-{domain} "fix: description"`
 
 ### Review & Quality
@@ -41,9 +41,9 @@ Say what you want; map to the right command.
 1. /plan "feature description"
    → Creates .claude/requirements/<id>/06-requirements-spec.md
 
-2. /orca-nextjs "implement requirement <id>"
-   OR /orca-ios "implement requirement <id>"
-   OR /orca-expo "implement requirement <id>"
+2. /nextjs "implement requirement <id>"
+   OR /ios "implement requirement <id>"
+   OR /expo "implement requirement <id>"
    → Team confirmation → Implementation → Gates → Verification
 
 3. /audit "last 5 tasks" (periodically)
@@ -78,10 +78,10 @@ Say what you want; map to the right command.
 - **Confirm agent teams** - AskUserQuestion shows you what will happen before work starts
 
 ### Don't Do This
-- ❌ Skip `/plan` for complex features (creates scope ambiguity)
-- ❌ Try to write code when orchestrator asks questions (breaks role boundaries)
-- ❌ Worry about interrupting - pipeline survives questions/clarifications
-- ❌ Use deprecated commands (`/requirements-*`, `/response-awareness-*`)
+-  Skip `/plan` for complex features (creates scope ambiguity)
+-  Try to write code when orchestrator asks questions (breaks role boundaries)
+-  Worry about interrupting - pipeline survives questions/clarifications
+-  Use deprecated commands (`/requirements-*`, `/response-awareness-*`)
 
 ### When to Use What
 

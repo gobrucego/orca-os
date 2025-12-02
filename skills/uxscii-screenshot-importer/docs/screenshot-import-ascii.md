@@ -14,52 +14,52 @@ function selectBorderChars(state: string, baseStyle: string): string {
   // Format: "topLeft|top|topRight|side|bottomLeft|bottom|bottomRight"
   const styleMap: Record<string, Record<string, string>> = {
     'default': {
-      'light': '┌|─|┐|│|└|┘',
-      'rounded': '╭|─|╮|│|╰|╯',
-      'double': '╔|═|╗|║|╚|╝',
-      'heavy': '┏|━|┓|┃|┗|┛',
+      'light': '|||||',
+      'rounded': '|||||',
+      'double': '|||||',
+      'heavy': '|||||',
       'none': ' | | | | | '
     },
     'hover': {
-      'light': '┏|━|┓|┃|┗|┛',      // Upgrade to heavy
-      'rounded': '┏|━|┓|┃|┗|┛',    // Upgrade to heavy
-      'double': '╔|═|╗|║|╚|╝',     // Keep double
-      'heavy': '┏|━|┓|┃|┗|┛',      // Keep heavy
+      'light': '|||||',      // Upgrade to heavy
+      'rounded': '|||||',    // Upgrade to heavy
+      'double': '|||||',     // Keep double
+      'heavy': '|||||',      // Keep heavy
       'none': ' | | | | | '
     },
     'focus': {
-      'light': '┏|━|┓|┃|┗|┛',      // Upgrade to heavy
-      'rounded': '┏|━|┓|┃|┗|┛',    // Upgrade to heavy
-      'double': '╔|═|╗|║|╚|╝',     // Keep double
-      'heavy': '┏|━|┓|┃|┗|┛',      // Keep heavy
+      'light': '|||||',      // Upgrade to heavy
+      'rounded': '|||||',    // Upgrade to heavy
+      'double': '|||||',     // Keep double
+      'heavy': '|||||',      // Keep heavy
       'none': ' | | | | | '
     },
     'active': {
-      'light': '┏|━|┓|┃|┗|┛',
-      'rounded': '┏|━|┓|┃|┗|┛',
-      'double': '╔|═|╗|║|╚|╝',
-      'heavy': '┏|━|┓|┃|┗|┛',
+      'light': '|||||',
+      'rounded': '|||||',
+      'double': '|||||',
+      'heavy': '|||||',
       'none': ' | | | | | '
     },
     'disabled': {
-      'light': '┌| ─ |┐|│|└| ─ |┘',    // Dashed pattern
-      'rounded': '╭| ─ |╮|│|╰| ─ |╯',  // Dashed pattern
-      'double': '╔| ═ |╗|║|╚| ═ |╝',   // Dashed pattern
-      'heavy': '┏| ━ |┓|┃|┗| ━ |┛',    // Dashed pattern
+      'light': '|  ||||  |',    // Dashed pattern
+      'rounded': '|  ||||  |',  // Dashed pattern
+      'double': '|  ||||  |',   // Dashed pattern
+      'heavy': '|  ||||  |',    // Dashed pattern
       'none': ' | | | | | '
     },
     'error': {
-      'light': '┏|━|┓|┃|┗|┛',
-      'rounded': '┏|━|┓|┃|┗|┛',
-      'double': '╔|═|╗|║|╚|╝',
-      'heavy': '┏|━|┓|┃|┗|┛',
+      'light': '|||||',
+      'rounded': '|||||',
+      'double': '|||||',
+      'heavy': '|||||',
       'none': ' | | | | | '
     },
     'success': {
-      'light': '┏|━|┓|┃|┗|┛',
-      'rounded': '┏|━|┓|┃|┗|┛',
-      'double': '╔|═|╗|║|╚|╝',
-      'heavy': '┏|━|┓|┃|┗|┛',
+      'light': '|||||',
+      'rounded': '|||||',
+      'double': '|||||',
+      'heavy': '|||||',
       'none': ' | | | | | '
     }
   };
@@ -81,7 +81,7 @@ Determines interior fill character based on component type and state:
 ```typescript
 function selectFillPattern(state: string, componentType: string): string {
   const typePatterns: Record<string, string> = {
-    'button': '▓',        // Solid button fill
+    'button': '',        // Solid button fill
     'input': ' ',         // Empty space for text
     'checkbox': ' ',      // Filled by special generator
     'radio': ' ',         // Filled by special generator
@@ -90,7 +90,7 @@ function selectFillPattern(state: string, componentType: string): string {
     'modal': ' ',         // Content area
     'panel': ' ',         // Content area
     'alert': ' ',         // Message area
-    'badge': '▓',         // Solid badge fill
+    'badge': '',         // Solid badge fill
     'progress': ' ',      // Filled by special generator
     'spinner': ' ',       // Filled by special generator
     'toast': ' ',         // Message area
@@ -102,16 +102,16 @@ function selectFillPattern(state: string, componentType: string): string {
 
   // State-specific modifications
   if (state === 'hover' && componentType === 'button') {
-    return '█';  // Darker fill on hover
+    return '';  // Darker fill on hover
   }
   if (state === 'disabled') {
     return ' ';  // Empty on disabled
   }
   if (state === 'active' && componentType === 'button') {
-    return '█';  // Full solid on active
+    return '';  // Full solid on active
   }
   if (state === 'focus' && componentType === 'input') {
-    return '│';  // Cursor indicator
+    return '';  // Cursor indicator
   }
 
   return baseFill;
@@ -119,9 +119,9 @@ function selectFillPattern(state: string, componentType: string): string {
 ```
 
 **Pattern Types:**
-- Solid `▓`: Buttons, badges
-- Full `█`: Hover/active states
-- Cursor `│`: Input focus
+- Solid ``: Buttons, badges
+- Full ``: Hover/active states
+- Cursor ``: Input focus
 - Empty ` `: Inputs, containers
 
 ### buildASCIIBox()
@@ -207,13 +207,13 @@ function generateASCII(
 
   // Add state indicators
   if (state === 'focus' && componentType === 'button') {
-    text += ' ✨';
+    text += ' ';
   }
   if (state === 'error' && componentType === 'input') {
-    text = '⚠️ ' + text;
+    text = ' ' + text;
   }
   if (state === 'success' && componentType === 'input') {
-    text = '✅ ' + text;
+    text = ' ' + text;
   }
 
   return buildASCIIBox(
@@ -261,11 +261,11 @@ function generateCheckbox(state: string, label: string): string {
   let box = '[ ]';  // Unchecked
 
   if (state === 'checked') {
-    box = '[✓]';
+    box = '[]';
   } else if (state === 'indeterminate') {
-    box = '[▬]';
+    box = '[]';
   } else if (state === 'disabled') {
-    box = '[─]';
+    box = '[]';
   }
 
   return `${box} ${label}`;
@@ -274,20 +274,20 @@ function generateCheckbox(state: string, label: string): string {
 
 **States:**
 - Unchecked: `[ ]`
-- Checked: `[✓]`
-- Indeterminate: `[▬]`
-- Disabled: `[─]`
+- Checked: `[]`
+- Indeterminate: `[]`
+- Disabled: `[]`
 
 ### generateRadio()
 
 ```typescript
 function generateRadio(state: string, label: string): string {
-  let circle = '○';  // Unselected
+  let circle = '';  // Unselected
 
   if (state === 'selected') {
-    circle = '◉';
+    circle = '';
   } else if (state === 'disabled') {
-    circle = '◌';
+    circle = '';
   }
 
   return `${circle} ${label}`;
@@ -295,9 +295,9 @@ function generateRadio(state: string, label: string): string {
 ```
 
 **States:**
-- Unselected: `○`
-- Selected: `◉`
-- Disabled: `◌`
+- Unselected: ``
+- Selected: ``
+- Disabled: ``
 
 ### generateProgressBar()
 
@@ -306,18 +306,18 @@ function generateProgressBar(percent: number, width: number): string {
   const filled = Math.floor((width * percent) / 100);
   const remaining = width - filled;
 
-  const bar = '█'.repeat(filled) + '░'.repeat(remaining);
+  const bar = ''.repeat(filled) + ''.repeat(remaining);
   return `${bar} ${percent}%`;
 }
 ```
 
-**Example:** `████░░░░░░ 40%`
+**Example:** ` 40%`
 
 ### generateSpinner()
 
 ```typescript
 function generateSpinner(frame: number): string {
-  const frames = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
+  const frames = ['', '', '', '', '', '', '', '', '', ''];
   return frames[frame % frames.length];
 }
 ```
@@ -357,10 +357,10 @@ For hover states:
 ```typescript
 function addGlowEffect(ascii: string): string {
   const lines = ascii.split('\n');
-  const glowLines = lines.map(line => `░${line}░`);
+  const glowLines = lines.map(line => `${line}`);
 
-  const glowTop = '░'.repeat(glowLines[0].length);
-  const glowBottom = '░'.repeat(glowLines[0].length);
+  const glowTop = ''.repeat(glowLines[0].length);
+  const glowBottom = ''.repeat(glowLines[0].length);
 
   return [glowTop, ...glowLines, glowBottom].join('\n');
 }
@@ -369,11 +369,11 @@ function addGlowEffect(ascii: string): string {
 **Example:**
 ```
 Without glow:         With glow:
-╭─────────╮          ░░░░░░░░░░░░░
-│  Click  │          ░╭─────────╮░
-╰─────────╯          ░│  Click  │░
-                     ░╰─────────╯░
-                     ░░░░░░░░░░░░░
+          
+  Click            
+            Click  
+                     
+                     
 ```
 
 ### addValidationIndicator()
@@ -387,12 +387,12 @@ function addValidationIndicator(
   let indicator = '';
 
   if (state === 'error') {
-    indicator = '⚠️';
+    indicator = '';
     if (message) {
-      indicator += '\n❌ ' + message;
+      indicator += '\n ' + message;
     }
   } else if (state === 'success') {
-    indicator = '✅';
+    indicator = '';
   }
 
   return ascii + indicator;
@@ -424,9 +424,9 @@ const defaultASCII = generateASCII(
   'button'
 );
 // Result:
-// ╭──────────────────╮
-// │▓▓▓▓▓▓Submit▓▓▓▓▓▓│
-// ╰──────────────────╯
+// 
+// Submit
+// 
 
 // Generate hover state
 const hoverASCII = generateASCII(
@@ -436,9 +436,9 @@ const hoverASCII = generateASCII(
   'button'
 );
 // Result:
-// ┏━━━━━━━━━━━━━━━━━━┓
-// ┃████████Submit████┃
-// ┗━━━━━━━━━━━━━━━━━━┛
+// 
+// Submit
+// 
 
 // Generate disabled state
 const disabledASCII = generateASCII(
@@ -448,9 +448,9 @@ const disabledASCII = generateASCII(
   'button'
 );
 // Result:
-// ╭ ─ ─ ─ ─ ─ ─ ─ ─ ╮
-// │      Submit      │
-// ╰ ─ ─ ─ ─ ─ ─ ─ ─ ╯
+//          
+//       Submit      
+//          
 ```
 
 ## ASCII Generation Guidelines
@@ -459,7 +459,7 @@ const disabledASCII = generateASCII(
 1. Same dimensions across all states
 2. Border progression: default→light, hover→heavy, disabled→dashed
 3. Text always centered (horizontal and vertical)
-4. State indicators used sparingly (✨, ⚠️, ✅)
+4. State indicators used sparingly (, , )
 5. Test in monospace font
 
 **Performance Tips:**

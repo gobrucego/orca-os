@@ -102,7 +102,7 @@ A `/record` command that:
 
 **Message:**
 ```
-⚠️ DUPLICATE DETECTED
+ DUPLICATE DETECTED
 
 Similar entry exists (recorded 3 days ago):
   "Don't store tokens in localStorage" [gotcha]
@@ -157,10 +157,10 @@ mcp__project-context__save_task_history(domain, task, outcome, files, learnings)
 **Recording logic:**
 | Learning Type | Workshop | ProjectContext |
 |---------------|----------|----------------|
-| decision | ✅ decision | ✅ save_decision |
-| gotcha | ✅ gotcha | ❌ (no equivalent) |
-| note | ✅ note | ❌ (no equivalent) |
-| task_history | ✅ note | ✅ save_task_history |
+| decision |  decision |  save_decision |
+| gotcha |  gotcha |  (no equivalent) |
+| note |  note |  (no equivalent) |
+| task_history |  note |  save_task_history |
 
 ### FR6: Standard Promotion Suggestion
 
@@ -170,7 +170,7 @@ mcp__project-context__save_task_history(domain, task, outcome, files, learnings)
 
 **Message:**
 ```
-💡 STANDARD SUGGESTION
+ STANDARD SUGGESTION
 
 This gotcha seems critical enough to become a standard:
   "Never store auth tokens in localStorage"
@@ -198,7 +198,7 @@ mcp__project-context__save_standard(
 
 **Message:**
 ```
-📊 PATTERN DETECTED
+ PATTERN DETECTED
 
 This gotcha appears similar to 2 other entries:
   - "Auth token exposed in URL" (2025-11-20)
@@ -213,16 +213,16 @@ This might be a recurring pattern. Run /audit to analyze and consider improvemen
 
 **Format:**
 ```
-✅ RECORDED TO PROJECT MEMORY
+ RECORDED TO PROJECT MEMORY
 
 Workshop:
-  📌 Decisions: 2 recorded
-  ⚠️ Gotchas: 1 recorded
-  📝 Notes: 1 recorded
+   Decisions: 2 recorded
+   Gotchas: 1 recorded
+   Notes: 1 recorded
 
 ProjectContext:
-  ✅ Decision saved (domain: nextjs)
-  ✅ Task history saved
+   Decision saved (domain: nextjs)
+   Task history saved
 
 Tags: #auth, #security, #v2.3.1
 
@@ -230,7 +230,7 @@ Query later:
   workshop why "authentication"
   workshop search "token"
 
-💡 Tip: Run /audit periodically to analyze patterns
+ Tip: Run /audit periodically to analyze patterns
 ```
 
 ---
@@ -311,50 +311,50 @@ workshop --workspace .claude/memory recent --limit 20
 
 ```
 /record [--quick] [topic]
-    │
-    ├─ Parse arguments
-    │
-    ├─ Gather context
-    │   ├─ git log --oneline -20
-    │   ├─ git diff --stat HEAD~10
-    │   ├─ cat .claude/orchestration/phase_state.json
-    │   └─ workshop recent --limit 10
-    │
-    ├─ Detect domain
-    │
-    ├─ Extract learnings
-    │   ├─ Parse commit messages
-    │   ├─ Identify patterns (decision/gotcha/note)
-    │   └─ Auto-categorize
-    │
-    ├─ If insufficient context:
-    │   └─ AskUserQuestion for summary
-    │
-    ├─ Check duplicates (7-day window)
-    │   ├─ workshop search for each learning
-    │   └─ Block if duplicate found
-    │
-    ├─ If NOT --quick:
-    │   ├─ Present learnings
-    │   ├─ Confirm category/content/severity
-    │   └─ Confirm domain
-    │
-    ├─ Record to Workshop
-    │   ├─ workshop decision (with -r reasoning)
-    │   ├─ workshop gotcha (with -t tags)
-    │   └─ workshop note
-    │
-    ├─ Record to ProjectContext
-    │   ├─ save_decision
-    │   └─ save_task_history
-    │
-    ├─ If critical gotcha:
-    │   └─ Suggest standard promotion
-    │
-    ├─ Check for patterns
-    │   └─ If 2+ similar: hint /audit
-    │
-    └─ Display summary
+    
+     Parse arguments
+    
+     Gather context
+        git log --oneline -20
+        git diff --stat HEAD~10
+        cat .claude/orchestration/phase_state.json
+        workshop recent --limit 10
+    
+     Detect domain
+    
+     Extract learnings
+        Parse commit messages
+        Identify patterns (decision/gotcha/note)
+        Auto-categorize
+    
+     If insufficient context:
+        AskUserQuestion for summary
+    
+     Check duplicates (7-day window)
+        workshop search for each learning
+        Block if duplicate found
+    
+     If NOT --quick:
+        Present learnings
+        Confirm category/content/severity
+        Confirm domain
+    
+     Record to Workshop
+        workshop decision (with -r reasoning)
+        workshop gotcha (with -t tags)
+        workshop note
+    
+     Record to ProjectContext
+        save_decision
+        save_task_history
+    
+     If critical gotcha:
+        Suggest standard promotion
+    
+     Check for patterns
+        If 2+ similar: hint /audit
+    
+     Display summary
 ```
 
 ---

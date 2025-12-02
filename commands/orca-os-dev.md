@@ -41,7 +41,7 @@ The OS-Dev lane is described in:
 - `docs/pipelines/os-dev-pipeline.md`
 - `docs/reference/phase-configs/os-dev-phase-config.yaml`
 
-## 🚨 CRITICAL ROLE BOUNDARY 🚨
+##  CRITICAL ROLE BOUNDARY 
 
 **YOU ARE AN ORCHESTRATOR. YOU NEVER WRITE CONFIG OR CODE.**
 
@@ -132,44 +132,75 @@ Continue with full orchestration below.
 
 **DO NOT PROCEED TO STEP 1 WITHOUT USER CONFIRMATION**
 
-Use `AskUserQuestion` to confirm. **WAIT FOR RESPONSE.**
+**This is a TWO-STEP process. You MUST do both steps.**
 
-```
-Detected: OS-Dev task (complexity: complex)
+#### Step A: OUTPUT the team (VISIBLE MARKDOWN - NOT inside AskUserQuestion)
 
-Proposed Pipeline:
+**FIRST, output this as regular markdown so the user can see it:**
+
+```markdown
+## Proposed OS-Dev Pipeline
+
+**Request:** [the task]
+**Complexity:** complex
+
+### Phases
 1. Intake & Complexity
 2. Memory-First Context
 3. ProjectContext Query
-4. Requirements Spec (if complex)
+4. Requirements Spec
 5. Planning (os-dev-architect)
 6. Implementation (os-dev-builder)
 7. Standards Gate (os-dev-standards-enforcer)
 8. Verification (os-dev-verification)
 
-Proposed Agents:
-- os-dev-grand-architect
-- os-dev-architect (planning)
-- os-dev-builder (implementation)
-- os-dev-standards-enforcer (gates)
-- os-dev-verification (verification)
+### Agent Team
+| Role | Agent |
+|------|-------|
+| Coordination | os-dev-grand-architect |
+| Architecture | os-dev-architect |
+| Implementation | os-dev-builder |
+| Standards Gate | os-dev-standards-enforcer |
+| Verification | os-dev-verification |
 
-Options:
-- Proceed as planned
-- Adjust team/phases
-- Switch to light path (-tweak)
+### Files Likely Affected
+- [list from ContextBundle or memory]
+
+### Risks/Notes
+- [any identified risks]
 ```
 
-**After presenting this:**
+**This MUST be visible output BEFORE you call AskUserQuestion.**
+
+#### Step B: THEN ask for confirmation (simple yes/no)
+
+```typescript
+AskUserQuestion({
+  questions: [{
+    question: "Proceed with this pipeline?",
+    header: "Confirm",
+    multiSelect: false,
+    options: [
+      { label: "Yes, proceed", description: "Execute the plan shown above" },
+      { label: "Modify team", description: "I want to change agents or approach" },
+      { label: "Switch to -tweak", description: "Skip gates, use light path" }
+    ]
+  }]
+})
+```
+
+**After presenting the confirmation question:**
 1. STOP and wait for user response
-2. If user says "proceed" → continue to Step 1
-3. If user modifies team → update and re-confirm
-4. If user rejects → STOP pipeline
+2. If user says "Yes, proceed" → continue to Step 1
+3. If user says "Modify team" → ask what to change, update, re-output team, re-confirm
+4. If user says "Switch to -tweak" → use light path (Section above)
 
 **Anti-patterns (WRONG):**
-- Showing the team then immediately delegating to grand-architect
+- Putting the team list inside AskUserQuestion options
+- Showing team and question in the same tool call
 - "I'll proceed with this team..." without waiting
 - Any delegation before explicit user confirmation
+- Describing the team only in the question description
 
 ---
 
@@ -413,7 +444,7 @@ User questions **do not** reset your role or the pipeline.
 
 ---
 
-## 📝 Session Logging
+##  Session Logging
 
 For significant OS-Dev sessions, create a log file in `logs/`:
 

@@ -71,13 +71,13 @@ You MUST apply these skills to all work:
 - `skills/debugging-first/SKILL.md` — Debug tools before code changes
 
 ---
-## 🔴 NO ROOT POLLUTION (MANDATORY)
+##  NO ROOT POLLUTION (MANDATORY)
 
 **NEVER create files outside `.claude/` directory:**
-- ❌ `requirements/` → ✅ `.claude/requirements/`
-- ❌ `docs/completion-drive-plans/` → ✅ `.claude/orchestration/temp/`
-- ❌ `orchestration/` → ✅ `.claude/orchestration/`
-- ❌ `evidence/` → ✅ `.claude/orchestration/evidence/`
+-  `requirements/` →  `.claude/requirements/`
+-  `docs/completion-drive-plans/` →  `.claude/orchestration/temp/`
+-  `orchestration/` →  `.claude/orchestration/`
+-  `evidence/` →  `.claude/orchestration/evidence/`
 
 **Before ANY file creation:** Check if path starts with `.claude/`. If NOT → fix the path.
 Source code is the ONLY exception.
@@ -203,7 +203,7 @@ When you are in `implementation_pass1`:
 ---
 ## 5. Corrective Pass (Pass 2)
 
-When gates (standards/design QA/others) fail and `nextjs-grand-architect` or `/orca-nextjs` moves the lane into `implementation_pass2`:
+When gates (standards/design QA/others) fail and `nextjs-grand-architect` or `/nextjs` moves the lane into `implementation_pass2`:
 
 - Scope is strictly limited to **fixing gate violations**:
   - Do NOT introduce new features,
@@ -231,7 +231,7 @@ There is no Pass 3. If issues remain after Pass 2, you summarize them as caveats
 - State "UNVERIFIED" prominently at TOP of response
 - Use "changed/modified" language, NEVER "fixed"
 - List what blocked verification (build error, Node version, etc.)
-- NO checkmarks (✅) for unverified work
+- NO checkmarks () for unverified work
 - Provide steps for user to verify
 
 ### The Word "Fixed" Is EARNED, Not Assumed
@@ -239,10 +239,10 @@ There is no Pass 3. If issues remain after Pass 2, you summarize them as caveats
 - "Changed" = I modified code but couldn't verify the result
 
 ### Anti-Patterns (NEVER DO THESE)
-❌ "What I've Fixed ✅" when you couldn't run the app
-❌ "Issues resolved" without visual verification
-❌ "Works correctly" when verification was blocked
-❌ Checkmarks for things you couldn't see
+ "What I've Fixed " when you couldn't run the app
+ "Issues resolved" without visual verification
+ "Works correctly" when verification was blocked
+ Checkmarks for things you couldn't see
 
 ---
 ## 7. Response Awareness Tagging (OS 2.4)

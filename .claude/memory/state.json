@@ -10,16 +10,6 @@
         "path": "/Users/adilkalam/claude-vibe-config/CLAUDE.md"
       },
       {
-        "name": "CLAUDE.md.global-copy",
-        "type": "file",
-        "path": "/Users/adilkalam/claude-vibe-config/CLAUDE.md.global-copy"
-      },
-      {
-        "name": "README-old.md",
-        "type": "file",
-        "path": "/Users/adilkalam/claude-vibe-config/README-old.md"
-      },
-      {
         "name": "README.md",
         "type": "file",
         "path": "/Users/adilkalam/claude-vibe-config/README.md"
@@ -2180,6 +2170,93 @@
                     "name": "tsconfig.json",
                     "type": "file",
                     "path": "/Users/adilkalam/claude-vibe-config/_explore/_MCPs/chrome-devtools-mcp/tsconfig.json"
+                  }
+                ]
+              },
+              {
+                "name": "clearthought-onepointfive",
+                "type": "directory",
+                "path": "/Users/adilkalam/claude-vibe-config/_explore/_MCPs/clearthought-onepointfive",
+                "children": [
+                  {
+                    "name": "CLAUDE.md",
+                    "type": "file",
+                    "path": "/Users/adilkalam/claude-vibe-config/_explore/_MCPs/clearthought-onepointfive/CLAUDE.md"
+                  },
+                  {
+                    "name": "LICENSE",
+                    "type": "file",
+                    "path": "/Users/adilkalam/claude-vibe-config/_explore/_MCPs/clearthought-onepointfive/LICENSE"
+                  },
+                  {
+                    "name": "README.md",
+                    "type": "file",
+                    "path": "/Users/adilkalam/claude-vibe-config/_explore/_MCPs/clearthought-onepointfive/README.md"
+                  },
+                  {
+                    "name": "...",
+                    "type": "directory",
+                    "path": "/Users/adilkalam/claude-vibe-config/_explore/_MCPs/clearthought-onepointfive/cli"
+                  },
+                  {
+                    "name": "...",
+                    "type": "directory",
+                    "path": "/Users/adilkalam/claude-vibe-config/_explore/_MCPs/clearthought-onepointfive/docs"
+                  },
+                  {
+                    "name": "package-lock.json",
+                    "type": "file",
+                    "path": "/Users/adilkalam/claude-vibe-config/_explore/_MCPs/clearthought-onepointfive/package-lock.json"
+                  },
+                  {
+                    "name": "package.json",
+                    "type": "file",
+                    "path": "/Users/adilkalam/claude-vibe-config/_explore/_MCPs/clearthought-onepointfive/package.json"
+                  },
+                  {
+                    "name": "refactoring-game-round2.md",
+                    "type": "file",
+                    "path": "/Users/adilkalam/claude-vibe-config/_explore/_MCPs/clearthought-onepointfive/refactoring-game-round2.md"
+                  },
+                  {
+                    "name": "refactoring-summary.md",
+                    "type": "file",
+                    "path": "/Users/adilkalam/claude-vibe-config/_explore/_MCPs/clearthought-onepointfive/refactoring-summary.md"
+                  },
+                  {
+                    "name": "...",
+                    "type": "directory",
+                    "path": "/Users/adilkalam/claude-vibe-config/_explore/_MCPs/clearthought-onepointfive/reports"
+                  },
+                  {
+                    "name": "smithery.yaml",
+                    "type": "file",
+                    "path": "/Users/adilkalam/claude-vibe-config/_explore/_MCPs/clearthought-onepointfive/smithery.yaml"
+                  },
+                  {
+                    "name": "...",
+                    "type": "directory",
+                    "path": "/Users/adilkalam/claude-vibe-config/_explore/_MCPs/clearthought-onepointfive/src"
+                  },
+                  {
+                    "name": "...",
+                    "type": "directory",
+                    "path": "/Users/adilkalam/claude-vibe-config/_explore/_MCPs/clearthought-onepointfive/srcbook-notebook-examples"
+                  },
+                  {
+                    "name": "...",
+                    "type": "directory",
+                    "path": "/Users/adilkalam/claude-vibe-config/_explore/_MCPs/clearthought-onepointfive/tests"
+                  },
+                  {
+                    "name": "tsconfig.json",
+                    "type": "file",
+                    "path": "/Users/adilkalam/claude-vibe-config/_explore/_MCPs/clearthought-onepointfive/tsconfig.json"
+                  },
+                  {
+                    "name": "vitest.config.ts",
+                    "type": "file",
+                    "path": "/Users/adilkalam/claude-vibe-config/_explore/_MCPs/clearthought-onepointfive/vitest.config.ts"
                   }
                 ]
               },
@@ -9978,6 +10055,11 @@
                 "name": "shopify-theme-checker.md",
                 "type": "file",
                 "path": "/Users/adilkalam/claude-vibe-config/agents/shopify/shopify-theme-checker.md"
+              },
+              {
+                "name": "shopify-ui-reviewer.md",
+                "type": "file",
+                "path": "/Users/adilkalam/claude-vibe-config/agents/shopify/shopify-ui-reviewer.md"
               }
             ]
           }
@@ -10205,6 +10287,11 @@
             "path": "/Users/adilkalam/claude-vibe-config/commands/audit.md"
           },
           {
+            "name": "clear-thought.md",
+            "type": "file",
+            "path": "/Users/adilkalam/claude-vibe-config/commands/clear-thought.md"
+          },
+          {
             "name": "clone-website.md",
             "type": "file",
             "path": "/Users/adilkalam/claude-vibe-config/commands/clone-website.md"
@@ -10328,6 +10415,11 @@
             "name": "skill-health.md",
             "type": "file",
             "path": "/Users/adilkalam/claude-vibe-config/commands/skill-health.md"
+          },
+          {
+            "name": "think.md",
+            "type": "file",
+            "path": "/Users/adilkalam/claude-vibe-config/commands/think.md"
           },
           {
             "name": "ultra-think.md",
@@ -10830,6 +10922,11 @@
             "path": "/Users/adilkalam/claude-vibe-config/quick-reference/os2-commands.md"
           },
           {
+            "name": "readme-clear-thought.md",
+            "type": "file",
+            "path": "/Users/adilkalam/claude-vibe-config/quick-reference/readme-clear-thought.md"
+          },
+          {
             "name": "readme-data.md",
             "type": "file",
             "path": "/Users/adilkalam/claude-vibe-config/quick-reference/readme-data.md"
@@ -10853,6 +10950,11 @@
             "name": "readme-os-dev.md",
             "type": "file",
             "path": "/Users/adilkalam/claude-vibe-config/quick-reference/readme-os-dev.md"
+          },
+          {
+            "name": "readme-research.md",
+            "type": "file",
+            "path": "/Users/adilkalam/claude-vibe-config/quick-reference/readme-research.md"
           },
           {
             "name": "readme-seo.md",
@@ -11107,6 +11209,11 @@
             ]
           },
           {
+            "name": "validate-design-review-evidence.sh",
+            "type": "file",
+            "path": "/Users/adilkalam/claude-vibe-config/scripts/validate-design-review-evidence.sh"
+          },
+          {
             "name": "vibe-sync.py",
             "type": "file",
             "path": "/Users/adilkalam/claude-vibe-config/scripts/vibe-sync.py"
@@ -11186,6 +11293,30 @@
                 "name": "SKILL.md",
                 "type": "file",
                 "path": "/Users/adilkalam/claude-vibe-config/skills/creative-strategist/SKILL.md"
+              }
+            ]
+          },
+          {
+            "name": "cursor-code-style",
+            "type": "directory",
+            "path": "/Users/adilkalam/claude-vibe-config/skills/cursor-code-style",
+            "children": [
+              {
+                "name": "SKILL.md",
+                "type": "file",
+                "path": "/Users/adilkalam/claude-vibe-config/skills/cursor-code-style/SKILL.md"
+              }
+            ]
+          },
+          {
+            "name": "debugging-first",
+            "type": "directory",
+            "path": "/Users/adilkalam/claude-vibe-config/skills/debugging-first",
+            "children": [
+              {
+                "name": "SKILL.md",
+                "type": "file",
+                "path": "/Users/adilkalam/claude-vibe-config/skills/debugging-first/SKILL.md"
               }
             ]
           },
@@ -11356,6 +11487,18 @@
             ]
           },
           {
+            "name": "linter-loop-limits",
+            "type": "directory",
+            "path": "/Users/adilkalam/claude-vibe-config/skills/linter-loop-limits",
+            "children": [
+              {
+                "name": "SKILL.md",
+                "type": "file",
+                "path": "/Users/adilkalam/claude-vibe-config/skills/linter-loop-limits/SKILL.md"
+              }
+            ]
+          },
+          {
             "name": "liquid-quick",
             "type": "directory",
             "path": "/Users/adilkalam/claude-vibe-config/skills/liquid-quick",
@@ -11364,6 +11507,18 @@
                 "name": "SKILL.md",
                 "type": "file",
                 "path": "/Users/adilkalam/claude-vibe-config/skills/liquid-quick/SKILL.md"
+              }
+            ]
+          },
+          {
+            "name": "lovable-pitfalls",
+            "type": "directory",
+            "path": "/Users/adilkalam/claude-vibe-config/skills/lovable-pitfalls",
+            "children": [
+              {
+                "name": "SKILL.md",
+                "type": "file",
+                "path": "/Users/adilkalam/claude-vibe-config/skills/lovable-pitfalls/SKILL.md"
               }
             ]
           },
@@ -11455,6 +11610,18 @@
             "name": "react-patterns.md",
             "type": "file",
             "path": "/Users/adilkalam/claude-vibe-config/skills/react-patterns.md"
+          },
+          {
+            "name": "search-before-edit",
+            "type": "directory",
+            "path": "/Users/adilkalam/claude-vibe-config/skills/search-before-edit",
+            "children": [
+              {
+                "name": "SKILL.md",
+                "type": "file",
+                "path": "/Users/adilkalam/claude-vibe-config/skills/search-before-edit/SKILL.md"
+              }
+            ]
           },
           {
             "name": "security-basics.md",
@@ -11928,5 +12095,5 @@
   },
   "components": [],
   "dependencies": {},
-  "lastUpdated": "2025-11-28T18:52:46.575Z"
+  "lastUpdated": "2025-11-29T17:36:46.834Z"
 }

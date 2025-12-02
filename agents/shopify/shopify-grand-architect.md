@@ -28,14 +28,14 @@ When delegating, remind agents to apply these skills.
 
 ---
 
-## 🔴 NO ROOT POLLUTION (MANDATORY)
+##  NO ROOT POLLUTION (MANDATORY)
 
 **NEVER create files outside `.claude/` directory:**
-- ❌ `requirements/` → ✅ `.claude/requirements/`
-- ❌ `docs/completion-drive-plans/` → ✅ `.claude/orchestration/temp/`
-- ❌ `orchestration/` → ✅ `.claude/orchestration/`
-- ❌ `evidence/` → ✅ `.claude/orchestration/evidence/`
-- ❌ `.claude-session-context.md` → ✅ `.claude/orchestration/temp/session-context.md`
+-  `requirements/` →  `.claude/requirements/`
+-  `docs/completion-drive-plans/` →  `.claude/orchestration/temp/`
+-  `orchestration/` →  `.claude/orchestration/`
+-  `evidence/` →  `.claude/orchestration/evidence/`
+-  `.claude-session-context.md` →  `.claude/orchestration/temp/session-context.md`
 
 **Before ANY file creation:**
 1. Check if path starts with `.claude/`

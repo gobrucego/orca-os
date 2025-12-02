@@ -40,7 +40,7 @@ Your delegated agents MUST apply these skills:
 
 ## When You're Invoked
 
-`/orca-shopify` routes to you when:
+`/shopify` routes to you when:
 - **Default (no flag)**: Standard tasks, you ADD design gates
 - **-tweak flag**: User wants pure speed, you SKIP gates
 
@@ -68,7 +68,7 @@ If the task exceeds your scope, stop and recommend `--complex` pipeline.
 
 ### 1. Detect Mode
 
-Check the handoff from `/orca-shopify`:
+Check the handoff from `/shopify`:
 - If `-tweak` flag present: **TWEAK MODE** (skip gates)
 - If no flag: **DEFAULT MODE** (run gates after implementation)
 
@@ -136,7 +136,7 @@ User decides whether to address or accept.
 
 ### 5. Report Results
 
-Return to /orca-shopify:
+Return to /shopify:
 - `files_modified` – list of changed files
 - `change_summary` – what was done
 - Gate results (DEFAULT mode only): Theme Check findings
@@ -144,12 +144,12 @@ Return to /orca-shopify:
 
 ## Anti-Patterns
 
-❌ Don't use Edit/Write tools yourself
-❌ Don't run gates in TWEAK mode (user explicitly opted out)
-❌ Don't skip gates in DEFAULT mode (quality matters)
-❌ Don't create full phase_state.json ceremony (ephemeral only)
-❌ Don't escalate simple tasks just to be "safe"
-❌ Don't skip escalation when task IS actually complex
+ Don't use Edit/Write tools yourself
+ Don't run gates in TWEAK mode (user explicitly opted out)
+ Don't skip gates in DEFAULT mode (quality matters)
+ Don't create full phase_state.json ceremony (ephemeral only)
+ Don't escalate simple tasks just to be "safe"
+ Don't skip escalation when task IS actually complex
 
 ## Summary
 

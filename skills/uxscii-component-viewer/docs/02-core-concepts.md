@@ -46,9 +46,9 @@ submit-button.uxm says:
   }
 
 submit-button.md contains:
-  ╭──────────────────╮
-  │   {{text}}       │  ← Uses the variable
-  ╰──────────────────╯
+  
+     {{text}}         ← Uses the variable
+  
 ```
 
 The `.uxm` **defines** variables, the `.md` **uses** them.
@@ -117,16 +117,16 @@ The `.uxm` **defines** variables, the `.md` **uses** them.
 
 ### In .md (Usage)
 ```
-╭──────────────────╮
-│   {{text}}       │  ← Replaced with prop value
-╰──────────────────╯
+
+   {{text}}         ← Replaced with prop value
+
 ```
 
 ### Result
 ```
-╭──────────────────╮
-│   Click me       │  ← Actual rendered output
-╰──────────────────╯
+
+   Click me         ← Actual rendered output
+
 ```
 
 ## States and Behaviors
@@ -223,23 +223,23 @@ Standard types:
 ## Naming Conventions
 
 ### Component IDs (kebab-case)
-- ✓ `submit-button`
-- ✓ `email-input`
-- ✓ `user-profile-card`
-- ✗ `submitButton` (camelCase)
-- ✗ `Submit Button` (spaces)
+-  `submit-button`
+-  `email-input`
+-  `user-profile-card`
+-  `submitButton` (camelCase)
+-  `Submit Button` (spaces)
 
 ### Variables (camelCase)
-- ✓ `userName`
-- ✓ `isDisabled`
-- ✓ `maxLength`
-- ✗ `user-name` (kebab-case)
-- ✗ `user_name` (snake_case)
+-  `userName`
+-  `isDisabled`
+-  `maxLength`
+-  `user-name` (kebab-case)
+-  `user_name` (snake_case)
 
 ### Files (kebab-case + extension)
-- ✓ `submit-button.uxm`
-- ✓ `submit-button.md`
-- ✗ `submitButton.uxm`
+-  `submit-button.uxm`
+-  `submit-button.md`
+-  `submitButton.uxm`
 
 ## Accessibility
 

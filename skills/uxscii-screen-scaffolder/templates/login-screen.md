@@ -5,24 +5,24 @@ User authentication screen with email and password inputs.
 ## Layout
 
 ```
-╭──────────────────────────────────────────╮
-│                                          │
-│          {{title}}                       │
-│      {{subtitle}}                        │
-│                                          │
-│  Email                                   │
-│  {{emailInput}}                          │
-│                                          │
-│  Password                                │
-│  {{passwordInput}}                       │
-│                                          │
-│  {{errorMessage}}                        │
-│                                          │
-│         {{submitButton}}                 │
-│                                          │
-│  {{forgotPassword}}  │  {{signupLink}}   │
-│                                          │
-╰──────────────────────────────────────────╯
+
+                                          
+          {{title}}                       
+      {{subtitle}}                        
+                                          
+  Email                                   
+  {{emailInput}}                          
+                                          
+  Password                                
+  {{passwordInput}}                       
+                                          
+  {{errorMessage}}                        
+                                          
+         {{submitButton}}                 
+                                          
+  {{forgotPassword}}    {{signupLink}}   
+                                          
+
 ```
 
 ## Components Used

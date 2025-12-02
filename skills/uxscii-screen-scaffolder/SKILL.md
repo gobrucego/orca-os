@@ -29,7 +29,7 @@ Create complete screen designs using the **uxscii standard** by orchestrating sp
 
 ## Your Task
 
-**⚠️ YOU ARE AN ORCHESTRATOR - DO NOT DO THE WORK YOURSELF! ⚠️**
+** YOU ARE AN ORCHESTRATOR - DO NOT DO THE WORK YOURSELF! **
 
 Your role is to **spawn agents** using the Task tool. You coordinate agents, you don't create components directly.
 
@@ -77,10 +77,10 @@ const missing = requiredComponents.filter(c => !available.includes(c));
 **If missing components exist**, spawn designer agents **IN PARALLEL** - one agent per component:
 
 **CRITICAL ORCHESTRATION RULES**:
-1. ⚠️ **DO NOT** create a TodoWrite list and work through it yourself
-2. ⚠️ **DO NOT** create components yourself using Write/Edit tools
-3. ✅ **DO** use the Task tool to spawn one agent per missing component
-4. ✅ **DO** send ONE message containing ALL Task tool calls (for parallel execution)
+1.  **DO NOT** create a TodoWrite list and work through it yourself
+2.  **DO NOT** create components yourself using Write/Edit tools
+3.  **DO** use the Task tool to spawn one agent per missing component
+4.  **DO** send ONE message containing ALL Task tool calls (for parallel execution)
 
 **Example of CORRECT approach** - If 6 components are missing, your next response should contain exactly 6 Task() calls:
 
@@ -204,15 +204,15 @@ Follow the uxscii standard strictly."
 Create comprehensive summary:
 
 ```markdown
-# Screen Scaffolding Complete ✓
+# Screen Scaffolding Complete 
 
 ## Screen: ${screenName}
 
 ### Components Created (by designer agent)
-${missingComponents.length > 0 ? missingComponents.map(c => `✓ ${c}`).join('\n') : 'None - all components existed'}
+${missingComponents.length > 0 ? missingComponents.map(c => ` ${c}`).join('\n') : 'None - all components existed'}
 
 ### Components Used (by composer agent)
-${availableComponents.map(c => `✓ ${c}`).join('\n')}
+${availableComponents.map(c => ` ${c}`).join('\n')}
 
 ### Files Created
 
@@ -227,8 +227,8 @@ ${missingComponents.length * 2} files (.uxm + .md)
 **Total: ${missingComponents.length * 2 + 3} files**
 
 ## Performance
-- Component creation: ${missingComponents.length > 0 ? 'Designer agent (background)' : 'Skipped'} ⚡
-- Screen composition: Composer agent ⚡
+- Component creation: ${missingComponents.length > 0 ? 'Designer agent (background)' : 'Skipped'} 
+- Screen composition: Composer agent 
 
 ## Next Steps
 
@@ -268,9 +268,9 @@ Skill: I'll help you create a login screen! Let me check what components we have
 [Checks ./fluxwing/components/, ./fluxwing/library/, bundled templates]
 
 I found:
-✓ email-input (exists in ./fluxwing/components/)
-✗ password-input (needs to be created)
-✗ submit-button (needs to be created)
+ email-input (exists in ./fluxwing/components/)
+ password-input (needs to be created)
+ submit-button (needs to be created)
 
 I'll use a two-phase approach:
 - Phase 1: Spawn 2 agents in parallel (one per missing component)
@@ -278,12 +278,12 @@ I'll use a two-phase approach:
 
 [Spawns 2 component agents in parallel]
 
-✓ password-input agent completed
-✓ submit-button agent completed
+ password-input agent completed
+ submit-button agent completed
 
 [Now spawns composer agent]
 
-✓ Composer agent created login screen
+ Composer agent created login screen
 
 Total: 7 files created in ./fluxwing/
 Performance: ~2x faster with parallel component creation!
@@ -303,9 +303,9 @@ Performance: ~2x faster with parallel component creation!
 
 ## Success Criteria
 
-- ✓ All required components exist (created or found)
-- ✓ Screen has 3 files (.uxm + .md + .rendered.md)
-- ✓ Agents ran efficiently (parallel when possible)
-- ✓ User can immediately use the screen design
+-  All required components exist (created or found)
+-  Screen has 3 files (.uxm + .md + .rendered.md)
+-  Agents ran efficiently (parallel when possible)
+-  User can immediately use the screen design
 
 You are building complete, production-ready screen designs with maximum agent concurrency!

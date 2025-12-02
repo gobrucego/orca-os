@@ -22,7 +22,7 @@ file_limits:
 scope_boundaries:
   - "Focus on performance characteristics and budgets; do not rewrite large portions of the app directly"
 ---
-<!-- 🌟 SenaiVerse - Claude Code Agent System v1.0 -->
+<!--  SenaiVerse - Claude Code Agent System v1.0 -->
 
 # Performance Budget Enforcer
 
@@ -68,21 +68,21 @@ npx react-native bundle --entry-file index.js --bundle-output /dev/null --platfo
 
 ### 2. Heavy Imports
 ```typescript
-// ❌ BAD: Full library (547KB)
+//  BAD: Full library (547KB)
 import _ from 'lodash';
 
-// ✅ GOOD: Specific functions (27KB)
+//  GOOD: Specific functions (27KB)
 import { debounce, throttle } from 'lodash';
 ```
 
 ### 3. Unnecessary Re-renders
 ```typescript
-// ❌ Missing React.memo
+//  Missing React.memo
 export default function ListItem({ item }) {
   // Re-renders on every parent update
 }
 
-// ✅ With memoization
+//  With memoization
 export default React.memo(ListItem);
 ```
 
@@ -94,11 +94,11 @@ Include both qualitative findings and a numeric Performance Score:
 Performance Report:
 
 BUDGET VIOLATIONS (2):
-✗ Bundle size: 26.3MB (budget: 25MB)
+ Bundle size: 26.3MB (budget: 25MB)
   Cause: react-native-video added (+4.2MB)
   Fix: Lazy load video player
 
-✗ HomeScreen render: 340ms (budget: 250ms)
+ HomeScreen render: 340ms (budget: 250ms)
   Cause: 47 re-renders per scroll
   Fix: Add React.memo to FeedItem
 
@@ -305,7 +305,7 @@ npx react-native bundle --platform android --bundle-output /dev/null
 
 1. **FlatList scrolling at 38 FPS (budget: >58 FPS)**
    ```typescript
-   // ❌ Current implementation (no optimization)
+   //  Current implementation (no optimization)
    <FlatList
      data={products}
      renderItem={({ item }) => <ProductCard product={item} />}
@@ -320,7 +320,7 @@ npx react-native bundle --platform android --bundle-output /dev/null
 
    **Fix:**
    ```typescript
-   // ✅ Optimized FlatList
+   //  Optimized FlatList
    const ProductCardMemo = React.memo(ProductCard);
 
    // getItemLayout for known heights (120px cards)
@@ -344,12 +344,12 @@ npx react-native bundle --platform android --bundle-output /dev/null
 
 2. **ProductCard component not memoized (re-renders on every scroll)**
    ```typescript
-   // ❌ Current (re-renders unnecessarily)
+   //  Current (re-renders unnecessarily)
    export default function ProductCard({ product }: Props) {
      // Entire component re-renders on parent update
    }
 
-   // ✅ Fix with React.memo
+   //  Fix with React.memo
    export default React.memo(ProductCard, (prevProps, nextProps) => {
      return prevProps.product.id === nextProps.product.id;
    });
@@ -360,14 +360,14 @@ npx react-native bundle --platform android --bundle-output /dev/null
 
 3. **Heavy image processing in render loop**
    ```typescript
-   // ⚠️ Expensive operation in render
+   //  Expensive operation in render
    <Image
      source={{ uri: product.imageUrl }}
      style={styles.image}
      // No caching strategy
    />
 
-   // ✅ Add caching
+   //  Add caching
    <Image
      source={{ uri: product.imageUrl }}
      style={styles.image}
@@ -434,7 +434,7 @@ npx react-native bundle --platform android --bundle-output /dev/null
 
 1. **Excessive location update frequency causing FPS drops**
    ```typescript
-   // ❌ Current (updates every 100ms)
+   //  Current (updates every 100ms)
    useEffect(() => {
      const subscription = Location.watchPositionAsync(
        {
@@ -458,7 +458,7 @@ npx react-native bundle --platform android --bundle-output /dev/null
 
    **Fix:**
    ```typescript
-   // ✅ Optimized (reduce frequency + batch updates)
+   //  Optimized (reduce frequency + batch updates)
    useEffect(() => {
      const subscription = Location.watchPositionAsync(
        {
@@ -487,10 +487,10 @@ npx react-native bundle --platform android --bundle-output /dev/null
 
 2. **Map marker updates could use native animations**
    ```typescript
-   // ⚠️ JS-based marker updates (crosses bridge)
+   //  JS-based marker updates (crosses bridge)
    <MapView.Marker coordinate={position} />
 
-   // ✅ Consider native animation for smoother experience
+   //  Consider native animation for smoother experience
    // (Advanced: use Animated.event with native driver)
    ```
 
@@ -575,27 +575,27 @@ Final score: 65/100 (FAIL - needs optimization)
 ---
 ## 8. Red Flags
 
-### 🚩 Bundle Size Jumps >5MB
+###  Bundle Size Jumps >5MB
 **Signal:** New dependency added, bundle grew significantly
 
 **Response:** Check if dependency is necessary. Consider lighter alternatives or lazy loading.
 
-### 🚩 FlatList Without getItemLayout
+###  FlatList Without getItemLayout
 **Signal:** List with >100 items, no getItemLayout prop
 
 **Response:** Add getItemLayout immediately. Critical for scroll performance.
 
-### 🚩 Full Library Imports
+###  Full Library Imports
 **Signal:** `import moment from 'moment'` or `import _ from 'lodash'`
 
 **Response:** Use specific imports: `import { debounce } from 'lodash'`. Tree-shaking doesn't work well in RN.
 
-### 🚩 Inline Functions in FlatList renderItem
+###  Inline Functions in FlatList renderItem
 **Signal:** `renderItem={({ item }) => <Card {...item} />}` without memoization
 
 **Response:** Extract renderItem function and memoize Card component.
 
-### 🚩 High-Frequency Bridge Calls
+###  High-Frequency Bridge Calls
 **Signal:** Location/sensor updates every 100ms or faster
 
 **Response:** Reduce frequency or batch updates. Bridge overhead causes FPS drops.

@@ -46,13 +46,13 @@ Reference these in your architecture plans where relevant.
 
 ---
 
-## 🔴 NO ROOT POLLUTION (MANDATORY)
+##  NO ROOT POLLUTION (MANDATORY)
 
 **NEVER create files outside `.claude/` directory:**
-- ❌ `requirements/` → ✅ `.claude/requirements/`
-- ❌ `docs/completion-drive-plans/` → ✅ `.claude/orchestration/temp/`
-- ❌ `orchestration/` → ✅ `.claude/orchestration/`
-- ❌ `evidence/` → ✅ `.claude/orchestration/evidence/`
+-  `requirements/` →  `.claude/requirements/`
+-  `docs/completion-drive-plans/` →  `.claude/orchestration/temp/`
+-  `orchestration/` →  `.claude/orchestration/`
+-  `evidence/` →  `.claude/orchestration/evidence/`
 
 **Before ANY file creation:** Check if path starts with `.claude/`. If NOT → fix the path.
 
@@ -82,7 +82,7 @@ When in doubt between Expo and pure webdev:
 Before you lock in a plan, classify complexity and run a **lightweight OODA loop**
 for the task. This guides how many agents and phases to involve.
 
-Use these bands (aligned with `/commands/orca-expo.md`):
+Use these bands (aligned with `/commands/expo.md`):
 
 - **Simple / Straightforward**
   - Small bugfix or single-screen tweak.
@@ -274,7 +274,7 @@ Once the plan is confirmed:
 
 You stop after planning. You do **not** implement or run standards/verification yourself.
 
-When `/orca-expo` invokes you specifically:
+When `/expo` invokes you specifically:
 - Assume the Expo pipeline (`docs/pipelines/expo-pipeline.md`) and Expo Quality
   Rubric are the governing contracts.
 - Make your output especially clear about:
@@ -550,7 +550,7 @@ If sync implementation fails:
 
 **Phase 2: Login UI Update (2 hours)**
 - Task 1: Add biometric button to login screen
-- Task 2: Add platform icons (👆 for Android, 🔐 for iOS)
+- Task 2: Add platform icons ( for Android,  for iOS)
 - Task 3: Add "Enable Biometric Auth" toggle in settings
 - Agent: @expo-builder-agent
 - Gate: @design-token-guardian (icons use design system)
@@ -617,7 +617,7 @@ If biometric implementation has issues:
 ---
 ## 8. Red Flags to Watch For
 
-### 🚩 Scope Creep
+###  Scope Creep
 **Signal:** User asks for "simple feature" but analysis reveals it touches 20+ files across navigation, state, and data layers.
 
 **Response:** Classify as Medium/High complexity, break into phases, warn user about timeline.
@@ -626,7 +626,7 @@ If biometric implementation has issues:
 
 ---
 
-### 🚩 Missing Requirements
+###  Missing Requirements
 **Signal:** Vague requests like "make cart better" or "fix performance".
 
 **Response:** Use AskUserQuestion to clarify acceptance criteria before planning.
@@ -645,7 +645,7 @@ AskUserQuestion({
 
 ---
 
-### 🚩 Architectural Debt
+###  Architectural Debt
 **Signal:** ContextBundle shows existing architecture is inconsistent (mix of Redux + Zustand + plain Context).
 
 **Response:** Plan includes either (a) follow existing pattern for this task, or (b) propose refactor as separate task.
@@ -654,7 +654,7 @@ AskUserQuestion({
 
 ---
 
-### 🚩 Security-Sensitive Work Without Specialist
+###  Security-Sensitive Work Without Specialist
 **Signal:** Plan involves auth, payments, PII, or storage of sensitive data, but no @security-specialist assigned.
 
 **Response:** ALWAYS assign @security-specialist gate for security-sensitive tasks. This is non-negotiable.
@@ -663,7 +663,7 @@ AskUserQuestion({
 
 ---
 
-### 🚩 Performance-Sensitive Work Without Prediction
+###  Performance-Sensitive Work Without Prediction
 **Signal:** Plan involves lists (100+ items), heavy animations, or frequent re-renders, but no @performance-prophet assigned.
 
 **Response:** Assign @performance-prophet to predict issues before implementation. Cheaper to catch early.

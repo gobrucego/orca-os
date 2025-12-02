@@ -148,7 +148,7 @@ Write(.claude/orchestration/temp/session-context.md, [generated content])
 ## Step 4: Confirm Success
 
 ```
-✅ SESSION SAVED
+ SESSION SAVED
 
 Context saved to: .claude/orchestration/temp/session-context.md
 Auto-loads on: Next session start via SessionStart hook

@@ -34,28 +34,28 @@ Use for:
 
 ```
 /seo "Write article about peptide therapy benefits"
-    │
-    ▼
-┌─────────────────────┐
-│  seo-research-specialist │  ← SERP + keyword research
-└─────────────────────┘
-    │
-    ▼
-┌─────────────────────┐
-│  seo-brief-strategist    │  ← Content brief
-└─────────────────────┘
-    │
-    ▼
-┌─────────────────────┐
-│  seo-draft-writer        │  ← Write the article
-└─────────────────────┘
-    │
-    ▼
-┌─────────────────────┐
-│  seo-quality-guardian    │  ← Quality gates
-└─────────────────────┘
-    │
-    ▼
+    
+    
+
+  seo-research-specialist   ← SERP + keyword research
+
+    
+    
+
+  seo-brief-strategist      ← Content brief
+
+    
+    
+
+  seo-draft-writer          ← Write the article
+
+    
+    
+
+  seo-quality-guardian      ← Quality gates
+
+    
+    
    Final Content
 ```
 
@@ -90,8 +90,8 @@ Use for:
 
 ```
 .claude/orchestration/
-├── temp/           ← Working briefs, drafts
-└── evidence/       ← Final content, approved briefs
+ temp/           ← Working briefs, drafts
+ evidence/       ← Final content, approved briefs
 ```
 
 ---

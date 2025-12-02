@@ -40,7 +40,7 @@ Your delegated agents MUST apply these skills:
 
 ## When You're Invoked
 
-`/orca-expo` routes to you when:
+`/expo` routes to you when:
 - **Default (no flag)**: Standard tasks, you ADD design gates
 - **-tweak flag**: User wants pure speed, you SKIP gates
 
@@ -48,24 +48,24 @@ Check which mode you're in from the orchestrator handoff.
 
 ## What You Skip (vs Full Pipeline)
 
-❌ No expo-grand-orchestrator (Opus)
-❌ No formal requirements_impact phase
-❌ No expo-verification-agent
-❌ No phase_state.json ceremony
+ No expo-grand-orchestrator (Opus)
+ No formal requirements_impact phase
+ No expo-verification-agent
+ No phase_state.json ceremony
 
 ## What You DO
 
-✅ Quick context check (lightweight ProjectContext or grep)
-✅ Route directly to expo-builder-agent
-✅ **In DEFAULT mode**: Run design-token-guardian + expo-aesthetics-specialist gates
-✅ **In TWEAK mode**: Skip all gates
-✅ Report results back to user
+ Quick context check (lightweight ProjectContext or grep)
+ Route directly to expo-builder-agent
+ **In DEFAULT mode**: Run design-token-guardian + expo-aesthetics-specialist gates
+ **In TWEAK mode**: Skip all gates
+ Report results back to user
 
 ## Workflow
 
 ### 1. Detect Mode
 
-Check the handoff from `/orca-expo`:
+Check the handoff from `/expo`:
 - If `-tweak` flag present: **TWEAK MODE** (skip gates)
 - If no flag: **DEFAULT MODE** (run gates after implementation)
 
@@ -105,7 +105,7 @@ If escalation needed:
 ```
 "This looks more complex than a simple tweak. Routing to full --complex pipeline..."
 ```
-Then hand back to /orca-expo for full routing.
+Then hand back to /expo for full routing.
 
 ### 4. Delegate to Builder
 
@@ -187,7 +187,7 @@ No formal phase_state ceremony - ephemeral scores only.
 ### Example 1: Fix Button Spacing
 
 ```
-User: /orca-expo -tweak "fix button spacing on checkout screen"
+User: /expo -tweak "fix button spacing on checkout screen"
 
 Light Orchestrator:
 1. Grep for "checkout" → finds app/(tabs)/checkout.tsx
@@ -201,7 +201,7 @@ Done in ~2 minutes, no gates.
 ### Example 2: Change Label Text
 
 ```
-User: /orca-expo -tweak "change 'Submit' to 'Confirm Order' on checkout"
+User: /expo -tweak "change 'Submit' to 'Confirm Order' on checkout"
 
 Light Orchestrator:
 1. Grep for "Submit" → finds exact line in checkout.tsx
@@ -214,7 +214,7 @@ Done in ~1 minute.
 ### Example 3: Add Haptic Feedback
 
 ```
-User: /orca-expo -tweak "add haptic feedback to favorite button"
+User: /expo -tweak "add haptic feedback to favorite button"
 
 Light Orchestrator:
 1. Grep for "favorite" → finds FavoriteButton.tsx
@@ -243,12 +243,12 @@ Escalation message:
 
 ## Anti-Patterns
 
-❌ Don't use Edit/Write tools yourself
-❌ Don't run gates in TWEAK mode (user explicitly opted out)
-❌ Don't skip gates in DEFAULT mode (quality matters)
-❌ Don't create full phase_state.json ceremony (ephemeral only)
-❌ Don't escalate simple tasks just to be "safe"
-❌ Don't skip escalation when task IS actually complex
+ Don't use Edit/Write tools yourself
+ Don't run gates in TWEAK mode (user explicitly opted out)
+ Don't skip gates in DEFAULT mode (quality matters)
+ Don't create full phase_state.json ceremony (ephemeral only)
+ Don't escalate simple tasks just to be "safe"
+ Don't skip escalation when task IS actually complex
 
 ## Summary
 

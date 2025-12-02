@@ -219,11 +219,11 @@ with open('$VTT_FILE', 'r') as f:
                 seen.add(clean)
 " > "${VIDEO_TITLE}.txt"
 
-echo "✓ Saved to: ${VIDEO_TITLE}.txt"
+echo " Saved to: ${VIDEO_TITLE}.txt"
 
 # Clean up VTT file
 rm "$VTT_FILE"
-echo "✓ Cleaned up temporary VTT file"
+echo " Cleaned up temporary VTT file"
 ```
 
 ## Output Formats
@@ -272,7 +272,7 @@ yt-dlp --list-subs "$VIDEO_URL"
 # ============================================
 echo "Attempting to download manual subtitles..."
 if yt-dlp --write-sub --skip-download --output "$OUTPUT_NAME" "$VIDEO_URL" 2>/dev/null; then
-    echo "✓ Manual subtitles downloaded successfully!"
+    echo " Manual subtitles downloaded successfully!"
     ls -lh ${OUTPUT_NAME}.*
 else
     # ============================================
@@ -280,13 +280,13 @@ else
     # ============================================
     echo "Manual subtitles not available. Trying auto-generated..."
     if yt-dlp --write-auto-sub --skip-download --output "$OUTPUT_NAME" "$VIDEO_URL" 2>/dev/null; then
-        echo "✓ Auto-generated subtitles downloaded successfully!"
+        echo " Auto-generated subtitles downloaded successfully!"
         ls -lh ${OUTPUT_NAME}.*
     else
         # ============================================
         # STEP 5: Last resort - Whisper transcription
         # ============================================
-        echo "⚠ No subtitles available for this video."
+        echo " No subtitles available for this video."
 
         # Get file size
         FILE_SIZE=$(yt-dlp --print "%(filesize_approx)s" -f "bestaudio" "$VIDEO_URL")
@@ -359,16 +359,16 @@ with open('$VTT_FILE', 'r') as f:
                 print(clean)
                 seen.add(clean)
 " > "${VIDEO_TITLE}.txt"
-    echo "✓ Saved to: ${VIDEO_TITLE}.txt"
+    echo " Saved to: ${VIDEO_TITLE}.txt"
 
     # Clean up temporary VTT file
     rm "$VTT_FILE"
-    echo "✓ Cleaned up temporary VTT file"
+    echo " Cleaned up temporary VTT file"
 else
-    echo "⚠ No VTT file found to convert"
+    echo " No VTT file found to convert"
 fi
 
-echo "✓ Complete!"
+echo " Complete!"
 ```
 
 **Note**: This complete workflow handles all scenarios with proper error checking and user prompts at each decision point.
@@ -410,9 +410,9 @@ echo "✓ Complete!"
 
 ### Best Practices:
 
-- ✅ Always check what's available before attempting download (`--list-subs`)
-- ✅ Verify success at each step before proceeding to next
-- ✅ Ask user before large downloads (audio files, Whisper models)
-- ✅ Clean up temporary files after processing
-- ✅ Provide clear feedback about what's happening at each stage
-- ✅ Handle errors gracefully with helpful messages
+-  Always check what's available before attempting download (`--list-subs`)
+-  Verify success at each step before proceeding to next
+-  Ask user before large downloads (audio files, Whisper models)
+-  Clean up temporary files after processing
+-  Provide clear feedback about what's happening at each stage
+-  Handle errors gracefully with helpful messages

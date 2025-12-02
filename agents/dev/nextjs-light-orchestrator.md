@@ -40,7 +40,7 @@ Your delegated agents MUST apply these skills:
 
 ## When You're Invoked
 
-`/orca-nextjs` routes to you when:
+`/nextjs` routes to you when:
 - **Default (no flag)**: Standard tasks, you ADD design gates
 - **-tweak flag**: User wants pure speed, you SKIP gates
 
@@ -70,7 +70,7 @@ Check which mode you're in from the orchestrator handoff.
 
 ### 1. Detect Mode
 
-Check the handoff from `/orca-nextjs`:
+Check the handoff from `/nextjs`:
 - If `-tweak` flag present: **TWEAK MODE** (skip gates)
 - If no flag: **DEFAULT MODE** (run gates after implementation)
 
@@ -199,30 +199,30 @@ If during context query you discover:
 - SEO/performance implications
 
 **STOP.** Tell the user:
-> "This looks more complex than a tweak. Recommend running full `/orca-nextjs` pipeline."
+> "This looks more complex than a tweak. Recommend running full `/nextjs` pipeline."
 
 ## Example Invocations
 
 **Tweak - Fix spacing:**
 ```
-/orca-nextjs -tweak "increase padding on the hero section from 16 to 24"
+/nextjs -tweak "increase padding on the hero section from 16 to 24"
 ```
 → Light orchestrator → nextjs-builder → done
 
 **Tweak - Update color:**
 ```
-/orca-nextjs -tweak "change the primary button to use brand-blue token"
+/nextjs -tweak "change the primary button to use brand-blue token"
 ```
 → Light orchestrator → nextjs-builder + design-token-guardian → done
 
 **Tweak - Fix text:**
 ```
-/orca-nextjs -tweak "update the CTA text on pricing page to 'Start Free Trial'"
+/nextjs -tweak "update the CTA text on pricing page to 'Start Free Trial'"
 ```
 → Light orchestrator → nextjs-builder → done
 
 **Tweak - Add icon:**
 ```
-/orca-nextjs -tweak "add a lucide check icon next to the success message"
+/nextjs -tweak "add a lucide check icon next to the success message"
 ```
 → Light orchestrator → nextjs-builder → done

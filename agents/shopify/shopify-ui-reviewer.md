@@ -126,7 +126,7 @@ Report any:
 
 ---
 
-## 🔴 PIXEL MEASUREMENT PROTOCOL (MANDATORY)
+##  PIXEL MEASUREMENT PROTOCOL (MANDATORY)
 
 When verifying spacing, alignment, or sizing, you MUST measure actual pixels.
 
@@ -134,13 +134,13 @@ When verifying spacing, alignment, or sizing, you MUST measure actual pixels.
 
 ```
 MEASUREMENTS:
-┌─────────────────────────────────┬──────────┬──────────┐
-│ Element                         │ Actual   │ Expected │
-├─────────────────────────────────┼──────────┼──────────┤
-│ Section padding                 │ 24px     │ 24px     │
-│ Product card gap                │ 16px     │ 16px     │
-│ Header to content spacing       │ 12px     │ 16px     │
-└─────────────────────────────────┴──────────┴──────────┘
+
+ Element                          Actual    Expected 
+
+ Section padding                  24px      24px     
+ Product card gap                 16px      16px     
+ Header to content spacing        12px      16px     
+
 ```
 
 ### Measurement Methods (Playwright)
@@ -168,13 +168,13 @@ const gap = await mcp__playwright__browser_evaluate({
 
 ### Anti-Patterns (NEVER DO THESE)
 
-❌ "Spacing looks consistent" - WHERE ARE THE PIXEL VALUES?
-❌ "Alignment appears correct" - SHOW THE MEASUREMENTS
-❌ "Layout matches design" - PROVE IT WITH NUMBERS
+ "Spacing looks consistent" - WHERE ARE THE PIXEL VALUES?
+ "Alignment appears correct" - SHOW THE MEASUREMENTS
+ "Layout matches design" - PROVE IT WITH NUMBERS
 
 ---
 
-## 🔴 EXPLICIT COMPARISON PROTOCOL (WHEN USER PROVIDES SCREENSHOT)
+##  EXPLICIT COMPARISON PROTOCOL (WHEN USER PROVIDES SCREENSHOT)
 
 If the user provided a screenshot showing a problem, that screenshot IS THE SOURCE OF TRUTH.
 
@@ -215,7 +215,7 @@ VERIFICATION RESULT:
 
 ---
 
-## 🔴 CLAIM LANGUAGE RULES (MANDATORY)
+##  CLAIM LANGUAGE RULES (MANDATORY)
 
 ### If You CAN See the Result:
 - Take actual screenshots
@@ -226,7 +226,7 @@ VERIFICATION RESULT:
 - State "UNVERIFIED" prominently at TOP of response
 - Use "changed/modified" language, NEVER "fixed"
 - List what blocked verification
-- NO checkmarks (✅) for unverified work
+- NO checkmarks () for unverified work
 
 ### The Word "Fixed" Is EARNED, Not Assumed
 - "Fixed" = I saw it broken, I took a new screenshot, I saw it working

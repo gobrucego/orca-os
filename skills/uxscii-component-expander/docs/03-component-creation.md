@@ -151,9 +151,9 @@ Brief description of what this component does.
 ## Default State
 
 ```
-╭──────────────────╮
-│   {{text}}       │
-╰──────────────────╯
+
+   {{text}}       
+
 ```
 
 ## Variables
@@ -171,16 +171,16 @@ Brief description of what this component does.
 
 ### Primary Button
 ```
-╭──────────────────╮
-│   Submit Form    │
-╰──────────────────╯
+
+   Submit Form    
+
 ```
 
 ### Secondary Button
 ```
-┌──────────────────┐
-│   Cancel         │
-└──────────────────┘
+
+   Cancel         
+
 ```
 ````
 

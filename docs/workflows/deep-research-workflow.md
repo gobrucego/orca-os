@@ -221,9 +221,9 @@ Research artifacts persist in `.claude/research/`:
 
 ```
 .claude/research/
-├── evidence/       ← Raw evidence notes from subagents
-├── reports/        ← Final research reports
-└── cache/          ← Cached search results (speeds up related queries)
+ evidence/       ← Raw evidence notes from subagents
+ reports/        ← Final research reports
+ cache/          ← Cached search results (speeds up related queries)
 ```
 
 You can reference past research:

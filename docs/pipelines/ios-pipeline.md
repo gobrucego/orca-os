@@ -35,8 +35,8 @@ The iOS pipeline uses three-tier routing:
 Most tasks take this path. Fast execution with automated quality checks.
 
 ```bash
-/orca-ios "fix button padding"        # → light orchestrator → builder → gates
-/orca-ios "add haptic feedback"       # → light orchestrator → builder → gates
+/ios "fix button padding"        # → light orchestrator → builder → gates
+/ios "add haptic feedback"       # → light orchestrator → builder → gates
 ```
 
 **Gates run:** `ios-standards-enforcer` + `ios-ui-reviewer`
@@ -46,7 +46,7 @@ Most tasks take this path. Fast execution with automated quality checks.
 Pure speed path. User explicitly accepts responsibility for verification.
 
 ```bash
-/orca-ios -tweak "fix padding"        # → light orchestrator → builder → done
+/ios -tweak "fix padding"        # → light orchestrator → builder → done
 ```
 
 ### Complex Mode (`--complex`)
@@ -54,8 +54,8 @@ Pure speed path. User explicitly accepts responsibility for verification.
 Full pipeline with grand-architect planning. Spec required.
 
 ```bash
-/orca-ios --complex "implement auth flow"   # → full pipeline
-/orca-ios "build multi-screen onboarding"   # Auto-routes to --complex
+/ios --complex "implement auth flow"   # → full pipeline
+/ios "build multi-screen onboarding"   # Auto-routes to --complex
 ```
 
 | Tier | Files | Spec Required | Example |
@@ -137,8 +137,8 @@ Request (iOS feature/bug/refactor)
 [Phase 6: UI/Interaction QA Gate (iOS UI Reviewer)]
     ↓
 Decision Point:
-├─ All gates ≥ thresholds → [Phase 7: Build & Test Verification]
-└─ Any gate fails → [Phase 4b: Implementation – Pass 2] (ONE corrective pass)
+ All gates ≥ thresholds → [Phase 7: Build & Test Verification]
+ Any gate fails → [Phase 4b: Implementation – Pass 2] (ONE corrective pass)
     ↓
 [Phase 7: Build & Test Verification (iOS Verification Agent)]
     ↓
@@ -292,24 +292,32 @@ Decision Point:
 
 ---
 
-### Phase 6: UI / Interaction QA Gate
+### Phase 6: UI / Interaction QA Gate (Code Review)
 
 **Agent:** `ios-ui-reviewer`
 
-**Inputs:**
-- Feature/flow under review.
-- Target/scheme and navigation steps (how to reach the feature).
-- Any design/UX notes.
+**Mode:** Code review only (no simulator access)
 
-**Checks:**
-- Layout & visuals on relevant devices.
-- Navigation and flow correctness.
-- Interaction behavior (taps, gestures, loading/error states).
-- Basic accessibility concerns.
+**Inputs:**
+- Modified files from ios-builder
+- Design DNA/tokens reference
+- Any UX spec or Figma snapshots
+
+**Checks (Code-Based):**
+- Design token usage (no hardcoded colors/spacing/fonts)
+- SwiftUI/UIKit patterns (LazyVStack, modifier ordering, state management)
+- Accessibility labels in code (.accessibilityLabel, .accessibilityHint)
+- State handling (loading/empty/error/success defined in code)
+
+**Does NOT Check (Deferred to Phase 7):**
+- Actual visual layout on device
+- Pixel measurements
+- Screenshot comparisons
 
 **Output:**
-- Design/Interaction Score (0–100).
-- Gate label: PASS / CAUTION / FAIL.
+- Code Review Score (0-100)
+- Gate label: PASS / CAUTION / FAIL
+- List of items requiring visual verification in Phase 7
 
 ---
 
@@ -336,21 +344,33 @@ Same implementation agents as Phase 4, but:
 
 ---
 
-### Phase 7: Build & Test Verification
+### Phase 7: Build, Test & Visual Verification
 
 **Agent:** `ios-verification`
 
+**Mode:** ONLY agent with simulator access (XcodeBuildMCP)
+
 **Tasks:**
-1. Build the iOS app for the appropriate scheme/target using Xcode tools:
-   - `xcodebuild` or XcodeBuildMCP (if available).
+1. Build the iOS app for the appropriate scheme/target:
+   - Uses XcodeBuildMCP (boots simulator, builds project)
 2. Run tests:
-   - Relevant unit/integration/UI tests.
-3. Capture:
-   - Build status.
-   - Test results and failures.
+   - Relevant unit/integration/UI tests
+3. Visual verification (if requested or Phase 6 flagged items):
+   - Take screenshots via XcodeBuildMCP
+   - Pixel measurements via describe_ui
+   - Compare to user-provided screenshots if any
+4. Capture:
+   - Build status
+   - Test results and failures
+   - Screenshots saved to `.claude/orchestration/evidence/`
+
+**Visual Verification Protocol:**
+- Zero tolerance for pixel mismatches when expected value exists
+- Explicit side-by-side comparison when user provided screenshot
+- Claim "fixed" only with measurement proof
 
 **Gate:**
-- PASS only if the build succeeds and relevant tests pass.
+- PASS only if build succeeds AND tests pass AND visual verification passes (if applicable)
 
 ---
 

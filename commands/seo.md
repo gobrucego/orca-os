@@ -110,12 +110,12 @@ await AskUserQuestion({
 - Standards enforcement
 
 **Quality Gates:**
-- ✅ Clarity Gate (70+ score)
-- ✅ Keyword Density (0.5-1.5%)
-- ✅ Word Count (1500+ minimum)
-- ✅ Citations (5+ external)
-- ✅ Compliance (FDA/medical disclaimers)
-- ✅ Standards (from vibe.db)
+-  Clarity Gate (70+ score)
+-  Keyword Density (0.5-1.5%)
+-  Word Count (1500+ minimum)
+-  Citations (5+ external)
+-  Compliance (FDA/medical disclaimers)
+-  Standards (from vibe.db)
 ```
 
 ### 1.3 User Confirmation (MANDATORY)
@@ -447,11 +447,11 @@ cat outputs/seo/${SLUG}-qa.md
 
 ## Pipeline Phases Completed
 
-1. ✅ Context Query - Project awareness loaded
-2. ✅ Research - SERP + KG + external research
-3. ✅ Brief Refinement - Strategic enhancement
-4. ✅ Content Writing - v4 gold-standard quality
-5. ✅ Quality Assurance - Clarity gates + compliance
+1.  Context Query - Project awareness loaded
+2.  Research - SERP + KG + external research
+3.  Brief Refinement - Strategic enhancement
+4.  Content Writing - v4 gold-standard quality
+5.  Quality Assurance - Clarity gates + compliance
 
 ---
 

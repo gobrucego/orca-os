@@ -42,6 +42,27 @@ if [[ "$TOOL_NAME" == "Bash" ]]; then
         mkdir -p "$PHASE_TEMP_DIR" 2>/dev/null || true
         printf "%s\n" "$CMD" >> "$BASH_LOG"
     fi
+
+    # ==================================================
+    # ARCHIVE DEPLOYMENT GUARD (rule-004)
+    # Block any command that would copy archive dirs to ~/.claude
+    # ==================================================
+    if [[ "$CMD" =~ (rsync|cp|mv).*(archive|deprecated).*~/.claude ]] || \
+       [[ "$CMD" =~ (rsync|cp|mv).*~/.claude.*(archive|deprecated) ]] || \
+       [[ "$CMD" =~ (rsync|cp|mv).*(_archive|\.archived|deprecated).*/\.claude ]] || \
+       [[ "$CMD" =~ rsync.*commands/.*~/.claude/commands ]] && [[ ! "$CMD" =~ --exclude.*archive ]]; then
+        echo -e "${RED}BLOCKED: ARCHIVE DEPLOYMENT ATTEMPT${NC}"
+        echo ""
+        echo "Command would deploy archived content to ~/.claude"
+        echo "This pollutes the global config with ghost commands."
+        echo ""
+        echo "Blocked command: $CMD"
+        echo ""
+        echo -e "${YELLOW}Rule-004: Never deploy archived content${NC}"
+        echo "Archived directories (_archive/, .archived-v1/, deprecated/) must NEVER"
+        echo "be copied to ~/.claude. Use --exclude patterns or copy files individually."
+        exit 1
+    fi
 fi
 
 # ==================================================

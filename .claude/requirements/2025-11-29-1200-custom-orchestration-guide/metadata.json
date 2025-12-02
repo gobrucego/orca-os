@@ -1,0 +1,28 @@
+{
+  "id": "custom-orchestration-guide",
+  "started": "2025-11-29T12:00:00Z",
+  "lastUpdated": "2025-11-29T17:45:00Z",
+  "status": "complete",
+  "phase": "complete",
+  "tier": "default",
+  "progress": {
+    "discovery": { "answered": 4, "total": 4 },
+    "detail": { "answered": 4, "total": 4 }
+  },
+  "contextFiles": [
+    "docs/pipelines/*.md",
+    "docs/reference/phase-configs/*.yaml",
+    "agents/**/*.md",
+    "skills/*/SKILL.md",
+    "commands/*.md",
+    "docs/concepts/*.md",
+    "docs/readme.md"
+  ],
+  "relatedFeatures": [
+    "OS 2.4 orchestration",
+    "Agent definitions",
+    "Pipeline architecture",
+    "Skills system"
+  ],
+  "domain": "documentation"
+}

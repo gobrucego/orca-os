@@ -280,13 +280,13 @@ Every report includes limitations:
 
 ```
 .claude/research/
-├── evidence/
-│   ├── kg-topic-bpc-157-tendinopathy.json   ← KG topic brief
-│   ├── kg-mech-1.json                        ← Mechanism evidence
-│   └── web-clinical-trials.md                ← Web evidence
-├── reports/
-│   └── bpc-157-tendinopathy-report.md        ← Final report
-└── cache/
+ evidence/
+    kg-topic-bpc-157-tendinopathy.json   ← KG topic brief
+    kg-mech-1.json                        ← Mechanism evidence
+    web-clinical-trials.md                ← Web evidence
+ reports/
+    bpc-157-tendinopathy-report.md        ← Final report
+ cache/
 ```
 
 ---

@@ -164,7 +164,7 @@ You support:
 - Domain architects (e.g., expo-architect-agent) needing data-informed decisions.
 - Strategy/marketing agents (e.g., creative-strategist, competitive-analyst)
   that need quantified backing for their recommendations.
-- Orchestrators (`/orca`, `/orca-expo`) when they require a data pass before
+- Orchestrators (`/orca`, `/expo`) when they require a data pass before
   committing to a plan.
 
 Respect:

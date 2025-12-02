@@ -181,33 +181,35 @@ phases:
         type: hard_block
         message: Must use modern Swift concurrency
 
-  # Phase 6: UI Review Gate
+  # Phase 6: UI Review Gate (Code Review Only)
   - name: ui_review_gate
     agent: ios-ui-reviewer
-    description: UI/UX and design token compliance verification
+    description: Code-based UI review (no simulator access)
+    mode: code_review_only
     dependencies:
       - implementation_pass1
     context_required: true
     inputs:
-      - affected_views
+      - files_modified
       - design_tokens
     outputs:
-      - ui_score
-      - visual_issues
-      - gate_decision
+      - code_review_score
+      - token_violations
+      - accessibility_in_code
+      - items_needing_visual_verification
     quality_gates:
-      ui_score:
+      code_review_score:
         threshold: 90
         type: hard_block
-        message: UI review score must be e90
+        message: Code review score must be >=90
       token_compliance:
         threshold: 100
         type: hard_block
-        message: No adhoc styling allowed
-      accessibility:
+        message: No hardcoded colors/spacing/fonts allowed
+      accessibility_labels:
         threshold: 85
         type: soft_warning
-        message: Accessibility checks recommended
+        message: Accessibility labels in code recommended
 
   # Phase 4b: Implementation - Pass 2 (Corrective)
   - name: implementation_pass2
@@ -230,19 +232,28 @@ phases:
       integration: Re-run failed gates only
       resource: Single corrective pass only
 
-  # Phase 7: Build & Test Verification
+  # Phase 7: Build, Test & Visual Verification
   - name: verification
     agent: ios-verification
-    description: Xcode build and test execution
+    description: Build, test, and visual verification (ONLY agent with simulator)
+    mode: full_verification
+    mcp_access:
+      - XcodeBuildMCP (bootSimulator, buildProject, runTests, screenshot, describe_ui)
     dependencies:
       - standards_gate
       - ui_review_gate
-    context_required: false
+    context_required: true
+    inputs:
+      - items_needing_visual_verification  # From Phase 6
+      - user_screenshot  # If provided
     outputs:
       - build_status
       - test_results
       - coverage_metrics
       - warnings_count
+      - screenshots
+      - pixel_measurements
+      - visual_verification_result
     quality_gates:
       build:
         threshold: pass
@@ -252,6 +263,10 @@ phases:
         threshold: pass
         type: hard_block
         message: All tests must pass
+      visual_verification:
+        threshold: pass
+        type: hard_block
+        message: Visual issues must be verified fixed
       coverage:
         threshold: 80
         type: soft_warning

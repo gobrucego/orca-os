@@ -10,16 +10,16 @@ A multi-lane pipeline architecture for Claude Code that routes tasks to domain-s
 
 # Execute via domain orchestrator
 /orca "task description"                    # Auto-routes to correct lane
-/orca-ios "add haptic feedback"             # iOS-specific
-/orca-nextjs "update pricing page"          # Next.js-specific
-/orca-expo "add pull-to-refresh"            # Expo/React Native
-/orca-shopify "refactor header CSS"         # Shopify theme
+/ios "add haptic feedback"             # iOS-specific
+/nextjs "update pricing page"          # Next.js-specific
+/expo "add pull-to-refresh"            # Expo/React Native
+/shopify "refactor header CSS"         # Shopify theme
 
 # Quick fixes (skip overhead)
-/orca-ios -tweak "fix button padding"
+/ios -tweak "fix button padding"
 
 # Deep audit (review without changes)
-/orca-ios --audit
+/ios --audit
 
 # Retrospective analysis
 /audit "last 10 tasks"
@@ -44,10 +44,10 @@ A multi-lane pipeline architecture for Claude Code that routes tasks to domain-s
 
 | Lane | Entry Point | Description |
 |------|-------------|-------------|
-| iOS | `/orca-ios` | Native iOS (Swift/SwiftUI/UIKit) |
-| Next.js | `/orca-nextjs` | Next.js frontend |
-| Expo | `/orca-expo` | React Native/Expo mobile |
-| Shopify | `/orca-shopify` | Shopify theme (Liquid/CSS/JS) |
+| iOS | `/ios` | Native iOS (Swift/SwiftUI/UIKit) |
+| Next.js | `/nextjs` | Next.js frontend |
+| Expo | `/expo` | React Native/Expo mobile |
+| Shopify | `/shopify` | Shopify theme (Liquid/CSS/JS) |
 | Data | via `/orca` | Data analysis and research |
 | SEO | via `/orca` | SEO content pipeline |
 | Design | via `/orca` | Design system work |
@@ -102,13 +102,13 @@ User-facing guides for specific workflows:
 
 ```
 docs/
-├── README.md              # This file
-├── changelog.md           # Version history
-├── agents.md              # Agent roster
-├── concepts/              # Core mental models
-├── pipelines/             # Lane architecture (technical)
-├── workflows/             # User-facing workflow guides
-└── reference/             # Technical schemas
+ README.md              # This file
+ changelog.md           # Version history
+ agents.md              # Agent roster
+ concepts/              # Core mental models
+ pipelines/             # Lane architecture (technical)
+ workflows/             # User-facing workflow guides
+ reference/             # Technical schemas
 
 quick-reference/           # Domain quick-reference guides
 agents/                    # Agent definitions (runtime)

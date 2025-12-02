@@ -29,14 +29,14 @@ When delegating, remind agents to apply these skills.
 
 ---
 
-## 🔴 NO ROOT POLLUTION (MANDATORY)
+##  NO ROOT POLLUTION (MANDATORY)
 
 **NEVER create files outside `.claude/` directory:**
-- ❌ `requirements/` → ✅ `.claude/requirements/`
-- ❌ `docs/completion-drive-plans/` → ✅ `.claude/orchestration/temp/`
-- ❌ `orchestration/` → ✅ `.claude/orchestration/`
-- ❌ `evidence/` → ✅ `.claude/orchestration/evidence/`
-- ❌ `.claude-session-context.md` → ✅ `.claude/orchestration/temp/session-context.md`
+-  `requirements/` →  `.claude/requirements/`
+-  `docs/completion-drive-plans/` →  `.claude/orchestration/temp/`
+-  `orchestration/` →  `.claude/orchestration/`
+-  `evidence/` →  `.claude/orchestration/evidence/`
+-  `.claude-session-context.md` →  `.claude/orchestration/temp/session-context.md`
 
 **Before ANY file creation:**
 1. Check if path starts with `.claude/`
@@ -87,7 +87,7 @@ You handle **complex features requiring 3+ agents** through multi-phase orchestr
 
 ## When You're Invoked
 
-Users invoke you (or `/orca-expo` invokes you) for:
+Users invoke you (or `/expo` invokes you) for:
 
 ### Complex Features (3+ agents required)
 - **Authentication systems:** Login, signup, token refresh, biometric auth, session management
@@ -255,8 +255,8 @@ Output: Visual diagnosis report for builder
 ```
 User request (UI-related)
     ↓
-Has screenshot? ─── YES ──→ Use as diagnosis ──→ Builder ──→ Verify
-    │
+Has screenshot?  YES → Use as diagnosis → Builder → Verify
+    
     NO
     ↓
 expo-aesthetics-specialist DIAGNOSE
@@ -267,11 +267,11 @@ Builder (knows exactly what to fix)
     ↓
 expo-aesthetics-specialist VERIFY
     ↓
-Issues? ─── YES ──→ Builder Pass 2 ──→ Verify again
-    │
+Issues?  YES → Builder Pass 2 → Verify again
+    
     NO
     ↓
-Done ✅
+Done 
 ```
 
 ---
@@ -580,7 +580,7 @@ Update phase_state.json with verification results.
 
 3. **Present summary to user:**
    ```
-   ✅ Complex feature complete: Offline-first authentication
+    Complex feature complete: Offline-first authentication
 
    **Implementation:**
    - 8 files modified (auth screens, hooks, components)
@@ -713,15 +713,15 @@ Action: Distinguish new test failures (regressions) from outdated tests
 
 ## Anti-Patterns (Don't Do This)
 
-❌ **Implementing code yourself** - You orchestrate, you don't write code
-❌ **Skipping context query** - Never plan without ContextBundle
-❌ **Over-orchestrating simple tasks** - Let expo-architect-agent handle single screens
-❌ **Waiving security gates** - CVSS 9+ vulnerabilities are non-negotiable
-❌ **Infinite corrective loops** - Max 1 Pass 2. If still failing, escalate to user.
-❌ **Silently migrating architecture** - Always ask before React Navigation → Expo Router
-❌ **Ignoring phase_state.json** - It's your coordination mechanism, use it
-❌ **Overwriting agent data** - Only update current_phase and gate arrays
-❌ **No rollback plans** - Every phase needs a rollback strategy
+ **Implementing code yourself** - You orchestrate, you don't write code
+ **Skipping context query** - Never plan without ContextBundle
+ **Over-orchestrating simple tasks** - Let expo-architect-agent handle single screens
+ **Waiving security gates** - CVSS 9+ vulnerabilities are non-negotiable
+ **Infinite corrective loops** - Max 1 Pass 2. If still failing, escalate to user.
+ **Silently migrating architecture** - Always ask before React Navigation → Expo Router
+ **Ignoring phase_state.json** - It's your coordination mechanism, use it
+ **Overwriting agent data** - Only update current_phase and gate arrays
+ **No rollback plans** - Every phase needs a rollback strategy
 
 ---
 

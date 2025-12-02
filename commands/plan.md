@@ -9,7 +9,7 @@ allowed-tools:
 # /plan – Requirements + Response-Aware Blueprint
 
 Use this command to produce a **blueprint-quality requirements spec** for a task
-before running any domain lane (`/orca-nextjs`, `/orca-ios`, `/orca-expo`, etc.).
+before running any domain lane (`/nextjs`, `/ios`, `/expo`, etc.).
 It combines:
 - The OS 2.4 **requirements pipeline** (requirements folder + docs),
 - **Response Awareness** tagging (RA tags as per `docs/reference/response-awareness.md`),
@@ -72,11 +72,16 @@ The user can override the recommendation.
 ---
 ## 1. Initialize or Reuse a Requirement
 
+ **CRITICAL PATH RULE**: ALL requirements artifacts go in `.claude/requirements/`, NEVER in `requirements/` at project root.
+-  CORRECT: `.claude/requirements/2025-11-29-1430-dark-mode/`
+-  WRONG: `requirements/2025-11-29-1430-dark-mode/`
+- Before ANY Write/mkdir: verify path starts with `.claude/`
+
 1. If there is NO active requirement:
-   - Behave like the old `/requirements-start $ARGUMENTS`:
-     - Slugify the request (e.g. `"New onboarding flow"` → `new-onboarding-flow`).
-     - Create a timestamped folder:
-       - `.claude/requirements/YYYY-MM-DD-HHMM-[slug]`
+   - Slugify the request (e.g. `"New onboarding flow"` → `new-onboarding-flow`).
+   - Create a timestamped folder at `.claude/requirements/YYYY-MM-DD-HHMM-[slug]`:
+     - First ensure `.claude/requirements/` exists
+     - Path MUST be: `.claude/requirements/YYYY-MM-DD-HHMM-[slug]`
      - Inside that folder create:
        - `00-initial-request.md` – write the user’s request and any initial notes.
        - `metadata.json` with:
@@ -184,25 +189,25 @@ No production code should be written during `/plan`.
 ---
 ## 4. Next Steps – Execute with /orca
 
-After `/plan` completes, suggest the matching `/orca-*` command with the **same tier**:
+After `/plan` completes, suggest the matching domain command with the **same tier**:
 
 | Plan Tier | Suggested Next Command |
 |-----------|------------------------|
-| `-tweak` | `/orca-{domain} -tweak Implement requirement <id>` |
-| (default) | `/orca-{domain} Implement requirement <id>` |
-| `-complex` | `/orca-{domain} -complex Implement requirement <id>` |
+| `-tweak` | `/{domain} -tweak Implement requirement <id>` |
+| (default) | `/{domain} Implement requirement <id>` |
+| `-complex` | `/{domain} -complex Implement requirement <id>` |
 
 Example output:
 ```
-✓ Spec complete: .claude/requirements/2025-11-27-1430-dark-mode/06-requirements-spec.md
+ Spec complete: .claude/requirements/2025-11-27-1430-dark-mode/06-requirements-spec.md
   Tier: default
   Domain detected: nextjs
 
 Suggested next step:
-  /orca-nextjs Implement requirement dark-mode
+  /nextjs Implement requirement dark-mode
 ```
 
-The domain `/orca-*` command will:
+The domain command will:
 1. Detect the spec at `.claude/requirements/<id>/06-requirements-spec.md`
 2. Read the `tier` from spec metadata and match execution depth
 3. Pass the spec + RA tags to the grand architect

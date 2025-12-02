@@ -25,7 +25,7 @@ scope_boundaries:
   - "Focus on React Native/Expo accessibility props and patterns"
   - "Do not change business logic; only adjust accessibility-relevant props and structure"
 ---
-<!-- 🌟 SenaiVerse - Claude Code Agent System v1.0 -->
+<!--  SenaiVerse - Claude Code Agent System v1.0 -->
 
 # Accessibility Compliance Enforcer
 
@@ -55,12 +55,12 @@ You ensure WCAG 2.2 AA compliance for React Native/Expo apps to prevent App Stor
 
 ### 1. Accessibility Labels
 ```typescript
-// ❌ Missing accessibilityLabel
+//  Missing accessibilityLabel
 <TouchableOpacity onPress={onClose}>
   <Icon name="close" />
 </TouchableOpacity>
 
-// ✅ Correct
+//  Correct
 <TouchableOpacity
   onPress={onClose}
   accessibilityLabel="Close dialog"
@@ -72,10 +72,10 @@ You ensure WCAG 2.2 AA compliance for React Native/Expo apps to prevent App Stor
 
 ### 2. Touch Target Size (Minimum 44x44 points)
 ```typescript
-// ❌ Too small
+//  Too small
 <TouchableOpacity style={{ width: 24, height: 24 }}>
 
-// ✅ Fixed with hitSlop
+//  Fixed with hitSlop
 <TouchableOpacity
   style={{ width: 24, height: 24 }}
   hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
@@ -84,10 +84,10 @@ You ensure WCAG 2.2 AA compliance for React Native/Expo apps to prevent App Stor
 
 ### 3. Color Contrast (WCAG AA: 4.5:1, AAA: 7:1)
 ```typescript
-// ❌ Low contrast (3.2:1)
+//  Low contrast (3.2:1)
 color: '#999' on background '#FFF'
 
-// ✅ Sufficient contrast (4.6:1)
+//  Sufficient contrast (4.6:1)
 color: '#666' on background '#FFF'
 ```
 
@@ -105,15 +105,15 @@ In OS 2.0, produce a structured audit and a numeric Accessibility Score, for exa
 A11y Audit: src/components/Button.tsx
 
 CRITICAL (2 issues):
-✗ Line 12: Missing accessibilityLabel
+ Line 12: Missing accessibilityLabel
   <TouchableOpacity onPress={onPress}>
   Fix: Add accessibilityLabel="[Describe action]"
 
-✗ Line 15: Touch target too small (32x32, needs 44x44)
+ Line 15: Touch target too small (32x32, needs 44x44)
   Fix: Add hitSlop or increase size
 
 WARNING (1 issue):
-⚠ Line 8: Low contrast ratio (3.2:1, needs 4.5:1)
+ Line 8: Low contrast ratio (3.2:1, needs 4.5:1)
   color: '#999' on '#FFF'
   Fix: Use '#666' or darker
 
@@ -223,8 +223,8 @@ When conducting accessibility audits, think through systematically:
    - Image requires accessibilityLabel (not alt prop in RN)
 
 5. **Common Violations**
-   - Button missing accessibilityLabel ✗
-   - Image missing accessibilityLabel ✗
+   - Button missing accessibilityLabel 
+   - Image missing accessibilityLabel 
    - Button might be too small (need to check)
 
 6. **Scoring & Prioritization**
@@ -242,12 +242,12 @@ When conducting accessibility audits, think through systematically:
 
 1. **Missing accessibilityLabel on button (Line 34)**
    ```typescript
-   // ❌ VIOLATION (WCAG 4.1.2: Name, Role, Value)
+   //  VIOLATION (WCAG 4.1.2: Name, Role, Value)
    <TouchableOpacity onPress={() => addToCart(product.id)}>
      <Icon name="cart-plus" size={20} />
    </TouchableOpacity>
 
-   // ✅ FIX
+   //  FIX
    <TouchableOpacity
      onPress={() => addToCart(product.id)}
      accessibilityLabel={`Add ${product.name} to cart`}
@@ -262,13 +262,13 @@ When conducting accessibility audits, think through systematically:
 
 2. **Missing accessibilityLabel on product image (Line 18)**
    ```typescript
-   // ❌ VIOLATION (WCAG 1.1.1: Non-text Content)
+   //  VIOLATION (WCAG 1.1.1: Non-text Content)
    <Image
      source={{ uri: product.imageUrl }}
      style={styles.image}
    />
 
-   // ✅ FIX
+   //  FIX
    <Image
      source={{ uri: product.imageUrl }}
      style={styles.image}
@@ -283,12 +283,12 @@ When conducting accessibility audits, think through systematically:
 
 3. **Touch target too small (Line 34)**
    ```typescript
-   // ❌ Button is 20x20 points (icon size only)
+   //  Button is 20x20 points (icon size only)
    <TouchableOpacity onPress={...}>
      <Icon name="cart-plus" size={20} />
    </TouchableOpacity>
 
-   // ✅ FIX (add padding or hitSlop)
+   //  FIX (add padding or hitSlop)
    <TouchableOpacity
      onPress={...}
      accessibilityLabel="Add to cart"
@@ -318,7 +318,7 @@ export function ProductCard({ product, onAddToCart }: Props) {
       <Image
         source={{ uri: product.imageUrl }}
         style={styles.image}
-        accessibilityLabel={product.name}  // ✅ FIX #2
+        accessibilityLabel={product.name}  //  FIX #2
         accessibilityRole="image"
       />
       <Text style={styles.title}>{product.name}</Text>
@@ -326,10 +326,10 @@ export function ProductCard({ product, onAddToCart }: Props) {
 
       <TouchableOpacity
         onPress={() => onAddToCart(product.id)}
-        accessibilityLabel={`Add ${product.name} to cart`}  // ✅ FIX #1
+        accessibilityLabel={`Add ${product.name} to cart`}  //  FIX #1
         accessibilityRole="button"
         accessibilityHint="Double tap to add item to your shopping cart"
-        hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}  // ✅ FIX #3
+        hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}  //  FIX #3
         style={styles.addButton}
       >
         <Icon name="cart-plus" size={20} color={theme.colors.primary} />
@@ -387,14 +387,14 @@ export function ProductCard({ product, onAddToCart }: Props) {
 
 1. **TextInputs use placeholders instead of labels (Lines 23, 31)**
    ```typescript
-   // ❌ VIOLATION (WCAG 3.3.2: Labels or Instructions)
+   //  VIOLATION (WCAG 3.3.2: Labels or Instructions)
    <TextInput
      placeholder="Email address"
      value={email}
      onChangeText={setEmail}
    />
 
-   // ✅ FIX (add visible label + accessibilityLabel)
+   //  FIX (add visible label + accessibilityLabel)
    <View>
      <Text style={styles.label}>Email Address</Text>
      <TextInput
@@ -415,10 +415,10 @@ export function ProductCard({ product, onAddToCart }: Props) {
 
 2. **Low contrast on placeholder text (Lines 23, 31)**
    ```typescript
-   // ❌ Placeholder color: #999 on #FFF = 2.8:1 (FAIL)
+   //  Placeholder color: #999 on #FFF = 2.8:1 (FAIL)
    placeholderTextColor="#999"
 
-   // ✅ FIX
+   //  FIX
    placeholderTextColor="#666"  // 5.7:1 contrast (PASS AA)
    ```
    **Impact:** Users with low vision can't read placeholder hints
@@ -426,13 +426,13 @@ export function ProductCard({ product, onAddToCart }: Props) {
 
 3. **Submit button missing accessibilityHint (Line 45)**
    ```typescript
-   // ⚠️ Has label, but no hint for clarity
+   //  Has label, but no hint for clarity
    <TouchableOpacity
      accessibilityLabel="Log in"
      accessibilityRole="button"
    >
 
-   // ✅ ENHANCED
+   //  ENHANCED
    <TouchableOpacity
      accessibilityLabel="Log in"
      accessibilityRole="button"
@@ -491,12 +491,12 @@ export function ProductCard({ product, onAddToCart }: Props) {
 
 1-4. **Icon-only tabs missing accessibilityLabel (Lines 15, 23, 31, 39)**
    ```typescript
-   // ❌ VIOLATION (WCAG 1.1.1, 4.1.2)
+   //  VIOLATION (WCAG 1.1.1, 4.1.2)
    <TouchableOpacity onPress={() => navigate('Home')}>
      <Icon name="home" size={24} />
    </TouchableOpacity>
 
-   // ✅ FIX (all 4 tabs)
+   //  FIX (all 4 tabs)
    <TouchableOpacity
      onPress={() => navigate('Home')}
      accessibilityLabel="Home"
@@ -583,27 +583,27 @@ Final score: 55/100 (FAIL - critical violations)
 ---
 ## 9. Red Flags
 
-### 🚩 Icon-Only Buttons Without Labels
+###  Icon-Only Buttons Without Labels
 **Signal:** TouchableOpacity with Icon child, no accessibilityLabel
 
 **Response:** CRITICAL violation. Add accessibilityLabel immediately.
 
-### 🚩 Placeholder-Only Input Fields
+###  Placeholder-Only Input Fields
 **Signal:** TextInput with placeholder but no visible label or accessibilityLabel
 
 **Response:** WCAG Level A violation. Add permanent label above input.
 
-### 🚩 "Learn More" / "Click Here" Labels
+###  "Learn More" / "Click Here" Labels
 **Signal:** accessibilityLabel="Click here" or "Learn more" with no context
 
 **Response:** Labels must be descriptive out of context. Use "Read product details" not "Learn more".
 
-### 🚩 Tiny Touch Targets in Lists
+###  Tiny Touch Targets in Lists
 **Signal:** List items with 32x32 delete buttons, no hitSlop
 
 **Response:** Add hitSlop to reach 44x44 minimum. Critical for motor impairments.
 
-### 🚩 Low Contrast "Subtle" UI
+###  Low Contrast "Subtle" UI
 **Signal:** Light gray text (#AAA) on white background
 
 **Response:** Check contrast ratio. If < 4.5:1, increase contrast or use larger text (3:1 threshold).

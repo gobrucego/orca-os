@@ -2,12 +2,12 @@
 
 **Lane:** Next.js / Frontend  
 **Domain:** `nextjs`  
-**Entrypoints:** `/plan`, `/orca`, `/orca-nextjs`, `/project-memory`, `/project-code`
+**Entrypoints:** `/plan`, `/orca`, `/nextjs`, `/project-memory`, `/project-code`
 
 This document explains how the Next.js lane works in Vibe OS 2.4:
 
 - How planning and specs work (`/plan`)
-- How orchestration routes (`/orca`, `/orca-nextjs`)
+- How orchestration routes (`/orca`, `/nextjs`)
 - How the pipeline and phase state are structured
 - Which agents and skills are involved
 - How memory (`/project-memory`, `/project-code`) and Response Awareness integrate
@@ -57,26 +57,26 @@ For **complex** Next.js tasks the spec is **required** before the full lane runs
 - Checks Workshop + vibe.db first (memory‑first).
 - Checks for an active requirements spec.
 - Detects that the task is Next.js work.
-- Routes to `/orca-nextjs` with:
+- Routes to `/nextjs` with:
   - Request summary
   - Any memory hits
   - Info about requirements/specs, if present
 
-You can also call `/orca-nextjs` directly.
+You can also call `/nextjs` directly.
 
 ---
 
-### 2.3 Next.js Orchestrator – `/orca-nextjs`
+### 2.3 Next.js Orchestrator – `/nextjs`
 
-File: `commands/orca-nextjs.md`
+File: `commands/nextjs.md`
 
 - Accepts:
 
   ```bash
-  /orca-nextjs "fix button spacing"                    # Default: light + gates
-  /orca-nextjs -tweak "try different padding"         # Tweak: light, no gates
-  /orca-nextjs --complex "implement auth flow"        # Complex: full pipeline
-  /orca-nextjs "implement requirement <id>"           # With spec
+  /nextjs "fix button spacing"                    # Default: light + gates
+  /nextjs -tweak "try different padding"         # Tweak: light, no gates
+  /nextjs --complex "implement auth flow"        # Complex: full pipeline
+  /nextjs "implement requirement <id>"           # With spec
   ```
 
 - **Three-Tier Routing (OS 2.4):**
@@ -188,7 +188,7 @@ Specialists:
     - Route directly to `nextjs-builder` (+ at most one specialist).
     - **Default mode**: Runs gates (`nextjs-standards-enforcer` + `nextjs-design-reviewer`)
     - **Tweak mode** (`-tweak`): Skips gates (user verifies)
-  - Escalates back to full `/orca-nextjs --complex` when it detects hidden complexity.
+  - Escalates back to full `/nextjs --complex` when it detects hidden complexity.
 
 ---
 
@@ -246,7 +246,7 @@ Unified memory search:
 
 - The OS 2.4 hooks and scripts provide a unified search that:
   - Queries Workshop and vibe.db together.
-  - Is used by `/orca` and `/orca-nextjs` before ProjectContext.
+  - Is used by `/orca` and `/nextjs` before ProjectContext.
 
 ---
 
@@ -271,9 +271,9 @@ For Next.js work in OS 2.4 (three-tier routing):
 
 | Mode | Command | Path |
 |------|---------|------|
-| **Default** | `/orca-nextjs "fix spacing"` | Light + gates |
-| **Tweak** | `/orca-nextjs -tweak "try padding"` | Light, no gates |
-| **Complex** | `/orca-nextjs --complex "auth flow"` | Full pipeline |
+| **Default** | `/nextjs "fix spacing"` | Light + gates |
+| **Tweak** | `/nextjs -tweak "try padding"` | Light, no gates |
+| **Complex** | `/nextjs --complex "auth flow"` | Full pipeline |
 
 - **Most work**: Default mode (light path WITH gates)
 - **Exploration**: Tweak mode (light path, no gates, you verify)

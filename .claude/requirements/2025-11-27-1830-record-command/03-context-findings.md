@@ -106,8 +106,8 @@ Extract Learnings:
 User Confirmation (unless --quick)
     ↓
 Record to:
-  ├── Workshop (decision, gotcha, note)
-  └── ProjectContext (save_decision, save_task_history)
+   Workshop (decision, gotcha, note)
+   ProjectContext (save_decision, save_task_history)
     ↓
 Summary Output
 ```

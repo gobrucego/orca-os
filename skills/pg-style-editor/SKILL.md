@@ -203,9 +203,9 @@ The conventional assumption holds that markets discover products organically. Hi
 ```
 
 **What to Avoid**:
-- ❌ ~~"I think..." "You might..." "I bet..."~~
-- ❌ ~~Direct address and first-person narrative~~
-- ✅ Use objective statements and structural engagement
+-  ~~"I think..." "You might..." "I bet..."~~
+-  ~~Direct address and first-person narrative~~
+-  Use objective statements and structural engagement
 
 ---
 
@@ -257,34 +257,34 @@ The conventional assumption holds that markets discover products organically. Hi
 
 ### 9. What to Avoid (Research Writing)
 
-❌ **Casual conversational elements** (for research writing)
+ **Casual conversational elements** (for research writing)
 - ~~"I think..." "You might..." "I bet..."~~
 - ~~"I only figured this out recently"~~
 - ~~Direct address to reader~~
 - → Use objective statements instead
 
-❌ **Formal/stuffy academic language**
+ **Formal/stuffy academic language**
 - "utilized" → use
 - "facilitate" → help
 - "pen" as verb → write
 
-❌ **Unnecessary complexity**
+ **Unnecessary complexity**
 - Long word when short word works
 - Passive voice when active is clearer
 - Subordinate clauses when simple sentences work
 
-❌ **Vagueness**
+ **Vagueness**
 - "some people" → name them or say "conventional wisdom"
 - "often" → when?
 - "important" → why?
 
-❌ **False hedging**
+ **False hedging**
 - "It could be argued that..." → just argue it
 - "Some might say..." → state the counterargument directly
 - Exception: Genuine uncertainty is acceptable
   - "The evidence remains inconclusive"
 
-❌ **Academic pomposity**
+ **Academic pomposity**
 - Jargon for jargon's sake
 - Complexity as sophistication signal
 
@@ -302,16 +302,16 @@ Get the text they want edited:
 ### Step 2: Analyze Against PG Principles (Research)
 
 Check for:
-1. ✅ Sentence variety? (short, medium, long - emphasize with short)
-2. ✅ Simple words? (Germanic > Latinate, concrete > abstract)
-3. ✅ Objective tone? (no "I/you", accessible formality)
-4. ✅ Focused paragraphs? (3-6 sentences, up to 10 for complex arguments)
-5. ✅ Specific evidence? (names, dates, numbers, verifiable)
-6. ✅ Acknowledge complexity? (genuine uncertainty, counterarguments)
-7. ✅ Cut unnecessary words?
-8. ✅ Section headers? (for long pieces)
-9. ✅ Evidence before conclusions?
-10. ✅ Technical terms explained?
+1.  Sentence variety? (short, medium, long - emphasize with short)
+2.  Simple words? (Germanic > Latinate, concrete > abstract)
+3.  Objective tone? (no "I/you", accessible formality)
+4.  Focused paragraphs? (3-6 sentences, up to 10 for complex arguments)
+5.  Specific evidence? (names, dates, numbers, verifiable)
+6.  Acknowledge complexity? (genuine uncertainty, counterarguments)
+7.  Cut unnecessary words?
+8.  Section headers? (for long pieces)
+9.  Evidence before conclusions?
+10.  Technical terms explained?
 
 ### Step 3: Rewrite with Edits
 
@@ -337,11 +337,11 @@ The implementation of our strategic initiative necessitates the utilization of a
 ```
 
 ### Step 1: Analyze
-❌ Latinate words (implementation, necessitates, utilization)
-❌ Vague (strategic initiative, technological solutions, sustainable growth)
-❌ Passive voice
-❌ Formal tone
-❌ No concrete examples
+ Latinate words (implementation, necessitates, utilization)
+ Vague (strategic initiative, technological solutions, sustainable growth)
+ Passive voice
+ Formal tone
+ No concrete examples
 
 ### Step 2: Rewrite (Research Style - No First Person)
 ```
@@ -399,14 +399,14 @@ When editing content, present:
 
 ## Checklist
 
-- ✅ Varied sentence length
-- ✅ Simple, concrete words
-- ✅ Objective tone (no "I/you")
-- ✅ Focused paragraphs
-- ✅ Specific evidence
-- ✅ Section headers (if long)
-- ✅ Unnecessary words cut
-- ✅ Evidence before conclusions
+-  Varied sentence length
+-  Simple, concrete words
+-  Objective tone (no "I/you")
+-  Focused paragraphs
+-  Specific evidence
+-  Section headers (if long)
+-  Unnecessary words cut
+-  Evidence before conclusions
 ```
 
 ---

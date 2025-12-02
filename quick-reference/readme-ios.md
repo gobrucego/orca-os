@@ -2,12 +2,12 @@
 
 **Lane:** iOS / Native Apple Platforms  
 **Domain:** `ios`  
-**Entrypoints:** `/plan`, `/orca`, `/orca-ios`, `/project-memory`, `/project-code`
+**Entrypoints:** `/plan`, `/orca`, `/ios`, `/project-memory`, `/project-code`
 
 This document explains how the iOS lane works in Vibe OS 2.4:
 
 - Planning & specs (`/plan`)
-- Orchestration (`/orca`, `/orca-ios`)
+- Orchestration (`/orca`, `/ios`)
 - Pipeline & phases
 - Agents and specialists
 - Skills and memory integration
@@ -54,26 +54,26 @@ offline) must have a spec before the iOS lane runs in full.
 - Runs memory‑first search (Workshop + vibe.db).
 - Checks for existing requirements/specs.
 - Detects the iOS domain for the task.
-- Routes to `/orca-ios` with:
+- Routes to `/ios` with:
   - Task summary
   - Memory context
   - Spec information (if any)
 
-You can also call `/orca-ios` directly.
+You can also call `/ios` directly.
 
 ---
 
-### 2.3 iOS Orchestrator – `/orca-ios`
+### 2.3 iOS Orchestrator – `/ios`
 
-File: `commands/orca-ios.md`
+File: `commands/ios.md`
 
 - Accepts:
 
   ```bash
-  /orca-ios "fix button padding"                       # Default: light + gates
-  /orca-ios -tweak "experiment with animation"        # Tweak: light, no gates
-  /orca-ios --complex "implement auth flow"           # Complex: full pipeline
-  /orca-ios "implement requirement <id>"              # With spec
+  /ios "fix button padding"                       # Default: light + gates
+  /ios -tweak "experiment with animation"        # Tweak: light, no gates
+  /ios --complex "implement auth flow"           # Complex: full pipeline
+  /ios "implement requirement <id>"              # With spec
   ```
 
 - **Three-Tier Routing (OS 2.4):**
@@ -117,9 +117,9 @@ File: `commands/orca-ios.md`
   - `planning` – architecture path (SwiftUI vs UIKit vs MVVM/TCA), data strategy.
   - `implementation_pass1` – `ios-builder` output + `ra_events`.
   - `standards_gate` – `ios-standards-enforcer` results (RA‑aware).
-  - `ui_review_gate` – `ios-ui-reviewer` for design tokens/UI.
+  - `ui_review_gate` – `ios-ui-reviewer` code review (tokens, patterns, a11y in code - NO simulator).
   - `implementation_pass2` – corrective pass when gates fail.
-  - `verification` – `ios-verification` build/tests.
+  - `verification` – `ios-verification` build/tests/visual (ONLY agent with XcodeBuildMCP).
 
 Response Awareness:
 - Implementation phases include `ra_events`.
@@ -155,10 +155,12 @@ Core agents:
     - RA‑aware: scans for RA tags and includes them in decisions.
 
 - `agents/iOS/ios-ui-reviewer.md`
-  - UI/UX and design token compliance, multi‑device layout checks.
+  - Code-based UI review (tokens, patterns, accessibility in code).
+  - NO simulator access - defers visual verification to ios-verification.
 
 - `agents/iOS/ios-verification.md`
-  - Build/test gate using Xcode/xcodebuild/XcodeBuildMCP.
+  - Build/test/visual gate using XcodeBuildMCP.
+  - ONLY iOS agent with simulator access (screenshot, describe_ui).
 
 Specialists:
 
@@ -230,7 +232,7 @@ Same pattern as other lanes:
   - Indexes Swift/SwiftUI/UIKit code and test targets.
   - Can fetch Apple/Point‑Free/other docs via Context7 libraries for deeper iOS patterns.
 
-Unified memory search is used by `/orca` and `/orca-ios` before
+Unified memory search is used by `/orca` and `/ios` before
 ProjectContext for fast recall.
 
 ---
@@ -255,9 +257,9 @@ For iOS work in OS 2.4 (three-tier routing):
 
 | Mode | Command | Path |
 |------|---------|------|
-| **Default** | `/orca-ios "fix padding"` | Light + gates |
-| **Tweak** | `/orca-ios -tweak "try animation"` | Light, no gates |
-| **Complex** | `/orca-ios --complex "auth flow"` | Full pipeline |
+| **Default** | `/ios "fix padding"` | Light + gates |
+| **Tweak** | `/ios -tweak "try animation"` | Light, no gates |
+| **Complex** | `/ios --complex "auth flow"` | Full pipeline |
 
 - **Most work**: Default mode (light path WITH gates)
 - **Exploration**: Tweak mode (light path, no gates, you verify)

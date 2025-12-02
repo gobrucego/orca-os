@@ -71,30 +71,30 @@ Use `/research` when you need:
 
 ```
 /research <question>
-    │
-    ▼
-┌─────────────────────┐
-│  research-lead-agent │  ← Coordinates everything
-└─────────────────────┘
-    │
-    ├──► research-web-search-subagent (parallel searches)
-    ├──► research-site-crawler-subagent (if specific sites needed)
-    │
-    ▼
-┌─────────────────────┐
-│  research-answer-writer │  ← Quick mode
-│  OR                      │
-│  research-deep-writer    │  ← --deep mode
-└─────────────────────┘
-    │
-    ▼ (--deep only)
-┌─────────────────────┐
-│  research-fact-checker   │
-│  research-consistency-gate│
-│  research-citation-gate  │
-└─────────────────────┘
-    │
-    ▼
+    
+    
+
+  research-lead-agent   ← Coordinates everything
+
+    
+     research-web-search-subagent (parallel searches)
+     research-site-crawler-subagent (if specific sites needed)
+    
+    
+
+  research-answer-writer   ← Quick mode
+  OR                      
+  research-deep-writer      ← --deep mode
+
+    
+     (--deep only)
+
+  research-fact-checker   
+  research-consistency-gate
+  research-citation-gate  
+
+    
+    
    Final Report
 ```
 
@@ -106,9 +106,9 @@ Research artifacts are saved to:
 
 ```
 .claude/research/
-├── evidence/       ← Source notes from subagents
-├── reports/        ← Final and draft reports
-└── cache/          ← Cached search results
+ evidence/       ← Source notes from subagents
+ reports/        ← Final and draft reports
+ cache/          ← Cached search results
 ```
 
 **Note:** Unlike `.claude/orchestration/temp/`, research artifacts persist across sessions for follow-up queries.

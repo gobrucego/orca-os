@@ -136,9 +136,9 @@ You MUST apply these skills to all work:
 **Data/Analytics agents:**
 ```markdown
 ## Citation Format (Codex)
-- File citations: 【F:src/main.rs†L21-L31】
-- Terminal citations: 【chunk_id†L1-L24】
-- Test results prefixed: ✅ pass, ⚠️ warning, ❌ fail
+- File citations: F:src/main.rs†L21-L31
+- Terminal citations: chunk_id†L1-L24
+- Test results prefixed:  pass,  warning,  fail
 - Use ripgrep (`rg`), never `grep -R` or `ls -R`
 - Run ALL programmatic checks mentioned in project docs
 ```
@@ -161,13 +161,13 @@ Implement persistent learning via file-based knowledge store.
 **Directory structure:**
 ```
 .claude/agent-knowledge/
-├── nextjs-builder/
-│   ├── patterns.json
-│   ├── failures.json
-│   └── metrics.json
-├── ios-builder/
-├── research-lead-agent/
-└── ... (one per agent that executes tasks)
+ nextjs-builder/
+    patterns.json
+    failures.json
+    metrics.json
+ ios-builder/
+ research-lead-agent/
+ ... (one per agent that executes tasks)
 ```
 
 **patterns.json schema:**
@@ -421,7 +421,7 @@ Update 52 remaining agents:
 ## 8. Suggested Next Step
 
 ```
-✓ Spec complete: .claude/requirements/2025-11-28-1930-os24-agent-enrichment/06-requirements-spec.md
+ Spec complete: .claude/requirements/2025-11-28-1930-os24-agent-enrichment/06-requirements-spec.md
   Tier: complex
   Domain detected: os-dev
 

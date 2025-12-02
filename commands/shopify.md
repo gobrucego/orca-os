@@ -13,20 +13,20 @@ allowed-tools:
   - Glob
 ---
 
-# /orca-shopify – Shopify Lane Orchestrator (OS 2.4)
+# /shopify - Shopify Lane Orchestrator (OS 2.4)
 
 Use this command for Shopify theme work (Liquid, sections, CSS, JS components).
 
 ## Usage
 
 ```bash
-/orca-shopify "refactor header section CSS to use tokens"   # Default: light path + design gates
-/orca-shopify -tweak "fix button padding"                    # Fast: light path, no gates
-/orca-shopify --complex "cart & checkout redesign"           # Full: grand-architect + all gates
-/orca-shopify "implement requirement 2025-11-25-header-redesign"  # Full path with spec
+/shopify "refactor header section CSS to use tokens"   # Default: light path + design gates
+/shopify -tweak "fix button padding"                    # Fast: light path, no gates
+/shopify --complex "cart & checkout redesign"           # Full: grand-architect + all gates
+/shopify "implement requirement 2025-11-25-header-redesign"  # Full path with spec
 ```
 
-## 🚨 CRITICAL ROLE BOUNDARY 🚨
+##  CRITICAL ROLE BOUNDARY 
 
 **YOU ARE AN ORCHESTRATOR. YOU NEVER WRITE CODE.**
 
@@ -171,7 +171,7 @@ for example:
   - Any structural problems, performance, or SEO concerns.
 
 - **Concrete Follow-Up Tasks**
-  - Small, scoped tasks that can be turned into `/plan` + `/orca-shopify`
+  - Small, scoped tasks that can be turned into `/plan` + `/shopify`
     or other lanes, e.g.:
     - “Normalize product card CSS into a single component file.”
     - “Remove inline styles from X sections and map them to tokens.”
@@ -247,13 +247,13 @@ ls .claude/requirements/*/06-requirements-spec.md 2>/dev/null | head -5
 
 **If NO spec exists:**
 ```
-⚠️ Complex Shopify work requires a requirements spec.
+ Complex Shopify work requires a requirements spec.
 
 Run first:
   /plan "Short description of the Shopify change"
 
 Then return with:
-  /orca-shopify "implement requirement <id>"
+  /shopify "implement requirement <id>"
 ```
 
 **STOP HERE** - Do not proceed without spec for complex work.
@@ -383,46 +383,73 @@ Record `complexity_tier` in `phase_state.intake.complexity_tier` before proceedi
 
 **DO NOT PROCEED TO SECTION 3.2 WITHOUT USER CONFIRMATION**
 
-Use `AskUserQuestion` to confirm. **WAIT FOR RESPONSE.**
+**This is a TWO-STEP process. You MUST do both steps.**
 
-```
-Detected: Shopify task (complexity: medium/complex)
+#### Step A: OUTPUT the team (VISIBLE MARKDOWN - NOT inside AskUserQuestion)
 
-Proposed Pipeline:
+**FIRST, output this as regular markdown so the user can see it:**
+
+```markdown
+## Proposed Shopify Pipeline
+
+**Request:** [the task]
+**Complexity:** [simple/medium/complex]
+
+### Phases
 1. Context Query (ProjectContext)
 2. Grand Architect (shopify-grand-architect) - coordination
 3. Implementation (specialists based on task)
 4. Gates (shopify-theme-checker)
 5. Verification
 
-Proposed Agents:
-- shopify-grand-architect
-- Specialists as needed (see 3.1.1):
-  - shopify-css-specialist - CSS/tokens
-  - shopify-liquid-specialist - Liquid templates
-  - shopify-section-builder - sections/schemas
-  - shopify-js-specialist - JavaScript/Web Components
-- shopify-theme-checker - verification gate
+### Agent Team
+| Role | Agent |
+|------|-------|
+| Coordination | shopify-grand-architect |
+| CSS/Tokens | shopify-css-specialist (if CSS work) |
+| Liquid | shopify-liquid-specialist (if template work) |
+| Sections | shopify-section-builder (if section work) |
+| JavaScript | shopify-js-specialist (if JS work) |
+| Verification | shopify-theme-checker |
 
-Complexity: [simple/medium/complex]
-Spec: [linked/none]
+### Files Likely Affected
+- [list from ContextBundle or memory]
 
-Options:
-- Proceed as planned
-- Adjust team/phases
-- Switch to light path (-tweak)
+### Risks/Notes
+- [any identified risks]
 ```
 
-**After presenting this:**
+**This MUST be visible output BEFORE you call AskUserQuestion.**
+
+#### Step B: THEN ask for confirmation (simple yes/no)
+
+```typescript
+AskUserQuestion({
+  questions: [{
+    question: "Proceed with this pipeline?",
+    header: "Confirm",
+    multiSelect: false,
+    options: [
+      { label: "Yes, proceed", description: "Execute the plan shown above" },
+      { label: "Modify team", description: "I want to change agents or approach" },
+      { label: "Switch to -tweak", description: "Skip gates, use light path" }
+    ]
+  }]
+})
+```
+
+**After presenting the confirmation question:**
 1. STOP and wait for user response
-2. If user says "proceed" → continue to 3.2
-3. If user modifies team → update and re-confirm
-4. If user rejects → STOP pipeline
+2. If user says "Yes, proceed" → continue to 3.2
+3. If user says "Modify team" → ask what to change, update, re-output team, re-confirm
+4. If user says "Switch to -tweak" → delegate directly to specialist (Section 2)
 
 **Anti-patterns (WRONG):**
-- Showing the team then immediately delegating to grand-architect
+- Putting the team list inside AskUserQuestion options
+- Showing team and question in the same tool call
 - "I'll proceed with this team..." without waiting
 - Any delegation before explicit user confirmation
+- Describing the team only in the question description
 
 #### 3.1.1 Intent-Aware Specialist Selection
 

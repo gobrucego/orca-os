@@ -31,7 +31,7 @@ Parse the JSON output to get patterns ready for promotion.
 
 1. Present the pattern:
    ```
-   📊 Pattern Found: [TYPE]
+    Pattern Found: [TYPE]
 
    Content: "<signal content>"
    Occurrences: N times
@@ -59,9 +59,9 @@ Parse the JSON output to get patterns ready for promotion.
 
 4. Show summary when done:
    ```
-   ═══════════════════════════════════════════════════════════
+   
    /reflect Summary
-   ═══════════════════════════════════════════════════════════
+   
 
    Files analyzed: N
    Signals found: N new, N total
@@ -86,9 +86,9 @@ Show learning journal summary:
 JOURNAL=".claude/orchestration/temp/reflect-journal.json"
 
 if [ -f "$JOURNAL" ]; then
-    echo "═══════════════════════════════════════════════════════════"
+    echo ""
     echo "  /reflect Status"
-    echo "═══════════════════════════════════════════════════════════"
+    echo ""
     echo ""
 
     # Use jq or python to parse and display summary
@@ -149,7 +149,7 @@ python3 ~/.claude/scripts/reflect-apply.py add \
 
 Confirm to user:
 ```
-✅ Added rule: "<rule text>"
+ Added rule: "<rule text>"
    Target: CLAUDE.md / Workshop preferences
 ```
 
@@ -187,7 +187,7 @@ Remove or archive a learned rule:
 
 Confirm to user:
 ```
-✅ Rule [rule-id] has been archived/removed.
+ Rule [rule-id] has been archived/removed.
 ```
 
 ---
@@ -204,9 +204,9 @@ python3 ~/.claude/scripts/reflect-apply.py list
 Present in a readable format:
 
 ```
-═══════════════════════════════════════════════════════════
+
   /reflect History
-═══════════════════════════════════════════════════════════
+
 
 === Active Rules (CLAUDE.md) ===
 
@@ -235,7 +235,7 @@ Show command usage:
 
 ```
 /reflect - Claude Code Self-Improvement
-═══════════════════════════════════════════════════════════
+
 
 Learn from your interactions. Extract patterns from transcripts
 and promote them to persistent rules.
@@ -272,7 +272,7 @@ Examples:
 When adding a rule, the script checks for conflicts. If a conflict is detected:
 
 ```
-⚠️ CONFLICT DETECTED
+ CONFLICT DETECTED
 
 New rule: "Use bun for package management"
 Conflicts with: "Use npm for package management" [rule-003]

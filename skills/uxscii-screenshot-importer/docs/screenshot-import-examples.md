@@ -144,33 +144,33 @@ An interactive button component for user actions. Submit form
 ## Default State
 
 ```
-╭──────────────────╮
-│▓▓▓▓▓▓Submit▓▓▓▓▓▓│
-╰──────────────────╯
+
+Submit
+
 ```
 
 ## Hover State
 
 ```
-┏━━━━━━━━━━━━━━━━━━┓
-┃████████Submit████┃
-┗━━━━━━━━━━━━━━━━━━┛
+
+Submit
+
 ```
 
 ## Focus State
 
 ```
-┏━━━━━━━━━━━━━━━━━━┓
-┃▓▓▓▓▓Submit ✨▓▓▓▓┃
-┗━━━━━━━━━━━━━━━━━━┛
+
+Submit 
+
 ```
 
 ## Disabled State
 
 ```
-╭ ─ ─ ─ ─ ─ ─ ─ ─ ╮
-│      Submit      │
-╰ ─ ─ ─ ─ ─ ─ ─ ─ ╯
+         
+      Submit      
+         
 ```
 
 ## Variables
@@ -195,9 +195,9 @@ An interactive button component for user actions. Submit form
 ## Usage Examples
 
 ```
-╭──────────────────╮
-│▓▓▓Submit Form▓▓▓▓│
-╰──────────────────╯
+
+Submit Form
+
 ```
 
 ---
@@ -290,38 +290,38 @@ A text input field for user data entry. Email address
 ## Default State
 
 ```
-┌──────────────────────────────────────┐
-│ Email                                │
-│ Enter your email                     │
-└──────────────────────────────────────┘
+
+ Email                                
+ Enter your email                     
+
 ```
 
 ## Focus State
 
 ```
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Email                              │┃
-┃ john.doe@example.com               ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+ Email                              
+ john.doe@example.com               
+
 ```
 
 ## Error State
 
 ```
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ ⚠️ Email                            ┃
-┃ invalid@email                       ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-❌ Please enter valid email address
+
+  Email                            
+ invalid@email                       
+
+ Please enter valid email address
 ```
 
 ## Disabled State
 
 ```
-┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
-│ Email                                │
-│ ──────────────────────              │
-└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
+                  
+ Email                                
+               
+                  
 ```
 
 ## Variables
@@ -468,17 +468,17 @@ A form container for collecting user input. Login form
 ## Default State
 
 ```
-╭────────────────────────────────────────────────╮
-│ Sign In                                        │
-├────────────────────────────────────────────────┤
-│                                                │
-│ {{component:email-input}}                      │
-│                                                │
-│ {{component:password-input}}                   │
-│                                                │
-│           {{component:submit-button}}          │
-│                                                │
-╰────────────────────────────────────────────────╯
+
+ Sign In                                        
+
+                                                
+ {{component:email-input}}                      
+                                                
+ {{component:password-input}}                   
+                                                
+           {{component:submit-button}}          
+                                                
+
 ```
 
 ## Variables
@@ -506,25 +506,25 @@ User authentication screen with email/password inputs
 ## Rendered Example
 
 ```
-╭────────────────────────────────────────────────╮
-│ Sign In                                        │
-├────────────────────────────────────────────────┤
-│                                                │
-│ ┌──────────────────────────────────────┐      │
-│ │ Email                                │      │
-│ │ john.doe@example.com                 │      │
-│ └──────────────────────────────────────┘      │
-│                                                │
-│ ┌──────────────────────────────────────┐      │
-│ │ Password                             │      │
-│ │ ••••••••                             │      │
-│ └──────────────────────────────────────┘      │
-│                                                │
-│           ╭──────────────────╮                 │
-│           │▓▓▓▓Sign In▓▓▓▓▓▓▓│                 │
-│           ╰──────────────────╯                 │
-│                                                │
-╰────────────────────────────────────────────────╯
+
+ Sign In                                        
+
+                                                
+       
+  Email                                      
+  john.doe@example.com                       
+       
+                                                
+       
+  Password                                   
+  ••••••••                                   
+       
+                                                
+                            
+           Sign In                 
+                            
+                                                
+
 ```
 
 **Example Data:**
@@ -588,13 +588,13 @@ A checkbox input for boolean selection. Remember login credentials
 ## Checked State
 
 ```
-[✓] Remember me
+[] Remember me
 ```
 
 ## Disabled State
 
 ```
-[─] Remember me
+[] Remember me
 ```
 
 ## Variables
@@ -648,7 +648,7 @@ A small badge component for labels or counts. New item indicator
 ## Default State
 
 ```
-▓ New ▓
+ New 
 ```
 
 ## Variables

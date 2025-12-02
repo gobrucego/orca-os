@@ -240,9 +240,9 @@ Research artifacts that persist across sessions:
 
 ```
 .claude/research/
-├── evidence/       ← Evidence Notes from subagents
-├── reports/        ← Final and draft research reports
-└── cache/          ← Cached search results (optional)
+ evidence/       ← Evidence Notes from subagents
+ reports/        ← Final and draft research reports
+ cache/          ← Cached search results (optional)
 ```
 
 **Note:** Unlike `.claude/orchestration/temp/`, research artifacts may be reused

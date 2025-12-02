@@ -5,144 +5,144 @@ A comprehensive form container with field grouping, validation state management,
 ## Standard Vertical Form Layout
 
 ```
-┌──────────────────────────────────────────────────────┐
-│                 {{title}}                            │
-├──────────────────────────────────────────────────────┤
-│                                                      │
-│  {{fields[0].label}} {{fields[0].required ? '*' : ''}}      │
-│  ┌────────────────────────────────────────────────┐  │
-│  │ {{fields[0].placeholder}}                      │  │
-│  └────────────────────────────────────────────────┘  │
-│                                                      │
-│  {{fields[1].label}} {{fields[1].required ? '*' : ''}}      │
-│  ┌────────────────────────────────────────────────┐  │
-│  │ {{fields[1].placeholder}}                      │  │
-│  └────────────────────────────────────────────────┘  │
-│                                                      │
-│  {{fields[2].label}} {{fields[2].required ? '*' : ''}}      │
-│  ┌────────────────────────────────────────────────┐  │
-│  │ {{fields[2].placeholder}}                      │  │
-│  │                                                │  │
-│  │                                                │  │
-│  └────────────────────────────────────────────────┘  │
-│                                                      │
-│  ┌─────────────┐  {{showReset ? '┌─────────────┐' : ''}} │
-│  │  {{submitText}}   │  {{showReset ? '│    Reset    │' : ''}} │
-│  └─────────────┘  {{showReset ? '└─────────────┘' : ''}} │
-└──────────────────────────────────────────────────────┘
+
+                 {{title}}                            
+
+                                                      
+  {{fields[0].label}} {{fields[0].required ? '*' : ''}}      
+    
+   {{fields[0].placeholder}}                        
+    
+                                                      
+  {{fields[1].label}} {{fields[1].required ? '*' : ''}}      
+    
+   {{fields[1].placeholder}}                        
+    
+                                                      
+  {{fields[2].label}} {{fields[2].required ? '*' : ''}}      
+    
+   {{fields[2].placeholder}}                        
+                                                    
+                                                    
+    
+                                                      
+    {{showReset ? '' : ''}} 
+    {{submitText}}     {{showReset ? '    Reset    ' : ''}} 
+    {{showReset ? '' : ''}} 
+
 ```
 
 ## Horizontal Form Layout
 
 ```
-┌────────────────────────────────────────────────────────────────┐
-│                          {{title}}                            │
-├────────────────────────────────────────────────────────────────┤
-│                                                                │
-│  {{fields[0].label}}*     {{fields[1].label}}*                │
-│  ┌─────────────────┐     ┌─────────────────────────────────┐   │
-│  │ {{fields[0].placeholder}}      │     │ {{fields[1].placeholder}}               │   │
-│  └─────────────────┘     └─────────────────────────────────┘   │
-│                                                                │
-│  {{fields[2].label}}                                          │
-│  ┌──────────────────────────────────────────────────────────┐ │
-│  │ {{fields[2].placeholder}}                                │ │
-│  │                                                          │ │
-│  └──────────────────────────────────────────────────────────┘ │
-│                                                                │
-│  ┌─────────────┐  ┌─────────────┐                             │
-│  │  {{submitText}}   │  │    Reset    │                             │
-│  └─────────────┘  └─────────────┘                             │
-└────────────────────────────────────────────────────────────────┘
+
+                          {{title}}                            
+
+                                                                
+  {{fields[0].label}}*     {{fields[1].label}}*                
+          
+   {{fields[0].placeholder}}            {{fields[1].placeholder}}                  
+          
+                                                                
+  {{fields[2].label}}                                          
+   
+   {{fields[2].placeholder}}                                 
+                                                             
+   
+                                                                
+                                 
+    {{submitText}}         Reset                                 
+                                 
+
 ```
 
 ## Validation States
 
 ### Valid Form
 ```
-┌──────────────────────────────────────────────────────┐
-│                 Contact Form                         │
-├──────────────────────────────────────────────────────┤
-│                                                      │
-│  Full Name *                                  ✓      │
-│  ┌────────────────────────────────────────────────┐  │
-│  │ John Doe                                       │  │
-│  └────────────────────────────────────────────────┘  │
-│                                                      │
-│  Email Address *                              ✓      │  
-│  ┌────────────────────────────────────────────────┐  │
-│  │ john@example.com                               │  │
-│  └────────────────────────────────────────────────┘  │
-│                                                      │
-│  ▓▓▓▓▓▓▓▓▓▓▓▓▓  ░░░░░░░░░░░░░                        │
-│  ▓   Submit   ▓  ░   Reset   ░                        │
-│  ▓▓▓▓▓▓▓▓▓▓▓▓▓  ░░░░░░░░░░░░░                        │
-└──────────────────────────────────────────────────────┘
+
+                 Contact Form                         
+
+                                                      
+  Full Name *                                        
+    
+   John Doe                                         
+    
+                                                      
+  Email Address *                                      
+    
+   john@example.com                                 
+    
+                                                      
+                            
+     Submit        Reset                           
+                            
+
 ```
 
 ### Form with Validation Errors
 ```
-┌──────────────────────────────────────────────────────┐
-│                 Contact Form                         │
-├──────────────────────────────────────────────────────┤
-│                                                      │
-│  Full Name *                                  ✗      │
-│  ┌────────────────────────────────────────────────┐  │
-│  │                                                │  │
-│  └────────────────────────────────────────────────┘  │
-│  ⚠ This field is required                           │
-│                                                      │
-│  Email Address *                              ✗      │
-│  ┌────────────────────────────────────────────────┐  │
-│  │ invalid-email                                  │  │
-│  └────────────────────────────────────────────────┘  │
-│  ⚠ Please enter a valid email address               │
-│                                                      │
-│  ░░░░░░░░░░░░░  ░░░░░░░░░░░░░                        │
-│  ░   Submit   ░  ░   Reset   ░                        │
-│  ░░░░░░░░░░░░░  ░░░░░░░░░░░░░                        │
-└──────────────────────────────────────────────────────┘
+
+                 Contact Form                         
+
+                                                      
+  Full Name *                                        
+    
+                                                    
+    
+   This field is required                           
+                                                      
+  Email Address *                                    
+    
+   invalid-email                                    
+    
+   Please enter a valid email address               
+                                                      
+                            
+     Submit        Reset                           
+                            
+
 ```
 
 ## Grid Layout (2x2)
 
 ```
-┌──────────────────────────────────────────────────────────────┐
-│                        {{title}}                            │
-├──────────────────────────────────────────────────────────────┤
-│                                                              │
-│  First Name *            Last Name *                         │
-│  ┌─────────────────┐    ┌─────────────────────────────────┐  │
-│  │ First name      │    │ Last name                       │  │
-│  └─────────────────┘    └─────────────────────────────────┘  │
-│                                                              │
-│  Email *                 Phone                               │
-│  ┌─────────────────┐    ┌─────────────────────────────────┐  │
-│  │ Email address   │    │ Phone number                    │  │
-│  └─────────────────┘    └─────────────────────────────────┘  │
-│                                                              │
-│  ┌─────────────┐  ┌─────────────┐                           │
-│  │  {{submitText}}   │  │    Reset    │                           │
-│  └─────────────┘  └─────────────┘                           │
-└──────────────────────────────────────────────────────────────┘
+
+                        {{title}}                            
+
+                                                              
+  First Name *            Last Name *                         
+        
+   First name           Last name                         
+        
+                                                              
+  Email *                 Phone                               
+        
+   Email address        Phone number                      
+        
+                                                              
+                               
+    {{submitText}}         Reset                               
+                               
+
 ```
 
 ## Compact Form
 
 ```
-┌─────────────────────────────────────┐
-│           Login                     │
-├─────────────────────────────────────┤
-│ Username: ┌───────────────────────┐ │
-│           │ Enter username        │ │
-│           └───────────────────────┘ │
-│ Password: ┌───────────────────────┐ │
-│           │ ••••••••••••••••••••  │ │
-│           └───────────────────────┘ │
-│ ┌─────────┐ ┌─────────┐            │
-│ │  Login  │ │ Cancel  │            │
-│ └─────────┘ └─────────┘            │
-└─────────────────────────────────────┘
+
+           Login                     
+
+ Username:  
+            Enter username         
+            
+ Password:  
+            ••••••••••••••••••••   
+            
+              
+   Login    Cancel              
+              
+
 ```
 
 ## Dimensions
@@ -183,65 +183,65 @@ A comprehensive form container with field grouping, validation state management,
 
 ### Contact Form
 ```
-┌──────────────────────────────────────────────────────┐
-│                 Contact Us                           │
-├──────────────────────────────────────────────────────┤
-│                                                      │
-│  Your Name *                                         │
-│  ┌────────────────────────────────────────────────┐  │
-│  │ Enter your full name                           │  │
-│  └────────────────────────────────────────────────┘  │
-│                                                      │
-│  Email Address *                                     │
-│  ┌────────────────────────────────────────────────┐  │
-│  │ your@email.com                                 │  │
-│  └────────────────────────────────────────────────┘  │
-│                                                      │
-│  Subject                                             │
-│  ┌────────────────────────────────────────────────┐  │
-│  │ Brief description                              │  │
-│  └────────────────────────────────────────────────┘  │
-│                                                      │
-│  Message                                             │
-│  ┌────────────────────────────────────────────────┐  │
-│  │ Your message here...                           │  │
-│  │                                                │  │
-│  │                                                │  │
-│  └────────────────────────────────────────────────┘  │
-│                                                      │
-│  ▓▓▓▓▓▓▓▓▓▓▓▓▓  ░░░░░░░░░░░░░                        │
-│  ▓ Send Message │  ░   Clear   ░                        │
-│  ▓▓▓▓▓▓▓▓▓▓▓▓▓  ░░░░░░░░░░░░░                        │
-└──────────────────────────────────────────────────────┘
+
+                 Contact Us                           
+
+                                                      
+  Your Name *                                         
+    
+   Enter your full name                             
+    
+                                                      
+  Email Address *                                     
+    
+   your@email.com                                   
+    
+                                                      
+  Subject                                             
+    
+   Brief description                                
+    
+                                                      
+  Message                                             
+    
+   Your message here...                             
+                                                    
+                                                    
+    
+                                                      
+                            
+   Send Message      Clear                           
+                            
+
 ```
 
 ### Registration Form
 ```
-┌──────────────────────────────────────────────────────────────┐
-│                      Create Account                          │
-├──────────────────────────────────────────────────────────────┤
-│                                                              │
-│  First Name *            Last Name *                         │
-│  ┌─────────────────┐    ┌─────────────────────────────────┐  │
-│  │ First name      │    │ Last name                       │  │
-│  └─────────────────┘    └─────────────────────────────────┘  │
-│                                                              │
-│  Email Address *                                             │
-│  ┌─────────────────────────────────────────────────────────┐│
-│  │ Enter a valid email address                             ││
-│  └─────────────────────────────────────────────────────────┘│
-│                                                              │
-│  Password *              Confirm Password *                  │
-│  ┌─────────────────┐    ┌─────────────────────────────────┐  │
-│  │ ••••••••••••••• │    │ ••••••••••••••••••••••••••••••  │  │
-│  └─────────────────┘    └─────────────────────────────────┘  │
-│                                                              │
-│  ☐ I agree to the Terms of Service                          │
-│                                                              │
-│  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  ░░░░░░░░░░░░░                           │
-│  ▓ Create Account ▓  ░   Cancel   ░                           │
-│  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  ░░░░░░░░░░░░░                           │
-└──────────────────────────────────────────────────────────────┘
+
+                      Create Account                          
+
+                                                              
+  First Name *            Last Name *                         
+        
+   First name           Last name                         
+        
+                                                              
+  Email Address *                                             
+  
+   Enter a valid email address                             
+  
+                                                              
+  Password *              Confirm Password *                  
+        
+   •••••••••••••••      ••••••••••••••••••••••••••••••    
+        
+                                                              
+   I agree to the Terms of Service                          
+                                                              
+                               
+   Create Account      Cancel                              
+                               
+
 ```
 
 ## Component Behavior
@@ -275,20 +275,20 @@ A comprehensive form container with field grouping, validation state management,
 ## Design Tokens
 
 ### Visual Elements
-- `┌─┐└┘─│` = Form and field borders
-- `▓` = Primary submit button
-- `░` = Secondary/reset button  
-- `✓` = Valid field indicator
-- `✗` = Invalid field indicator
-- `⚠` = Error/warning symbol
+- `` = Form and field borders
+- `` = Primary submit button
+- `` = Secondary/reset button  
+- `` = Valid field indicator
+- `` = Invalid field indicator
+- `` = Error/warning symbol
 - `*` = Required field marker
 
 ### Status Colors (represented by patterns)
 - Solid borders = Default/active state
 - Dashed borders = Disabled state
 - Double borders = Focus state
-- `▓` pattern = Primary/submit actions
-- `░` pattern = Secondary/cancel actions
+- `` pattern = Primary/submit actions
+- `` pattern = Secondary/cancel actions
 
 ## Related Components
 

@@ -27,7 +27,7 @@ scope_boundaries:
   - "Do not change business logic or non-UI code"
   - "Prefer suggesting fixes; only auto-apply edits when explicitly asked"
 ---
-<!-- 🌟 SenaiVerse - Claude Code Agent System v1.0 -->
+<!--  SenaiVerse - Claude Code Agent System v1.0 -->
 
 # Design Token Guardian
 
@@ -61,12 +61,12 @@ Scan React Native/Expo codebases for hardcoded design values and enforce token u
 
 ### 1. Hardcoded Colors
 ```typescript
-// ❌ BAD
+//  BAD
 <View style={{ backgroundColor: '#007AFF' }} />
 <Text style={{ color: 'rgb(0, 122, 255)' }} />
 <View style={{ backgroundColor: 'rgba(0,0,0,0.1)' }} />
 
-// ✅ GOOD
+//  GOOD
 <View style={{ backgroundColor: theme.colors.primary }} />
 <Text style={{ color: colors.primary }} />
 <View style={{ backgroundColor: theme.colors.overlay }} />
@@ -74,40 +74,40 @@ Scan React Native/Expo codebases for hardcoded design values and enforce token u
 
 ### 2. Hardcoded Spacing
 ```typescript
-// ❌ BAD
+//  BAD
 <View style={{ padding: 16, marginTop: 20 }} />
 <View style={{ gap: 8 }} />
 
-// ✅ GOOD
+//  GOOD
 <View style={{ padding: theme.spacing.md, marginTop: theme.spacing.lg }} />
 <View style={{ gap: theme.spacing.sm }} />
 ```
 
 ### 3. Hardcoded Typography
 ```typescript
-// ❌ BAD
+//  BAD
 <Text style={{ fontSize: 16, fontWeight: '600' }} />
 <Text style={{ fontFamily: 'System', lineHeight: 22 }} />
 
-// ✅ GOOD
+//  GOOD
 <Text style={[typography.body, { fontWeight: '600' }]} />
 <Text style={typography.heading} />
 ```
 
 ### 4. Hardcoded Border Radius
 ```typescript
-// ❌ BAD
+//  BAD
 <View style={{ borderRadius: 8 }} />
 <View style={{ borderRadius: 16 }} />
 
-// ✅ GOOD
+//  GOOD
 <View style={{ borderRadius: theme.borderRadius.sm }} />
 <View style={{ borderRadius: theme.borderRadius.md }} />
 ```
 
 ### 5. Hardcoded Shadows
 ```typescript
-// ❌ BAD
+//  BAD
 <View style={{
   shadowColor: '#000',
   shadowOffset: { width: 0, height: 2 },
@@ -115,54 +115,54 @@ Scan React Native/Expo codebases for hardcoded design values and enforce token u
   shadowRadius: 4
 }} />
 
-// ✅ GOOD
+//  GOOD
 <View style={theme.shadows.sm} />
 ```
 
 ### 6. Hardcoded Font Weights
 ```typescript
-// ❌ BAD
+//  BAD
 <Text style={{ fontWeight: '600' }} />
 <Text style={{ fontWeight: 'bold' }} />
 
-// ✅ GOOD (if theme defines weights)
+//  GOOD (if theme defines weights)
 <Text style={{ fontWeight: theme.fontWeights.semibold }} />
 <Text style={{ fontWeight: theme.fontWeights.bold }} />
 ```
 
 ### 7. Hardcoded Opacity Values
 ```typescript
-// ❌ BAD (for semantic opacity like disabled states)
+//  BAD (for semantic opacity like disabled states)
 <View style={{ opacity: 0.5 }} />
 <Text style={{ opacity: 0.6 }} />
 
-// ✅ GOOD
+//  GOOD
 <View style={{ opacity: theme.opacity.disabled }} />
 <Text style={{ opacity: theme.opacity.secondary }} />
 ```
 
 ### 8. Hardcoded Icon Sizes
 ```typescript
-// ❌ BAD
+//  BAD
 <Icon size={24} />
 <Icon size={16} />
 
-// ✅ GOOD
+//  GOOD
 <Icon size={theme.iconSizes.md} />
 <Icon size={theme.iconSizes.sm} />
 ```
 
 ### 9. Mixed Token/Hardcoded Values
 ```typescript
-// ❌ BAD (inconsistent - mixing tokens and hardcoded)
+//  BAD (inconsistent - mixing tokens and hardcoded)
 <View style={{
-  padding: theme.spacing.md,  // Using token ✓
-  marginTop: 20,              // Hardcoded ✗
-  backgroundColor: theme.colors.background,  // Using token ✓
-  borderRadius: 12            // Hardcoded ✗
+  padding: theme.spacing.md,  // Using token 
+  marginTop: 20,              // Hardcoded 
+  backgroundColor: theme.colors.background,  // Using token 
+  borderRadius: 12            // Hardcoded 
 }} />
 
-// ✅ GOOD (100% tokens)
+//  GOOD (100% tokens)
 <View style={{
   padding: theme.spacing.md,
   marginTop: theme.spacing.lg,
@@ -318,7 +318,7 @@ Final score: 60/100 (FAIL - requires design token refactor)
 
 9. **Check for StyleSheet.create** - Hardcoded values in StyleSheet.create are just as bad as inline:
    ```typescript
-   // ❌ STILL BAD (even in StyleSheet)
+   //  STILL BAD (even in StyleSheet)
    const styles = StyleSheet.create({
      container: {
        backgroundColor: '#007AFF',  // Violation

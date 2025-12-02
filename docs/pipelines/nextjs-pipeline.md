@@ -23,7 +23,7 @@ The Nextjs pipeline handles **frontend/web development work** for Next.js apps. 
 5. Maximum 2 implementation passes
 
 **Orchestration:**
-- Nextjs work SHOULD be run via the `/orca-nextjs` command.
+- Nextjs work SHOULD be run via the `/nextjs` command.
 - Phase state is tracked in `.claude/orchestration/phase_state.json` using the contract in `docs/reference/phase-configs/nextjs-phase-config.yaml`.
 - The high-level phases in this doc map to the more detailed `phase_state` entries:
   - "Planning & Spec" ↔ `requirements_impact` + `planning`
@@ -50,8 +50,8 @@ The Next.js pipeline uses three-tier routing (see `docs/concepts/complexity-rout
 Most tasks take this path. Fast execution with automated quality checks.
 
 ```bash
-/orca-nextjs "fix button spacing"        # → light orchestrator → builder → gates
-/orca-nextjs "update header text"        # → light orchestrator → builder → gates
+/nextjs "fix button spacing"        # → light orchestrator → builder → gates
+/nextjs "update header text"        # → light orchestrator → builder → gates
 ```
 
 **Gates run:** `nextjs-standards-enforcer` + `nextjs-design-reviewer`
@@ -61,7 +61,7 @@ Most tasks take this path. Fast execution with automated quality checks.
 Pure speed path. User explicitly accepts responsibility for verification.
 
 ```bash
-/orca-nextjs -tweak "fix padding"        # → light orchestrator → builder → done
+/nextjs -tweak "fix padding"        # → light orchestrator → builder → done
 ```
 
 ### Complex Mode (`--complex`)
@@ -69,8 +69,8 @@ Pure speed path. User explicitly accepts responsibility for verification.
 Full pipeline with grand-architect planning. Spec required.
 
 ```bash
-/orca-nextjs --complex "implement checkout flow"   # → full pipeline
-/orca-nextjs "build multi-page auth"               # Auto-routes to --complex
+/nextjs --complex "implement checkout flow"   # → full pipeline
+/nextjs "build multi-page auth"               # Auto-routes to --complex
 ```
 
 | Tier | Files | Spec Required | Example |
@@ -90,7 +90,7 @@ Some Next.js tasks are **structural CSS/layout refactors** rather than simple tw
 
 These tasks run under `--complex` but use a **CSS refactor sub-mode**:
 
-- The orchestrator explicitly classifies the task as a CSS/layout refactor (via `/orca-nextjs --complex ...` + clarification).
+- The orchestrator explicitly classifies the task as a CSS/layout refactor (via `/nextjs --complex ...` + clarification).
 - `nextjs-builder` is allowed to perform **targeted rewrites** of style/layout layers (CSS, module CSS, layout components) instead of strict edit-only changes.
 - A dedicated **CSS Architecture Gate** (`nextjs-css-architecture-gate`) runs after implementation to check structural quality:
   - Global CSS minimized or reduced where planned
@@ -160,13 +160,13 @@ Request
 [Phase 4: Implementation - Pass 1]
     ↓
 [Phase 5: Gate Checks (Parallel Group)]
-  ├─ Standards Enforcement (`nextjs-standards-enforcer`)
-  └─ Design QA (`nextjs-design-reviewer`)
+   Standards Enforcement (`nextjs-standards-enforcer`)
+   Design QA (`nextjs-design-reviewer`)
       [+ Optional: a11y/perf/security gates]
     ↓
 Decision Point:
-├─ All required gates ≥ thresholds → [Phase 8: Verification]
-└─ Any gate < threshold → [Phase 4b: Implementation - Pass 2] (ONE corrective pass only)
+ All required gates ≥ thresholds → [Phase 8: Verification]
+ Any gate < threshold → [Phase 4b: Implementation - Pass 2] (ONE corrective pass only)
     ↓
 [Phase 5b: Gate Re-checks (same parallel group)]
     ↓
@@ -680,22 +680,22 @@ an additional **CSS Architecture Gate** runs as well.
 **Outcome:** Success / Partial / Failure
 
 **Phases:**
-- ✅ Context Query: X relevant files, Y standards
-- ✅ Planning: Z components identified
-- ✅ Analysis: Dependency map created
-- ✅ Implementation Pass 1: A files modified
-- ✅ Standards Enforcement: Score 95 (PASS)
-- ✅ Design QA: Score 92 (PASS)
-- [✅/❌] Implementation Pass 2: B files fixed
-- [✅/❌] Re-validation: Scores X/Y
-- ✅ Verification: Build passed, tests passed
-- ✅ Completion: Task recorded
+-  Context Query: X relevant files, Y standards
+-  Planning: Z components identified
+-  Analysis: Dependency map created
+-  Implementation Pass 1: A files modified
+-  Standards Enforcement: Score 95 (PASS)
+-  Design QA: Score 92 (PASS)
+- [/] Implementation Pass 2: B files fixed
+- [/] Re-validation: Scores X/Y
+-  Verification: Build passed, tests passed
+-  Completion: Task recorded
 
 **Gates Passed:**
-- ✅ Customization Gate
-- ✅ Standards Gate (Score: 95)
-- ✅ Design QA Gate (Score: 92)
-- ✅ Build Gate
+-  Customization Gate
+-  Standards Gate (Score: 95)
+-  Design QA Gate (Score: 92)
+-  Build Gate
 
 **Files Modified:**
 - path/to/component1.tsx
@@ -924,21 +924,21 @@ As the pipeline runs, it learns:
 - Verify: Lint passes, typecheck passes
 
 **Phase 5:** Standards Enforcement
-- Check: No inline styles ✅
-- Check: All values from tokens ✅
-- Check: No rewrites ✅
+- Check: No inline styles 
+- Check: All values from tokens 
+- Check: No rewrites 
 - Score: 100 (PASS)
 
 **Phase 6:** Design QA
-- Check: Spacing hierarchy correct ✅
-- Check: Mobile spacing increased ✅
-- Check: Optical alignment good ✅
+- Check: Spacing hierarchy correct 
+- Check: Mobile spacing increased 
+- Check: Optical alignment good 
 - Score: 95 (PASS)
 
 **GATES:** Both ≥90 → Skip Pass 2, proceed to verification
 
 **Phase 8:** Verification
-- Build: Success ✅
+- Build: Success 
 - Tests: 0 tests (none exist)
 
 **GATE:** Build → PASS
@@ -948,7 +948,7 @@ As the pipeline runs, it learns:
 - Summary generated
 - Clean exit
 
-**Result:** Success in 1 pass, both gates passed first try ✅
+**Result:** Success in 1 pass, both gates passed first try 
 
 ---
 

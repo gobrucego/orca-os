@@ -9,7 +9,7 @@
 
 ### Line 1: Model | Tokens | Auto-Compact
 ```
-Sonnet 4.5 | 📊 (68.2%) 136,476/200,000 | 23.5k until auto-compact
+Sonnet 4.5 |  (68.2%) 136,476/200,000 | 23.5k until auto-compact
 ```
 
 - **Model name** (purple)
@@ -19,42 +19,42 @@ Sonnet 4.5 | 📊 (68.2%) 136,476/200,000 | 23.5k until auto-compact
 
 ### Line 2: System | Location | Git Status
 ```
-󰻠 25% • 󰍛 68% | 📁 claude-vibe-config •  main | [1 󰄬 • 2 󰛿 • 3 󰋗] • 5 󰜷 • 2 󰜮
+ 25% •  68% |  claude-vibe-config •  main | [1  • 2  • 3 ] • 5  • 2 
 ```
 
-- **CPU usage:** `󰻠 XX%` - green <60%, yellow 60-80%, red >80%
-- **Memory usage:** `󰍛 XX%` - always shown, green <75%, yellow 75-90%, red >90%
+- **CPU usage:** ` XX%` - green <60%, yellow 60-80%, red >80%
+- **Memory usage:** ` XX%` - always shown, green <75%, yellow 75-90%, red >90%
 
 - **Current folder** (cyan)
 - **Git branch** (green) - using  icon
 - **Git status:**
-  - `# 󰄬` - staged files (green)
-  - `# 󰛿` - modified files (yellow)
-  - `# 󰋗` - untracked files (red)
+  - `# ` - staged files (green)
+  - `# ` - modified files (yellow)
+  - `# ` - untracked files (red)
 - **Git ahead/behind:**
-  - `# 󰜷` - commits ahead (green)
-  - `# 󰜮` - commits behind (red)
+  - `# ` - commits ahead (green)
+  - `# ` - commits behind (red)
 
 ---
 
 ## What Changed
 
-### Removed ❌
+### Removed 
 - Session ID (not useful)
 - Python venv indicator (not used)
 - Docker container count (not used)
 - Shell level indicator (confusing)
 - GPU usage (requires sudo, not feasible)
 
-### Added ✅
+### Added 
 - **Auto-compact text** - shows `XX.Xk until auto-compact` in grey (abbreviated format)
 - **CPU usage** - always shown with color coding
 - **Fixed memory calculation** - now always shows, using active + wired + compressed pages
 - **Improved spacing** - space between number and icon in git status
 
-### Changed 🔄
+### Changed 
 - **Token display:** Format is now `(%) used/total` - percentage first, then counts
-- **Git branch icon:** Changed from 󰊢 to  (standard git branch icon)
+- **Git branch icon:** Changed from  to  (standard git branch icon)
 - **Git status:** Now shows `# icon` instead of `icon#` for better readability
 - **Layout:** Two-line format - system metrics moved to line 2 before folder info
 
@@ -64,16 +64,16 @@ Sonnet 4.5 | 📊 (68.2%) 136,476/200,000 | 23.5k until auto-compact
 
 | Icon | Meaning |
 |------|---------|
-| 📊 | Token usage |
-| 󰻠 | CPU usage |
-| 󰍛 | Memory usage |
-| 📁 | Current folder |
+|  | Token usage |
+|  | CPU usage |
+|  | Memory usage |
+|  | Current folder |
 |  | Git branch |
-| 󰄬 | Staged files |
-| 󰛿 | Modified files |
-| 󰋗 | Untracked files |
-| 󰜷 | Commits ahead |
-| 󰜮 | Commits behind |
+|  | Staged files |
+|  | Modified files |
+|  | Untracked files |
+|  | Commits ahead |
+|  | Commits behind |
 
 ---
 
@@ -94,9 +94,9 @@ Claude Code automatically compacts the conversation when it reaches **~160K toke
 **Planned feature:** Toggle display of active agents in session
 
 ```
-Sonnet 4.5 | 📊 (50.2%) 100,427/200,000 | 59.6k until auto-compact
-󰻠 25% • 󰍛 68% | 📁 project •  main | [1 󰄬 • 2 󰛿]
-🤖 system-architect • frontend-engineer • test-engineer
+Sonnet 4.5 |  (50.2%) 100,427/200,000 | 59.6k until auto-compact
+ 25% •  68% |  project •  main | [1  • 2 ]
+ system-architect • frontend-engineer • test-engineer
 ```
 
 Implementation would require:
@@ -107,4 +107,4 @@ Implementation would require:
 ---
 
 **Last updated:** 2025-01-24
-**Status:** ✅ Production
+**Status:**  Production

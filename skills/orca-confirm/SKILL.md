@@ -23,20 +23,39 @@ description: Handle team confirmation with automatic bypass mode detection for /
 
 ## Implementation
 
-### Step 1: Present Proposed Team
+### Step 1: Present Proposed Team (VISIBLE OUTPUT - NOT IN TOOL CALL)
 
-Show the user what team was selected:
+**CRITICAL: This must be VISIBLE MARKDOWN OUTPUT, not inside AskUserQuestion.**
 
+Output this as regular text so the user can see it:
+
+```markdown
+## Proposed Pipeline
+
+**Request:** [task description]
+**Domain:** [PROJECT_TYPE]
+**Complexity:** [simple/medium/complex]
+
+### Agent Team
+| Role | Agent |
+|------|-------|
+| Coordination | [grand-architect] |
+| Architecture | [architect] |
+| Implementation | [builder] |
+| Specialists | [list them] |
+| Gates | [gate agents] |
+| Verification | [verification agent] |
+
+### Files Likely Affected
+- [from ContextBundle]
+
+### Risks/Notes
+- [any identified]
 ```
-🎯 Detected: [PROJECT_TYPE]
 
-Proposed Agent Team:
-• [agent-1]
-• [agent-2]
-• [agent-3]
-```
+**This output MUST appear BEFORE you call AskUserQuestion.**
 
-### Step 2: Ask for Confirmation (ONCE ONLY)
+### Step 2: Ask for Confirmation (ONCE ONLY - SIMPLE QUESTION)
 
 Use AskUserQuestion with these exact options:
 
@@ -60,7 +79,7 @@ if response is None or response.get("answers") is None or len(response.get("answ
     # Proceed immediately with proposed team
 
     Output:
-    "⚠️ Proceeding with proposed team (bypass mode detected - confirmation unavailable)
+    " Proceeding with proposed team (bypass mode detected - confirmation unavailable)
 
     Proposed Team: [list team]
 
@@ -74,7 +93,7 @@ else:
     user_answer = response["answers"][first_question_key]
 
     if user_answer == "Yes, proceed":
-        Output: "✓ Team confirmed"
+        Output: " Team confirmed"
         # Return to /orca with: CONFIRMED|original_team
 
     elif user_answer == "Modify team":
@@ -123,7 +142,7 @@ RESULT: STATUS|agent,list,here
 **AskUserQuestion returns:** `{"answers": {}}`
 **Output:**
 ```
-⚠️ Proceeding with proposed team (bypass mode detected - confirmation unavailable)
+ Proceeding with proposed team (bypass mode detected - confirmation unavailable)
 
 Proposed Team:
 • swiftui-developer
@@ -141,7 +160,7 @@ RESULT: BYPASS|swiftui-developer,swiftdata-specialist,swift-testing-specialist
 **AskUserQuestion returns:** `{"answers": {"q1": "Yes, proceed"}}`
 **Output:**
 ```
-✓ Team confirmed by user
+ Team confirmed by user
 
 Proceeding with:
 • nextjs-14-specialist
@@ -157,7 +176,7 @@ RESULT: CONFIRMED|nextjs-14-specialist,tailwind-specialist,design-reviewer
 **User says:** "Remove quality-validator, add test-engineer"
 **Output:**
 ```
-✓ Team modified per user request
+ Team modified per user request
 
 Original: backend-engineer, quality-validator
 Modified: backend-engineer, test-engineer
@@ -171,35 +190,35 @@ RESULT: MODIFIED|backend-engineer,test-engineer
 
 Before returning results, verify:
 
-- ☐ Asked AskUserQuestion exactly ONCE
-- ☐ Checked response.answers structure explicitly
-- ☐ Returned RESULT line in correct format
-- ☐ Did NOT retry on blank response
-- ☐ Showed clear message to user about what's happening
+-  Asked AskUserQuestion exactly ONCE
+-  Checked response.answers structure explicitly
+-  Returned RESULT line in correct format
+-  Did NOT retry on blank response
+-  Showed clear message to user about what's happening
 
 ---
 
 ## Common Mistakes to Avoid
 
-❌ **DON'T:**
+ **DON'T:**
 ```
 "I didn't receive a response, let me ask again..."
 [Retries AskUserQuestion]
 ```
 
-✅ **DO:**
+ **DO:**
 ```
-"⚠️ Proceeding with proposed team (bypass mode detected)"
+" Proceeding with proposed team (bypass mode detected)"
 RESULT: BYPASS|team,list
 ```
 
-❌ **DON'T:**
+ **DON'T:**
 ```
 # Unclear what happened
 RESULT: team,list
 ```
 
-✅ **DO:**
+ **DO:**
 ```
 # Clear status prefix
 RESULT: BYPASS|team,list

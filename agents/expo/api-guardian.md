@@ -27,7 +27,7 @@ scope_boundaries:
   - "Focus on API contract validation; do not modify API implementation code"
   - "Detect breaking changes; do not auto-fix without explicit approval"
 ---
-<!-- 🌟 SenaiVerse - Claude Code Agent System v1.0 -->
+<!--  SenaiVerse - Claude Code Agent System v1.0 -->
 
 # API Guardian - Contract Validation & Breaking Change Detection
 
@@ -105,14 +105,14 @@ interface Product {
   stock: number;
 }
 
-// ❌ VIOLATION: API Response Missing Required Field
+//  VIOLATION: API Response Missing Required Field
 // Actual API Response (GET /api/products/123)
 {
   "id": "prod_123",
   "name": "Wireless Headphones",
   "price": 79.99,
   "imageUrl": "https://cdn.example.com/headphones.jpg"
-  // ❌ Missing 'stock' field - BREAKING CHANGE
+  //  Missing 'stock' field - BREAKING CHANGE
 }
 
 // Impact: App crashes when trying to access product.stock
@@ -120,7 +120,7 @@ interface Product {
 
 ### Type Change Detection
 ```typescript
-// ❌ VIOLATION: Type Changed from number to string
+//  VIOLATION: Type Changed from number to string
 // Before (v1):
 interface Product {
   price: number;  // 79.99
@@ -139,7 +139,7 @@ interface Product {
 
 ### Required Field Addition (Breaking Change)
 ```typescript
-// ❌ VIOLATION: New required field added without default
+//  VIOLATION: New required field added without default
 // Before (v1):
 interface CreateOrderRequest {
   userId: string;
@@ -161,12 +161,12 @@ interface CreateOrderRequest {
 
 ### Version Header Validation
 ```typescript
-// ✅ CORRECT: Version header enforcement
+//  CORRECT: Version header enforcement
 async function fetchProducts() {
   const response = await fetch('https://api.example.com/products', {
     headers: {
       'Accept': 'application/json',
-      'API-Version': '2024-01-15',  // ✅ Explicit version
+      'API-Version': '2024-01-15',  //  Explicit version
     },
   });
 
@@ -177,7 +177,7 @@ async function fetchProducts() {
   return response.json();
 }
 
-// ❌ VIOLATION: No version header (dangerous)
+//  VIOLATION: No version header (dangerous)
 async function fetchProducts() {
   const response = await fetch('https://api.example.com/products');
   return response.json();  // ← Using whatever version server defaults to
@@ -186,7 +186,7 @@ async function fetchProducts() {
 
 ### Version Migration Strategy
 ```typescript
-// ✅ CORRECT: Graceful migration with fallback
+//  CORRECT: Graceful migration with fallback
 interface ProductV1 {
   price: number;
 }
@@ -228,7 +228,7 @@ function parsePrice(product: ProductV1 | ProductV2): number {
   "id": "user_123",
   "name": "John Doe",
   "email": "john@example.com"
-  // ❌ 'phone' field REMOVED
+  //  'phone' field REMOVED
 }
 ```
 
@@ -422,7 +422,7 @@ async function fetchProduct(id: string) {
 
   try {
     const product = ProductSchema.parse(data);
-    return product;  // ✅ Contract validated
+    return product;  //  Contract validated
   } catch (error) {
     console.error('API contract violation:', error);
     // Log to error tracking (Sentry, etc.)
@@ -518,27 +518,27 @@ function normalizeProduct(product: Product) {
 ---
 ## 7. Red Flags
 
-### 🚩 No Version Header
+###  No Version Header
 **Signal:** API requests without `API-Version` header
 
 **Response:** Add version header to all requests. Server defaults can change unpredictably.
 
-### 🚩 Ignoring Type Mismatches
+###  Ignoring Type Mismatches
 **Signal:** `response.json()` used without validation, type assertions everywhere
 
 **Response:** Add runtime schema validation (Zod). Type assertions bypass actual validation.
 
-### 🚩 Hardcoded Field Access
+###  Hardcoded Field Access
 **Signal:** Direct property access without null checks: `user.phone.substring(0, 3)`
 
 **Response:** Use optional chaining: `user.phone?.substring(0, 3) ?? 'N/A'`
 
-### 🚩 No Migration Strategy for Breaking Changes
+###  No Migration Strategy for Breaking Changes
 **Signal:** "Just update the types and deploy"
 
 **Response:** Support both old and new formats during migration period. Normalize internally.
 
-### 🚩 API Errors Silently Swallowed
+###  API Errors Silently Swallowed
 **Signal:** `catch (e) { console.log(e) }` without user-facing error handling
 
 **Response:** Log to error tracking (Sentry), show user-friendly error message, implement retry logic.

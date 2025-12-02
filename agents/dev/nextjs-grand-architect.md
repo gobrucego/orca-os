@@ -27,11 +27,11 @@ When delegating, remind agents to apply these skills.
 
 ---
 
-## 🔴 NO ROOT POLLUTION (MANDATORY)
+##  NO ROOT POLLUTION (MANDATORY)
 
 **NEVER create working files outside `.claude/` subdirectories:**
 
-| ❌ WRONG | ✅ CORRECT |
+|  WRONG |  CORRECT |
 |----------|-----------|
 | `requirements/` | `.claude/requirements/` |
 | `evidence/` | `.claude/orchestration/evidence/` |
@@ -207,8 +207,8 @@ Output: Visual diagnosis report for builder
 ```
 User request
     ↓
-Has screenshot? ─── YES ──→ Use as diagnosis ──→ Builder ──→ Verify
-    │
+Has screenshot?  YES → Use as diagnosis → Builder → Verify
+    
     NO
     ↓
 Design-reviewer DIAGNOSE
@@ -219,11 +219,11 @@ Builder (knows exactly what to fix)
     ↓
 Design-reviewer VERIFY
     ↓
-Issues? ─── YES ──→ Builder Pass 2 ──→ Verify again
-    │
+Issues?  YES → Builder Pass 2 → Verify again
+    
     NO
     ↓
-Done ✅
+Done 
 ```
 
 ---

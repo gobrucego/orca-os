@@ -272,7 +272,7 @@ const violations = standards.map(standard =>
 if (violations.length > 0) {
   // Add warnings to brief
   violations.forEach(v => {
-    addWarningToBrief(`⚠️ Standard violation: ${v.rule} - ${v.reason}`);
+    addWarningToBrief(` Standard violation: ${v.rule} - ${v.reason}`);
   });
 }
 ```
@@ -321,30 +321,30 @@ await save_decision({
 ## Output Checklist
 
 ### File Modified
-- ✅ `outputs/seo/${SLUG}-brief.md` - Enhanced with strategic guidance
+-  `outputs/seo/${SLUG}-brief.md` - Enhanced with strategic guidance
 
 ### Enhancements Added
-- ✅ Refined keyword strategy (primary + secondary + LSI)
-- ✅ Optimized content structure (H1/H2/H3 hierarchy)
-- ✅ E-E-A-T signals defined (author, citations, trust indicators)
-- ✅ Competitive differentiation outlined (unique angles, content gaps)
-- ✅ Internal linking opportunities identified
-- ✅ Compliance needs flagged (medical/legal disclaimers)
-- ✅ TODOs added for missing data/risky claims
-- ✅ Standards violations noted
+-  Refined keyword strategy (primary + secondary + LSI)
+-  Optimized content structure (H1/H2/H3 hierarchy)
+-  E-E-A-T signals defined (author, citations, trust indicators)
+-  Competitive differentiation outlined (unique angles, content gaps)
+-  Internal linking opportunities identified
+-  Compliance needs flagged (medical/legal disclaimers)
+-  TODOs added for missing data/risky claims
+-  Standards violations noted
 
 ### Context Used
-- ✅ Past high-performing angles from contextBundle.pastDecisions
-- ✅ Successful content structures from contextBundle.relevantFiles
-- ✅ SEO standards from contextBundle.relatedStandards
-- ✅ Internal link opportunities from contextBundle.projectState
+-  Past high-performing angles from contextBundle.pastDecisions
+-  Successful content structures from contextBundle.relevantFiles
+-  SEO standards from contextBundle.relatedStandards
+-  Internal link opportunities from contextBundle.projectState
 
 ### AgentDB Updated
-- ✅ Refined strategy cached for draft writer
+-  Refined strategy cached for draft writer
 
 ### Decisions Logged
-- ✅ Content angle decision saved to vibe.db
-- ✅ Reasoning includes SERP + KG + context insights
+-  Content angle decision saved to vibe.db
+-  Reasoning includes SERP + KG + context insights
 
 ## Hand-off to Next Phase
 
@@ -362,12 +362,12 @@ await save_decision({
 ---
 
 **Phase complete when:**
-1. Brief.md loaded and analyzed ✅
-2. Keyword strategy refined ✅
-3. Content structure optimized ✅
-4. E-E-A-T signals added ✅
-5. Competitive differentiation defined ✅
-6. Gaps flagged with TODOs ✅
-7. Standards enforced ✅
-8. Enhancements saved to brief.md ✅
-9. Decision logged to vibe.db ✅
+1. Brief.md loaded and analyzed 
+2. Keyword strategy refined 
+3. Content structure optimized 
+4. E-E-A-T signals added 
+5. Competitive differentiation defined 
+6. Gaps flagged with TODOs 
+7. Standards enforced 
+8. Enhancements saved to brief.md 
+9. Decision logged to vibe.db 

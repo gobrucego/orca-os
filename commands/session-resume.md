@@ -18,11 +18,11 @@ allowed-tools: [Read, Bash]
 ## Step 1: Check for Context File
 
 ```bash
-if [ -f .claude-session-context.md ]; then
-  echo "✅ Session context file found"
-  cat .claude-session-context.md
+if [ -f .claude/orchestration/temp/session-context.md ]; then
+  echo " Session context file found"
+  cat .claude/orchestration/temp/session-context.md
 else
-  echo "❌ No session context file found"
+  echo " No session context file found"
   echo ""
   echo "To create one, run: /session-save"
   exit 1
@@ -36,7 +36,7 @@ fi
 **Read the file:**
 
 ```
-Read(.claude-session-context.md)
+Read(.claude/orchestration/temp/session-context.md)
 ```
 
 **Parse and present:**
@@ -55,7 +55,7 @@ Extract from the file:
 **Check file age:**
 
 ```bash
-fileAge=$(( $(date +%s) - $(stat -f %m .claude-session-context.md) ))
+fileAge=$(( $(date +%s) - $(stat -f %m .claude/orchestration/temp/session-context.md) ))
 ageMinutes=$(( fileAge / 60 ))
 ageHours=$(( fileAge / 3600 ))
 
@@ -65,7 +65,7 @@ elif [ $ageHours -lt 24 ]; then
   echo "Context is recent: ${ageHours} hours old"
 else
   ageDays=$(( ageHours / 24 ))
-  echo "⚠️ Context is ${ageDays} days old - may be stale"
+  echo " Context is ${ageDays} days old - may be stale"
   echo "Consider running /session-save to update"
 fi
 ```
@@ -75,7 +75,7 @@ fi
 ## Step 4: Present Summary
 
 ```
-📋 SESSION CONTEXT LOADED
+ SESSION CONTEXT LOADED
 
 Last Updated: [timestamp from file]
 Age: [X minutes/hours/days ago]
@@ -107,7 +107,7 @@ Context loaded successfully! I'm now up to speed on your previous work.
 **If context is stale (>24 hours):**
 
 ```
-⚠️ This context is [X days] old.
+ This context is [X days] old.
 
 Has anything changed since then? For example:
 - Completed any of the listed tasks?
@@ -131,9 +131,9 @@ Want to pick up with: [Next steps from context]
 
 **No context file exists:**
 ```
-❌ NO SESSION CONTEXT FOUND
+ NO SESSION CONTEXT FOUND
 
-No .claude-session-context.md file exists yet.
+No .claude/orchestration/temp/session-context.md file exists yet.
 
 To create one:
 1. Run /session-save to capture current session
@@ -145,19 +145,19 @@ once you've saved at least one session.
 
 **Context file is corrupted:**
 ```
-⚠️ Context file exists but couldn't be parsed
+ Context file exists but couldn't be parsed
 
-The .claude-session-context.md file may be corrupted.
+The .claude/orchestration/temp/session-context.md file may be corrupted.
 
 Options:
-1. Manually inspect: cat .claude-session-context.md
+1. Manually inspect: cat .claude/orchestration/temp/session-context.md
 2. Create fresh context: /session-save
-3. Delete and start over: rm .claude-session-context.md
+3. Delete and start over: rm .claude/orchestration/temp/session-context.md
 ```
 
 **Multiple sessions in file:**
 ```
-📚 MULTIPLE SESSIONS FOUND
+ MULTIPLE SESSIONS FOUND
 
 Found context from [X] previous sessions:
 - [Session 1: Date, Focus]
@@ -186,7 +186,7 @@ Loading most recent session: [Session 1]
        "hooks": [
          {
            "type": "command",
-           "command": "cat .claude-session-context.md 2>/dev/null || echo '# New Session'"
+           "command": "cat .claude/orchestration/temp/session-context.md 2>/dev/null || echo '# New Session'"
          }
        ]
      }
@@ -195,7 +195,7 @@ Loading most recent session: [Session 1]
 
 3. Test hook manually:
    ```bash
-   cat .claude-session-context.md 2>/dev/null || echo '# New Session'
+   cat .claude/orchestration/temp/session-context.md 2>/dev/null || echo '# New Session'
    ```
 
 **If hook exists but doesn't fire:**

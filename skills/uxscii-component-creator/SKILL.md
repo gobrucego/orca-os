@@ -233,8 +233,8 @@ uv run {SKILL_ROOT}/scripts/quick_validate.py \\
 ```
 
 **Validation output:**
-- ✓ If valid: Shows component summary (type, states, props)
-- ✗ If invalid: Shows specific errors that need fixing
+-  If valid: Shows component summary (type, states, props)
+-  If invalid: Shows specific errors that need fixing
 
 **Performance**: ~100ms per component (very fast!)
 
@@ -255,7 +255,7 @@ uv run {SKILL_ROOT}/scripts/quick_validate.py \\
 **For SINGLE component**, present the results:
 
 ```markdown
-# Component Created ✓
+# Component Created 
 
 ## ${componentName}
 
@@ -282,7 +282,7 @@ ${asciiPreview}
 **For MULTIPLE components**, present a summary:
 
 ```markdown
-# Components Created ✓
+# Components Created 
 
 Created ${componentCount} components in parallel:
 
@@ -292,9 +292,9 @@ Created ${componentCount} components in parallel:
 - ./fluxwing/components/submit-button.md
 
 **Preview**:
-╭──────────────────╮
-│   Submit Form    │
-╰──────────────────╯
+
+   Submit Form    
+
 
 ## cancel-button (button)
 **Files**:
@@ -302,9 +302,9 @@ Created ${componentCount} components in parallel:
 - ./fluxwing/components/cancel-button.md
 
 **Preview**:
-┌──────────────────┐
-│   Cancel         │
-└──────────────────┘
+
+   Cancel         
+
 
 ## email-input (input)
 **Files**:
@@ -312,9 +312,9 @@ Created ${componentCount} components in parallel:
 - ./fluxwing/components/email-input.md
 
 **Preview**:
-┌────────────────────────────┐
-│ Email: [________________]  │
-└────────────────────────────┘
+
+ Email: [________________]  
+
 
 ---
 
@@ -350,16 +350,16 @@ Perfect! Creating submit-button component with the designer agent...
 
 [Spawns designer agent]
 
-✓ Component created successfully!
+ Component created successfully!
 
 Files:
 - ./fluxwing/components/submit-button.uxm
 - ./fluxwing/components/submit-button.md
 
 Preview (default state):
-╭──────────────────╮
-│   Submit Form    │
-╰──────────────────╯
+
+   Submit Form    
+
 
 Next steps:
 - Add states: Ask me to "add hover state to submit-button"
@@ -380,7 +380,7 @@ Based on the component types, I'll use these defaults:
 
 [Spawns 3 designer agents in a SINGLE message]
 
-✓ All 3 components created successfully in parallel!
+ All 3 components created successfully in parallel!
 
 ## submit-button (button)
 Files: submit-button.uxm + submit-button.md
@@ -426,7 +426,7 @@ Next steps:
 **Example speedup:**
 - 1 component: ~30 seconds
 - 3 components sequential: ~90 seconds
-- 3 components parallel: ~30 seconds (3x faster!) ⚡
+- 3 components parallel: ~30 seconds (3x faster!) 
 
 ## Error Handling
 
@@ -442,9 +442,9 @@ Next steps:
 
 **Example partial failure:**
 ```
-✓ submit-button created successfully
-✓ cancel-button created successfully
-✗ email-input failed: Invalid component type specified
+ submit-button created successfully
+ cancel-button created successfully
+ email-input failed: Invalid component type specified
 
 2 of 3 components created. You can:
 1. Retry email-input with corrected parameters
@@ -455,16 +455,16 @@ Next steps:
 ## Success Criteria
 
 **For single component:**
-- ✓ Designer agent created component successfully
-- ✓ Both .uxm and .md files exist in ./fluxwing/components/
-- ✓ Component follows uxscii standard
-- ✓ User can immediately use or expand the component
+-  Designer agent created component successfully
+-  Both .uxm and .md files exist in ./fluxwing/components/
+-  Component follows uxscii standard
+-  User can immediately use or expand the component
 
 **For multiple components:**
-- ✓ All designer agents launched in parallel (single message)
-- ✓ Each component has both .uxm and .md files in ./fluxwing/components/
-- ✓ All components follow uxscii standard
-- ✓ Clear report showing which succeeded/failed (if any failures)
-- ✓ User can immediately use all successful components
+-  All designer agents launched in parallel (single message)
+-  Each component has both .uxm and .md files in ./fluxwing/components/
+-  All components follow uxscii standard
+-  Clear report showing which succeeded/failed (if any failures)
+-  User can immediately use all successful components
 
 You are helping build AI-native designs with production-quality components at maximum speed!

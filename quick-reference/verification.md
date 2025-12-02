@@ -10,33 +10,33 @@ Verification in OS 2.4 is **automated** within pipelines. This guide covers manu
 ### How Verification Works Now
 
 **Automatic in Pipelines:**
-1. `/orca-nextjs` → Implementation → **Standards Gate (≥90)** → **Design QA Gate (≥90)** → **Build/Test Verification (automatic)** → Done
-2. `/orca-ios` → Implementation → **Standards Gate (≥90)** → **UI Review Gate (≥90)** → **xcodebuild + tests (automatic)** → Done
-3. `/orca-expo` → Implementation → **Design Tokens** → **A11y** → **Performance** → **Security** → **Build/Test (automatic)** → Done
+1. `/nextjs` → Implementation → **Standards Gate (≥90)** → **Design QA Gate (≥90)** → **Build/Test Verification (automatic)** → Done
+2. `/ios` → Implementation → **Standards Gate (≥90)** → **UI Review Gate (≥90)** → **xcodebuild + tests (automatic)** → Done
+3. `/expo` → Implementation → **Design Tokens** → **A11y** → **Performance** → **Security** → **Build/Test (automatic)** → Done
 
 **What Changed from OS 2.2 → OS 2.4:**
-- ❌ No more manual `/finalize` script
-- ✅ Verification agents run automatically in Phase 6
-- ✅ Evidence captured automatically in `.claude/orchestration/evidence/`
-- ✅ Build/test results stored in phase_state.json
-- ✅ Gate scores enforced (≥90 or fail)
+-  No more manual `/finalize` script
+-  Verification agents run automatically in Phase 6
+-  Evidence captured automatically in `.claude/orchestration/evidence/`
+-  Build/test results stored in phase_state.json
+-  Gate scores enforced (≥90 or fail)
 
 ### Where Evidence Lives (OS 2.4)
 
 ```
 <project>/.claude/
-├── project/
-│   ├── phase_state.json          # Gate results, verification status
-│   └── vibe.db                    # Task history
-├── orchestration/
-│   ├── evidence/                  # Final artifacts
-│   │   ├── screenshots/           # UI evidence
-│   │   ├── audit-*.md             # Audit reports (from /audit)
-│   │   └── verification-*.md      # Verification reports
-│   └── temp/                      # Working files (clean up after)
-└── requirements/                  # Planning outputs
-    └── YYYY-MM-DD-HHMM-<slug>/
-        └── 06-requirements-spec.md
+ project/
+    phase_state.json          # Gate results, verification status
+    vibe.db                    # Task history
+ orchestration/
+    evidence/                  # Final artifacts
+       screenshots/           # UI evidence
+       audit-*.md             # Audit reports (from /audit)
+       verification-*.md      # Verification reports
+    temp/                      # Working files (clean up after)
+ requirements/                  # Planning outputs
+     YYYY-MM-DD-HHMM-<slug>/
+         06-requirements-spec.md
 ```
 
 ## Verification Agents (Automatic)
@@ -167,7 +167,7 @@ Tags now recorded automatically in `/plan` output:
 /plan "Add dark mode toggle"
 
 # 2. Implement (automatic verification)
-/orca-nextjs "Implement requirement 2025-11-24-1430-dark-mode using that spec"
+/nextjs "Implement requirement 2025-11-24-1430-dark-mode using that spec"
 
 # Pipeline automatically:
 # - Confirms team (AskUserQuestion)
@@ -187,7 +187,7 @@ Tags now recorded automatically in `/plan` output:
 /plan "Add biometric authentication"
 
 # 2. Implement (automatic verification)
-/orca-ios "Implement requirement 2025-11-24-1500-biometric-auth using that spec"
+/ios "Implement requirement 2025-11-24-1500-biometric-auth using that spec"
 
 # Pipeline automatically:
 # - Confirms team
@@ -201,7 +201,7 @@ Tags now recorded automatically in `/plan` output:
 ### Quick Fix (No Planning)
 ```bash
 # Direct implementation for trivial tasks
-/orca-nextjs "Fix typo in homepage title"
+/nextjs "Fix typo in homepage title"
 
 # Pipeline still runs:
 # - Team confirmation
@@ -253,20 +253,20 @@ Standards Gate Re-run: 92/100 → PASS
 
 ### Old Way (Manual)
 ```bash
-❌ bash scripts/finalize.sh
-❌ bash scripts/capture-build.sh
-❌ bash scripts/capture-tests.sh
-❌ Manual evidence collection
-❌ Manual gate checking
+ bash scripts/finalize.sh
+ bash scripts/capture-build.sh
+ bash scripts/capture-tests.sh
+ Manual evidence collection
+ Manual gate checking
 ```
 
 ### New Way (Automatic)
 ```bash
-✅ /plan "feature"
-✅ /orca-{domain} "implement requirement <id>"
-✅ Verification happens automatically
-✅ Evidence captured automatically
-✅ Gates enforced automatically
+ /plan "feature"
+ /orca-{domain} "implement requirement <id>"
+ Verification happens automatically
+ Evidence captured automatically
+ Gates enforced automatically
 ```
 
 ## When Manual Verification Still Needed

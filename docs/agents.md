@@ -191,15 +191,15 @@ evidence for peptide/protocol/mechanism research.
 Agent definitions live in `agents/`:
 ```
 agents/
-├── iOS/              # iOS specialists
-├── dev/              # Next.js + OS-Dev
-├── expo/             # Expo specialists
-├── shopify/          # Shopify specialists
-├── research/         # Research specialists
-├── OBDN/             # KG research specialists
-├── data/             # Data specialists
-├── seo/              # SEO specialists
-└── *.md              # Cross-cutting specialists
+ iOS/              # iOS specialists
+ dev/              # Next.js + OS-Dev
+ expo/             # Expo specialists
+ shopify/          # Shopify specialists
+ research/         # Research specialists
+ OBDN/             # KG research specialists
+ data/             # Data specialists
+ seo/              # SEO specialists
+ *.md              # Cross-cutting specialists
 ```
 
 Each agent is a markdown file with YAML frontmatter:

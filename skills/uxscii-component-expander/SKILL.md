@@ -148,13 +148,13 @@ Insert into the `behavior.states` array. Each state needs:
 
 Use appropriate box-drawing characters for each state:
 
-- **hover**: Heavy border `┏━┓┃┗━┛`
-- **focus**: Double border `╔═╗║╚═╝`
-- **active**: Heavy filled `┏━┓┃┗━┛` with darker interior
-- **disabled**: Dashed border `┌┄┄┐┆└┄┄┘`
-- **error**: Heavy border with indicator `┏━┓┃┗━┛ ⚠`
-- **success**: Heavy border with indicator `┏━┓┃┗━┛ ✓`
-- **checked**: Box with checkmark `[✓]` or filled indicator
+- **hover**: Heavy border ``
+- **focus**: Double border ``
+- **active**: Heavy filled `` with darker interior
+- **disabled**: Dashed border ``
+- **error**: Heavy border with indicator ` `
+- **success**: Heavy border with indicator ` `
+- **checked**: Box with checkmark `[]` or filled indicator
 - **selected**: Heavy border with highlight background
 - **loading**: Spinner or progress indicator
 
@@ -199,11 +199,11 @@ uv run {SKILL_ROOT}/../uxscii-component-creator/scripts/quick_validate.py \\
 ```
 
 **Validation checks:**
-- ✓ JSON schema compliance
-- ✓ All states have valid properties
-- ✓ Variables match between .uxm and .md
-- ✓ Accessibility requirements met
-- ✓ No duplicate states
+-  JSON schema compliance
+-  All states have valid properties
+-  Variables match between .uxm and .md
+-  Accessibility requirements met
+-  No duplicate states
 
 **If validation fails:**
 1. Read the error messages
@@ -216,14 +216,14 @@ uv run {SKILL_ROOT}/../uxscii-component-creator/scripts/quick_validate.py \\
 
 Show summary:
 ```
-✓ Expanded: ./fluxwing/components/{component-name}
-✓ Added states: hover, active, disabled
-✓ Total states: 4 (default, hover, active, disabled)
+ Expanded: ./fluxwing/components/{component-name}
+ Added states: hover, active, disabled
+ Total states: 4 (default, hover, active, disabled)
 
 Preview of hover state:
-┏━━━━━━━━━━━━━━━━━━━━┓
-┃   {{text}}         ┃
-┗━━━━━━━━━━━━━━━━━━━━┛
+
+   {{text}}         
+
 ```
 
 ## Resources Available
@@ -246,14 +246,14 @@ I'll add the hover state to make the button interactive.
 [Generates hover state]
 [Updates both files]
 
-✓ Expanded: ./fluxwing/components/submit-button
-✓ Added states: hover
-✓ Total states: 2 (default, hover)
+ Expanded: ./fluxwing/components/submit-button
+ Added states: hover
+ Total states: 2 (default, hover)
 
 Preview of hover state:
-┏━━━━━━━━━━━━━━━━━━━━┓
-┃   Submit Form      ┃
-┗━━━━━━━━━━━━━━━━━━━━┛
+
+   Submit Form      
+
 
 Next steps:
 - Add more states (active, disabled)
@@ -274,9 +274,9 @@ I'll add the requested states: focus, error
 
 [Generates only focus and error states]
 
-✓ Expanded: ./fluxwing/components/email-input
-✓ Added states: focus, error
-✓ Total states: 3 (default, focus, error)
+ Expanded: ./fluxwing/components/email-input
+ Added states: focus, error
+ Total states: 3 (default, focus, error)
 
 Note: Standard input states also include 'disabled'.
 Let me know if you want to add it!
@@ -285,14 +285,14 @@ Let me know if you want to add it!
 ## Quality Standards
 
 Ensure expanded components include:
-- ✓ Valid JSON schema compliance (no breaking changes)
-- ✓ All new states have definitions in .uxm behavior.states array
-- ✓ All new states have ASCII sections in .md
-- ✓ State properties match component type conventions
-- ✓ Consistent box-drawing character usage
-- ✓ Updated modification timestamp
-- ✓ Preserved existing data (no data loss)
-- ✓ No duplicate states (check before adding)
+-  Valid JSON schema compliance (no breaking changes)
+-  All new states have definitions in .uxm behavior.states array
+-  All new states have ASCII sections in .md
+-  State properties match component type conventions
+-  Consistent box-drawing character usage
+-  Updated modification timestamp
+-  Preserved existing data (no data loss)
+-  No duplicate states (check before adding)
 
 ## Important Notes
 
@@ -309,7 +309,7 @@ Ensure expanded components include:
 
 If component not found:
 ```
-✗ Component '{component-name}' not found.
+ Component '{component-name}' not found.
 
 Searched in:
 - ./fluxwing/components/
@@ -323,7 +323,7 @@ Please check the component name and try again.
 
 If state already exists:
 ```
-⚠ State 'hover' already exists in {component-name}.
+ State 'hover' already exists in {component-name}.
 Skipping duplicate state.
 
 Current states: default, hover
@@ -332,7 +332,7 @@ Adding: active, disabled
 
 If file write fails:
 ```
-✗ Failed to update {component-name}.
+ Failed to update {component-name}.
 
 Error: [specific error message]
 

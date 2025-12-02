@@ -82,26 +82,26 @@ This achieves 9.3x better search quality than raw excerpts.
 ### The Loop
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                                                                 │
-│  Execute Task                                                   │
-│       ↓                                                         │
-│  Record Outcome (success/failure, issues, time, files)          │
-│       ↓                                                         │
-│  Store in Workshop (.claude/memory/workshop.db)                 │
-│       ↓                                                         │
-│  /audit or Periodic Harvest                                     │
-│       ↓                                                         │
-│  Identify Patterns (3+ occurrences of same issue)               │
-│       ↓                                                         │
-│  Generate Improvement Proposal (agent_improvements schema)      │
-│       ↓                                                         │
-│  User Approves/Rejects                                          │
-│       ↓                                                         │
-│  Update Agent Definition / CLAUDE.md / Workshop Standard        │
-│       ↓                                                         │
-│  Measure Impact (track if issue recurs)                         │
-│       └────────────────────────────────────────────────────────┘
+
+                                                                 
+  Execute Task                                                   
+       ↓                                                         
+  Record Outcome (success/failure, issues, time, files)          
+       ↓                                                         
+  Store in Workshop (.claude/memory/workshop.db)                 
+       ↓                                                         
+  /audit or Periodic Harvest                                     
+       ↓                                                         
+  Identify Patterns (3+ occurrences of same issue)               
+       ↓                                                         
+  Generate Improvement Proposal (agent_improvements schema)      
+       ↓                                                         
+  User Approves/Rejects                                          
+       ↓                                                         
+  Update Agent Definition / CLAUDE.md / Workshop Standard        
+       ↓                                                         
+  Measure Impact (track if issue recurs)                         
+       
 ```
 
 ### Where Data Lives

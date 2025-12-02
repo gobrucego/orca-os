@@ -8,17 +8,17 @@
 ## What's New in OS 2.4.1
 
 **Agent Enrichment (NEW):**
-- ✅ **85 Agents Enriched** - All agents have Knowledge Loading + Required Skills sections
-- ✅ **5 Universal Skills** - cursor-code-style, lovable-pitfalls, search-before-edit, linter-loop-limits, debugging-first
-- ✅ **Lane-Specific Patterns** - V0/Lovable for Next.js, Swift-agents for iOS, RN best practices for Expo
-- ✅ **Agent-Level Learning** - `.claude/agent-knowledge/{agent}/patterns.json` for pattern persistence
-- ✅ **Shopify Visual Validation** - New `shopify-ui-reviewer` with Playwright MCP
+-  **85 Agents Enriched** - All agents have Knowledge Loading + Required Skills sections
+-  **5 Universal Skills** - cursor-code-style, lovable-pitfalls, search-before-edit, linter-loop-limits, debugging-first
+-  **Lane-Specific Patterns** - V0/Lovable for Next.js, Swift-agents for iOS, RN best practices for Expo
+-  **Agent-Level Learning** - `.claude/agent-knowledge/{agent}/patterns.json` for pattern persistence
+-  **Shopify Visual Validation** - New `shopify-ui-reviewer` with Playwright MCP
 
 **Agent Architecture (OS 2.4):**
-- ✅ **All Agents Use Opus 4.5** - Unified model across all agents
-- ✅ **Role Boundaries Enforced** - Clear separation between orchestrators and workers
-- ✅ **State Preservation** - Agents survive interruptions across sessions
-- ✅ **85 Specialized Agents** - Comprehensive coverage across 9 domains
+-  **All Agents Use Opus 4.5** - Unified model across all agents
+-  **Role Boundaries Enforced** - Clear separation between orchestrators and workers
+-  **State Preservation** - Agents survive interruptions across sessions
+-  **85 Specialized Agents** - Comprehensive coverage across 9 domains
 
 **Key Improvements:**
 - Orchestrators NEVER write code (only coordinate via Task tool)
@@ -50,7 +50,7 @@
 - Pure coordination via Task tool only
 - Read phase_state.json to track progress
 - Survive interruptions (questions, pauses, clarifications)
-- Examples: `/orca-nextjs`, `/orca-ios`, `/orca-expo`, `/orca-data`
+- Examples: `/nextjs`, `/ios`, `/expo`, `/orca-data`
 
 **Agents (Implementation workers):**
 - Write code, run tests, analyze
@@ -110,9 +110,9 @@ All agents work with `phase_state.json`:
 8. **`ios-accessibility-specialist`** - VoiceOver, accessibility compliance
 
 #### Gates (4 agents)
-1. **`ios-standards-enforcer`** - Code standards, Swift 6 concurrency (≥90)
-2. **`ios-ui-reviewer`** - UI/interaction quality gate (≥90)
-3. **`ios-verification`** - Build/test verification (xcodebuild)
+1. **`ios-standards-enforcer`** - Code standards, Swift 6 concurrency (>=90)
+2. **`ios-ui-reviewer`** - Code-based UI review (tokens, patterns, a11y in code) - NO simulator
+3. **`ios-verification`** - Build/test/visual verification (ONLY agent with XcodeBuildMCP)
 4. **Architecture review** - Embedded in ios-grand-architect
 
 **Total iOS Team:** 18 agents (all Opus 4.5)
@@ -409,20 +409,20 @@ Phase 6: Evidence Capture & Memory Update
 **Note:** All agents use Opus 4.5. No model-based phase distinctions.
 
 ### Anti-Patterns (v2.4)
-❌ Orchestrator writing code directly
-❌ Skipping ProjectContextServer query
-❌ Bypassing team confirmation (for complex mode)
-❌ Abandoning pipeline on interruption
-❌ Skipping quality gates (unless -tweak mode)
-❌ Not updating phase_state.json
+ Orchestrator writing code directly
+ Skipping ProjectContextServer query
+ Bypassing team confirmation (for complex mode)
+ Abandoning pipeline on interruption
+ Skipping quality gates (unless -tweak mode)
+ Not updating phase_state.json
 
 ### Correct Patterns (v2.4)
-✅ Orchestrator delegates via Task tool only
-✅ Always query ProjectContextServer first
-✅ Confirm team before execution (complex mode)
-✅ Read phase_state.json after interruptions
-✅ All gates must pass (≥90 scores) except -tweak mode
-✅ Update phase_state.json at each phase
+ Orchestrator delegates via Task tool only
+ Always query ProjectContextServer first
+ Confirm team before execution (complex mode)
+ Read phase_state.json after interruptions
+ All gates must pass (≥90 scores) except -tweak mode
+ Update phase_state.json at each phase
 
 ---
 
@@ -434,16 +434,16 @@ Phase 6: Evidence Capture & Memory Update
 /plan "Add biometric authentication"
 
 # 2. Implement (orchestrator coordinates agents)
-/orca-ios --complex "Implement requirement <id> using spec"
+/ios --complex "Implement requirement <id> using spec"
 
 # Agents used (all Opus 4.5):
 - ios-grand-architect - Architecture planning
 - ios-architect - Implementation plan
 - ios-builder - Implementation
 - ios-security-specialist - Biometric integration
-- ios-standards-enforcer - Standards gate (≥90)
-- ios-ui-reviewer - UI gate (≥90)
-- ios-verification - Build/test verification
+- ios-standards-enforcer - Standards gate (>=90)
+- ios-ui-reviewer - Code review gate (>=90, no simulator)
+- ios-verification - Build/test/visual verification (simulator)
 ```
 
 ### Next.js UI Work
@@ -452,7 +452,7 @@ Phase 6: Evidence Capture & Memory Update
 /plan "Add dark mode with user preference persistence"
 
 # 2. Implement (orchestrator coordinates agents)
-/orca-nextjs --complex "Implement requirement <id> using spec"
+/nextjs --complex "Implement requirement <id> using spec"
 
 # Agents used (all Opus 4.5):
 - nextjs-grand-architect - Coordination
@@ -472,7 +472,7 @@ Phase 6: Evidence Capture & Memory Update
 /plan "Add offline mode with sync"
 
 # 2. Implement (orchestrator coordinates agents)
-/orca-expo --complex "Implement requirement <id> using spec"
+/expo --complex "Implement requirement <id> using spec"
 
 # Agents used (all Opus 4.5):
 - expo-grand-orchestrator - High-level coordination

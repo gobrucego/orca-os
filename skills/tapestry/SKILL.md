@@ -138,9 +138,9 @@ This creates:
 ### Step 5: Present to User
 
 Show:
-1. "✓ Content extracted from: [source]"
-2. "✓ Identified [N] core actionable lessons"
-3. "✓ Created Ship-Learn-Next plan: [filename]"
+1. " Content extracted from: [source]"
+2. " Identified [N] core actionable lessons"
+3. " Created Ship-Learn-Next plan: [filename]"
 4. Preview of Rep 1 (what's due this week)
 
 Ask:
@@ -175,9 +175,9 @@ Step 4: Activate ship-learn-next skill
   → Map Reps 2-5
 
 Step 5: Present results
-  ✓ Content extracted: "How to Build Profitable SaaS Products.txt"
-  ✓ Identified 5 core actionable lessons
-  ✓ Created: "Ship-Learn-Next Plan - Build Micro-SaaS.md"
+   Content extracted: "How to Build Profitable SaaS Products.txt"
+   Identified 5 core actionable lessons
+   Created: "Ship-Learn-Next Plan - Build Micro-SaaS.md"
 
   [Preview of Rep 1]
   **Rep 1: Ship Landing Page + Waitlist (By Friday)**
@@ -308,23 +308,23 @@ Solution:
 ## Best Practices
 
 ### For Content Extraction
-- ✅ Always verify extraction succeeded before proceeding
-- ✅ Show preview of extracted content
-- ✅ Handle missing tools gracefully (install prompts)
-- ✅ Clean filenames for filesystem compatibility
+-  Always verify extraction succeeded before proceeding
+-  Show preview of extracted content
+-  Handle missing tools gracefully (install prompts)
+-  Clean filenames for filesystem compatibility
 
 ### For Synthesis
-- ✅ Focus on specific, actionable advice (not theory)
-- ✅ Limit to 3-5 core lessons (avoid overwhelming)
-- ✅ Identify concrete examples to replicate
-- ✅ Connect lessons to practical implementations
+-  Focus on specific, actionable advice (not theory)
+-  Limit to 3-5 core lessons (avoid overwhelming)
+-  Identify concrete examples to replicate
+-  Connect lessons to practical implementations
 
 ### For Action Planning
-- ✅ Make Rep 1 shippable THIS WEEK
-- ✅ Ensure clear success criteria
-- ✅ Build progression that makes sense
-- ✅ Reference source material for each rep
-- ✅ Keep focus on DOING, not studying
+-  Make Rep 1 shippable THIS WEEK
+-  Ensure clear success criteria
+-  Build progression that makes sense
+-  Reference source material for each rep
+-  Keep focus on DOING, not studying
 
 ## Output Files
 
@@ -343,12 +343,12 @@ Tapestry creates two files:
 ## Success Criteria
 
 A successful tapestry run produces:
-- ✅ Clean extracted content file
-- ✅ Action plan with shippable Rep 1
-- ✅ Clear connection between content and action
-- ✅ Concrete deliverables (not vague goals)
-- ✅ Timeline commitments
-- ✅ Reflection framework built in
+-  Clean extracted content file
+-  Action plan with shippable Rep 1
+-  Clear connection between content and action
+-  Concrete deliverables (not vague goals)
+-  Timeline commitments
+-  Reflection framework built in
 
 ## Tips for Users
 
