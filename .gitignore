@@ -1,42 +1,121 @@
-# Keep essential dot files/folders
-!.gitignore
-!.git
-!.claude/
+# ============================================================
+# ORCA-OS PUBLIC REPO GITIGNORE
+# ============================================================
+# This is a PUBLIC repository. Keep internal work artifacts
+# out of version control.
+# ============================================================
 
-# Ignore temporary/generated dot files
+# ============================================================
+# SYSTEM FILES
+# ============================================================
 .DS_Store
-.workshop/
-.claude-session-context.md
+.!*!*
+*.log
+*.tmp
+
+# ============================================================
+# DATABASE & STATE FILES (NEVER PUBLIC)
+# ============================================================
+*.db
 *.db-shm
 *.db-wal
+*.db.backup*
+*.backup*
+state.json
+phase_state.json
 
-# BBEdit/TextWrangler crash recovery files
-.!*!*
+# ============================================================
+# INTERNAL WORK DIRECTORIES (NEVER PUBLIC)
+# ============================================================
 
-# Ignore .claude temp and cache
-.claude/cache/
-.claude/orchestration/temp/
-.claude/memory/*.db-shm
-.claude/memory/*.db-wal
+# Personal exploration/research folders
+/_explore/
+/_LLM-research/
 
-# Ignore codex folders
-/ext
-/quick-reference/codex
+# External tools not part of core
+/ext/
 
-# Ignore anything with 'archive' or 'deprecated' in the name
+# Archive and deprecated content
 *archive*
 *deprecated*
 
-# Ignore anything with 'mm-' in the name
+# ============================================================
+# .claude/ INTERNAL ARTIFACTS (NEVER PUBLIC)
+# ============================================================
+# Keep only: CLAUDE.md, README.md, orchestration/reference/,
+# orchestration/playbooks/
+
+# Session data and memory
+.claude/memory/
+.claude/project/
+.claude/workshop/
+.claude/cache/
+
+# Internal planning documents
+.claude/requirements/
+
+# Research evidence
+.claude/research/evidence/
+
+# Agent learned patterns (internal)
+.claude/agent-knowledge/
+
+# Orchestration runtime state
+.claude/orchestration/temp/
+.claude/orchestration/phase_state.json
+
+# Local settings (user-specific)
+.claude/settings.local.json
+.claude/settings.json.broken-backup
+.claude-session-context.md
+.workshop/
+
+# ============================================================
+# PROJECT-SPECIFIC / CLIENT-SPECIFIC CONTENT
+# ============================================================
+
+# Client-specific skills (mm = client prefix)
 *mm-*
 
-# Ignore _explore (research folder - read only)
-/_explore/
+# Codex integration (external)
+/quick-reference/codex/
 
-# Ignore node_modules in MCPs
+# ============================================================
+# BUILD ARTIFACTS & DEPENDENCIES
+# ============================================================
+
+# MCP build artifacts
 mcp/*/node_modules/
 mcp/*/dist/
+mcp/*/.tsbuildinfo
 
 # Python
 __pycache__/
 *.pyc
+*.pyo
+.pytest_cache/
+.venv/
+venv/
+
+# Node
+node_modules/
+*.tsbuildinfo
+
+# ============================================================
+# LOCAL CONFIGURATION
+# ============================================================
+settings.local.json
+*.local.json
+.env
+.env.local
+.env.*.local
+
+# ============================================================
+# TEMPORARY SCRIPTS (cleanup utilities)
+# ============================================================
+scripts/cleanup-claude-config.py
+
+# ============================================================
+# IMPLEMENTATION LOGS (internal work artifacts)
+# ============================================================
+/logs/
