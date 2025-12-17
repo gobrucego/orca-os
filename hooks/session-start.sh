@@ -82,19 +82,19 @@ WORKSHOP_CONTEXT=""
 WORKSHOP_STATUS="unknown"
 
 if [ -f "$DB_PATH" ]; then
-  if command -v workshop >/dev/null 2>&1; then
-    WORKSHOP_CONTEXT=$(workshop --workspace "$WORKSHOP_DIR" context 2>&1) && WORKSHOP_STATUS="loaded" || {
+  if command -v claude-workshop >/dev/null 2>&1; then
+    WORKSHOP_CONTEXT=$(claude-workshop --workspace "$WORKSHOP_DIR" context 2>&1) && WORKSHOP_STATUS="loaded" || {
       log_error "workshop" "Failed to load context: $WORKSHOP_CONTEXT"
       WORKSHOP_CONTEXT="Workshop context load failed - check $ERROR_LOG"
       WORKSHOP_STATUS="error"
     }
   else
-    WORKSHOP_CONTEXT="Workshop CLI not found - install: pip install claude-workshop"
+    WORKSHOP_CONTEXT="Workshop CLI not found - install: pip install -e mcp/workshop-cli"
     WORKSHOP_STATUS="cli-missing"
     log_error "workshop" "CLI not in PATH"
   fi
 else
-  WORKSHOP_CONTEXT="Workshop not initialized - run: workshop --workspace .claude/memory init"
+  WORKSHOP_CONTEXT="Workshop not initialized - run: claude-workshop init"
   WORKSHOP_STATUS="not-initialized"
   log_info "workshop" "Database not found at $DB_PATH"
 fi
@@ -139,7 +139,8 @@ fi
 # Count errors if any
 ERROR_COUNT=0
 if [ -f "$ERROR_LOG" ]; then
-  ERROR_COUNT=$(grep -c "ERROR:" "$ERROR_LOG" 2>/dev/null || echo 0)
+  ERROR_COUNT=$(grep -c "ERROR:" "$ERROR_LOG" 2>/dev/null || true)
+  [ -z "$ERROR_COUNT" ] && ERROR_COUNT=0
 fi
 
 {
@@ -176,25 +177,25 @@ echo "PROJECT CONTEXT AUTO-LOAD"
 echo "═══════════════════════════════════════════════════════════"
 echo ""
 echo "Memory systems available:"
-echo "  - Workshop: workshop --workspace .claude/memory <command>"
+echo "  - Workshop: claude-workshop --workspace .claude/memory <command>"
 echo "  - vibe.db: python3 ~/.claude/scripts/vibe-sync.py <command>"
 echo "  - ProjectContext MCP: mcp__project-context__query_context"
 echo ""
 echo "Quick commands:"
-echo "  workshop --workspace .claude/memory why \"<topic>\"  # Query past decisions"
-echo "  workshop --workspace .claude/memory recent         # Recent activity"
+echo "  claude-workshop why \"<topic>\"  # Query past decisions"
+echo "  claude-workshop recent          # Recent activity"
 echo ""
 echo "═══════════════════════════════════════════════════════════"
 echo ""
 
 # Show recent Workshop entries for immediate context
-if [ "$WORKSHOP_STATUS" = "loaded" ] && command -v workshop >/dev/null 2>&1; then
+if [ "$WORKSHOP_STATUS" = "loaded" ] && command -v claude-workshop >/dev/null 2>&1; then
   echo ""
   echo "═══════════════════════════════════════════════════════════"
   echo "RECENT WORKSHOP ENTRIES (last 5)"
   echo "═══════════════════════════════════════════════════════════"
   echo ""
-  workshop --workspace "$WORKSHOP_DIR" recent --limit 5 2>/dev/null || echo "(Could not load recent entries)"
+  claude-workshop --workspace "$WORKSHOP_DIR" recent --limit 5 2>/dev/null || echo "(Could not load recent entries)"
   echo ""
 fi
 

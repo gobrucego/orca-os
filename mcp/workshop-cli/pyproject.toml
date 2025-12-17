@@ -1,0 +1,27 @@
+[project]
+name = "claude-workshop"
+version = "0.1.0"
+description = "Persistent project memory CLI for Claude Code sessions"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "Claude", email = "noreply@anthropic.com"}
+]
+keywords = ["claude", "memory", "cli", "workshop"]
+
+dependencies = [
+    "click>=8.0",
+    "rich>=13.0",
+]
+
+[project.scripts]
+claude-workshop = "claude_workshop.cli:main"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["claude_workshop*"]

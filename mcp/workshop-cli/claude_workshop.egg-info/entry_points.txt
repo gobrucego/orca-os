@@ -1,0 +1,2 @@
+[console_scripts]
+claude-workshop = claude_workshop.cli:main

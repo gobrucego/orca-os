@@ -37,15 +37,15 @@ Once configured, Claude will automatically:
 
 You can also manually run Workshop commands:
 ```bash
-workshop context
-workshop decision "Using X because Y" -r "reasoning here"
-workshop gotcha "Watch out for Z" -t tag1 -t tag2
-workshop search "authentication"
+claude-workshop context
+claude-workshop decision "Using X because Y" -r "reasoning here"
+claude-workshop gotcha "Watch out for Z" -t tag1 -t tag2
+claude-workshop search "authentication"
 ```
 
 ## Installation
 
-1. Ensure Workshop is installed: `pip install -e ./workshop`
+1. Ensure Workshop is installed: `pip install -e mcp/workshop-cli`
 2. The `.claude/` configuration is already set up in this project
 3. Start a new Claude Code session - Workshop context will load automatically!
 

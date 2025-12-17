@@ -26,7 +26,7 @@ echo ""
 # Workshop status
 if [ -f ".claude/memory/workshop.db" ]; then
     echo "Workshop:  .claude/memory/workshop.db"
-    workshop --workspace .claude/memory info 2>/dev/null || echo "  (run 'workshop info' for details)"
+    claude-workshop info 2>/dev/null || echo "  (run 'workshop info' for details)"
 else
     echo "Workshop:  Not initialized"
 fi
@@ -44,7 +44,7 @@ echo ""
 # Recent activity
 echo ""
 echo "Recent Activity:"
-workshop --workspace .claude/memory recent --limit 5 2>/dev/null || echo "  (no recent activity)"
+claude-workshop recent --limit 5 2>/dev/null || echo "  (no recent activity)"
 ```
 
 ---
@@ -72,7 +72,7 @@ The init script will:
 Query past decisions about a topic:
 
 ```bash
-workshop --workspace .claude/memory why "<topic>"
+claude-workshop why "<topic>"
 ```
 
 Display the results clearly. If no results, suggest recording a decision.
@@ -86,13 +86,13 @@ Record a decision. Ask the user for reasoning if not provided:
 
 1. If text contains ` -r ` or ` --reason `, parse it:
    ```bash
-   workshop --workspace .claude/memory decision "<decision_text>" -r "<reasoning>"
+   claude-workshop decision "<decision_text>" -r "<reasoning>"
    ```
 
 2. Otherwise, ask: "What's the reasoning for this decision?"
    Then record:
    ```bash
-   workshop --workspace .claude/memory decision "<decision_text>" -r "<user_provided_reasoning>"
+   claude-workshop decision "<decision_text>" -r "<user_provided_reasoning>"
    ```
 
 Confirm the decision was recorded.
@@ -105,12 +105,12 @@ Confirm the decision was recorded.
 Record a gotcha/warning/pitfall:
 
 ```bash
-workshop --workspace .claude/memory gotcha "<gotcha_text>"
+claude-workshop gotcha "<gotcha_text>"
 ```
 
 If tags are useful, add them:
 ```bash
-workshop --workspace .claude/memory gotcha "<gotcha_text>" -t warning
+claude-workshop gotcha "<gotcha_text>" -t warning
 ```
 
 Confirm the gotcha was recorded.
@@ -123,7 +123,7 @@ Confirm the gotcha was recorded.
 Show recent workshop activity:
 
 ```bash
-workshop --workspace .claude/memory recent --limit <limit_or_10>
+claude-workshop recent --limit <limit_or_10>
 ```
 
 ---
@@ -134,7 +134,7 @@ workshop --workspace .claude/memory recent --limit <limit_or_10>
 Search across all memory:
 
 ```bash
-workshop --workspace .claude/memory search "<query>"
+claude-workshop search "<query>"
 ```
 
 ---
@@ -158,7 +158,7 @@ Show the sync results.
 Review all entries of a specific type. Valid types: `decisions`, `gotchas`, `preferences`, `notes`, `antipatterns`
 
 ```bash
-workshop --workspace .claude/memory read -t <type> --full --limit 50
+claude-workshop read -t <type> --full --limit 50
 ```
 
 **Present results in a table format:**
@@ -191,7 +191,7 @@ Delete an entry by ID (shown in review) or delete the most recent entry:
 
 **Step 1: Show the entry to be deleted**
 ```bash
-workshop --workspace .claude/memory read --full | grep -A5 "ID: <id>"
+claude-workshop read --full | grep -A5 "ID: <id>"
 ```
 
 **Step 2: Confirm with user**
@@ -199,7 +199,7 @@ Use AskUserQuestion: "Delete this entry? (yes/no)"
 
 **Step 3: If confirmed, delete**
 ```bash
-workshop --workspace .claude/memory delete <id>
+claude-workshop delete <id>
 ```
 
 Confirm deletion was successful.
@@ -212,7 +212,7 @@ Confirm deletion was successful.
 Launch interactive cleanup mode to review and delete multiple entries:
 
 ```bash
-workshop --workspace .claude/memory clean
+claude-workshop clean
 ```
 
 This shows entries one-by-one and lets user decide to keep/delete each.
@@ -263,6 +263,6 @@ Examples:
 
 ## Error Handling
 
-- If Workshop is not installed: Show `cargo install workshop`
-- If workshop.db doesn't exist: Suggest `/project-memory init`
+- If Workshop is not installed: Show `pip install -e mcp/workshop-cli`
+- If workshop.db doesn't exist: Suggest `/project-memory init` or `claude-workshop init`
 - If vibe-sync.py is missing: Note it's optional for code context

@@ -26,7 +26,7 @@ export class WorkshopClient {
    */
   private async runWorkshop(args: string): Promise<string> {
     try {
-      const cmd = `workshop --workspace "${this.workspacePath}" ${args}`;
+      const cmd = `claude-workshop --workspace "${this.workspacePath}" ${args}`;
       const { stdout, stderr } = await execAsync(cmd, {
         encoding: 'utf8',
         timeout: 10000,

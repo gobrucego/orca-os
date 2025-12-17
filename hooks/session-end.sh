@@ -33,16 +33,16 @@ log_info() {
 }
 
 # Check if Workshop is available
-if ! command -v workshop >/dev/null 2>&1; then
+if ! command -v claude-workshop >/dev/null 2>&1; then
   echo "Workshop not installed - session not captured"
-  echo "Install: pip install claude-workshop"
+  echo "Install: pip install -e mcp/workshop-cli"
   exit 0
 fi
 
 # Check if Workshop is initialized
 if [ ! -f "$WORKSHOP_DB" ]; then
   echo "Workshop not initialized in .claude/memory/"
-  echo "Run: workshop --workspace .claude/memory init"
+  echo "Run: claude-workshop init"
   exit 0
 fi
 
@@ -56,10 +56,10 @@ IMPORT_COUNT=0
 # Run workshop import to extract actual session content
 # This parses JSONL transcripts and extracts decisions, gotchas, preferences
 # NOTE: No --store-raw-messages - we only want extracted insights, not every message
-if workshop --workspace "$MEMORY_DIR" import --execute 2>"$ERROR_LOG"; then
+if claude-workshop --workspace "$MEMORY_DIR" import --execute 2>"$ERROR_LOG"; then
   IMPORT_SUCCESS=true
   # Try to get count from import output (this is best-effort)
-  IMPORT_COUNT=$(workshop --workspace "$MEMORY_DIR" import-status 2>/dev/null | grep -c "entries" || echo "?")
+  IMPORT_COUNT=$(claude-workshop --workspace "$MEMORY_DIR" info 2>/dev/null | grep -c "entries" || echo "?")
   log_info "Import completed successfully"
 else
   log_error "Workshop import failed - see error log"
@@ -88,7 +88,7 @@ if [ "$CHANGED_FILES" -gt 0 ] || [ -n "$RECENT_COMMIT" ]; then
     SESSION_SUMMARY="$SESSION_SUMMARY | Commit: $RECENT_COMMIT"
   fi
 
-  workshop --workspace "$MEMORY_DIR" note "$SESSION_SUMMARY" \
+  claude-workshop --workspace "$MEMORY_DIR" note "$SESSION_SUMMARY" \
     --tags "session" "auto-captured" 2>/dev/null || true
 fi
 
@@ -127,7 +127,7 @@ if [ -n "$RECENT_COMMIT" ]; then
   echo "Recent commit: $RECENT_COMMIT"
 fi
 echo ""
-echo "Review: workshop --workspace .claude/memory recent"
+echo "Review: claude-workshop recent"
 echo "==============================================================="
 
 exit 0
